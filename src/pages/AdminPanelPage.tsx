@@ -15,7 +15,8 @@ import InboxTab from "../components/admin/InboxTab";
 import AuditTab from "../components/admin/AuditTab";
 import NoticesTab from "../components/admin/NoticesTab";
 import EditOrderModal from "../components/admin/EditOrderModal";
-import { ClipboardList, Clock, Palette, Mail, ScrollText, LogOut, Loader2, Menu, Megaphone } from "lucide-react";
+import { AdminSkeleton } from "../components/ui/SkeletonLoaders";
+import { ClipboardList, Clock, Palette, Mail, ScrollText, LogOut, Menu, Megaphone } from "lucide-react";
 import { useTranslation } from "../i18n";
 
 interface DialogState {
@@ -182,12 +183,7 @@ export default function AdminPanel() {
   ];
 
   if (sessionLoading) {
-    return (
-      <div className="flex h-dvh w-full text-gray-500 font-sans bg-[#F1E8DC] items-center justify-center">
-        <Loader2 className="w-8 h-8 mr-2 animate-spin" />
-        {t('common.loading')}
-      </div>
-    );
+    return <AdminSkeleton />;
   }
 
   if (!session) {

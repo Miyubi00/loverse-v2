@@ -13,6 +13,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { KeyRound, LogIn, Home } from 'lucide-react';
 import { useTranslation } from '../i18n';
+import { ForgotPinConfirmSkeleton } from '../components/ui/SkeletonLoaders';
 
 type ConfirmStatus = 'loading' | 'confirmed' | 'canceled' | 'invalid';
 
@@ -67,23 +68,15 @@ export default function ForgotPinConfirmPage() {
     void run();
   }, [params]);
 
+  if (status === 'loading') {
+    return <ForgotPinConfirmSkeleton />;
+  }
+
   return (
     <div className="min-h-screen bg-[#F1E8DC] flex items-center justify-center p-3 sm:p-4 font-sans">
       <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-md border border-[#EBDFCE] text-center">
-
         <StatusIcon />
-
-        {status === 'loading' ? (
-          <>
-            <h1 className="text-xl sm:text-2xl font-black text-[#712E1E]">
-              {t('forgotPinConfirm.loadingTitle')}
-            </h1>
-            <p className="text-stone-400 mt-2 text-xs sm:text-sm">{t('forgotPinConfirm.loading')}</p>
-            <div className="mt-5 flex justify-center" role="status" aria-live="polite">
-              <div className="w-8 h-8 border-4 border-[#E59A59]/30 border-t-[#E59A59] rounded-full animate-spin" />
-            </div>
-          </>
-        ) : status === 'confirmed' ? (
+        {status === 'confirmed' ? (
           <>
             <h1 className="text-xl sm:text-2xl font-black text-[#712E1E]">
               {t('forgotPinConfirm.successTitle')}

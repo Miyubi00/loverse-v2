@@ -382,7 +382,14 @@ export default function OrderForm() {
             todayStr={todayStr}
             onChange={handleChange}
             onWhatsappChange={handleWhatsappChange}
-            onChangeTemplate={() => goBackOrHome(navigate)}
+            // Bukan generic-back: arahkan eksplisit ke katalog pada posisi
+            // kartu tema yang sedang dipilih (state dibaca HomePage).
+            onChangeTemplate={() =>
+              navigate('/', {
+                replace: true,
+                state: { scrollToTemplate: selectedTemplate?.slug },
+              })
+            }
           />
         ) : null}
 

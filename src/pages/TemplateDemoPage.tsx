@@ -15,6 +15,7 @@ import { useTranslation } from '../i18n';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { MASTER_TEMPLATES } from '../lib/constants';
 import LanguageSwitcher from '../components/shared/LanguageSwitcher';
+import { DemoSkeleton } from '../components/ui/SkeletonLoaders';
 
 export default function TemplateDemo() {
   const { t } = useTranslation();
@@ -106,13 +107,7 @@ export default function TemplateDemo() {
         <LanguageSwitcher variant="header" />
       </div>
 
-      <Suspense
-        fallback={
-          <div className="min-h-screen flex items-center justify-center bg-gray-50">
-            <div className="animate-spin rounded-full h-10 w-10 border-4 border-orange-500 border-t-transparent" />
-          </div>
-        }
-      >
+      <Suspense fallback={<DemoSkeleton />}>
         <TemplateRenderer
           groom={dummyData.groom}
           bride={dummyData.bride}

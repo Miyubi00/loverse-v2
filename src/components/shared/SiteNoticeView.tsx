@@ -9,7 +9,7 @@
 // types/database (SiteNoticeRow).
 // ============================================================
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AlertTriangle, Gift, Info, Wrench, X } from 'lucide-react';
 import type { SiteNoticeRow, SiteNoticeType } from '../../types/database';
@@ -153,6 +153,84 @@ function NoticeModal({ notice, onClose }: { notice: SiteNoticeRow; onClose: () =
   );
 }
 
+// Banner utk satu notice: body dibatasi 2 baris di mobile (hemat layar)
+// dengan tombol expand agar tetap terbaca penuh bila dipilih pengguna.
+function NoticeBanner({ notice }: { notice: SiteNoticeRow }) {
+  const { t } = useTranslation();
+  const bodyRef = useRef<HTMLParagraphElement>(null);
+  const [isTruncated, setIsTruncated] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const style = BANNER_STYLE[notice.type] ?? BANNER_STYLE.info;
+  const Icon = style.Icon;
+  const href = notice.cta_href?.trim() ?? '';
+  const isInternal = href.startsWith('/');
+  const actionLabel = notice.cta_label?.trim();
+
+  // Deteksi apakah body terpotong clamp (tergantung lebar viewport saat itu).
+  useEffect(() => {
+    if (!notice.body) return;
+    const check = () => {
+      const el = bodyRef.current;
+      if (el) setIsTruncated(el.scrollHeight > el.clientHeight + 1);
+    };
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, [notice.body]);
+
+  return (
+    <div className={`mx-auto flex max-w-6xl items-start gap-3 rounded-xl border px-4 py-3 ${style.wrap}`}>
+      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${style.icon}`}>
+        <Icon size={16} />
+      </span>
+      <div className="min-w-0 flex-1 text-sm">
+        <span className="font-bold">{notice.title}</span>
+        {notice.body && (
+          <p
+            ref={bodyRef}
+            className={`mt-0.5 whitespace-pre-line opacity-90 ${expanded ? '' : 'line-clamp-2'}`}
+          >
+            {notice.body}
+          </p>
+        )}
+        {(notice.body && (isTruncated || expanded)) || href ? (
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+            {notice.body && (isTruncated || expanded) && (
+              <button
+                type="button"
+                onClick={() => setExpanded((prev) => !prev)}
+                aria-expanded={expanded}
+                className="text-xs font-bold underline underline-offset-2 hover:opacity-80"
+              >
+                {expanded ? t('siteNotice.readLess') : t('siteNotice.readMore')}
+              </button>
+            )}
+            {href && actionLabel && (
+              isInternal ? (
+                <Link
+                  to={href}
+                  className="text-xs font-bold underline underline-offset-2 hover:opacity-80"
+                >
+                  {actionLabel}
+                </Link>
+              ) : (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs font-bold underline underline-offset-2 hover:opacity-80"
+                >
+                  {actionLabel}
+                </a>
+              )
+            )}
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 export default function SiteNoticeView({ notices }: { notices: SiteNoticeRow[] }) {
   const [dismissed, setDismissed] = useState<ReadonlySet<string>>(() => new Set());
 
@@ -176,50 +254,9 @@ export default function SiteNoticeView({ notices }: { notices: SiteNoticeRow[] }
     <>
       {banners.length > 0 && (
         <div className="w-full space-y-2 bg-[#F1E8DC] px-4 pb-1 pt-4 sm:px-6 lg:px-8">
-          {banners.map((n) => {
-            const style = BANNER_STYLE[n.type] ?? BANNER_STYLE.info;
-            const Icon = style.Icon;
-            const href = n.cta_href?.trim() ?? '';
-            const isInternal = href.startsWith('/');
-            const actionLabel = n.cta_label?.trim();
-            return (
-              <div
-                key={n.id}
-                className={`mx-auto flex max-w-6xl items-start gap-3 rounded-xl border px-4 py-3 ${style.wrap}`}
-              >
-                <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${style.icon}`}>
-                  <Icon size={16} />
-                </span>
-                <div className="min-w-0 flex-1 text-sm">
-                  <span className="font-bold">{n.title}</span>
-                  {n.body && (
-                    <span className="ml-1.5 opacity-90">
-                      {n.body.split('\n')[0]}
-                    </span>
-                  )}
-                  {href && actionLabel && (
-                    isInternal ? (
-                      <Link
-                        to={href}
-                        className="ml-2 inline-block font-bold underline underline-offset-2"
-                      >
-                        {actionLabel}
-                      </Link>
-                    ) : (
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="ml-2 inline-block font-bold underline underline-offset-2"
-                      >
-                        {actionLabel}
-                      </a>
-                    )
-                  )}
-                </div>
-              </div>
-            );
-          })}
+          {banners.map((n) => (
+            <NoticeBanner key={n.id} notice={n} />
+          ))}
         </div>
       )}
 
