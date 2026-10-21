@@ -121,7 +121,7 @@ Artifacts: `artifacts/ui/after/`, `artifacts/ui/revision/color/`, `artifacts/ui/
 ## Known Limitations
 
 - Authenticated dashboard/admin pages are in the typography/contrast audit via `scripts/ui-mocks.mjs`, but the full axe rule set still covers only seven public/auth routes.
-- Lighthouse has not been run.
+- Lighthouse mobile audit ran during PhoneShowcase v2 M4; it scored 45 Performance, 100 Accessibility, 96 Best Practices, and 100 SEO.
 - Large full-page Chromium screenshots can display repeated/ghosted text; targeted crops and DOM assertions are the reliable review method. Home-mobile, dashboard, and admin ghosting were confirmed as display artifacts.
 - Home mobile first fold still places most of the `PhoneShowcase` below the fold at 390×844.
 - Dev-only `/dev/invoice` and `/dev/email` pages are not in the typography audit route list.
@@ -132,7 +132,7 @@ Artifacts: `artifacts/ui/after/`, `artifacts/ui/revision/color/`, `artifacts/ui/
 ## Not Done
 
 - Phase commits for Sections 3–4 (Section 1–2 commits exist).
-- Optional Lighthouse run and full axe coverage for authenticated admin/dashboard tabs.
+- Full axe coverage for authenticated admin/dashboard tabs.
 - Optional typography audit coverage for `/dev/invoice` and `/dev/email`.
 - Optional mono treatment for technical data if the 0.0% ratio is not desired.
 
