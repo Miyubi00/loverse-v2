@@ -37,8 +37,15 @@ type PhoneId = 0 | 1;
 
 const BACK_POSITION = new Vector3(-0.62, -0.16, -0.62);
 const FRONT_POSITION = new Vector3(0.64, 0.04, 0.46);
+const BACK_ROTATION = new Vector3(0.035, -0.14, 0.19);
+const FRONT_ROTATION = new Vector3(0.025, 0.16, -0.2);
 const BACK_SCALE = 0.93;
 const FRONT_SCALE = 1.08;
+
+function smoothStep(value: number) {
+  const t = MathUtils.clamp(value, 0, 1);
+  return t * t * (3 - 2 * t);
+}
 
 interface SceneProps {
   activeIndex: number;
@@ -426,7 +433,6 @@ function ShowcaseRig({
       progress < 0.5
         ? 4 * progress ** 3
         : 1 - (-2 * progress + 2) ** 3 / 2;
-    const shuffleArc = Math.sin(progress * Math.PI);
     stack.position.x = animation.from * (1 - eased);
     stack.position.z = -Math.abs(animation.from) * 0.06 * (1 - eased);
     stack.rotation.z = -animation.from * 0.075 * (1 - eased);
@@ -435,18 +441,34 @@ function ShowcaseRig({
     if (animation.direction !== 0) {
       const incoming = animation.frontPhoneId === 0 ? phone1 : phone0;
       const outgoing = animation.frontPhoneId === 0 ? phone0 : phone1;
+      const straighten = smoothStep(progress / 0.2);
+      const swap = smoothStep((progress - 0.28) / 0.48);
+      const restoreV = smoothStep((progress - 0.76) / 0.24);
+      const shuffleArc = Math.sin(swap * Math.PI);
+
       incoming.position.set(
-        MathUtils.lerp(BACK_POSITION.x, FRONT_POSITION.x, eased),
-        MathUtils.lerp(BACK_POSITION.y, FRONT_POSITION.y, eased) + shuffleArc * 0.14,
-        MathUtils.lerp(BACK_POSITION.z, FRONT_POSITION.z, eased) + shuffleArc * 0.5,
+        MathUtils.lerp(BACK_POSITION.x, FRONT_POSITION.x, swap),
+        MathUtils.lerp(BACK_POSITION.y, FRONT_POSITION.y, swap) + shuffleArc * 0.14,
+        MathUtils.lerp(BACK_POSITION.z, FRONT_POSITION.z, swap) + shuffleArc * 0.5,
       );
       outgoing.position.set(
-        MathUtils.lerp(FRONT_POSITION.x, BACK_POSITION.x, eased),
-        MathUtils.lerp(FRONT_POSITION.y, BACK_POSITION.y, eased) - shuffleArc * 0.1,
-        MathUtils.lerp(FRONT_POSITION.z, BACK_POSITION.z, eased) - shuffleArc * 0.42,
+        MathUtils.lerp(FRONT_POSITION.x, BACK_POSITION.x, swap),
+        MathUtils.lerp(FRONT_POSITION.y, BACK_POSITION.y, swap) - shuffleArc * 0.1,
+        MathUtils.lerp(FRONT_POSITION.z, BACK_POSITION.z, swap) - shuffleArc * 0.42,
       );
-      incoming.scale.setScalar(MathUtils.lerp(BACK_SCALE, FRONT_SCALE, eased) + shuffleArc * 0.025);
-      outgoing.scale.setScalar(MathUtils.lerp(FRONT_SCALE, BACK_SCALE, eased) - shuffleArc * 0.02);
+      incoming.scale.setScalar(MathUtils.lerp(BACK_SCALE, FRONT_SCALE, swap) + shuffleArc * 0.025);
+      outgoing.scale.setScalar(MathUtils.lerp(FRONT_SCALE, BACK_SCALE, swap) - shuffleArc * 0.02);
+
+      incoming.rotation.set(
+        MathUtils.lerp(MathUtils.lerp(BACK_ROTATION.x, 0, straighten), FRONT_ROTATION.x, restoreV),
+        MathUtils.lerp(MathUtils.lerp(BACK_ROTATION.y, 0, straighten), FRONT_ROTATION.y, restoreV),
+        MathUtils.lerp(MathUtils.lerp(BACK_ROTATION.z, 0, straighten), FRONT_ROTATION.z, restoreV),
+      );
+      outgoing.rotation.set(
+        MathUtils.lerp(MathUtils.lerp(FRONT_ROTATION.x, 0, straighten), BACK_ROTATION.x, restoreV),
+        MathUtils.lerp(MathUtils.lerp(FRONT_ROTATION.y, 0, straighten), BACK_ROTATION.y, restoreV),
+        MathUtils.lerp(MathUtils.lerp(FRONT_ROTATION.z, 0, straighten), BACK_ROTATION.z, restoreV),
+      );
     }
 
     if (progress >= 1) {
