@@ -87,8 +87,8 @@ export default function Landing() {
   const minPriceLabel = formatIDR(displayMinPrice);
 
   usePageMeta(
-    "LoVerse — Undangan Pernikahan Digital Elegan & Modern",
-    `LoVerse — undangan pernikahan digital elegan & modern. Pilih 40+ tema, RSVP online, musik, galeri foto, dan buku tamu. Buat dalam hitungan menit mulai ${minPriceLabel}.`,
+    `LoVerse — ${t("home.heroLine1")} ${t("home.heroLine2")} ${t("home.heroLine3")}`,
+    t("home.footerTagline"),
   );
 
   useEffect(() => {
