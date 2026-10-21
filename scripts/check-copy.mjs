@@ -120,7 +120,7 @@ for (const language of ["id", "en"]) {
 const changelog = readFileSync(resolve(root, "docs/copy-changelog.md"), "utf8");
 const rows = changelog
   .split(/\r?\n/)
-  .filter((line) => /^\|\s*`home\./.test(line))
+  .filter((line) => /^\|\s*`(?:home|order)\./.test(line))
   .map((line) => line.split("|").slice(1, -1).map((cell) => cell.trim()));
 
 if (rows.length === 0) errors.push("No locale entries found in docs/copy-changelog.md");
@@ -148,5 +148,5 @@ if (errors.length) {
   console.error(`Copy checks failed (${errors.length}):\n- ${errors.join("\n- ")}`);
   process.exitCode = 1;
 } else {
-  console.log(`Copy checks passed: ${idKeys.length} matching non-empty locale keys; ${rows.length} K1 changes preserve placeholders, tags, and numbers.`);
+  console.log(`Copy checks passed: ${idKeys.length} matching non-empty locale keys; ${rows.length} documented locale changes preserve placeholders, tags, and numbers.`);
 }

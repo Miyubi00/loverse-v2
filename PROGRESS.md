@@ -1,6 +1,17 @@
 # LoVerse UI Redesign — Progress
 
-Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete. The full Playwright suite has two unrelated language-toggle failures on `/demo/motion-flow`.**
+Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete; copywriting K1 and K2 complete. The full Playwright suite has two unrelated language-toggle failures on `/demo/motion-flow`.**
+
+## Copywriting — K2 (catalog, FAQ, checkout, and payment)
+
+- [x] Clarified catalog headings, search and empty states, shortened theme-selection buttons, and kept theme terminology consistent across the order flow.
+- [x] Rewrote the guest-link FAQ to describe the existing name/CSV and WhatsApp flow. Clarified order steps, reset confirmation, payment labels, fee labels, and Midtrans payment details without changing prices, fee rates, payment choices, or checkout steps.
+- [x] Kept unsupported operational and security claims unchanged and logged them in `docs/copy-flags.md`; added source references for the facts used in `docs/copy-facts.md`. Changelog is in `docs/copy-changelog.md`.
+- [x] `scripts/check-copy.mjs`: 933 matching non-empty ID/EN keys; 57 documented locale changes preserve placeholders, tags, and numbers.
+- [x] Reviewed landing and catalog screenshots in ID/EN at 390×844 and 1440×900. Copy fits the tested layouts and the page has no horizontal overflow. Catalog thumbnail images were unavailable in the capture browser and appear as dark cards, so their visual content could not be reviewed in these screenshots.
+- [x] Screenshots: [ID mobile landing](artifacts/copy-k2/id-390-landing.png), [EN mobile landing](artifacts/copy-k2/en-390-landing.png), [ID mobile catalog](artifacts/copy-k2/id-390-catalog.png), [EN mobile catalog](artifacts/copy-k2/en-390-catalog.png), [ID desktop landing](artifacts/copy-k2/id-1440-landing.png), [EN desktop landing](artifacts/copy-k2/en-1440-landing.png), [ID desktop catalog](artifacts/copy-k2/id-1440-catalog.png), [EN desktop catalog](artifacts/copy-k2/en-1440-catalog.png).
+- [x] `npm run lint`, `npm run typecheck`, production build, and `npm test` pass; unit suite: 44/44. The local-only order tests are ignored by Git per `.gitignore` but were updated to the current labels before running.
+- [x] Production build retains the existing `PhoneShowcaseScene` warning at 1,076.89 kB / 297.86 kB gzip; K2 changes do not affect that chunk.
 
 ## PhoneShowcase v2 — M1
 

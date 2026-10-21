@@ -296,7 +296,7 @@ export function PaymentMethodPicker({
       </div>
 
       <p className="text-[14px] leading-relaxed text-ink-400">
-        Pembayaran otomatis diproses Midtrans. Biaya kanal dan PPN ditampilkan transparan di ringkasan.
+        {t("order.autoMethodDesc")}
       </p>
     </SectionCard>
   );
