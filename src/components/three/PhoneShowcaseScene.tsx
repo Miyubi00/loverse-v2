@@ -472,25 +472,25 @@ function ShowcaseRig({
         const swap = smoothStep((progress - 0.28) / 0.48);
         const shuffleArc = Math.sin(swap * Math.PI);
         incoming.position.set(
-          MathUtils.lerp(STRAIGHT_BACK_POSITION.x, STRAIGHT_FRONT_POSITION.x, swap),
-          MathUtils.lerp(STRAIGHT_BACK_POSITION.y, STRAIGHT_FRONT_POSITION.y, swap) + shuffleArc * 0.14,
-          MathUtils.lerp(STRAIGHT_BACK_POSITION.z, STRAIGHT_FRONT_POSITION.z, swap) + shuffleArc * 0.5,
+          MathUtils.lerp(STRAIGHT_BACK_POSITION.x, FRONT_POSITION.x, swap),
+          MathUtils.lerp(STRAIGHT_BACK_POSITION.y, FRONT_POSITION.y, swap) + shuffleArc * 0.2,
+          MathUtils.lerp(STRAIGHT_BACK_POSITION.z, FRONT_POSITION.z, swap) + shuffleArc * 0.85,
         );
         outgoing.position.set(
-          MathUtils.lerp(STRAIGHT_FRONT_POSITION.x, STRAIGHT_BACK_POSITION.x, swap),
-          MathUtils.lerp(STRAIGHT_FRONT_POSITION.y, STRAIGHT_BACK_POSITION.y, swap) - shuffleArc * 0.1,
-          MathUtils.lerp(STRAIGHT_FRONT_POSITION.z, STRAIGHT_BACK_POSITION.z, swap) - shuffleArc * 0.42,
+          MathUtils.lerp(STRAIGHT_FRONT_POSITION.x, BACK_POSITION.x, swap),
+          MathUtils.lerp(STRAIGHT_FRONT_POSITION.y, BACK_POSITION.y, swap) - shuffleArc * 0.12,
+          MathUtils.lerp(STRAIGHT_FRONT_POSITION.z, BACK_POSITION.z, swap) - shuffleArc * 0.55,
         );
-        incoming.scale.setScalar(MathUtils.lerp(STRAIGHT_BACK_SCALE, STRAIGHT_FRONT_SCALE, swap) + shuffleArc * 0.025);
-        outgoing.scale.setScalar(MathUtils.lerp(STRAIGHT_FRONT_SCALE, STRAIGHT_BACK_SCALE, swap) - shuffleArc * 0.02);
+        incoming.scale.setScalar(MathUtils.lerp(STRAIGHT_BACK_SCALE, FRONT_SCALE, swap) + shuffleArc * 0.045);
+        outgoing.scale.setScalar(MathUtils.lerp(STRAIGHT_FRONT_SCALE, BACK_SCALE, swap) - shuffleArc * 0.035);
         incoming.rotation.set(0, 0, 0);
         outgoing.rotation.set(0, 0, 0);
       } else {
         const restoreV = smoothStep((progress - 0.76) / 0.24);
-        incoming.position.lerpVectors(STRAIGHT_FRONT_POSITION, FRONT_POSITION, restoreV);
-        outgoing.position.lerpVectors(STRAIGHT_BACK_POSITION, BACK_POSITION, restoreV);
-        incoming.scale.setScalar(MathUtils.lerp(STRAIGHT_FRONT_SCALE, FRONT_SCALE, restoreV));
-        outgoing.scale.setScalar(MathUtils.lerp(STRAIGHT_BACK_SCALE, BACK_SCALE, restoreV));
+        incoming.position.copy(FRONT_POSITION);
+        outgoing.position.copy(BACK_POSITION);
+        incoming.scale.setScalar(FRONT_SCALE);
+        outgoing.scale.setScalar(BACK_SCALE);
         incoming.rotation.set(
           MathUtils.lerp(0, FRONT_ROTATION.x, restoreV),
           MathUtils.lerp(0, FRONT_ROTATION.y, restoreV),
