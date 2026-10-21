@@ -1,5 +1,5 @@
-import { Suspense, useEffect, useLayoutEffect, useMemo } from "react";
-import { Canvas, useLoader, useThree } from "@react-three/fiber";
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, type RefObject } from "react";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { ContactShadows, Environment, Lightformer, useGLTF } from "@react-three/drei";
 import {
   ACESFilmicToneMapping,
@@ -9,6 +9,7 @@ import {
   CanvasTexture,
   Color,
   DoubleSide,
+  Group,
   LinearFilter,
   LinearMipmapLinearFilter,
   MathUtils,
@@ -27,6 +28,7 @@ import {
 } from "three";
 import { toCreasedNormals } from "three/addons/utils/BufferGeometryUtils.js";
 import { readColorToken } from "../../lib/cssColor";
+import type { PhoneShowcaseMotion } from "../home/phoneShowcaseMotion";
 import { SHOWCASE_TEMPLATES } from "../home/showcaseTemplates";
 
 const MODEL_PATH = "/models/phone.glb";
@@ -34,6 +36,9 @@ const PHONE_HEIGHT = 3.82;
 
 interface SceneProps {
   activeIndex: number;
+  motionRef: RefObject<PhoneShowcaseMotion>;
+  onThemeChange: (index: number) => void;
+  onSpinComplete: () => void;
   onReady: () => void;
   onContextLost: () => void;
 }
@@ -155,6 +160,39 @@ function normalizePhone(root: Object3D) {
   root.updateMatrixWorld(true);
 }
 
+function moveWorldZ(object: Object3D, deltaZ: number) {
+  if (!object.parent) return;
+  const parentInverse = object.parent.matrixWorld.clone().invert();
+  const localOrigin = new Vector3().applyMatrix4(parentInverse);
+  const localTarget = new Vector3(0, 0, deltaZ).applyMatrix4(parentInverse);
+  object.position.add(localTarget.sub(localOrigin));
+}
+
+function placeRearCamerasOnBack(root: Object3D) {
+  root.updateMatrixWorld(true);
+  const phoneBounds = new Box3().setFromObject(root);
+  const rearParts: Mesh[] = [];
+  const cameraBounds = new Box3();
+
+  root.traverse((object) => {
+    const mesh = object as Mesh;
+    if (!mesh.isMesh) return;
+    const keys = materialList(mesh).map(materialKey);
+    if (!keys.some((key) => key.includes("backcamera") || key.includes("backcamborder"))) return;
+    rearParts.push(mesh);
+    cameraBounds.union(new Box3().setFromObject(mesh));
+  });
+
+  if (rearParts.length === 0 || cameraBounds.isEmpty()) return;
+
+  const cameraCenter = cameraBounds.getCenter(new Vector3());
+  const cameraDepth = cameraBounds.getSize(new Vector3()).z;
+  const targetCenterZ = phoneBounds.min.z - Math.min(cameraDepth * 0.35, 0.025);
+  const deltaZ = targetCenterZ - cameraCenter.z;
+  rearParts.forEach((mesh) => moveWorldZ(mesh, deltaZ));
+  root.updateMatrixWorld(true);
+}
+
 function makePhone(
   source: Object3D,
   screen: MeshBasicMaterial,
@@ -163,6 +201,7 @@ function makePhone(
   const model = source.clone(true);
   const geometries: BufferGeometry[] = [];
   normalizePhone(model);
+  placeRearCamerasOnBack(model);
 
   model.traverse((object) => {
     const mesh = object as Mesh;
@@ -177,6 +216,11 @@ function makePhone(
     mesh.receiveShadow = true;
 
     const originals = materialList(mesh);
+    const keys = originals.map(materialKey);
+    if (keys.some((key) => key.includes("backcamera") || key.includes("backcamborder"))) {
+      mesh.userData.rearCameraPart = true;
+      mesh.visible = false;
+    }
     const assigned = originals.map((original) =>
       isDisplayMaterial(original)
         ? screen
@@ -297,13 +341,100 @@ function OrbitRings({ peach, ember }: { peach: string; ember: string }) {
 function ShowcaseRig({
   activeIndex,
   onReady,
-}: Pick<SceneProps, "activeIndex" | "onReady">) {
-  const { gl } = useThree();
+  motionRef,
+  onThemeChange,
+  onSpinComplete,
+}: Pick<SceneProps, "activeIndex" | "motionRef" | "onReady" | "onThemeChange" | "onSpinComplete">) {
+  const { gl, invalidate } = useThree();
+  const carouselRef = useRef<Group>(null);
+  const animationRef = useRef({
+    commandId: 0,
+    active: false,
+    direction: 0 as -1 | 0 | 1,
+    from: 0,
+    to: 0,
+    startedAt: 0,
+    duration: 1,
+    nextIndex: activeIndex,
+    swapped: false,
+  });
+  useEffect(() => {
+    const motion = motionRef.current;
+    motion.requestFrame = invalidate;
+    return () => {
+      motion.requestFrame = undefined;
+    };
+  }, [invalidate, motionRef]);
   const nextIndex = (activeIndex + 1) % SHOWCASE_TEMPLATES.length;
-  const textures = useLoader(TextureLoader, [
-    SHOWCASE_TEMPLATES[activeIndex].image,
-    SHOWCASE_TEMPLATES[nextIndex].image,
-  ]);
+  const textures = useLoader(
+    TextureLoader,
+    SHOWCASE_TEMPLATES.map((template) => template.image),
+  );
+
+  useFrame(() => {
+    const group = carouselRef.current;
+    if (!group) return;
+
+    const motion = motionRef.current;
+    const command = motion.command;
+    const animation = animationRef.current;
+
+    if (command && command.id !== animation.commandId) {
+      animation.commandId = command.id;
+      animation.active = true;
+      animation.direction = command.direction;
+      animation.from = motion.dragRotation;
+      animation.to = command.direction === 0 ? 0 : command.direction * Math.PI * 2;
+      animation.startedAt = performance.now();
+      animation.duration =
+        command.direction === 0
+          ? 0.24
+          : Math.max(0.68, Math.min(1.28, 1.14 - command.velocity * 0.035));
+      animation.nextIndex = command.nextIndex;
+      animation.swapped = command.direction === 0;
+    }
+
+    if (motion.dragging) {
+      group.rotation.y = motion.dragRotation;
+      const showRearCameras = Math.cos(group.rotation.y) < -0.15;
+      group.traverse((object) => {
+        if (object.userData.rearCameraPart) object.visible = showRearCameras;
+      });
+      invalidate();
+      return;
+    }
+
+    if (!animation.active) return;
+
+    const progress = Math.min(
+      (performance.now() - animation.startedAt) / (animation.duration * 1000),
+      1,
+    );
+    const eased =
+      progress < 0.5
+        ? 4 * progress ** 3
+        : 1 - (-2 * progress + 2) ** 3 / 2;
+    group.rotation.y = animation.from + (animation.to - animation.from) * eased;
+    const showRearCameras = Math.cos(group.rotation.y) < -0.15;
+    group.traverse((object) => {
+      if (object.userData.rearCameraPart) object.visible = showRearCameras;
+    });
+
+    if (animation.direction !== 0 && !animation.swapped && progress >= 0.5) {
+      animation.swapped = true;
+      onThemeChange(animation.nextIndex);
+    }
+
+    if (progress >= 1) {
+      group.rotation.y = 0;
+      animation.active = false;
+      motion.dragRotation = 0;
+      motion.command = null;
+      onSpinComplete();
+    } else {
+      invalidate();
+    }
+  });
 
   useLayoutEffect(() => {
     textures.forEach((texture) => {
@@ -321,7 +452,7 @@ function ShowcaseRig({
 
   const screens = useMemo(
     () =>
-      textures.map(
+      [textures[activeIndex], textures[nextIndex]].map(
         (texture) =>
           new MeshBasicMaterial({
             map: texture,
@@ -329,7 +460,7 @@ function ShowcaseRig({
             toneMapped: false,
           }),
       ),
-    [textures],
+    [activeIndex, nextIndex, textures],
   );
 
   useEffect(() => () => screens.forEach((material) => material.dispose()), [screens]);
@@ -410,7 +541,7 @@ function ShowcaseRig({
         <Lightformer form="rect" intensity={0.7} color={colors.cream} scale={[3, 3, 1]} position={[0, 5, 0]} target={[0, 0, 0]} />
       </Environment>
 
-      <group>
+      <group ref={carouselRef}>
         <OrbitRings peach={colors.peach} ember={colors.ember} />
         <group position={[-0.62, -0.16, -0.62]} rotation={[0.035, -0.14, 0.19]} scale={0.93}>
           <PhoneModel screen={screens[1]} materials={materials} />
@@ -433,7 +564,14 @@ function ShowcaseRig({
   );
 }
 
-export default function PhoneShowcaseScene({ activeIndex, onReady, onContextLost }: SceneProps) {
+export default function PhoneShowcaseScene({
+  activeIndex,
+  motionRef,
+  onThemeChange,
+  onSpinComplete,
+  onReady,
+  onContextLost,
+}: SceneProps) {
   const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
 
   return (
@@ -455,7 +593,13 @@ export default function PhoneShowcaseScene({ activeIndex, onReady, onContextLost
       }}
     >
       <Suspense fallback={null}>
-        <ShowcaseRig activeIndex={activeIndex} onReady={onReady} />
+        <ShowcaseRig
+          activeIndex={activeIndex}
+          motionRef={motionRef}
+          onThemeChange={onThemeChange}
+          onSpinComplete={onSpinComplete}
+          onReady={onReady}
+        />
       </Suspense>
     </Canvas>
   );

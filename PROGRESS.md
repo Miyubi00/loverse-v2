@@ -1,6 +1,6 @@
 # LoVerse UI Redesign — Progress
 
-Status: **Revisions A–D committed; PhoneShowcase v2 M1 complete and committed; waiting for feedback before M2.**
+Status: **Revisions A–D committed; PhoneShowcase v2 M1–M2 complete; M3–M4 pending.**
 
 ## PhoneShowcase v2 — M1
 
@@ -10,7 +10,16 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1 complete and committed;
 - [x] Added Indonesian and English footer credit for “Low Poly Phone for Mockups” by akacodes, with modified-model attribution; details in `docs/credits.md`.
 - [x] Captured WebGL screenshots at [1440×900](artifacts/ui/revision/phone-showcase-v2/desktop-1440x900.png) and [390×844](artifacts/ui/revision/phone-showcase-v2/mobile-390x844.png). Compared with `docs/ref-3d-target.png`, the warm palette, V composition, and orbit motif are present. The source low-poly phone has a round camera hole and simpler edge treatment than the target, so the model silhouette is not an exact match. Mobile capture is scrolled to the showcase because the home page's first fold places most of it below the fold.
 - [x] Replaced the old 938.88 kB scene chunk: current scene chunk is 1,073,057 bytes / 296,593 bytes gzip; `public/models/phone.glb` is 42,988 bytes / 10,516 bytes gzip.
-- [x] `npm run lint` and `npm run typecheck` pass. M2 interaction work is paused pending user feedback.
+- [x] `npm run lint` and `npm run typecheck` pass for M1.
+
+## PhoneShowcase v2 — M2
+
+- [x] Added horizontal pointer drag with velocity-sensitive spin and snap; carousel advances themes by one step when released or controlled with previous/next buttons.
+- [x] Added a 360° eased rotation. The rear-camera group is placed on the back side using the model bounds, hidden while the display faces the viewer, and shown as the phones turn around. The circle no longer overlays the template; the front pill remains.
+- [x] Template textures swap at the halfway point, while the screens face away. Autoplay advances every 6.2 seconds and can be paused or resumed.
+- [x] Added bilingual DOM controls, arrow-key navigation, a live announcement for the active theme, and touch-safe horizontal dragging.
+- [x] Checked the flow in WebGL and captured desktop and 390×844 mobile views at [M2 desktop](artifacts/ui/revision/phone-showcase-v2/m2-desktop-carousel.png) and [M2 mobile](artifacts/ui/revision/phone-showcase-v2/m2-mobile-carousel.png).
+- [x] `npm run lint` and `npm run typecheck` pass. M3 fallback coverage and M4 full validation remain.
 
 ## Completed
 
@@ -20,7 +29,7 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1 complete and committed;
 - [x] `src/lib/cn.ts` and UI primitives: `Button`/`buttonClass`, `Brand`, `PageHeader`, `StatusBadge`, `EmptyState`, `ConfirmDialog`, `PageTransition`, `Reveal`.
 - [x] Skeleton primitive and selected route/stat/catalog/demo presets tokenized.
 - [x] Logo-derived palette in `src/index.css`, documented in `docs/color-from-logo.md`, enforced by `scripts/audit-colors.mjs`.
-- [x] PhoneShowcase v2 M1 replaces the previous ring scene with the static GLB composition above; drag, inertia, snap, rotation, and full fallback behavior are scheduled for M2–M3 after feedback.
+- [x] PhoneShowcase v2 M1 replaced the previous ring scene with the static GLB composition; M2 interaction work is recorded above and M3 fallback coverage remains.
 - [x] Section 3 docs synchronized: `PhoneShowcaseScene`, five WebP previews, CSS fallback, and prior 253.95 kB gzip baseline; legacy hero references removed.
 
 ### Section 4 — Typography
