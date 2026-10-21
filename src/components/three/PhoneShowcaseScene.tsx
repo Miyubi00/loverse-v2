@@ -37,10 +37,14 @@ type PhoneId = 0 | 1;
 
 const BACK_POSITION = new Vector3(-0.62, -0.16, -0.62);
 const FRONT_POSITION = new Vector3(0.64, 0.04, 0.46);
+const STRAIGHT_BACK_POSITION = new Vector3(-0.78, -0.06, -0.62);
+const STRAIGHT_FRONT_POSITION = new Vector3(0.78, -0.06, 0.46);
 const BACK_ROTATION = new Vector3(0.035, -0.14, 0.19);
 const FRONT_ROTATION = new Vector3(0.025, 0.16, -0.2);
 const BACK_SCALE = 0.93;
 const FRONT_SCALE = 1.08;
+const STRAIGHT_BACK_SCALE = 0.8;
+const STRAIGHT_FRONT_SCALE = 0.9;
 
 function smoothStep(value: number) {
   const t = MathUtils.clamp(value, 0, 1);
@@ -441,34 +445,63 @@ function ShowcaseRig({
     if (animation.direction !== 0) {
       const incoming = animation.frontPhoneId === 0 ? phone1 : phone0;
       const outgoing = animation.frontPhoneId === 0 ? phone0 : phone1;
-      const straighten = smoothStep(progress / 0.2);
-      const swap = smoothStep((progress - 0.28) / 0.48);
-      const restoreV = smoothStep((progress - 0.76) / 0.24);
-      const shuffleArc = Math.sin(swap * Math.PI);
-
-      incoming.position.set(
-        MathUtils.lerp(BACK_POSITION.x, FRONT_POSITION.x, swap),
-        MathUtils.lerp(BACK_POSITION.y, FRONT_POSITION.y, swap) + shuffleArc * 0.14,
-        MathUtils.lerp(BACK_POSITION.z, FRONT_POSITION.z, swap) + shuffleArc * 0.5,
-      );
-      outgoing.position.set(
-        MathUtils.lerp(FRONT_POSITION.x, BACK_POSITION.x, swap),
-        MathUtils.lerp(FRONT_POSITION.y, BACK_POSITION.y, swap) - shuffleArc * 0.1,
-        MathUtils.lerp(FRONT_POSITION.z, BACK_POSITION.z, swap) - shuffleArc * 0.42,
-      );
-      incoming.scale.setScalar(MathUtils.lerp(BACK_SCALE, FRONT_SCALE, swap) + shuffleArc * 0.025);
-      outgoing.scale.setScalar(MathUtils.lerp(FRONT_SCALE, BACK_SCALE, swap) - shuffleArc * 0.02);
-
-      incoming.rotation.set(
-        MathUtils.lerp(MathUtils.lerp(BACK_ROTATION.x, 0, straighten), FRONT_ROTATION.x, restoreV),
-        MathUtils.lerp(MathUtils.lerp(BACK_ROTATION.y, 0, straighten), FRONT_ROTATION.y, restoreV),
-        MathUtils.lerp(MathUtils.lerp(BACK_ROTATION.z, 0, straighten), FRONT_ROTATION.z, restoreV),
-      );
-      outgoing.rotation.set(
-        MathUtils.lerp(MathUtils.lerp(FRONT_ROTATION.x, 0, straighten), BACK_ROTATION.x, restoreV),
-        MathUtils.lerp(MathUtils.lerp(FRONT_ROTATION.y, 0, straighten), BACK_ROTATION.y, restoreV),
-        MathUtils.lerp(MathUtils.lerp(FRONT_ROTATION.z, 0, straighten), BACK_ROTATION.z, restoreV),
-      );
+      if (progress < 0.2) {
+        const straighten = smoothStep(progress / 0.2);
+        incoming.position.lerpVectors(BACK_POSITION, STRAIGHT_BACK_POSITION, straighten);
+        outgoing.position.lerpVectors(FRONT_POSITION, STRAIGHT_FRONT_POSITION, straighten);
+        incoming.scale.setScalar(MathUtils.lerp(BACK_SCALE, STRAIGHT_BACK_SCALE, straighten));
+        outgoing.scale.setScalar(MathUtils.lerp(FRONT_SCALE, STRAIGHT_FRONT_SCALE, straighten));
+        incoming.rotation.set(
+          MathUtils.lerp(BACK_ROTATION.x, 0, straighten),
+          MathUtils.lerp(BACK_ROTATION.y, 0, straighten),
+          MathUtils.lerp(BACK_ROTATION.z, 0, straighten),
+        );
+        outgoing.rotation.set(
+          MathUtils.lerp(FRONT_ROTATION.x, 0, straighten),
+          MathUtils.lerp(FRONT_ROTATION.y, 0, straighten),
+          MathUtils.lerp(FRONT_ROTATION.z, 0, straighten),
+        );
+      } else if (progress < 0.28) {
+        incoming.position.copy(STRAIGHT_BACK_POSITION);
+        outgoing.position.copy(STRAIGHT_FRONT_POSITION);
+        incoming.scale.setScalar(STRAIGHT_BACK_SCALE);
+        outgoing.scale.setScalar(STRAIGHT_FRONT_SCALE);
+        incoming.rotation.set(0, 0, 0);
+        outgoing.rotation.set(0, 0, 0);
+      } else if (progress < 0.76) {
+        const swap = smoothStep((progress - 0.28) / 0.48);
+        const shuffleArc = Math.sin(swap * Math.PI);
+        incoming.position.set(
+          MathUtils.lerp(STRAIGHT_BACK_POSITION.x, STRAIGHT_FRONT_POSITION.x, swap),
+          MathUtils.lerp(STRAIGHT_BACK_POSITION.y, STRAIGHT_FRONT_POSITION.y, swap) + shuffleArc * 0.14,
+          MathUtils.lerp(STRAIGHT_BACK_POSITION.z, STRAIGHT_FRONT_POSITION.z, swap) + shuffleArc * 0.5,
+        );
+        outgoing.position.set(
+          MathUtils.lerp(STRAIGHT_FRONT_POSITION.x, STRAIGHT_BACK_POSITION.x, swap),
+          MathUtils.lerp(STRAIGHT_FRONT_POSITION.y, STRAIGHT_BACK_POSITION.y, swap) - shuffleArc * 0.1,
+          MathUtils.lerp(STRAIGHT_FRONT_POSITION.z, STRAIGHT_BACK_POSITION.z, swap) - shuffleArc * 0.42,
+        );
+        incoming.scale.setScalar(MathUtils.lerp(STRAIGHT_BACK_SCALE, STRAIGHT_FRONT_SCALE, swap) + shuffleArc * 0.025);
+        outgoing.scale.setScalar(MathUtils.lerp(STRAIGHT_FRONT_SCALE, STRAIGHT_BACK_SCALE, swap) - shuffleArc * 0.02);
+        incoming.rotation.set(0, 0, 0);
+        outgoing.rotation.set(0, 0, 0);
+      } else {
+        const restoreV = smoothStep((progress - 0.76) / 0.24);
+        incoming.position.lerpVectors(STRAIGHT_FRONT_POSITION, FRONT_POSITION, restoreV);
+        outgoing.position.lerpVectors(STRAIGHT_BACK_POSITION, BACK_POSITION, restoreV);
+        incoming.scale.setScalar(MathUtils.lerp(STRAIGHT_FRONT_SCALE, FRONT_SCALE, restoreV));
+        outgoing.scale.setScalar(MathUtils.lerp(STRAIGHT_BACK_SCALE, BACK_SCALE, restoreV));
+        incoming.rotation.set(
+          MathUtils.lerp(0, FRONT_ROTATION.x, restoreV),
+          MathUtils.lerp(0, FRONT_ROTATION.y, restoreV),
+          MathUtils.lerp(0, FRONT_ROTATION.z, restoreV),
+        );
+        outgoing.rotation.set(
+          MathUtils.lerp(0, BACK_ROTATION.x, restoreV),
+          MathUtils.lerp(0, BACK_ROTATION.y, restoreV),
+          MathUtils.lerp(0, BACK_ROTATION.z, restoreV),
+        );
+      }
     }
 
     if (progress >= 1) {
