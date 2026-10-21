@@ -287,7 +287,7 @@ export default function Landing() {
               <span className="h-1 w-1 rounded-full bg-peach-300" />
               Live / 2026
             </div>
-            <div className="absolute right-5 top-1/2 z-10 hidden -translate-y-1/2 rotate-90 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/55 sm:block">
+            <div className="absolute right-5 top-1/2 z-0 hidden -translate-y-1/2 rotate-90 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/55 sm:block">
               {t("home.heroStageLabel")}
             </div>
             <PhoneShowcase />

@@ -1,6 +1,16 @@
 # LoVerse UI Redesign — Progress
 
-Status: **Sections 1–2 committed; Sections 3–4 implemented and validated; phase commits pending.**
+Status: **Revisions A–D committed; PhoneShowcase v2 M1 complete and committed; waiting for feedback before M2.**
+
+## PhoneShowcase v2 — M1
+
+- [x] Replaced the previous `PhoneShowcaseScene` chunk with a static two-phone 3D composition: opposed V pose, local template previews on both screens, warm lighting, orbit rings, and warm vignette background.
+- [x] Normalized the GLB at runtime from the screen normal and bounding box so the display faces +Z and the top faces +Y; model geometry is unchanged and normals are creased for smoother highlights.
+- [x] Applied warm metal to the `Case`, black to the bezel, dark camera materials, and local invitation preview textures. The GLB has separate named meshes/materials for screen, case, bezel, selfie camera, rear camera, and camera border. Its single `Case` mesh combines the rear shell and side frame, so those surfaces share the warm metal finish.
+- [x] Added Indonesian and English footer credit for “Low Poly Phone for Mockups” by akacodes, with modified-model attribution; details in `docs/credits.md`.
+- [x] Captured WebGL screenshots at [1440×900](artifacts/ui/revision/phone-showcase-v2/desktop-1440x900.png) and [390×844](artifacts/ui/revision/phone-showcase-v2/mobile-390x844.png). Compared with `docs/ref-3d-target.png`, the warm palette, V composition, and orbit motif are present. The source low-poly phone has a round camera hole and simpler edge treatment than the target, so the model silhouette is not an exact match. Mobile capture is scrolled to the showcase because the home page's first fold places most of it below the fold.
+- [x] Replaced the old 938.88 kB scene chunk: current scene chunk is 1,073,057 bytes / 296,593 bytes gzip; `public/models/phone.glb` is 42,988 bytes / 10,516 bytes gzip.
+- [x] `npm run lint` and `npm run typecheck` pass. M2 interaction work is paused pending user feedback.
 
 ## Completed
 
@@ -10,8 +20,8 @@ Status: **Sections 1–2 committed; Sections 3–4 implemented and validated; ph
 - [x] `src/lib/cn.ts` and UI primitives: `Button`/`buttonClass`, `Brand`, `PageHeader`, `StatusBadge`, `EmptyState`, `ConfirmDialog`, `PageTransition`, `Reveal`.
 - [x] Skeleton primitive and selected route/stat/catalog/demo presets tokenized.
 - [x] Logo-derived palette in `src/index.css`, documented in `docs/color-from-logo.md`, enforced by `scripts/audit-colors.mjs`.
-- [x] Lazy `PhoneShowcase` ring with five real preview textures, drag/inertia/snap, idle rotation, DOM controls, reduced-motion/no-WebGL CSS fallback, and DPR/visibility pausing.
-- [x] Section 3 docs synchronized: `PhoneShowcaseScene`, five WebP previews, CSS fallback, and 253.95 kB gzip chunk; legacy hero references removed.
+- [x] PhoneShowcase v2 M1 replaces the previous ring scene with the static GLB composition above; drag, inertia, snap, rotation, and full fallback behavior are scheduled for M2–M3 after feedback.
+- [x] Section 3 docs synchronized: `PhoneShowcaseScene`, five WebP previews, CSS fallback, and prior 253.95 kB gzip baseline; legacy hero references removed.
 
 ### Section 4 — Typography
 

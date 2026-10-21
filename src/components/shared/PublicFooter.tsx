@@ -133,10 +133,33 @@ export default function PublicFooter() {
           </p>
         </div>
 
-        <div className="relative flex flex-col gap-4 pt-8 sm:flex-row sm:items-end sm:justify-between">
-          <p className="text-[14px] text-cream-100/55">
-            {t("home.footerText", { year: new Date().getFullYear() })}
-          </p>
+        <div className="relative flex flex-col gap-3 pt-8 sm:flex-row sm:items-end sm:justify-between">
+          <div className="space-y-2">
+            <p className="text-[14px] text-cream-100/65">
+              {t("home.footerText", { year: new Date().getFullYear() })}
+            </p>
+            <p className="text-[12px] leading-relaxed text-cream-100/75">
+              {t("home.footerModelCreditPrefix")}{" "}
+              <a
+                href="https://sketchfab.com/3d-models/low-poly-phone-for-mockups-bb7058cfb8fd44f2880e03df1235299d"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-cream-100/45 underline-offset-2 hover:text-peach-300"
+              >
+                Low Poly Phone for Mockups
+              </a>{" "}
+              {t("home.footerModelCreditBy")}{" "}
+              <a
+                href="https://sketchfab.com/akacodes"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-cream-100/45 underline-offset-2 hover:text-peach-300"
+              >
+                akacodes
+              </a>{" "}
+              (CC BY); {t("home.footerModelCreditModified")}
+            </p>
+          </div>
         </div>
       </div>
     </footer>

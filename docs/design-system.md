@@ -157,11 +157,11 @@ Sizes: `sm` 36px, `md` 44px (`min-h-11`), `lg` 52px. All use 3px radius, 600 wei
 
 Allowed: landing hero, optional catalog accent, payment success. Never dashboard/admin.
 
-- `PhoneShowcase` renders local WebP previews on rounded-box phone geometry; no external models or remote textures.
+- `PhoneShowcase` renders local WebP previews on the credited CC BY phone model in `public/models/phone.glb`; all runtime model and preview assets are local. See `docs/credits.md`.
 - Lazy-load with `React.lazy`/dynamic import; DPR capped at 1.5–2.
 - Fallback to a CSS phone stack on reduced motion, Save-Data, low GPU, no WebGL, or load failure.
 - Canvas is `aria-hidden`; meaningful copy, active template name, and demo link stay in DOM.
-- Keep `PhoneShowcaseScene` as a separate chunk; the current build emits the standard >500 kB warning, but gzip size is ~254 kB, within the 300 kB target.
+- Keep `PhoneShowcaseScene` as a lazy separate chunk, cap its gzip size at 300 kB, and report its measured size when the scene changes.
 
 ## 7. Do / Don't
 
