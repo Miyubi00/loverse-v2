@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, type RefObject } from "react";
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { ContactShadows, Environment, Lightformer, useGLTF } from "@react-three/drei";
 import {
@@ -33,6 +33,12 @@ import { SHOWCASE_TEMPLATES } from "../home/showcaseTemplates";
 
 const MODEL_PATH = "/models/phone.glb";
 const PHONE_HEIGHT = 3.82;
+type PhoneId = 0 | 1;
+
+const BACK_POSITION = new Vector3(-0.62, -0.16, -0.62);
+const FRONT_POSITION = new Vector3(0.64, 0.04, 0.46);
+const BACK_SCALE = 0.93;
+const FRONT_SCALE = 1.08;
 
 interface SceneProps {
   activeIndex: number;
@@ -347,6 +353,12 @@ function ShowcaseRig({
 }: Pick<SceneProps, "activeIndex" | "motionRef" | "onReady" | "onThemeChange" | "onTransitionComplete">) {
   const { gl, invalidate } = useThree();
   const phoneStackRef = useRef<Group>(null);
+  const phone0Ref = useRef<Group>(null);
+  const phone1Ref = useRef<Group>(null);
+  const [displayIndex, setDisplayIndex] = useState(activeIndex);
+  const [frontPhoneId, setFrontPhoneId] = useState<PhoneId>(1);
+  const frontPhoneIdRef = useRef<PhoneId>(1);
+  const [incomingIndex, setIncomingIndex] = useState<number | null>(null);
   const animationRef = useRef({
     commandId: 0,
     active: false,
@@ -355,7 +367,7 @@ function ShowcaseRig({
     startedAt: 0,
     duration: 1,
     nextIndex: activeIndex,
-    swapped: false,
+    frontPhoneId: 1 as PhoneId,
   });
   useEffect(() => {
     const motion = motionRef.current;
@@ -364,15 +376,17 @@ function ShowcaseRig({
       motion.requestFrame = undefined;
     };
   }, [invalidate, motionRef]);
-  const nextIndex = (activeIndex + 1) % SHOWCASE_TEMPLATES.length;
+  const nextIndex = (displayIndex + 1) % SHOWCASE_TEMPLATES.length;
   const textures = useLoader(
     TextureLoader,
     SHOWCASE_TEMPLATES.map((template) => template.image),
   );
 
   useFrame(() => {
-    const group = phoneStackRef.current;
-    if (!group) return;
+    const stack = phoneStackRef.current;
+    const phone0 = phone0Ref.current;
+    const phone1 = phone1Ref.current;
+    if (!stack || !phone0 || !phone1) return;
 
     const motion = motionRef.current;
     const command = motion.command;
@@ -389,14 +403,15 @@ function ShowcaseRig({
           ? 0.24
           : Math.max(0.68, Math.min(1.28, 1.14 - command.velocity * 0.035));
       animation.nextIndex = command.nextIndex;
-      animation.swapped = command.direction === 0;
+      animation.frontPhoneId = frontPhoneIdRef.current;
+      if (command.direction !== 0) setIncomingIndex(command.nextIndex);
     }
 
     if (motion.dragging) {
-      group.position.x = motion.dragOffset;
-      group.position.z = -Math.abs(motion.dragOffset) * 0.06;
-      group.rotation.z = -motion.dragOffset * 0.075;
-      group.scale.setScalar(1 - Math.abs(motion.dragOffset) * 0.035);
+      stack.position.x = motion.dragOffset;
+      stack.position.z = -Math.abs(motion.dragOffset) * 0.06;
+      stack.rotation.z = -motion.dragOffset * 0.075;
+      stack.scale.setScalar(1 - Math.abs(motion.dragOffset) * 0.035);
       invalidate();
       return;
     }
@@ -411,25 +426,41 @@ function ShowcaseRig({
       progress < 0.5
         ? 4 * progress ** 3
         : 1 - (-2 * progress + 2) ** 3 / 2;
-    const cardArc = Math.sin(progress * Math.PI);
-    group.position.x =
-      animation.from * (1 - eased) - animation.direction * 0.58 * cardArc;
-    group.position.z = -0.08 * cardArc;
-    group.rotation.z =
-      -animation.direction * 0.045 * cardArc - animation.from * 0.06 * (1 - eased);
-    group.scale.setScalar(
-      1 - 0.055 * cardArc - Math.abs(animation.from) * 0.035 * (1 - eased),
-    );
+    const shuffleArc = Math.sin(progress * Math.PI);
+    stack.position.x = animation.from * (1 - eased);
+    stack.position.z = -Math.abs(animation.from) * 0.06 * (1 - eased);
+    stack.rotation.z = -animation.from * 0.075 * (1 - eased);
+    stack.scale.setScalar(1 - Math.abs(animation.from) * 0.035 * (1 - eased));
 
-    if (animation.direction !== 0 && !animation.swapped && progress >= 0.5) {
-      animation.swapped = true;
-      onThemeChange(animation.nextIndex);
+    if (animation.direction !== 0) {
+      const incoming = animation.frontPhoneId === 0 ? phone1 : phone0;
+      const outgoing = animation.frontPhoneId === 0 ? phone0 : phone1;
+      incoming.position.set(
+        MathUtils.lerp(BACK_POSITION.x, FRONT_POSITION.x, eased),
+        MathUtils.lerp(BACK_POSITION.y, FRONT_POSITION.y, eased) + shuffleArc * 0.14,
+        MathUtils.lerp(BACK_POSITION.z, FRONT_POSITION.z, eased) + shuffleArc * 0.5,
+      );
+      outgoing.position.set(
+        MathUtils.lerp(FRONT_POSITION.x, BACK_POSITION.x, eased),
+        MathUtils.lerp(FRONT_POSITION.y, BACK_POSITION.y, eased) - shuffleArc * 0.1,
+        MathUtils.lerp(FRONT_POSITION.z, BACK_POSITION.z, eased) - shuffleArc * 0.42,
+      );
+      incoming.scale.setScalar(MathUtils.lerp(BACK_SCALE, FRONT_SCALE, eased) + shuffleArc * 0.025);
+      outgoing.scale.setScalar(MathUtils.lerp(FRONT_SCALE, BACK_SCALE, eased) - shuffleArc * 0.02);
     }
 
     if (progress >= 1) {
-      group.position.set(0, 0, 0);
-      group.rotation.set(0, 0, 0);
-      group.scale.setScalar(1);
+      stack.position.set(0, 0, 0);
+      stack.rotation.set(0, 0, 0);
+      stack.scale.setScalar(1);
+      if (animation.direction !== 0) {
+        const nextFrontPhoneId: PhoneId = animation.frontPhoneId === 0 ? 1 : 0;
+        frontPhoneIdRef.current = nextFrontPhoneId;
+        setFrontPhoneId(nextFrontPhoneId);
+        setDisplayIndex(animation.nextIndex);
+        setIncomingIndex(null);
+        onThemeChange(animation.nextIndex);
+      }
       animation.active = false;
       motion.dragOffset = 0;
       motion.command = null;
@@ -453,17 +484,18 @@ function ShowcaseRig({
     });
   }, [gl, textures]);
 
+  const rearIndex = incomingIndex ?? nextIndex;
   const screens = useMemo(
     () =>
-      [textures[activeIndex], textures[nextIndex]].map(
-        (texture) =>
+      [0, 1].map(
+        (phoneId) =>
           new MeshBasicMaterial({
-            map: texture,
+            map: textures[phoneId === frontPhoneId ? displayIndex : rearIndex],
             color: "white",
             toneMapped: false,
           }),
       ),
-    [activeIndex, nextIndex, textures],
+    [displayIndex, frontPhoneId, rearIndex, textures],
   );
 
   useEffect(() => () => screens.forEach((material) => material.dispose()), [screens]);
@@ -547,11 +579,11 @@ function ShowcaseRig({
       <group>
         <OrbitRings peach={colors.peach} ember={colors.ember} />
         <group ref={phoneStackRef}>
-          <group position={[-0.62, -0.16, -0.62]} rotation={[0.035, -0.14, 0.19]} scale={0.93}>
-            <PhoneModel screen={screens[1]} materials={materials} />
-          </group>
-          <group position={[0.64, 0.04, 0.46]} rotation={[0.025, 0.16, -0.2]} scale={1.08}>
+          <group ref={phone0Ref} position={BACK_POSITION} rotation={[0.035, -0.14, 0.19]} scale={BACK_SCALE}>
             <PhoneModel screen={screens[0]} materials={materials} />
+          </group>
+          <group ref={phone1Ref} position={FRONT_POSITION} rotation={[0.025, 0.16, -0.2]} scale={FRONT_SCALE}>
+            <PhoneModel screen={screens[1]} materials={materials} />
           </group>
         </group>
         <ContactShadows

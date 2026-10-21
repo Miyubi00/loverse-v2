@@ -39,8 +39,8 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete. The full
 
 ## Post-M4 follow-up — card transition
 
-- [x] Replaced the full 360° phone turn with a horizontal card-stack slide, small depth shift, and restrained Z-axis tilt. The orbit rings stay in place while the phone pair moves; the theme swaps midway.
-- [x] Drag follows the pointer horizontally. The CSS fallback keeps its layered card stack and no longer yaws cards around the Y axis.
+- [x] Replaced the full 360° phone turn and the initial shared-stack slide with a two-phone shuffle: the rear phone advances into the front position while the current front phone recedes behind it. They separate in depth as they pass, without spinning around the Y axis.
+- [x] The incoming phone carries the next template through the exchange. Horizontal drag remains, and the CSS fallback keeps its layered card stack without yawing around the Y axis.
 - [x] `npm run lint` and `npm run typecheck` pass.
 
 ## Completed
