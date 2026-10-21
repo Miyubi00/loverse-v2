@@ -10,11 +10,11 @@
 // ============================================================
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { AlertTriangle, Gift, Info, Wrench, X } from 'lucide-react';
 import type { SiteNoticeRow, SiteNoticeType } from '../../types/database';
 import { useTranslation } from '../../i18n';
+import Modal from '../ui/Modal';
 
 const TYPE_PRIORITY: Record<SiteNoticeType, number> = {
   maintenance: 3,
@@ -73,19 +73,6 @@ function NoticeModal({ notice, onClose }: { notice: SiteNoticeRow; onClose: () =
   const ctaClass =
     'mt-6 flex min-h-11 w-full items-center justify-center rounded-[3px] bg-ink-950 px-4 text-sm font-semibold text-cream-50 no-underline transition hover:bg-ember-600 active:translate-y-px';
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    document.addEventListener('keydown', onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [onClose]);
-
   const dismiss = () => {
     try {
       sessionStorage.setItem(dismissedKey(notice), '1');
@@ -117,42 +104,36 @@ function NoticeModal({ notice, onClose }: { notice: SiteNoticeRow; onClose: () =
     );
   };
 
-  return createPortal(
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={notice.title}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950/72 p-4 backdrop-blur-[3px]"
-      onClick={dismiss}
+  return (
+    <Modal
+      onClose={onClose}
+      onBackdropClick={dismiss}
+      ariaLabel={notice.title}
+      overlayClassName="items-center justify-center bg-ink-950/72 p-4 backdrop-blur-[3px]"
+      panelClassName="w-full max-w-md border border-ink-900/15 bg-cream-50 p-6 text-ink-900 shadow-deep sm:p-8"
     >
-      <div
-        className="relative w-full max-w-md border border-ink-900/15 bg-cream-50 p-6 text-ink-900 shadow-deep sm:p-8"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-start justify-between gap-3">
-          <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[2px] ${style}`}>
-            <Icon size={18} />
-          </span>
-          <button
-            type="button"
-            onClick={dismiss}
-            aria-label={t('siteNotice.close')}
-            className="flex h-8 w-8 shrink-0 items-center justify-center text-ink-400 transition hover:text-ink-900"
-          >
-            <X size={16} />
-          </button>
-        </div>
-
-        <p className="eyebrow mt-6 text-ember-600">Pemberitahuan</p>
-        <h2 className="mt-3 font-display text-2xl leading-tight tracking-[-0.03em] text-ink-950">{notice.title}</h2>
-        {notice.body && (
-          <p className="mt-3 whitespace-pre-line text-[13px] leading-relaxed text-ink-500">{notice.body}</p>
-        )}
-
-        {renderCta()}
+      <div className="flex items-start justify-between gap-3">
+        <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[2px] ${style}`}>
+          <Icon size={18} />
+        </span>
+        <button
+          type="button"
+          onClick={dismiss}
+          aria-label={t('siteNotice.close')}
+          className="flex h-8 w-8 shrink-0 items-center justify-center text-ink-400 transition hover:text-ink-900"
+        >
+          <X size={16} />
+        </button>
       </div>
-    </div>,
-    document.body,
+
+      <p className="eyebrow mt-6 text-ember-600">Pemberitahuan</p>
+      <h2 className="mt-3 font-display text-2xl leading-tight tracking-[-0.03em] text-ink-950">{notice.title}</h2>
+      {notice.body && (
+        <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink-500">{notice.body}</p>
+      )}
+
+      {renderCta()}
+    </Modal>
   );
 }
 
@@ -203,7 +184,7 @@ function NoticeBanner({ notice }: { notice: SiteNoticeRow }) {
                 type="button"
                 onClick={() => setExpanded((prev) => !prev)}
                 aria-expanded={expanded}
-                className="text-xs font-bold underline underline-offset-2 hover:opacity-80"
+                className="text-[14px] font-bold underline underline-offset-2 hover:opacity-80"
               >
                 {expanded ? t('siteNotice.readLess') : t('siteNotice.readMore')}
               </button>
@@ -212,7 +193,7 @@ function NoticeBanner({ notice }: { notice: SiteNoticeRow }) {
               isInternal ? (
                 <Link
                   to={href}
-                  className="text-xs font-bold underline underline-offset-2 hover:opacity-80"
+                  className="text-[14px] font-bold underline underline-offset-2 hover:opacity-80"
                 >
                   {actionLabel}
                 </Link>
@@ -221,7 +202,7 @@ function NoticeBanner({ notice }: { notice: SiteNoticeRow }) {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-xs font-bold underline underline-offset-2 hover:opacity-80"
+                  className="text-[14px] font-bold underline underline-offset-2 hover:opacity-80"
                 >
                   {actionLabel}
                 </a>

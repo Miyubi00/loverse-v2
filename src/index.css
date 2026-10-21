@@ -351,7 +351,7 @@
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .animate-msg-in {
-  animation: msg-in 0.28s cubic-bezier(0.21, 1.02, 0.73, 1) both;
+  animation: msg-in 0.28s cubic-bezier(0.21, 1.02, 0.73, 1) backwards;
 }
 
 @keyframes rise-in {
@@ -380,7 +380,7 @@
 }
 
 .page-enter {
-  animation: page-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: page-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
 .animate-rise {

@@ -14,6 +14,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Cropper from 'react-easy-crop';
 import { Check, Loader2 } from 'lucide-react';
 import 'react-easy-crop/react-easy-crop.css';
+import Modal from '../ui/Modal';
 
 export interface CropAreaPixels {
   x: number;
@@ -55,77 +56,81 @@ export default function ImageCropModal({
   const ready = Boolean(objectUrl) && Boolean(areaPixels);
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-ink-950/70 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-cream-100 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-cream-300">
-
-        {/* Header */}
-        <div className="px-5 pt-5 pb-3">
-          <h3 className="font-bold text-ink-900">{title}</h3>
-          <p className="text-xs text-ink-500 mt-0.5">
-            Geser &amp; perbesar untuk memilih area — rasio sudah terkunci otomatis.
-          </p>
-        </div>
-
-        {/* Cropper — tinggi mengikuti rasio: potret lebih tinggi, lanskap penuh lebar */}
-        <div
-          className="relative mx-4 overflow-hidden rounded-xl bg-ink-950"
-          style={{ height: aspect >= 1 ? 280 : 440 }}
-        >
-          {objectUrl && (
-            <Cropper
-              image={objectUrl}
-              crop={crop}
-              zoom={zoom}
-              aspect={aspect}
-              onCropChange={setCrop}
-              onZoomChange={setZoom}
-              onCropComplete={(_, pixels) => setAreaPixels(pixels)}
-              showGrid
-              objectFit="contain"
-              restrictPosition
-            />
-          )}
-          {!objectUrl && (
-            <div className="absolute inset-0 grid place-items-center text-ink-500">
-              <Loader2 className="animate-spin" />
-            </div>
-          )}
-        </div>
-
-        {/* Zoom slider */}
-        <div className="px-5 pt-4 flex items-center gap-3">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-ink-500 shrink-0">Zoom</span>
-          <input
-            type="range"
-            min={1}
-            max={3}
-            step={0.05}
-            value={zoom}
-            onChange={(e) => setZoom(Number(e.target.value))}
-            className="w-full accent-ember-600"
-          />
-        </div>
-
-        {/* Aksi */}
-        <div className="flex gap-3 p-5">
-          <button
-            type="button"
-            onClick={onCancel}
-            disabled={!ready}
-            className="flex-1 py-2.5 rounded-xl border border-cream-300 bg-white text-ink-600 font-bold text-sm hover:bg-cream-100 transition"
-          >
-            Batal
-          </button>
-          <button
-            type="button"
-            onClick={() => areaPixels && onConfirm(areaPixels)}
-            disabled={!ready}
-            className="flex-1 py-2.5 rounded-xl bg-ember-600 text-white font-bold text-sm hover:bg-ember-700 transition shadow-md flex items-center justify-center gap-1.5"
-          >
-            <Check size={16} /> Pangkas &amp; Unggah
-          </button>
-        </div>
+    <Modal
+      onClose={onCancel}
+      ariaLabel={title}
+      closeOnEsc={false}
+      closeOnBackdrop={false}
+      overlayClassName="items-center justify-center bg-ink-950/70 p-4 backdrop-blur-sm"
+      panelClassName="max-h-dvh w-full max-w-lg overflow-y-auto rounded-2xl border border-cream-300 bg-cream-100 shadow-2xl"
+    >
+      {/* Header */}
+      <div className="px-5 pt-5 pb-3">
+        <h3 className="font-bold text-ink-900">{title}</h3>
+        <p className="text-[14px] text-ink-500 mt-0.5">
+          Geser &amp; perbesar untuk memilih area �?" rasio sudah terkunci otomatis.
+        </p>
       </div>
-    </div>
+
+      {/* Cropper �?" tinggi mengikuti rasio: potret lebih tinggi, lanskap penuh lebar */}
+      <div
+        className="relative mx-4 overflow-hidden rounded-xl bg-ink-950"
+        style={{ height: aspect >= 1 ? 280 : 440 }}
+      >
+        {objectUrl && (
+          <Cropper
+            image={objectUrl}
+            crop={crop}
+            zoom={zoom}
+            aspect={aspect}
+            onCropChange={setCrop}
+            onZoomChange={setZoom}
+            onCropComplete={(_, pixels) => setAreaPixels(pixels)}
+            showGrid
+            objectFit="contain"
+            restrictPosition
+          />
+        )}
+        {!objectUrl && (
+          <div className="absolute inset-0 grid place-items-center text-ink-500">
+            <Loader2 className="animate-spin" />
+          </div>
+        )}
+      </div>
+
+      {/* Zoom slider */}
+      <div className="px-5 pt-4 flex items-center gap-3">
+        <span className="text-[14px] font-bold uppercase tracking-wider text-ink-500 shrink-0">Zoom</span>
+        <input
+          type="range"
+          min={1}
+          max={3}
+          step={0.05}
+          value={zoom}
+          onChange={(e) => setZoom(Number(e.target.value))}
+          className="w-full accent-ember-600"
+        />
+      </div>
+
+      {/* Aksi */}
+      <div className="flex gap-3 p-5">
+        <button
+          type="button"
+          onClick={onCancel}
+          disabled={!ready}
+          className="flex-1 py-2.5 rounded-xl border border-cream-300 bg-white text-ink-600 font-bold text-sm hover:bg-cream-100 transition"
+        >
+          Batal
+        </button>
+        <button
+          type="button"
+          onClick={() => areaPixels && onConfirm(areaPixels)}
+          disabled={!ready}
+          className="flex-1 py-2.5 rounded-xl bg-ember-600 text-white font-bold text-sm hover:bg-ember-700 transition shadow-md flex items-center justify-center gap-1.5"
+        >
+          <Check size={16} /> Pangkas &amp; Unggah
+        </button>
+      </div>
+    </Modal>
   );
 }

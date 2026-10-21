@@ -1,8 +1,8 @@
 import { useRef, type ChangeEvent, type ReactNode } from "react";
-import { createPortal } from "react-dom";
 import { Camera, Eye, Loader2, Trash2, X } from "lucide-react";
 import { CARD_TITLE, FIELD_LABEL, ICON_CHIP, INPUT } from "./ui";
 import { useTranslation } from "../../../i18n";
+import Modal from "../../ui/Modal";
 
 const INPUT_CLASS = `${INPUT} mt-1.5`;
 
@@ -215,37 +215,34 @@ export function LightboxPreview({
   onClose: () => void;
 }) {
   if (!image) return null;
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950/85 p-4 backdrop-blur-[3px]"
-      onClick={onClose}
+  return (
+    <Modal
+      onClose={onClose}
+      ariaLabel={image.title}
+      closeOnEsc={false}
+      overlayClassName="items-center justify-center bg-ink-950/85 p-4 backdrop-blur-[3px]"
+      panelClassName="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden border border-cream-100/15 bg-ink-900 p-3"
     >
-      <div
-        className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden border border-cream-100/15 bg-ink-900 p-3"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex w-full items-center justify-between border-b border-cream-100/10 px-1 pb-2.5">
-          <span className="font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/70">
-            {image.title}
-          </span>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className="p-1 text-cream-100/50 transition-colors hover:text-cream-50"
-          >
-            <X size={18} />
-          </button>
-        </div>
-        <div className="mt-2 flex max-h-[75vh] items-center justify-center overflow-hidden bg-ink-950">
-          <img
-            src={image.url}
-            alt={image.title}
-            className="max-h-[70vh] w-auto max-w-full object-contain"
-          />
-        </div>
+      <div className="flex w-full items-center justify-between border-b border-cream-100/10 px-1 pb-2.5">
+        <span className="font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/70">
+          {image.title}
+        </span>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="p-1 text-cream-100/50 transition-colors hover:text-cream-50"
+        >
+          <X size={18} />
+        </button>
       </div>
-    </div>,
-    document.body,
+      <div className="mt-2 flex max-h-[75vh] items-center justify-center overflow-hidden bg-ink-950">
+        <img
+          src={image.url}
+          alt={image.title}
+          className="max-h-[70vh] w-auto max-w-full object-contain"
+        />
+      </div>
+    </Modal>
   );
 }
