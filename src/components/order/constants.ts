@@ -96,7 +96,7 @@ export const EWALLET_OPTIONS: readonly EwalletOption[] = [
     name: "GoPay / GoPay Later",
     descKey: "order.gopayDesc",
     logoBoxClass:
-      "bg-white border border-stone-200/90 rounded-lg px-2 py-0.5 sm:px-2.5 sm:py-1 flex items-center gap-1 shadow-xs shrink-0",
+      "bg-white border border-cream-300 rounded-lg px-2 py-0.5 sm:px-2.5 sm:py-1 flex items-center gap-1 shadow-xs shrink-0",
     logos: [
       {
         src: MIDTRANS_LOGOS.gopay,

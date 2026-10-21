@@ -5,7 +5,7 @@ export type ButtonSize = "sm" | "md" | "lg";
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-ink-950 text-cream-50 border border-ink-950 hover:bg-ember-600 hover:border-ember-600 shadow-[0_14px_30px_-18px_rgba(23,16,12,0.8)]",
+    "bg-ink-950 text-cream-50 border border-ink-950 hover:bg-ember-600 hover:border-ember-600 shadow-button",
   secondary:
     "bg-transparent text-ink-900 border border-ink-900/25 hover:border-ink-900 hover:bg-cream-50",
   ghost:
@@ -13,7 +13,7 @@ const variants: Record<ButtonVariant, string> = {
   danger:
     "bg-danger-600 text-white border border-danger-600 hover:bg-danger-700 hover:border-danger-700",
   peach:
-    "bg-peach-300 text-ink-950 border border-peach-300 hover:bg-peach-400 hover:border-peach-400 shadow-[0_14px_30px_-18px_rgba(184,90,40,0.55)]",
+    "bg-peach-300 text-ink-950 border border-peach-300 hover:bg-peach-400 hover:border-peach-400 shadow-accent",
   outlineLight:
     "bg-transparent text-cream-50 border border-cream-100/25 hover:border-cream-100 hover:bg-cream-50 hover:text-ink-950",
 };

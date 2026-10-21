@@ -163,11 +163,11 @@ export default function InvitationRender() {
 
   if (pageStatus === 'not_found') {
     return (
-      <div className="h-screen flex flex-col items-center justify-center bg-gray-50 p-6 text-center">
-        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 max-w-sm w-full">
-          <FileX className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-gray-800 mb-2">{t('invitation.notFoundTitle')}</h2>
-          <p className="text-gray-500 text-sm">{t('invitation.notFoundDesc')}</p>
+      <div className="h-screen flex flex-col items-center justify-center bg-cream-100 p-6 text-center">
+        <div className="bg-white p-8 rounded-2xl shadow-lg border border-cream-300 max-w-sm w-full">
+          <FileX className="w-16 h-16 text-ink-300 mx-auto mb-4" />
+          <h2 className="text-xl font-bold text-ink-800 mb-2">{t('invitation.notFoundTitle')}</h2>
+          <p className="text-ink-500 text-sm">{t('invitation.notFoundDesc')}</p>
         </div>
       </div>
     );
@@ -175,28 +175,28 @@ export default function InvitationRender() {
 
   if (pageStatus === 'unpaid') {
     return (
-      <div className="h-screen flex flex-col items-center justify-center bg-[#FFF0E0] p-6 text-center font-sans">
-        <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-orange-200 max-w-md w-full relative overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-32 h-32 bg-orange-100 rounded-full opacity-50 blur-2xl" />
+      <div className="h-screen flex flex-col items-center justify-center bg-cream-100 p-6 text-center font-sans">
+        <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-peach-300 max-w-md w-full relative overflow-hidden">
+          <div className="absolute -top-10 -right-10 w-32 h-32 bg-peach-200 rounded-full opacity-50 blur-2xl" />
 
           <div className="relative z-10">
-            <div className="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-red-100">
+            <div className="w-20 h-20 bg-danger-600/5 text-danger-600 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-danger-600/20">
               <Lock size={32} />
             </div>
-            <h1 className="text-2xl font-extrabold text-[#712E1E] mb-2">{t('invitation.unpaidTitle')}</h1>
-            <p className="text-[#888870] text-sm mb-6 leading-relaxed">
+            <h1 className="text-2xl font-extrabold text-ink-900 mb-2">{t('invitation.unpaidTitle')}</h1>
+            <p className="text-ink-500 text-sm mb-6 leading-relaxed">
               {t('invitation.unpaidDesc')}
             </p>
 
-            <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 text-xs text-gray-500 mb-6 flex items-start gap-3 text-left">
-              <Clock className="w-5 h-5 text-orange-500 shrink-0" />
+            <div className="bg-cream-100 p-4 rounded-xl border border-cream-300 text-xs text-ink-500 mb-6 flex items-start gap-3 text-left">
+              <Clock className="w-5 h-5 text-ember-600 shrink-0" />
               <div>
-                <p className="font-bold text-gray-700">{t('invitation.ownerQuestion')}</p>
+                <p className="font-bold text-ink-700">{t('invitation.ownerQuestion')}</p>
                 <p>{t('invitation.ownerHelp')}</p>
               </div>
             </div>
 
-            <a href="/" className="block w-full bg-black text-white py-3 rounded-xl font-bold text-sm hover:bg-gray-800 transition">
+            <a href="/" className="block w-full bg-ink-950 text-white py-3 rounded-xl font-bold text-sm hover:bg-ink-900 transition">
               {t('invitation.btnHome')}
             </a>
           </div>

@@ -40,25 +40,25 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6 text-center font-sans">
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 max-w-sm w-full">
-            <div className="w-16 h-16 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto mb-4">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-cream-100 p-6 text-center font-sans">
+          <div className="bg-white p-8 rounded-2xl shadow-lg border border-cream-300 max-w-sm w-full">
+            <div className="w-16 h-16 rounded-full bg-danger-600/5 text-danger-600 flex items-center justify-center mx-auto mb-4">
               <AlertTriangle size={28} />
             </div>
-            <h1 className="text-xl font-bold text-gray-800 mb-2">Terjadi Kesalahan</h1>
-            <p className="text-gray-500 text-sm mb-6">
+            <h1 className="text-xl font-bold text-ink-800 mb-2">Terjadi Kesalahan</h1>
+            <p className="text-ink-500 text-sm mb-6">
               Maaf, terjadi kesalahan saat menampilkan halaman ini. Coba muat ulang.
             </p>
             <div className="flex flex-col gap-2">
               <button
                 onClick={this.handleReset}
-                className="w-full bg-[#E59A59] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#d48b4b] transition"
+                className="w-full bg-ember-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-ember-700 transition"
               >
                 Coba Lagi
               </button>
               <button
                 onClick={() => window.location.assign('/')}
-                className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-bold text-sm hover:bg-gray-200 transition"
+                className="w-full bg-cream-200 text-ink-700 py-3 rounded-xl font-bold text-sm hover:bg-cream-300 transition"
               >
                 Kembali ke Beranda
               </button>

@@ -250,7 +250,7 @@ export function PhotosCard({
           </label>
 
           {isCoverUploading && (
-            <div className="absolute inset-0 z-20 grid place-items-center bg-black/50 backdrop-blur-sm">
+            <div className="absolute inset-0 z-20 grid place-items-center bg-ink-950/50 backdrop-blur-sm">
               <Loader2 size={26} className="animate-spin text-white" />
             </div>
           )}

@@ -66,7 +66,7 @@ export function OrderPayButton({
         className={`${PAY_BUTTON_BASE} ${
           disabled
             ? "cursor-not-allowed border border-ink-900/10 bg-cream-100 text-ink-300"
-            : "bg-[#1FA855] text-white shadow-[0_10px_30px_-16px_rgba(31,168,85,0.8)] hover:bg-[#178f47] active:translate-y-px"
+            : "bg-whatsapp-600 text-white shadow-whatsapp hover:bg-whatsapp-700 active:translate-y-px"
         }`}
       >
         {loadingWA ? (
@@ -91,7 +91,7 @@ export function OrderPayButton({
       className={`${PAY_BUTTON_BASE} ${
         disabled
           ? "cursor-not-allowed border border-ink-900/10 bg-cream-100 text-ink-300"
-          : "bg-ink-950 text-cream-50 shadow-[0_10px_30px_-16px_rgba(23,16,12,0.8)] hover:bg-ember-600 active:translate-y-px"
+          : "bg-ink-950 text-cream-50 shadow-button hover:bg-ember-600 active:translate-y-px"
       }`}
     >
       {loadingMidtrans ? (

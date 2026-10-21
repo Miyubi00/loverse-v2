@@ -37,7 +37,7 @@ export default function AuthShell({ eyebrow, title, description, children, footn
 
           <div className="pointer-events-none absolute -right-20 top-1/3 h-[420px] w-[420px] rounded-full border border-cream-100/10" aria-hidden="true" />
           <div className="pointer-events-none absolute -right-4 top-1/3 h-[260px] w-[260px] rounded-full border border-peach-300/15" aria-hidden="true" />
-          <div className="pointer-events-none absolute bottom-0 left-0 h-1/2 w-full bg-[radial-gradient(ellipse_at_bottom_left,rgba(184,90,40,0.18),transparent_66%)]" aria-hidden="true" />
+          <div className="pointer-events-none absolute bottom-0 left-0 h-1/2 w-full glow-ember" aria-hidden="true" />
         </aside>
 
         <div className="flex min-h-[calc(100svh-68px)] items-center px-4 py-12 sm:px-8 lg:px-14 lg:py-16">

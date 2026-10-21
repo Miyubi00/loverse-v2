@@ -116,7 +116,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
 
           <div className="pointer-events-none absolute -right-24 top-1/4 h-[460px] w-[460px] rounded-full border border-cream-100/10" aria-hidden="true" />
           <div className="pointer-events-none absolute -right-2 top-1/4 h-[280px] w-[280px] rounded-full border border-peach-300/15" aria-hidden="true" />
-          <div className="pointer-events-none absolute bottom-0 left-0 h-1/2 w-full bg-[radial-gradient(ellipse_at_bottom_left,rgba(184,90,40,0.18),transparent_66%)]" aria-hidden="true" />
+          <div className="pointer-events-none absolute bottom-0 left-0 h-1/2 w-full glow-ember" aria-hidden="true" />
         </aside>
 
         <main className="relative flex items-center px-4 py-12 sm:px-8 lg:px-14">

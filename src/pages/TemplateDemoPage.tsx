@@ -109,7 +109,7 @@ export default function TemplateDemo() {
       >
         <Link
           to="/"
-          className="inline-flex min-h-10 items-center gap-2 rounded-[3px] border border-cream-100/25 bg-ink-950/80 px-3.5 font-data text-[10px] uppercase tracking-[0.16em] text-cream-50 shadow-[0_14px_30px_-18px_rgba(23,16,12,0.9)] backdrop-blur-md transition-colors duration-200 hover:bg-ink-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300"
+          className="inline-flex min-h-10 items-center gap-2 rounded-[3px] border border-cream-100/25 bg-ink-950/80 px-3.5 font-data text-[10px] uppercase tracking-[0.16em] text-cream-50 shadow-header backdrop-blur-md transition-colors duration-200 hover:bg-ink-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300"
         >
           <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" /> {t('demo.back')}
         </Link>

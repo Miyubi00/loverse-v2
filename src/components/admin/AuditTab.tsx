@@ -39,7 +39,7 @@ const KIND_STYLE: Record<string, { pill: string; icon: typeof User }> = {
   customer: { pill: 'text-ink-600 bg-cream-100 border-ink-900/15', icon: User },
   service: { pill: 'text-ink-600 bg-cream-100 border-ink-900/15', icon: Cpu },
   midtrans: { pill: 'text-success-700 bg-success-600/[0.06] border-success-600/25', icon: CreditCard },
-  system: { pill: 'text-wine-600 bg-wine-600/[0.06] border-wine-600/20', icon: Bot },
+  system: { pill: 'text-ink-600 bg-ink-600/[0.06] border-ink-600/20', icon: Bot },
 };
 
 /** Daftar aksi yang dikenal — dropdown agar tidak salah ketik. */

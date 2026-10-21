@@ -260,7 +260,7 @@ export default function Landing() {
                     <span
                       key={initial}
                       className="flex h-8 w-8 items-center justify-center rounded-full border border-ink-950 bg-cream-200 font-display text-[11px] font-semibold text-ink-800"
-                      style={{ backgroundColor: ["#f0e5d2", "#ffd6b2", "#e4d4bb", "#f8f1e4"][index] }}
+                      style={{ backgroundColor: ["var(--color-cream-200)", "var(--color-peach-300)", "var(--color-cream-300)", "var(--color-cream-100)"][index] }}
                     >
                       {initial}
                     </span>

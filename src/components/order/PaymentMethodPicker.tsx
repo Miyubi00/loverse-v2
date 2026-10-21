@@ -34,7 +34,7 @@ const SelectMark = ({ selected, green = false }: { selected: boolean; green?: bo
     className={`flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border transition-colors ${
       selected
         ? green
-          ? "border-[#1FA855] bg-[#1FA855] text-white"
+          ? "border-whatsapp-600 bg-whatsapp-600 text-white"
           : "border-ink-950 bg-ink-950 text-cream-50"
         : "border-ink-900/25 bg-transparent text-transparent"
     }`}
@@ -88,7 +88,7 @@ function CategoryRow({
       className={`flex w-full cursor-pointer items-start justify-between gap-3 border p-3.5 text-left transition-colors sm:p-4 ${
         active
           ? green
-            ? "border-[#1FA855]/45 bg-[#f1f8f2]"
+            ? "border-whatsapp-600/45 bg-success-600/5"
             : "border-ink-950 bg-cream-100"
           : "border-ink-900/12 bg-white hover:border-ink-900/30 hover:bg-cream-50"
       }`}
@@ -98,7 +98,7 @@ function CategoryRow({
           className={`flex h-9 w-9 shrink-0 items-center justify-center border ${
             active
               ? green
-                ? "border-[#1FA855]/30 bg-[#1FA855] text-white"
+                ? "border-whatsapp-600/30 bg-whatsapp-600 text-white"
                 : "border-ink-950 bg-ink-950 text-peach-300"
               : "border-ink-900/10 bg-cream-100 text-ink-500"
           }`}
@@ -285,7 +285,7 @@ export function PaymentMethodPicker({
           icon={<FaWhatsapp size={17} />}
           title={t("order.methodWaTitle")}
           badge={
-            <span className="border border-[#1FA855]/25 bg-[#eaf6ec] px-1.5 py-0.5 font-data text-[8px] uppercase tracking-[0.1em] text-[#15703a]">
+            <span className="border border-whatsapp-600/25 bg-success-600/10 px-1.5 py-0.5 font-data text-[8px] uppercase tracking-[0.1em] text-success-700">
               {t("order.feeFreeBadge")}
             </span>
           }

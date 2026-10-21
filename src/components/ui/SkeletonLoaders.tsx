@@ -147,7 +147,7 @@ export function DashboardSkeleton() {
 /** Skeleton undangan tamu (ganti Loader2 + Suspense fallback InvitationPage). */
 export function InvitationSkeleton() {
   return (
-    <div className="h-screen flex flex-col items-center justify-center font-sans text-gray-500 bg-gray-50">
+    <div className="h-screen flex flex-col items-center justify-center font-sans text-ink-500 bg-cream-100">
       <div className="flex flex-col items-center gap-3">
         <Skeleton className="h-24 w-24 rounded-full" />
         <Skeleton className="h-4 w-44 rounded" />
@@ -161,9 +161,9 @@ export function InvitationSkeleton() {
 /** Skeleton status pembayaran (ganti circle animate-pulse PaymentStatusPage). */
 export function PaymentStatusSkeleton() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F1E8DC]">
+    <div className="min-h-screen flex items-center justify-center bg-cream-200">
       <div className="flex flex-col items-center gap-4">
-        <Skeleton className="h-16 w-16 rounded-full bg-[#E59A59]/40" />
+        <Skeleton className="h-16 w-16 rounded-full bg-ember-600/40" />
         <Skeleton className="h-4 w-48 rounded" />
       </div>
     </div>
@@ -181,7 +181,7 @@ function PageSkeletonShell({ tone, children }: { tone: string; children: React.R
 function HeroCenterSkeleton({ stats }: { stats?: boolean }) {
   return (
     <div className="text-center max-w-3xl mx-auto space-y-4">
-      <Skeleton className="h-7 w-44 mx-auto rounded-full border border-[#EBDFCE] bg-white" />
+      <Skeleton className="h-7 w-44 mx-auto rounded-full border border-cream-300 bg-white" />
       <div className="space-y-3">
         <Skeleton className="h-9 md:h-10 w-3/4 mx-auto" />
         <Skeleton className="h-9 md:h-10 w-1/2 mx-auto" />
@@ -200,8 +200,8 @@ function HeroCenterSkeleton({ stats }: { stats?: boolean }) {
 
 export function HomeSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#FAF6EE]">
-      <section className="border-b border-[#EBDFCE]/60 overflow-hidden">
+    <PageSkeletonShell tone="bg-cream-100">
+      <section className="border-b border-cream-300/60 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:pt-14 md:pb-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             <div className="lg:col-span-7 flex flex-col items-start space-y-6">
@@ -216,11 +216,11 @@ export function HomeSkeleton() {
                 <Skeleton className="h-4 w-[55%] rounded" />
               </div>
               <div className="flex flex-col sm:flex-row gap-3.5 w-full pt-2">
-                <Skeleton className="h-12 w-full sm:w-44 rounded-xl bg-[#E59A59]/50" />
+                <Skeleton className="h-12 w-full sm:w-44 rounded-xl bg-ember-600/50" />
                 <Skeleton className="h-12 w-full sm:w-44 rounded-xl bg-white" />
               </div>
               <Skeleton className="h-4 w-36 rounded" />
-              <div className="w-full flex items-center gap-4 pt-4 border-t border-[#EBDFCE]">
+              <div className="w-full flex items-center gap-4 pt-4 border-t border-cream-300">
                 <div className="flex -space-x-2.5">
                   {Array.from({ length: 4 }).map((_, i) => (
                     <Skeleton key={i} className="h-9 w-9 rounded-full ring-2 ring-white" />
@@ -254,7 +254,7 @@ export function HomeSkeleton() {
           ))}
         </div>
       </section>
-      <section className="bg-[#F1E8DC] py-14 md:py-20 border-y border-[#EBDFCE]">
+      <section className="bg-cream-200 py-14 md:py-20 border-y border-cream-300">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 md:mb-14 space-y-3">
             <Skeleton className="h-6 w-48 rounded-full bg-white mx-auto" />
@@ -267,7 +267,7 @@ export function HomeSkeleton() {
           </div>
         </div>
       </section>
-      <section className="bg-[#712E1E] py-14">
+      <section className="bg-ink-900 py-14">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <Skeleton className="h-7 w-2/3 mx-auto mb-8 rounded bg-white/15" />
           <div className="grid grid-cols-3 gap-6">
@@ -280,7 +280,7 @@ export function HomeSkeleton() {
           </div>
         </div>
       </section>
-      <section id="katalog" className="bg-[#FAF6EE] py-14 md:py-20 scroll-mt-20">
+      <section id="katalog" className="bg-cream-100 py-14 md:py-20 scroll-mt-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-6 md:mb-8 space-y-3">
             <Skeleton className="h-6 w-36 rounded-full bg-white mx-auto" />
@@ -288,7 +288,7 @@ export function HomeSkeleton() {
           </div>
           <div className="flex justify-center gap-2 mb-8">
             {Array.from({ length: 4 }).map((_, i) => (
-              <Skeleton key={i} className="h-9 w-20 rounded-full bg-white border border-[#EBDFCE]" />
+              <Skeleton key={i} className="h-9 w-20 rounded-full bg-white border border-cream-300" />
             ))}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -296,7 +296,7 @@ export function HomeSkeleton() {
           </div>
         </div>
       </section>
-      <section className="py-14 border-t border-[#EBDFCE]">
+      <section className="py-14 border-t border-cream-300">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <Skeleton className="h-8 md:h-10 w-2/5 mx-auto mb-10" />
           <div className="grid sm:grid-cols-3 gap-5">
@@ -306,7 +306,7 @@ export function HomeSkeleton() {
           </div>
         </div>
       </section>
-      <section className="bg-[#FAF6EE] py-14 border-t border-[#EBDFCE]">
+      <section className="bg-cream-100 py-14 border-t border-cream-300">
         <div className="max-w-3xl mx-auto px-4 space-y-4">
           <Skeleton className="h-8 md:h-10 w-2/5 mb-8" />
           {Array.from({ length: 5 }).map((_, i) => (
@@ -315,11 +315,11 @@ export function HomeSkeleton() {
         </div>
       </section>
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24 pt-6">
-        <div className="bg-[#712E1E] rounded-3xl p-10 md:p-14 text-center">
+        <div className="bg-ink-900 rounded-3xl p-10 md:p-14 text-center">
           <div className="max-w-xl mx-auto space-y-4">
             <Skeleton className="h-9 w-3/4 mx-auto rounded bg-white/20" />
             <Skeleton className="h-4 w-1/2 mx-auto rounded bg-white/10" />
-            <Skeleton className="h-12 w-48 mx-auto mt-4 rounded-xl bg-[#E59A59]/50" />
+            <Skeleton className="h-12 w-48 mx-auto mt-4 rounded-xl bg-ember-600/50" />
           </div>
         </div>
       </section>
@@ -329,7 +329,7 @@ export function HomeSkeleton() {
 
 export function OrderSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#F1E8DC]">
+    <PageSkeletonShell tone="bg-cream-200">
       <div className="w-full max-w-2xl mx-auto px-3 sm:px-6 py-5 sm:py-8 md:py-12">
         <div className="flex items-start justify-between gap-3 mb-5 sm:mb-6">
           <div className="min-w-0 flex-1">
@@ -340,13 +340,13 @@ export function OrderSkeleton() {
           <Skeleton className="h-9 w-9 sm:w-24 shrink-0 rounded-xl" />
         </div>
         <div className="flex items-center gap-2">
-          <Skeleton className="h-10 flex-1 rounded-full bg-[#E59A59]/40" />
+          <Skeleton className="h-10 flex-1 rounded-full bg-ember-600/40" />
           <Skeleton className="h-1.5 w-8 rounded-full" />
           <Skeleton className="h-10 flex-1 rounded-full bg-white" />
           <Skeleton className="h-1.5 w-8 rounded-full" />
           <Skeleton className="h-10 flex-1 rounded-full bg-white" />
         </div>
-        <div className="mt-6 bg-white rounded-3xl border border-[#EBDFCE] shadow-md p-5 sm:p-7 space-y-5">
+        <div className="mt-6 bg-white rounded-3xl border border-cream-300 shadow-md p-5 sm:p-7 space-y-5">
           <div className="flex items-center gap-4">
             <Skeleton variant="wave" className="h-24 w-20 rounded-xl shrink-0" />
             <div className="min-w-0 flex-1 space-y-2.5">
@@ -355,7 +355,7 @@ export function OrderSkeleton() {
               <Skeleton className="h-6 w-32 rounded-lg" />
             </div>
           </div>
-          <div className="pt-3 border-t border-[#EBDFCE] grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <div className="pt-3 border-t border-cream-300 grid grid-cols-1 md:grid-cols-2 gap-3.5">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="space-y-1.5">
                 <Skeleton className="h-3.5 w-28 rounded" />
@@ -367,7 +367,7 @@ export function OrderSkeleton() {
         </div>
         <div className="mt-5 flex gap-3">
           <Skeleton className="h-12 flex-1 rounded-xl" />
-          <Skeleton className="h-12 flex-1 rounded-xl bg-[#E59A59]/50" />
+          <Skeleton className="h-12 flex-1 rounded-xl bg-ember-600/50" />
         </div>
       </div>
     </PageSkeletonShell>
@@ -376,17 +376,17 @@ export function OrderSkeleton() {
 
 export function OrderSuccessSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#F1E8DC]">
+    <PageSkeletonShell tone="bg-cream-200">
       <div className="min-h-screen flex items-center justify-center p-3 sm:p-4">
-        <div className="bg-white p-5 sm:p-10 rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg border-t-4 border-[#25D366]/60 space-y-5">
+        <div className="bg-white p-5 sm:p-10 rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg border-t-4 border-whatsapp-600/60 space-y-5">
           <div className="flex flex-col items-center">
-            <Skeleton className="h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-green-100" />
+            <Skeleton className="h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-success-600/10" />
             <Skeleton className="h-7 w-56 mt-4 rounded" />
             <Skeleton className="h-3.5 w-64 mt-2 rounded" />
           </div>
           <div className="space-y-2.5">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="flex items-center gap-3 bg-[#FAF6EE] border border-[#EBDFCE] rounded-xl p-3.5">
+              <div key={i} className="flex items-center gap-3 bg-cream-100 border border-cream-300 rounded-xl p-3.5">
                 <Skeleton className="h-8 w-8 rounded-xl shrink-0 bg-white" />
                 <div className="min-w-0 flex-1 space-y-1.5">
                   <Skeleton className="h-3.5 w-2/5 rounded" />
@@ -396,7 +396,7 @@ export function OrderSuccessSkeleton() {
             ))}
           </div>
           <div className="space-y-2.5">
-            <Skeleton className="h-12 w-full rounded-xl bg-[#25D366]/50" />
+            <Skeleton className="h-12 w-full rounded-xl bg-whatsapp-600/50" />
             <Skeleton className="h-12 w-full rounded-xl" />
           </div>
         </div>
@@ -407,11 +407,11 @@ export function OrderSuccessSkeleton() {
 
 export function LoginSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#F1E8DC]">
+    <PageSkeletonShell tone="bg-cream-200">
       <div className="min-h-screen flex items-center justify-center p-3 sm:p-4">
-        <div className="bg-white p-5 sm:p-9 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-md border border-[#EBDFCE]">
+        <div className="bg-white p-5 sm:p-9 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-md border border-cream-300">
           <div className="text-center mb-7">
-            <Skeleton className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-[#E59A59]/15 mx-auto" />
+            <Skeleton className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-ember-600/15 mx-auto" />
             <Skeleton className="h-7 w-48 mx-auto mt-4 rounded" />
             <Skeleton className="h-3.5 w-36 mx-auto mt-2 rounded" />
           </div>
@@ -420,13 +420,13 @@ export function LoginSkeleton() {
               <Skeleton className="h-3.5 w-32 rounded mb-1.5" />
               <Skeleton className="h-11 rounded-xl" />
             </div>
-            <div className="bg-yellow-50 border border-yellow-100 rounded-xl p-3.5 space-y-2">
+            <div className="bg-gold-500/10 border border-gold-500/20 rounded-xl p-3.5 space-y-2">
               <Skeleton className="h-3.5 w-24 rounded" />
               <Skeleton className="h-11 rounded-xl" />
               <Skeleton className="h-3 w-2/3 rounded" />
             </div>
             <Skeleton className="h-16 rounded-xl" />
-            <Skeleton className="h-14 rounded-xl bg-[#E59A59]/50" />
+            <Skeleton className="h-14 rounded-xl bg-ember-600/50" />
           </div>
         </div>
       </div>
@@ -436,11 +436,11 @@ export function LoginSkeleton() {
 
 export function ForgotPinSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#F1E8DC]">
+    <PageSkeletonShell tone="bg-cream-200">
       <div className="min-h-screen flex items-center justify-center p-3 sm:p-4">
-        <div className="bg-white p-5 sm:p-9 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-md border border-[#EBDFCE]">
+        <div className="bg-white p-5 sm:p-9 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-md border border-cream-300">
           <div className="text-center mb-7">
-            <Skeleton className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-[#E59A59]/15 mx-auto" />
+            <Skeleton className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-ember-600/15 mx-auto" />
             <Skeleton className="h-7 w-52 mx-auto mt-4 rounded" />
             <Skeleton className="h-3.5 w-64 mx-auto mt-2 rounded" />
           </div>
@@ -453,7 +453,7 @@ export function ForgotPinSkeleton() {
               <Skeleton className="h-3.5 w-36 rounded mb-1.5" />
               <Skeleton className="h-11 rounded-xl" />
             </div>
-            <Skeleton className="h-12 rounded-xl bg-[#E59A59]/50" />
+            <Skeleton className="h-12 rounded-xl bg-ember-600/50" />
           </div>
         </div>
       </div>
@@ -463,14 +463,14 @@ export function ForgotPinSkeleton() {
 
 export function ForgotPinConfirmSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#F1E8DC]">
+    <PageSkeletonShell tone="bg-cream-200">
       <div className="min-h-screen flex items-center justify-center p-3 sm:p-4">
-        <div className="bg-white p-5 sm:p-9 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-md border border-[#EBDFCE] text-center">
-          <Skeleton className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-[#E59A59]/15 mx-auto" />
+        <div className="bg-white p-5 sm:p-9 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-md border border-cream-300 text-center">
+          <Skeleton className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-ember-600/15 mx-auto" />
           <Skeleton className="h-6 w-56 mx-auto mt-5 rounded" />
           <Skeleton className="h-3.5 w-64 mx-auto mt-3 rounded" />
           <Skeleton className="h-3.5 w-44 mx-auto mt-1.5 rounded" />
-          <Skeleton className="h-12 w-full mt-6 rounded-xl bg-[#E59A59]/50" />
+          <Skeleton className="h-12 w-full mt-6 rounded-xl bg-ember-600/50" />
         </div>
       </div>
     </PageSkeletonShell>
@@ -479,7 +479,7 @@ export function ForgotPinConfirmSkeleton() {
 
 export function ContactSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#F1E8DC]">
+    <PageSkeletonShell tone="bg-cream-200">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 md:pt-16 pb-16 sm:pb-24">
         <HeroCenterSkeleton />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start mt-8 sm:mt-12">
@@ -502,7 +502,7 @@ export function ContactSkeleton() {
                   <Skeleton className="h-3 w-56 rounded" />
                 </div>
               </div>
-              <div className="rounded-3xl bg-[#712E1E]/20 p-5 sm:p-7 space-y-4">
+              <div className="rounded-3xl bg-ink-900/20 p-5 sm:p-7 space-y-4">
                 <div className="flex items-start gap-3.5">
                   <Skeleton className="h-12 w-12 shrink-0 rounded-2xl bg-white/20" />
                   <div className="flex-1 space-y-2">
@@ -531,8 +531,8 @@ export function ContactSkeleton() {
 
 export function PortfolioSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#FAF6EE]">
-      <section className="border-b border-[#EBDFCE]/60">
+    <PageSkeletonShell tone="bg-cream-100">
+      <section className="border-b border-cream-300/60">
         <div className="container mx-auto px-4 py-14 md:py-20">
           <HeroCenterSkeleton stats />
         </div>
@@ -540,12 +540,12 @@ export function PortfolioSkeleton() {
       <section className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
         <div className="flex flex-wrap justify-center gap-2.5 mb-10">
           {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} className="h-9 w-24 rounded-full bg-white border border-[#EBDFCE]" />
+            <Skeleton key={i} className="h-9 w-24 rounded-full bg-white border border-cream-300" />
           ))}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
-            <article key={i} className="rounded-2xl overflow-hidden border border-[#EBDFCE] bg-white shadow-sm">
+            <article key={i} className="rounded-2xl overflow-hidden border border-cream-300 bg-white shadow-sm">
               <Skeleton variant="wave" className="aspect-[3/4] w-full rounded-none" />
               <div className="p-4 sm:p-5 space-y-2.5">
                 <Skeleton className="h-5 w-2/3 rounded" />
@@ -556,7 +556,7 @@ export function PortfolioSkeleton() {
           ))}
         </div>
         <div className="mt-14">
-          <Skeleton className="h-48 rounded-3xl bg-[#712E1E]/25" />
+          <Skeleton className="h-48 rounded-3xl bg-ink-900/25" />
         </div>
       </section>
     </PageSkeletonShell>
@@ -565,8 +565,8 @@ export function PortfolioSkeleton() {
 
 export function TutorialSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#FAF6EE]">
-      <section className="border-b border-[#EBDFCE]/60">
+    <PageSkeletonShell tone="bg-cream-100">
+      <section className="border-b border-cream-300/60">
         <div className="container mx-auto px-4 py-14 md:py-20">
           <HeroCenterSkeleton />
         </div>
@@ -576,7 +576,7 @@ export function TutorialSkeleton() {
           <Skeleton className="h-7 w-56 mx-auto mb-6" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto">
             {Array.from({ length: 4 }).map((_, i) => (
-              <Skeleton key={i} className="h-40 rounded-2xl bg-white border border-[#EBDFCE]" />
+              <Skeleton key={i} className="h-40 rounded-2xl bg-white border border-cream-300" />
             ))}
           </div>
         </section>
@@ -587,7 +587,7 @@ export function TutorialSkeleton() {
 
 export function LegalSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#FAF6EE]">
+    <PageSkeletonShell tone="bg-cream-100">
       <div className="w-full max-w-3xl mx-auto px-4 py-16">
         <Skeleton className="h-10 w-72 rounded" />
         <Skeleton className="h-5 w-44 rounded-full mt-4" />
@@ -608,15 +608,15 @@ export function LegalSkeleton() {
 
 export function NotFoundSkeleton() {
   return (
-    <PageSkeletonShell tone="bg-[#F1E8DC]">
+    <PageSkeletonShell tone="bg-cream-200">
       <div className="min-h-screen flex items-center justify-center p-6">
         <div className="text-center max-w-md w-full space-y-4">
-          <Skeleton className="h-24 w-24 rounded-full bg-[#FAF6EE] mx-auto border-2 border-[#E59A59]/40" />
+          <Skeleton className="h-24 w-24 rounded-full bg-cream-100 mx-auto border-2 border-ember-600/40" />
           <Skeleton className="h-14 md:h-20 w-44 mx-auto rounded" />
           <Skeleton className="h-6 w-60 mx-auto rounded" />
           <Skeleton className="h-4 w-72 mx-auto rounded" />
           <div className="flex flex-col gap-3 pt-4">
-            <Skeleton className="h-12 w-full rounded-xl bg-[#712E1E]/35" />
+            <Skeleton className="h-12 w-full rounded-xl bg-ink-900/35" />
             <Skeleton className="h-12 w-full rounded-xl bg-white" />
           </div>
         </div>

@@ -33,7 +33,7 @@ export function SectionCard({
   children: ReactNode;
 }) {
   return (
-    <section className="space-y-5 rounded-[3px] border border-ink-900/12 bg-white p-4 shadow-[0_1px_0_rgba(23,16,12,0.04)] sm:p-6 md:p-7">
+    <section className="space-y-5 rounded-[3px] border border-ink-900/12 bg-white p-4 shadow-lift sm:p-6 md:p-7">
       {title ? <SectionHeading step={step} title={title} /> : null}
       {children}
     </section>

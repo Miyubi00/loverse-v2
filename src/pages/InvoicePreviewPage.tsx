@@ -29,11 +29,11 @@ import { INVOICE_SAMPLE, LOVERSE_CONTACT, formatInvoiceRupiah, type InvoiceSampl
 function Field({ label, value, onChange }: { label: string; value: string | number; onChange: (v: string) => void }) {
   return (
     <label className="block">
-      <span className="block text-[11px] font-bold uppercase tracking-wider text-stone-500 mb-1">{label}</span>
+      <span className="block text-[11px] font-bold uppercase tracking-wider text-ink-500 mb-1">{label}</span>
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-stone-300 bg-white px-2.5 py-1.5 text-sm text-stone-800 focus:border-[#712E1E] focus:outline-none"
+        className="w-full rounded-lg border border-cream-300 bg-white px-2.5 py-1.5 text-sm text-ink-800 focus:border-ink-900 focus:outline-none"
       />
     </label>
   );
@@ -41,8 +41,8 @@ function Field({ label, value, onChange }: { label: string; value: string | numb
 
 function CardTitle({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
   return (
-    <p className="text-[12px] font-bold uppercase tracking-wider text-[#b98a6b] mb-3 flex items-center gap-2">
-      <span className="text-[#712E1E]">{icon}</span>
+    <p className="text-[12px] font-bold uppercase tracking-wider text-ink-500 mb-3 flex items-center gap-2">
+      <span className="text-ink-900">{icon}</span>
       {children}
     </p>
   );
@@ -52,7 +52,7 @@ function CardTitle({ icon, children }: { icon: React.ReactNode; children: React.
 function ContactRow({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
   return (
     <p className="flex items-center gap-2.5">
-      <span className="text-[#712E1E]">{icon}</span>
+      <span className="text-ink-900">{icon}</span>
       <span>{children}</span>
     </p>
   );
@@ -68,14 +68,14 @@ export default function InvoicePreviewPage() {
   const priceText = formatInvoiceRupiah(form.price);
 
   return (
-    <div className="min-h-screen bg-stone-200 py-6 px-3 sm:px-6">
+    <div className="min-h-screen bg-cream-200 py-6 px-3 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-black text-stone-800">Preview Invoice Baru</h1>
-            <p className="text-xs text-stone-500">Hanya ada di dev — tidak ikut ke production. Ubah form, pratinjau ikut berubah.</p>
+            <h1 className="text-lg font-black text-ink-800">Preview Invoice Baru</h1>
+            <p className="text-xs text-ink-500">Hanya ada di dev — tidak ikut ke production. Ubah form, pratinjau ikut berubah.</p>
           </div>
-          <Link to="/" className="text-xs font-bold text-[#712E1E] underline">Beranda</Link>
+          <Link to="/" className="text-xs font-bold text-ink-900 underline">Beranda</Link>
         </div>
         <div className="grid gap-5 lg:grid-cols-[300px_1fr]">
           <div className="h-fit rounded-xl bg-white p-4 shadow space-y-3">
@@ -89,44 +89,44 @@ export default function InvoicePreviewPage() {
             <Field label="Tema" value={form.templateName} onChange={set('templateName')} />
             <Field label="Harga" value={form.price} onChange={set('price')} />
             <Field label="Metode" value={form.paymentMethod} onChange={set('paymentMethod')} />
-            <button onClick={reset} className="w-full rounded-lg bg-stone-100 py-2 text-xs font-bold text-stone-600 hover:bg-stone-200">Reset</button>
+            <button onClick={reset} className="w-full rounded-lg bg-cream-200 py-2 text-xs font-bold text-ink-600 hover:bg-cream-200">Reset</button>
           </div>
           <div className="overflow-hidden rounded-xl bg-white shadow">
-            <div className="bg-[#712E1E] px-6 py-6 flex items-start justify-between gap-4">
+            <div className="bg-ink-900 px-6 py-6 flex items-start justify-between gap-4">
               <div>
                 <Link to="/" aria-label="Loverse — Beranda" className="inline-flex">
                   <img src="/logo.png" alt="Loverse" width={680} height={220} className="h-10 w-auto" />
                 </Link>
-                <p className="mt-1.5 text-[13px] text-[#FFD5AF]/90">Undangan Pernikahan Digital</p>
-                <p className="mt-2 text-[12px] italic text-[#FFD5AF]/80">Abadikan Momen Spesial, Dalam Satu Cerita Indah</p>
+                <p className="mt-1.5 text-[13px] text-peach-300/90">Undangan Pernikahan Digital</p>
+                <p className="mt-2 text-[12px] italic text-peach-300/80">Abadikan Momen Spesial, Dalam Satu Cerita Indah</p>
               </div>
               <div className="text-right shrink-0">
-                <p className="text-2xl font-black tracking-[0.2em] text-[#f5e6d3]">INVOICE</p>
-                <p className="mt-1 text-[11px] font-bold tracking-[0.25em] text-[#FFD5AF]/90">BUKTI PEMBAYARAN</p>
-                <div className="my-2 ml-auto h-px w-12 bg-[#FFD5AF]/70" />
-                <p className="text-[12px] text-[#FFD5AF]/80">{LOVERSE_CONTACT.domain}</p>
+                <p className="text-2xl font-black tracking-[0.2em] text-cream-200">INVOICE</p>
+                <p className="mt-1 text-[11px] font-bold tracking-[0.25em] text-peach-300/90">BUKTI PEMBAYARAN</p>
+                <div className="my-2 ml-auto h-px w-12 bg-peach-300/70" />
+                <p className="text-[12px] text-peach-300/80">{LOVERSE_CONTACT.domain}</p>
               </div>
             </div>
             <div className="grid gap-3 p-4 sm:grid-cols-2">
-              <div className="rounded-xl bg-[#faf6ef] p-4">
+              <div className="rounded-xl bg-cream-100 p-4">
                 <CardTitle icon={<User className="h-5 w-5" />}>Ditagihkan Kepada</CardTitle>
-                <p className="text-lg font-black text-stone-900">{form.groomName} &amp; {form.brideName}</p>
-                <div className="mt-3 space-y-1.5 text-[13px] text-stone-600">
+                <p className="text-lg font-black text-ink-900">{form.groomName} &amp; {form.brideName}</p>
+                <div className="mt-3 space-y-1.5 text-[13px] text-ink-600">
                   <ContactRow icon={<Phone className="h-4 w-4" />}>{form.whatsapp}</ContactRow>
                   <ContactRow icon={<Mail className="h-4 w-4" />}>{form.email}</ContactRow>
                   <ContactRow icon={<CalendarDays className="h-4 w-4" />}>Tgl. Acara: {form.weddingDate}</ContactRow>
                 </div>
               </div>
-              <div className="rounded-xl bg-[#faf6ef] p-4">
+              <div className="rounded-xl bg-cream-100 p-4">
                 <CardTitle icon={<FileText className="h-5 w-5" />}>Informasi Pembayaran</CardTitle>
-                <p className="text-[13px] text-stone-600">No. Invoice: <b className="text-stone-800">{form.orderId}</b></p>
-                <p className="text-[13px] text-stone-600">Tanggal: {form.issueDate}</p>
-                <p className="text-[13px] text-stone-600">Metode: <b className="text-stone-800">{form.paymentMethod.toUpperCase()}</b></p>
-                <div className="mt-3 flex items-center gap-3 rounded-lg bg-[#dcefe2] px-3 py-2.5">
-                  <BadgeCheck className="h-8 w-8 shrink-0 text-[#2e7d4f]" />
+                <p className="text-[13px] text-ink-600">No. Invoice: <b className="text-ink-800">{form.orderId}</b></p>
+                <p className="text-[13px] text-ink-600">Tanggal: {form.issueDate}</p>
+                <p className="text-[13px] text-ink-600">Metode: <b className="text-ink-800">{form.paymentMethod.toUpperCase()}</b></p>
+                <div className="mt-3 flex items-center gap-3 rounded-lg bg-success-600/10 px-3 py-2.5">
+                  <BadgeCheck className="h-8 w-8 shrink-0 text-success-700" />
                   <div>
-                    <p className="text-[13px] font-black text-[#2e7d4f]">LUNAS / PAID</p>
-                    <p className="text-[11px] text-[#2e7d4f]/80">Terima kasih atas kepercayaannya!</p>
+                    <p className="text-[13px] font-black text-success-700">LUNAS / PAID</p>
+                    <p className="text-[11px] text-success-700/80">Terima kasih atas kepercayaannya!</p>
                   </div>
                 </div>
               </div>
@@ -136,7 +136,7 @@ export default function InvoicePreviewPage() {
             <div className="px-4">
               <table className="w-full overflow-hidden rounded-xl text-left text-[13px]">
                 <thead>
-                  <tr className="bg-[#712E1E] text-[#f5e6d3]">
+                  <tr className="bg-ink-900 text-cream-200">
                     <th className="w-10 px-3 py-3 font-bold">NO</th>
                     <th className="px-3 py-3 font-bold">DESKRIPSI PRODUK</th>
                     <th className="px-3 py-3 font-bold">KATEGORI</th>
@@ -144,38 +144,38 @@ export default function InvoicePreviewPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="bg-[#fffdf8]">
-                    <td className="px-3 py-3 align-top text-stone-500">1</td>
+                  <tr className="bg-cream-50">
+                    <td className="px-3 py-3 align-top text-ink-500">1</td>
                     <td className="px-3 py-3">
-                      <p className="font-bold text-stone-900">Undangan Digital Pernikahan</p>
-                      <p className="mt-0.5 text-stone-500">Desain Tematik: {form.templateName}</p>
+                      <p className="font-bold text-ink-900">Undangan Digital Pernikahan</p>
+                      <p className="mt-0.5 text-ink-500">Desain Tematik: {form.templateName}</p>
                     </td>
-                    <td className="px-3 py-3 align-top text-stone-600">Web Invitation</td>
-                    <td className="px-3 py-3 text-right align-top font-bold text-stone-900">{priceText}</td>
+                    <td className="px-3 py-3 align-top text-ink-600">Web Invitation</td>
+                    <td className="px-3 py-3 text-right align-top font-bold text-ink-900">{priceText}</td>
                   </tr>
-                  <tr className="bg-[#f3e8d8]">
-                    <td colSpan={3} className="px-3 py-3 text-right font-black uppercase text-[#712E1E]">Total Pembayaran</td>
-                    <td className="px-3 py-3 text-right text-xl font-black text-[#712E1E]">{priceText}</td>
+                  <tr className="bg-cream-200">
+                    <td colSpan={3} className="px-3 py-3 text-right font-black uppercase text-ink-900">Total Pembayaran</td>
+                    <td className="px-3 py-3 text-right text-xl font-black text-ink-900">{priceText}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div className="grid gap-3 p-4 sm:grid-cols-2">
-              <div className="rounded-xl bg-[#faf6ef] p-4">
-                <p className="mb-3 flex items-center gap-2 text-[13px] font-black text-[#712E1E]">
+              <div className="rounded-xl bg-cream-100 p-4">
+                <p className="mb-3 flex items-center gap-2 text-[13px] font-black text-ink-900">
                   <Info className="h-5 w-5" /> Informasi dan Ketentuan Layanan
                 </p>
-                <ol className="space-y-3 text-[12px] leading-relaxed text-stone-600">
-                  <li className="flex gap-2.5"><span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f0dfc8] text-[11px] font-black text-[#712E1E]">1</span><span>Undangan digital Anda aktif secara otomatis dan dapat langsung dibagikan kepada para tamu undangan.</span></li>
-                  <li className="flex gap-2.5"><span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f0dfc8] text-[11px] font-black text-[#712E1E]">2</span><span>Perubahan data acara, jadwal, lokasi, foto, musik, dan fitur lainnya dapat dilakukan melalui dashboard kapan saja 24/7.</span></li>
-                  <li className="flex gap-2.5"><span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f0dfc8] text-[11px] font-black text-[#712E1E]">3</span><span>Simpan invoice resmi ini sebagai bukti pembayaran Anda yang sah.</span></li>
+                <ol className="space-y-3 text-[12px] leading-relaxed text-ink-600">
+                  <li className="flex gap-2.5"><span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cream-300 text-[11px] font-black text-ink-900">1</span><span>Undangan digital Anda aktif secara otomatis dan dapat langsung dibagikan kepada para tamu undangan.</span></li>
+                  <li className="flex gap-2.5"><span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cream-300 text-[11px] font-black text-ink-900">2</span><span>Perubahan data acara, jadwal, lokasi, foto, musik, dan fitur lainnya dapat dilakukan melalui dashboard kapan saja 24/7.</span></li>
+                  <li className="flex gap-2.5"><span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cream-300 text-[11px] font-black text-ink-900">3</span><span>Simpan invoice resmi ini sebagai bukti pembayaran Anda yang sah.</span></li>
                 </ol>
               </div>
-              <div className="rounded-xl bg-[#faf6ef] p-4">
-                <p className="mb-3 flex items-center gap-2 text-[13px] font-black text-[#712E1E]">
+              <div className="rounded-xl bg-cream-100 p-4">
+                <p className="mb-3 flex items-center gap-2 text-[13px] font-black text-ink-900">
                   <Heart className="h-5 w-5" /> Butuh bantuan? Hubungi kami:
                 </p>
-                <div className="space-y-2.5 text-[12px] text-stone-600">
+                <div className="space-y-2.5 text-[12px] text-ink-600">
                   <ContactRow icon={<Mail className="h-4 w-4" />}>{LOVERSE_CONTACT.email}</ContactRow>
                   <ContactRow icon={<Phone className="h-4 w-4" />}>{LOVERSE_CONTACT.whatsappDisplay}</ContactRow>
                   <ContactRow icon={<Instagram className="h-4 w-4" />}>{LOVERSE_CONTACT.instagram}</ContactRow>
@@ -184,16 +184,16 @@ export default function InvoicePreviewPage() {
               </div>
             </div>
             <div className="px-4">
-              <div className="flex items-center gap-4 rounded-xl bg-[#faf6ef] p-5">
-                <div className="border-l border-[#e5d3b8] pl-4">
-                  <p className="text-lg font-black text-[#712E1E]">Terima kasih</p>
-                  <p className="mt-1 text-[12px] leading-relaxed text-stone-500">Telah mempercayakan momen spesial Anda kepada LoVerse.<br />Semoga perjalanan cinta Anda selalu diberkahi.</p>
+              <div className="flex items-center gap-4 rounded-xl bg-cream-100 p-5">
+                <div className="border-l border-cream-300 pl-4">
+                  <p className="text-lg font-black text-ink-900">Terima kasih</p>
+                  <p className="mt-1 text-[12px] leading-relaxed text-ink-500">Telah mempercayakan momen spesial Anda kepada LoVerse.<br />Semoga perjalanan cinta Anda selalu diberkahi.</p>
                 </div>
-                <p className="ml-auto hidden text-right font-serif text-2xl italic leading-tight text-[#d9bfa4] sm:block">A Story<br />for Forever</p>
+                <p className="ml-auto hidden text-right font-serif text-2xl italic leading-tight text-cream-400 sm:block">A Story<br />for Forever</p>
               </div>
             </div>
             <div className="p-4">
-              <div className="flex flex-col gap-1 border-t border-stone-300 pt-3 text-[11px] text-stone-400 sm:flex-row sm:justify-between">
+              <div className="flex flex-col gap-1 border-t border-cream-300 pt-3 text-[11px] text-ink-500 sm:flex-row sm:justify-between">
                 <p>© 2026 LoVerse. Dokumen Bukti Pembayaran Digital Sah.</p>
                 <p>{LOVERSE_CONTACT.email} | {LOVERSE_CONTACT.whatsappDisplay} | {LOVERSE_CONTACT.domain}</p>
               </div>

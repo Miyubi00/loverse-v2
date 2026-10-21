@@ -71,7 +71,7 @@ export default function RsvpTab({ orderId }: RsvpTabProps) {
         <StatCell label={t("customer.rsvp.statTotal")} value={total} accent="text-ink-950" />
         <StatCell label={t("customer.rsvp.statAttending")} value={hadir} accent="text-success-700" />
         <StatCell label={t("customer.rsvp.statNotAttending")} value={tidakHadir} accent="text-danger-600" />
-        <StatCell label={t("customer.rsvp.statUncertain")} value={ragu} accent="text-amber-700" />
+        <StatCell label={t("customer.rsvp.statUncertain")} value={ragu} accent="text-gold-600" />
       </div>
 
       <div className="flex justify-end">
@@ -312,7 +312,7 @@ function StatusBadge({
     );
   }
   return (
-    <span className="inline-flex w-fit border border-amber-600/25 bg-amber-500/[0.07] px-2 py-1 font-data text-[8px] uppercase tracking-[0.1em] text-amber-700">
+    <span className="inline-flex w-fit border border-gold-600/30 bg-gold-600/[0.07] px-2 py-1 font-data text-[8px] uppercase tracking-[0.1em] text-gold-600">
       {t("customer.rsvp.statusUncertain")}
     </span>
   );

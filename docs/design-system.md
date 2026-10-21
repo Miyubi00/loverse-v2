@@ -14,36 +14,37 @@ Status: implemented in the `ui-redesign` worktree. Source of truth is `src/index
 
 ### Color
 
-Defined as Tailwind 4 tokens in `src/index.css`.
+Defined as Tailwind 4 tokens in `src/index.css`. The full derivation, OKLCH scale, and
+contrast table live in `docs/color-from-logo.md`.
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `ink-950` | `#17100C` | Primary text, dark panels, primary buttons |
-| `ink-900` | `#241813` | Body text, borders |
-| `ink-800` | `#34231B` | Strong secondary text |
-| `ink-700` | `#4A3328` | Secondary text |
-| `ink-600` | `#5F4638` | Muted text on light |
-| `ink-500` | `#7A6152` | Muted metadata |
-| `ink-400` | `#7F6A5C` | Minimum muted text on cream; meets 4.5:1 |
-| `ink-300` | `#BFAE9F` | Decorative only, never body copy |
-| `cream-50` | `#FDFAF3` | Paper highlight, text on ink |
-| `cream-100` | `#F8F1E4` | App background |
-| `cream-200` | `#F0E5D2` | Subtle fills |
-| `cream-300` | `#E4D4BB` | Disabled/decorative |
-| `cream-400` | `#D4BFA0` | Decorative rules |
-| `peach-100` | `#FFF1E2` | Lightest accent surface |
+| `ink-950` | `#190F07` | Primary text, dark panels, primary buttons |
+| `ink-900` | `#281B10` | Body text, borders |
+| `ink-800` | `#392A1D` | Strong secondary text |
+| `ink-700` | `#513E2D` | Secondary text |
+| `ink-600` | `#685341` | Muted text on light |
+| `ink-500` | `#75604E` | Muted metadata (5.28:1 on cream) |
+| `ink-400` | `#7D6958` | Minimum muted text on cream (4.64:1) |
+| `ink-300` | `#AC9B8C` | Decorative only, never body copy |
+| `cream-50` | `#FFF9F2` | Paper highlight, text on ink |
+| `cream-100` | `#FFEFE2` | App background |
+| `cream-200` | `#F8E2CF` | Subtle fills |
+| `cream-300` | `#ECD0B8` | Disabled/decorative |
+| `cream-400` | `#D8B79A` | Decorative rules |
+| `peach-100` | `#FFF0E1` | Lightest accent surface |
 | `peach-200` | `#FFE3C9` | Accent surface |
-| `peach-300` | `#FFD6B2` | Signature peach; light CTA |
-| `peach-400` | `#F3BB8B` | Peach hover |
-| `ember-400` | `#D87844` | Accent graphic |
-| `ember-500` | `#B85A28` | Focus ring, decorative accent |
-| `ember-600` | `#9E4319` | Ember text/CTA hover; use on cream for contrast |
-| `ember-700` | `#7F3414` | Ember text on peach/cream |
-| `wine-800/900` | `#4A1F2A` / `#35141D` | Editorial dark accent |
-| `forest-800/900` | `#1E3B30` / `#142C24` | Calm dark accent |
-| `gold-500/600` | `#B08A4F` / `#96713B` | Premium detail, not body text |
-| `success-600/700` | `#2F6B4F` / `#24543E` | Paid/confirmed states |
-| `danger-600/700` | `#A83A2C` / `#8B2D23` | Destructive/error |
+| `peach-300` | `#FFD6B2` | Exact logo peach; logo/CTA on dark only |
+| `peach-400` | `#F7BD89` | Peach hover |
+| `ember-400` | `#EEAF75` | Accent graphic |
+| `ember-500` | `#BF7523` | Focus ring, decorative accent |
+| `ember-600` | `#9D5800` | Ember text/CTA; 4.88:1 on cream |
+| `ember-700` | `#7D4600` | Ember text on peach/cream |
+| `wine-800/900` | `#3E2915` / `#28190A` | Same-hue dark panels |
+| `gold-500/600` | `#D3965C` / `#875726` | Pending status; `600` for text |
+| `success-600/700` | `#426F4C` / `#325B3B` | Paid/confirmed states |
+| `danger-600/700` | `#A43C33` / `#852F28` | Destructive/error |
+| `whatsapp-600/700` | `#17843F` / `#0E6E33` | WhatsApp action; white text passes |
 
 Legacy `brand-*` aliases remain for older components. Invitation palette tokens (`mf-*`, `pc-*`, `ln-*`, etc.) are template contracts and must not be edited.
 
@@ -52,8 +53,9 @@ Legacy `brand-*` aliases remain for older components. Invitation palette tokens 
 - Use `ink-400` or darker for readable text on cream/peach.
 - Do not use `ink-300` for copy.
 - Prefer `ember-600` for ember-colored text on light surfaces; `ember-500` is for focus rings/large graphics.
-- On ink surfaces use `cream-50`/`cream-100`; opacity below `/70` is decorative only.
+- On ink surfaces use `cream-50`/`cream-100`; opacity below `/70` is decorative only until the typography audit proves the effective color.
 - Verify state text (`success`, `danger`) with axe before merging.
+- Run `node scripts/audit-colors.mjs`; it fails on raw hex/rgb/hsl, foreign Tailwind palettes, and contrast regressions.
 
 ### Typography
 

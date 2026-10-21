@@ -36,7 +36,7 @@ export default function OrderSuccess() {
                 href={`https://wa.me/${ADMIN_WHATSAPP}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[2px] bg-[#1FA855] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#178f47]"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[2px] bg-whatsapp-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-whatsapp-700"
               >
                 <FaWhatsapp className="h-5 w-5" /> {t("orderSuccess.btnWhatsapp")}
               </a>
@@ -74,7 +74,7 @@ export default function OrderSuccess() {
             ))}
           </ol>
           <div className="flex items-center gap-2 border-t border-ink-900/10 bg-cream-50 px-5 py-3.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#1FA855]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-whatsapp-600" />
             <p className="font-data text-[9px] uppercase tracking-[0.12em] text-ink-400">{t("contact.hoursTitle")} · 09.00–21.00 WIB</p>
           </div>
         </aside>

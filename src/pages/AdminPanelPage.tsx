@@ -31,7 +31,7 @@ interface DialogState {
 function CapNotice({ total, shown, label }: { total: number | null; shown: number; label: string }) {
   if (typeof total !== "number" || total <= shown) return null;
   return (
-    <div className="border border-amber-600/25 bg-amber-500/[0.07] px-4 py-3 font-data text-[9px] uppercase tracking-[0.08em] text-amber-800">
+    <div className="border border-gold-600/30 bg-gold-600/[0.07] px-4 py-3 font-data text-[9px] uppercase tracking-[0.08em] text-gold-600">
       Menampilkan {shown.toLocaleString("id-ID")} {label} terbaru dari total{" "}
       {total.toLocaleString("id-ID")}. Data lebih lama tidak termuat dalam daftar ini.
     </div>

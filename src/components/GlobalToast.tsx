@@ -92,10 +92,10 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
               role="alert"
               className={`pointer-events-auto transform transition-all duration-300 ease-out flex items-center justify-between gap-3.5 px-4 py-3.5 sm:px-5 sm:py-4 rounded-2xl shadow-2xl border backdrop-blur-md w-full sm:min-w-[320px] sm:max-w-md animate-in fade-in slide-in-from-top-3 ${
                 isSuccess
-                  ? 'bg-white/95 border-emerald-200/80 text-stone-800 shadow-emerald-900/10'
+                  ? 'bg-white/95 border-success-600/20 text-ink-800 shadow-success-700/10'
                   : isError
-                  ? 'bg-white/95 border-rose-200/80 text-stone-800 shadow-rose-900/10'
-                  : 'bg-white/95 border-amber-200/80 text-stone-800 shadow-amber-900/10'
+                  ? 'bg-white/95 border-danger-600/20 text-ink-800 shadow-danger-700/10'
+                  : 'bg-white/95 border-gold-500/30 text-ink-800 shadow-gold-600/10'
               }`}
             >
               {/* Left Indicator & Icon */}
@@ -103,10 +103,10 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
                 <div
                   className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-xs ${
                     isSuccess
-                      ? 'bg-emerald-500 text-white shadow-emerald-500/25'
+                      ? 'bg-whatsapp-600 text-white shadow-whatsapp-600/25'
                       : isError
-                      ? 'bg-rose-500 text-white shadow-rose-500/25'
-                      : 'bg-amber-500 text-white shadow-amber-500/25'
+                      ? 'bg-danger-600 text-white shadow-danger-600/25'
+                      : 'bg-gold-600 text-white shadow-gold-600/25'
                   }`}
                 >
                   {isSuccess && <CheckCircle className="w-5 h-5 stroke-[2.5]" />}
@@ -116,7 +116,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
 
                 {/* Message Content */}
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm font-semibold text-stone-800 leading-snug break-words">
+                  <p className="text-xs sm:text-sm font-semibold text-ink-800 leading-snug break-words">
                     {t.message}
                   </p>
                 </div>
@@ -127,7 +127,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
                 type="button"
                 onClick={() => removeToast(t.id)}
                 aria-label="Tutup notifikasi"
-                className="p-1.5 -mr-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100/80 active:scale-95 transition shrink-0"
+                className="p-1.5 -mr-1 rounded-lg text-ink-500 hover:text-ink-700 hover:bg-cream-200/80 active:scale-95 transition shrink-0"
               >
                 <X className="w-4 h-4" />
               </button>

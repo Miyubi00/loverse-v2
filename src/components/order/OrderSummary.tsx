@@ -52,7 +52,7 @@ function DetailRow({ icon, label, value }: { icon: ReactNode; label: string; val
         <span className="text-ink-400">{icon}</span>
         {label}
       </span>
-      <span className="min-w-0 truncate text-right text-[12px] font-medium text-ink-850">{value}</span>
+      <span className="min-w-0 truncate text-right text-[12px] font-medium text-ink-800">{value}</span>
     </div>
   );
 }
@@ -140,8 +140,8 @@ export function OrderSummary({
           </div>
           <div className="mt-3 flex items-center gap-3 border border-ink-900/12 bg-cream-50 p-3">
             {paymentMethod === "whatsapp" ? (
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#eaf6ec]">
-                <FaWhatsapp size={20} className="text-[#1FA855]" />
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-success-600/10">
+                <FaWhatsapp size={20} className="text-whatsapp-600" />
               </span>
             ) : methodLogo ? (
               <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-ink-900/10 bg-white px-1.5">
@@ -191,7 +191,7 @@ export function OrderSummary({
           <p className="min-w-0 flex-1 text-[10px] leading-relaxed text-ink-500">
             <strong className="font-semibold text-ink-800">{t("order.secureTitle")}</strong> {t("order.secureDesc")}
           </p>
-          <span className="shrink-0 font-display text-[13px] italic text-[#00a6c4]">midtrans</span>
+          <span className="shrink-0 font-display text-[13px] italic text-ink-500">midtrans</span>
         </div>
 
         {actions ? <div className="space-y-2.5 p-4 sm:p-6">{actions}</div> : null}

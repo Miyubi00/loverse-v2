@@ -15,52 +15,55 @@
 
   --breakpoint-xs: 420px;
 
-  /* Ink / warm neutrals */
-  --color-ink-950: #17100c;
-  --color-ink-900: #241813;
-  --color-ink-800: #34231b;
-  --color-ink-700: #4a3328;
-  --color-ink-600: #5f4638;
-  --color-ink-500: #7a6152;
-  --color-ink-400: #7f6a5c;
-  --color-ink-300: #bfae9f;
+  /* Logo-derived scale — hue 63.12, sampled from public/logo.svg (#FFD6B2).
+     Values documented in docs/color-from-logo.md. */
+  --color-ink-950: #190f07;
+  --color-ink-900: #281b10;
+  --color-ink-800: #392a1d;
+  --color-ink-700: #513e2d;
+  --color-ink-600: #685341;
+  --color-ink-500: #75604e;
+  --color-ink-400: #7d6958;
+  --color-ink-300: #ac9b8c;
 
-  /* Paper / cream */
-  --color-cream-50: #fdfaf3;
-  --color-cream-100: #f8f1e4;
-  --color-cream-200: #f0e5d2;
-  --color-cream-300: #e4d4bb;
-  --color-cream-400: #d4bfa0;
+  /* Paper / cream — same hue, high lightness */
+  --color-cream-50: #fff9f2;
+  --color-cream-100: #ffefe2;
+  --color-cream-200: #f8e2cf;
+  --color-cream-300: #ecd0b8;
+  --color-cream-400: #d8b79a;
 
-  /* Peach light + ember accent */
-  --color-peach-100: #fff1e2;
+  /* Official logo peach + same-hue accents */
+  --color-peach-100: #fff0e1;
   --color-peach-200: #ffe3c9;
   --color-peach-300: #ffd6b2;
-  --color-peach-400: #f3bb8b;
-  --color-ember-400: #d87844;
-  --color-ember-500: #b85a28;
-  --color-ember-600: #9e4319;
-  --color-ember-700: #7f3414;
+  --color-peach-400: #f7bd89;
+  --color-ember-400: #eeaf75;
+  --color-ember-500: #bf7523;
+  --color-ember-600: #9d5800;
+  --color-ember-700: #7d4600;
 
-  /* Support */
-  --color-wine-800: #4a1f2a;
-  --color-wine-900: #35141d;
-  --color-forest-800: #1e3b30;
-  --color-forest-900: #142c24;
-  --color-gold-500: #b08a4f;
-  --color-gold-600: #96713b;
-  --color-success-600: #2f6b4f;
-  --color-success-700: #24543e;
-  --color-danger-600: #a83a2c;
-  --color-danger-700: #8b2d23;
+  /* Deep same-hue panels */
+  --color-wine-800: #3e2915;
+  --color-wine-900: #28190a;
+  --color-gold-500: #d3965c;
+  --color-gold-600: #875726;
+
+  /* Functional status colors — semantic exceptions, documented */
+  --color-success-600: #426f4c;
+  --color-success-700: #325b3b;
+  --color-danger-600: #a43c33;
+  --color-danger-700: #852f28;
+  --color-whatsapp-600: #17843f;
+  --color-whatsapp-700: #0e6e33;
 
   /* Backwards-compatible brand aliases used by older components */
-  --color-brand-nav: #241813;
+  --color-brand-nav: #190f07;
   --color-brand-nav-text: #ffd6b2;
-  --color-brand-bg: #f8f1e4;
-  --color-brand-text: #241813;
-  --color-brand-muted: #7a6152;
-  --color-brand-primary: #b85a28;
+  --color-brand-bg: #ffefe2;
+  --color-brand-text: #281b10;
+  --color-brand-muted: #75604e;
+  --color-brand-primary: #9d5800;
 
   /* Palet tema undangan (JANGAN diubah — kontrak visual template) */
   --color-mf-deep: #3D1832;
@@ -125,8 +128,13 @@
   --color-cl-mint: #A8E6CF;
   --color-cl-sky: #9BD7FF;
 
-  --shadow-lift: 0 1px 0 rgba(36, 24, 19, 0.04), 0 18px 40px -24px rgba(36, 24, 19, 0.35);
-  --shadow-deep: 0 32px 80px -34px rgba(23, 16, 12, 0.55);
+  --shadow-lift: 0 1px 0 color-mix(in srgb, var(--color-ink-900) 4%, transparent),
+    0 18px 40px -24px color-mix(in srgb, var(--color-ink-900) 35%, transparent);
+  --shadow-deep: 0 32px 80px -34px color-mix(in srgb, var(--color-ink-950) 55%, transparent);
+  --shadow-button: 0 14px 30px -18px color-mix(in srgb, var(--color-ink-950) 80%, transparent);
+  --shadow-accent: 0 14px 30px -18px color-mix(in srgb, var(--color-ember-700) 55%, transparent);
+  --shadow-whatsapp: 0 10px 30px -16px color-mix(in srgb, var(--color-whatsapp-600) 80%, transparent);
+  --shadow-header: 0 18px 40px -32px var(--color-ink-950);
 }
 
 @layer base {
@@ -280,6 +288,22 @@
   .ink-panel {
     background: var(--color-ink-950);
     color: var(--color-cream-100);
+  }
+
+  .glow-ember {
+    background-image: radial-gradient(
+      ellipse at bottom left,
+      color-mix(in srgb, var(--color-ember-600) 18%, transparent),
+      transparent 66%
+    );
+  }
+
+  .glow-peach {
+    background-image: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-peach-300) 16%, transparent),
+      transparent 68%
+    );
   }
 
   .app-shell {

@@ -60,7 +60,7 @@ export default function Navbar() {
         className={cn(
           "sticky top-0 z-50 w-full border-b transition-[background-color,border-color,box-shadow] duration-300",
           scrolled
-            ? "border-cream-100/12 bg-ink-950 shadow-[0_18px_40px_-32px_rgba(0,0,0,0.9)]"
+            ? "border-cream-100/12 bg-ink-950 shadow-header"
             : "border-transparent bg-ink-950",
         )}
       >

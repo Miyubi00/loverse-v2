@@ -45,7 +45,7 @@ function OrderSummary({ order }: { order: PaymentStatusResponse }) {
         {rows.map(([label, value]) => (
           <div key={label} className="flex items-center justify-between gap-4 px-4 py-2.5">
             <dt className="shrink-0 text-ink-400">{label}</dt>
-            <dd className="truncate text-right font-medium text-ink-850">{value}</dd>
+            <dd className="truncate text-right font-medium text-ink-800">{value}</dd>
           </div>
         ))}
       </dl>

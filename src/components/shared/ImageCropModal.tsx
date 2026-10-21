@@ -55,20 +55,20 @@ export default function ImageCropModal({
   const ready = Boolean(objectUrl) && Boolean(areaPixels);
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-[#FAF6EE] rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-[#EBDFCE]">
+    <div className="fixed inset-0 z-[9999] bg-ink-950/70 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+      <div className="bg-cream-100 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-cream-300">
 
         {/* Header */}
         <div className="px-5 pt-5 pb-3">
-          <h3 className="font-bold text-[#712E1E]">{title}</h3>
-          <p className="text-xs text-stone-500 mt-0.5">
+          <h3 className="font-bold text-ink-900">{title}</h3>
+          <p className="text-xs text-ink-500 mt-0.5">
             Geser &amp; perbesar untuk memilih area — rasio sudah terkunci otomatis.
           </p>
         </div>
 
         {/* Cropper — tinggi mengikuti rasio: potret lebih tinggi, lanskap penuh lebar */}
         <div
-          className="relative mx-4 overflow-hidden rounded-xl bg-stone-900"
+          className="relative mx-4 overflow-hidden rounded-xl bg-ink-950"
           style={{ height: aspect >= 1 ? 280 : 440 }}
         >
           {objectUrl && (
@@ -86,7 +86,7 @@ export default function ImageCropModal({
             />
           )}
           {!objectUrl && (
-            <div className="absolute inset-0 grid place-items-center text-stone-400">
+            <div className="absolute inset-0 grid place-items-center text-ink-500">
               <Loader2 className="animate-spin" />
             </div>
           )}
@@ -94,7 +94,7 @@ export default function ImageCropModal({
 
         {/* Zoom slider */}
         <div className="px-5 pt-4 flex items-center gap-3">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 shrink-0">Zoom</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-ink-500 shrink-0">Zoom</span>
           <input
             type="range"
             min={1}
@@ -102,7 +102,7 @@ export default function ImageCropModal({
             step={0.05}
             value={zoom}
             onChange={(e) => setZoom(Number(e.target.value))}
-            className="w-full accent-[#E59A59]"
+            className="w-full accent-ember-600"
           />
         </div>
 
@@ -112,7 +112,7 @@ export default function ImageCropModal({
             type="button"
             onClick={onCancel}
             disabled={!ready}
-            className="flex-1 py-2.5 rounded-xl border border-stone-200 bg-white text-stone-600 font-bold text-sm hover:bg-stone-50 transition"
+            className="flex-1 py-2.5 rounded-xl border border-cream-300 bg-white text-ink-600 font-bold text-sm hover:bg-cream-100 transition"
           >
             Batal
           </button>
@@ -120,7 +120,7 @@ export default function ImageCropModal({
             type="button"
             onClick={() => areaPixels && onConfirm(areaPixels)}
             disabled={!ready}
-            className="flex-1 py-2.5 rounded-xl bg-[#E59A59] text-white font-bold text-sm hover:bg-[#d48b4b] transition shadow-md flex items-center justify-center gap-1.5"
+            className="flex-1 py-2.5 rounded-xl bg-ember-600 text-white font-bold text-sm hover:bg-ember-700 transition shadow-md flex items-center justify-center gap-1.5"
           >
             <Check size={16} /> Pangkas &amp; Unggah
           </button>

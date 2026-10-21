@@ -354,7 +354,7 @@ function AdminOrderCard({
           className={`${INPUT} mt-1`}
           placeholder="misal: romeo-juliet"
         />
-        <p className="-mt-1 text-[10px] italic text-amber-600">
+        <p className="-mt-1 text-[10px] italic text-gold-600">
           {t('admin.cardSlugWarning')}
         </p>
       </div>

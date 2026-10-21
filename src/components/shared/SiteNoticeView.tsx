@@ -30,12 +30,12 @@ const BANNER_STYLE: Record<SiteNoticeType, { wrap: string; icon: string; Icon: t
     Icon: Info,
   },
   warning: {
-    wrap: 'border-gold-600/30 bg-[#f6ead4] text-ink-900',
+    wrap: 'border-gold-600/30 bg-gold-500/10 text-ink-900',
     icon: 'bg-gold-500/15 text-gold-600',
     Icon: AlertTriangle,
   },
   maintenance: {
-    wrap: 'border-danger-600/20 bg-[#f7e4dc] text-ink-900',
+    wrap: 'border-danger-600/20 bg-danger-600/10 text-ink-900',
     icon: 'bg-danger-600/10 text-danger-700',
     Icon: Wrench,
   },
