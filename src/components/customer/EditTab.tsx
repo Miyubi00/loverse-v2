@@ -94,19 +94,25 @@ export default function EditTab({
     <div>
       <form onSubmit={handleSaveData} className="pb-6">
         <div className="sticky top-0 z-20 -mx-4 flex flex-wrap items-center justify-between gap-3 border-b border-ink-900/10 bg-cream-100/95 px-4 py-3 backdrop-blur-sm sm:-mx-7 sm:px-7 lg:-mx-10 lg:px-10">
-          <div className="flex w-full border border-ink-900/12 bg-cream-50 p-1 sm:w-fit">
+          <div className="flex w-full border border-ink-900/12 bg-cream-50 p-1 lg:w-fit">
             {SUB_TABS.map((tab) => (
               <SubTabButton
                 key={tab.id}
                 active={activeSection === tab.id}
                 onClick={() => setActiveSection(tab.id)}
+                mobileEven
               >
-                <tab.icon size={14} strokeWidth={1.6} />
-                <span>{t(tab.label)}</span>
+                <tab.icon
+                  size={14}
+                  strokeWidth={1.6}
+                  className="hidden shrink-0 lg:block"
+                  aria-hidden="true"
+                />
+                <span className="line-clamp-2 min-w-0 text-center">{t(tab.label)}</span>
               </SubTabButton>
             ))}
           </div>
-          <span className="hidden font-data text-[9px] uppercase tracking-[0.14em] text-ink-400 sm:inline">
+          <span className="hidden font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 sm:inline">
             {String(activeIndex + 1).padStart(2, "0")} / 03
           </span>
         </div>
@@ -163,7 +169,7 @@ export default function EditTab({
         </div>
 
         <div className="sticky bottom-0 z-20 -mx-4 mt-8 flex items-center justify-between gap-4 border-t border-ink-900/12 bg-cream-100/95 px-4 py-3.5 backdrop-blur-sm sm:-mx-7 sm:px-7 lg:-mx-10 lg:px-10">
-          <p className="hidden max-w-xs text-[11px] leading-relaxed text-ink-400 sm:block">
+          <p className="hidden max-w-xs text-[14px] leading-relaxed text-ink-400 sm:block">
             {t("customer.edit.desc")}
           </p>
           <Button
@@ -171,7 +177,7 @@ export default function EditTab({
             size="lg"
             loading={loading}
             disabled={uploading}
-            icon={<Save size={15} />}
+            icon={<Save size={15} className="hidden lg:block" aria-hidden="true" />}
             className="ml-auto w-full sm:w-auto"
           >
             {loading ? t("customer.edit.btnSaving") : t("customer.edit.btnSave")}

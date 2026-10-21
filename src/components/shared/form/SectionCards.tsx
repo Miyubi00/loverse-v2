@@ -198,7 +198,7 @@ export function PhotosCard({
                 }}
                 className="flex items-center gap-1 font-data text-[14px] uppercase tracking-[0.06em] text-ink-600 transition hover:text-ember-600"
               >
-                <Eye size={13} aria-hidden="true" /> {t('common.view')}
+                <Eye size={13} className="hidden lg:block" aria-hidden="true" /> {t('common.view')}
               </button>
               <span className="text-ink-300" aria-hidden="true">·</span>
               <button
@@ -209,7 +209,7 @@ export function PhotosCard({
                 }}
                 className="flex items-center gap-1 font-data text-[14px] uppercase tracking-[0.06em] text-danger-600 transition hover:text-danger-700"
               >
-                <Trash2 size={13} aria-hidden="true" /> {t('common.delete')}
+                <Trash2 size={13} className="hidden lg:block" aria-hidden="true" /> {t('common.delete')}
               </button>
             </div>
           )}
@@ -319,9 +319,9 @@ export function GalleryCard({
         className="flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 border border-dashed border-ink-900/20 bg-cream-100/50 px-4 py-4 text-[14px] font-semibold text-ink-600 transition-colors hover:border-ember-500 hover:bg-cream-100 hover:text-ember-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500 active:scale-[0.99] disabled:cursor-wait disabled:opacity-80"
       >
         {isUploading ? (
-          <Loader2 size={18} className="animate-spin text-ember-500" aria-hidden="true" />
+          <Loader2 size={18} className="hidden animate-spin text-ember-500 lg:block" aria-hidden="true" />
         ) : (
-          <ImagePlus size={18} aria-hidden="true" />
+          <ImagePlus size={18} className="hidden lg:block" aria-hidden="true" />
         )}
         <span>
           {isUploading ? t('customer.edit.btnUploadingGallery') : t('customer.edit.btnUploadGallery')}
@@ -433,11 +433,11 @@ export function MusicQuoteCard({
             >
               {removing ? (
                 <>
-                  <Loader2 size={13} className="animate-spin" /> {t('customer.edit.btnRemovingMusic') || t('common.loading')}
+                  <Loader2 size={13} className="hidden animate-spin lg:block" aria-hidden="true" /> {t('customer.edit.btnRemovingMusic') || t('common.loading')}
                 </>
               ) : (
                 <>
-                  <Trash2 size={13} /> {t('common.delete')}
+                  <Trash2 size={13} className="hidden lg:block" aria-hidden="true" /> {t('common.delete')}
                 </>
               )}
             </button>
@@ -450,11 +450,11 @@ export function MusicQuoteCard({
           >
             {isAudioUploading ? (
               <>
-                <Loader2 size={13} className="animate-spin" /> {t('customer.edit.uploading') || 'Mengunggah...'}
+                <Loader2 size={13} className="hidden animate-spin lg:block" aria-hidden="true" /> {t('customer.edit.uploading') || 'Mengunggah...'}
               </>
             ) : converting ? (
               <>
-                <Loader2 size={13} className="animate-spin" /> {t('customer.edit.btnConvertingMusic')}
+                <Loader2 size={13} className="hidden animate-spin lg:block" aria-hidden="true" /> {t('customer.edit.btnConvertingMusic')}
               </>
             ) : (
               t('customer.edit.btnUploadMusic')

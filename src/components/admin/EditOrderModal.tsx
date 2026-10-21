@@ -168,28 +168,28 @@ export default function EditOrderModal({
             <h2 className="mt-1 font-display text-[clamp(1.8rem,3vw,2.6rem)] leading-none tracking-[-0.05em] text-ink-950">
               {t('admin.editInvitationTitle')}
             </h2>
-            <p className="mt-2 font-data text-[9px] text-ink-400">ID: {editingOrder.id.slice(0, 12)}…</p>
+            <p className="mt-2 font-data text-[14px] text-ink-400">ID: {editingOrder.id.slice(0, 12)}…</p>
           </div>
         </div>
 
         <div className="mt-6 flex w-fit max-w-full flex-wrap gap-1 border border-ink-900/12 bg-cream-100 p-1">
           <SubTabButton active={activeSection === "admin"} onClick={() => setActiveSection("admin")}>
-            <Users size={15} />
+            <Users size={15} className="hidden shrink-0 lg:block" aria-hidden="true" />
             <span>{t('admin.editTabOrderInfo')}</span>
           </SubTabButton>
 
           <SubTabButton active={activeSection === "guests"} onClick={() => setActiveSection("guests")}>
-            <MessageSquare size={15} />
+            <MessageSquare size={15} className="hidden shrink-0 lg:block" aria-hidden="true" />
             <span>{t('customer.rsvp.title')}</span>
           </SubTabButton>
 
           <SubTabButton active={activeSection === "media"} onClick={() => setActiveSection("media")}>
-            <Camera size={15} />
+            <Camera size={15} className="hidden shrink-0 lg:block" aria-hidden="true" />
             <span>{t('customer.edit.tabMedia')}</span>
           </SubTabButton>
 
           <SubTabButton active={activeSection === "extra"} onClick={() => setActiveSection("extra")}>
-            <CreditCard size={15} />
+            <CreditCard size={15} className="hidden shrink-0 lg:block" aria-hidden="true" />
             <span>{t('customer.edit.tabExtra')}</span>
           </SubTabButton>
         </div>
@@ -255,7 +255,7 @@ export default function EditOrderModal({
               type="submit"
               size="lg"
               disabled={uploading}
-              icon={uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save size={16} />}
+              icon={uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save size={16} className="hidden lg:block" aria-hidden="true" />}
               className="w-full"
             >
               {uploading ? t('customer.edit.btnSaving') : t('customer.edit.btnSave')}
@@ -354,7 +354,7 @@ function AdminOrderCard({
           className={`${INPUT} mt-1`}
           placeholder="misal: romeo-juliet"
         />
-        <p className="-mt-1 text-[10px] italic text-gold-600">
+        <p className="-mt-1 text-[14px] italic text-gold-600">
           {t('admin.cardSlugWarning')}
         </p>
       </div>
@@ -386,9 +386,9 @@ function GuestbookSection({
   } = rsvp;
   const { hadir, tidakHadir, ragu } = stats;
 
-  const labelCls = "mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500";
+  const labelCls = "mb-1.5 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500";
   const inputCls =
-    "h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15";
+    "h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[14px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15";
 
   return (
     <div className="space-y-4">
@@ -471,25 +471,25 @@ function GuestbookSection({
 
       <div className="overflow-hidden border border-ink-900/12 bg-cream-50">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-[12px] text-ink-600">
+          <table className="w-full text-left text-[14px] text-ink-600">
             <thead className="border-b border-ink-900/12 bg-cream-100">
               <tr>
-                <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('customer.rsvp.thGuest')}</th>
-                <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('customer.rsvp.thStatus')}</th>
-                <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('customer.rsvp.thMessage')}</th>
-                <th className="px-4 py-3.5 text-center font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('customer.rsvp.thAction')}</th>
+                <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('customer.rsvp.thGuest')}</th>
+                <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('customer.rsvp.thStatus')}</th>
+                <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('customer.rsvp.thMessage')}</th>
+                <th className="px-4 py-3.5 text-center font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('customer.rsvp.thAction')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-ink-900/10">
               {loading ? (
                 <tr>
-                  <td colSpan={4} className="px-4 py-12 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
+                  <td colSpan={4} className="px-4 py-12 text-center font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                     {t('common.loading')}
                   </td>
                 </tr>
               ) : rows.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-4 py-12 text-center text-[12px] italic text-ink-400">
+                  <td colSpan={4} className="px-4 py-12 text-center text-[14px] italic text-ink-400">
                     {hasActiveFilter ? t('customer.rsvp.emptyFiltered') : t('customer.rsvp.emptyDefault')}
                   </td>
                 </tr>
@@ -497,9 +497,9 @@ function GuestbookSection({
                 rows.map((rsvp) => (
                   <tr key={rsvp.id} className="transition-colors hover:bg-cream-100/50">
                     <td className="whitespace-nowrap px-4 py-4 align-top">
-                      <span className="text-[12px] font-semibold text-ink-900">{rsvp.guest_name}</span>
+                      <span className="text-[14px] font-semibold text-ink-900">{rsvp.guest_name}</span>
                       <br />
-                      <span className="font-data text-[9px] text-ink-400">
+                      <span className="font-data text-[14px] text-ink-400">
                         {rsvp.created_at ? new Date(rsvp.created_at).toLocaleDateString(language === 'en' ? "en-US" : "id-ID") : "-"}
                       </span>
                     </td>
@@ -507,13 +507,13 @@ function GuestbookSection({
                       <StatusBadge status={rsvp.status} pax={rsvp.pax} />
                     </td>
                     <td className="max-w-xs break-words px-4 py-4 align-top">
-                      <p className="text-[12px] italic text-ink-700">&ldquo;{rsvp.message}&rdquo;</p>
+                      <p className="text-[14px] italic text-ink-700">&ldquo;{rsvp.message}&rdquo;</p>
                       {rsvp.reply && (
                         <div className="mt-2 border-l-2 border-ember-500 bg-cream-100/70 p-2.5">
-                          <p className="mb-1 font-data text-[8px] uppercase tracking-[0.12em] text-ember-600">
+                          <p className="mb-1 font-data text-[14px] uppercase tracking-[0.06em] text-ember-600">
                             {t('customer.rsvp.yourReply')}
                           </p>
-                          <p className="text-[11px] text-ink-600">{rsvp.reply}</p>
+                          <p className="text-[14px] text-ink-600">{rsvp.reply}</p>
                         </div>
                       )}
                     </td>
@@ -562,7 +562,7 @@ function StatCard({
 }) {
   return (
     <div className="border border-ink-900/12 bg-cream-50 p-4">
-      <p className={`font-data text-[8px] uppercase tracking-[0.14em] ${labelClass}`}>
+      <p className={`font-data text-[14px] uppercase tracking-[0.06em] ${labelClass}`}>
         {label}
       </p>
       <p className={`mt-1.5 font-display text-3xl leading-none tracking-[-0.04em] ${valueClass}`}>{value}</p>
@@ -575,20 +575,20 @@ function StatusBadge({ status, pax }: { status: RsvpRow["status"]; pax: number }
 
   if (status === "hadir") {
     return (
-      <span className="flex w-fit items-center gap-1 border border-success-600/25 bg-success-600/[0.06] px-2 py-1 font-data text-[8px] uppercase tracking-[0.08em] text-success-700">
+      <span className="flex w-fit items-center gap-1 border border-success-600/25 bg-success-600/[0.06] px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-success-700">
         <CheckCircle2 size={10} /> {t('customer.rsvp.statusAttending')} ({pax})
       </span>
     );
   }
   if (status === "tidak_hadir") {
     return (
-      <span className="w-fit border border-danger-600/25 bg-danger-600/[0.06] px-2 py-1 font-data text-[8px] uppercase tracking-[0.08em] text-danger-600">
+      <span className="w-fit border border-danger-600/25 bg-danger-600/[0.06] px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-danger-600">
         {t('customer.rsvp.statusNotAttending')}
       </span>
     );
   }
   return (
-    <span className="w-fit border border-gold-500/35 bg-gold-500/10 px-2 py-1 font-data text-[8px] uppercase tracking-[0.08em] text-gold-600">
+    <span className="w-fit border border-gold-500/35 bg-gold-500/10 px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-gold-600">
       {t('customer.rsvp.statusUncertain')}
     </span>
   );

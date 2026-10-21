@@ -33,17 +33,23 @@ export function SubTabButton({
   active,
   onClick,
   children,
+  mobileEven = false,
 }: {
   active: boolean;
   onClick: () => void;
   children: ReactNode;
+  mobileEven?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`flex min-h-10 items-center gap-2 px-3.5 text-[14px] font-semibold tracking-[-0.01em] transition-colors ${
+      className={`flex min-h-11 items-center justify-center gap-2 py-2 text-center text-[13px] font-semibold tracking-[-0.01em] transition-colors lg:min-h-10 lg:text-[14px] ${
+        mobileEven
+          ? "min-w-0 flex-1 basis-0 px-1.5 lg:flex-none lg:basis-auto lg:px-3.5"
+          : "px-3.5"
+      } ${
         active
           ? "bg-ink-950 text-cream-50"
           : "text-ink-500 hover:bg-cream-50 hover:text-ink-900"

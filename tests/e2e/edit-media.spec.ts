@@ -144,6 +144,20 @@ for (const width of [1440, 390]) {
       chooserCount += 1;
     });
 
+    const bannerView = page.getByRole("button", { name: "Lihat", exact: true }).first();
+    const saveButton = page.getByRole("button", { name: "Simpan Perubahan" });
+    const galleryUpload = page.getByRole("button", { name: "Upload Foto ke Galeri" });
+
+    if (width === 390) {
+      await expect(bannerView.locator("svg").first()).toBeHidden();
+      await expect(saveButton.locator("svg").first()).toBeHidden();
+      await expect(galleryUpload.locator("svg").first()).toBeHidden();
+    } else {
+      await expect(bannerView.locator("svg").first()).toBeVisible();
+      await expect(saveButton.locator("svg").first()).toBeVisible();
+      await expect(galleryUpload.locator("svg").first()).toBeVisible();
+    }
+
     const changes = page.getByRole("button", { name: "Ganti Foto" });
     await expect(changes).toHaveCount(3);
     await expectFilePicker(page, changes.nth(0).locator("img"), "Atur Foto Mempelai Pria");
@@ -173,5 +187,56 @@ for (const width of [1440, 390]) {
     await expect(page.getByText("Konfirmasi Hapus")).toBeVisible();
     expect(chooserCount).toBe(0);
     await page.getByRole("button", { name: "Batal" }).click();
+  });
+}
+
+for (const width of [320, 360, 390]) {
+  test(`edit content tabs stay readable without icons at ${width}px`, async ({ page, context }) => {
+    await page.setViewportSize({ width, height: 740 });
+    const data = order(`tabs-${width}`, false);
+    await mockDashboard(context, data);
+    await openMediaTab(page, data.id);
+
+    const tabs = page.getByRole("button", {
+      name: /Detail Acara & Lokasi|Foto & Galeri|Musik & Rekening/,
+    });
+    await expect(tabs).toHaveCount(3);
+
+    const metrics = await tabs.evaluateAll((elements) =>
+      elements.map((element) => {
+        const rect = element.getBoundingClientRect();
+        const label = element.querySelector("span");
+        return {
+          left: rect.left,
+          right: rect.right,
+          width: rect.width,
+          height: rect.height,
+          fontSize: Number.parseFloat(getComputedStyle(element).fontSize),
+          lineClamp: label ? getComputedStyle(label).webkitLineClamp : "",
+          labelScrollWidth: label?.scrollWidth ?? 0,
+          labelClientWidth: label?.clientWidth ?? 0,
+        };
+      }),
+    );
+
+    const widths = metrics.map((metric) => metric.width);
+    expect(Math.max(...widths) - Math.min(...widths)).toBeLessThanOrEqual(1);
+    for (const metric of metrics) {
+      expect(metric.height).toBeGreaterThanOrEqual(44);
+      expect(metric.fontSize).toBeGreaterThanOrEqual(13);
+      expect(metric.lineClamp).toBe("2");
+      expect(metric.left).toBeGreaterThanOrEqual(0);
+      expect(metric.right).toBeLessThanOrEqual(width);
+      expect(metric.labelScrollWidth).toBeLessThanOrEqual(metric.labelClientWidth + 1);
+    }
+
+    for (let index = 0; index < 3; index += 1) {
+      await expect(tabs.nth(index).locator("svg").first()).toBeHidden();
+    }
+
+    const horizontalOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
+    expect(horizontalOverflow).toBeLessThanOrEqual(0);
   });
 }
