@@ -17,7 +17,7 @@ import NoticesTab from "../components/admin/NoticesTab";
 import EditOrderModal from "../components/admin/EditOrderModal";
 import { AdminSkeleton } from "../components/ui/SkeletonLoaders";
 import { Wordmark } from "../components/ui/Brand";
-import LanguageSwitcher from "../components/shared/LanguageSwitcher";
+import LanguageToggleButton from "../components/shared/LanguageToggleButton";
 import { ClipboardList, Clock, Palette, Mail, ScrollText, Menu, Megaphone } from "lucide-react";
 import { useTranslation } from "../i18n";
 
@@ -237,7 +237,7 @@ export default function AdminPanel() {
             </button>
             <Wordmark imageClassName="h-6" />
             <div className="ml-auto shrink-0">
-              <LanguageSwitcher variant="header" mode="toggle" />
+              <LanguageToggleButton variant="dark" />
             </div>
           </header>
 

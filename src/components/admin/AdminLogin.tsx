@@ -4,7 +4,7 @@ import { captureError } from "../../lib/monitoring";
 import type { ToastApi } from "../GlobalToast";
 import { Eye, EyeOff, Lock, Mail, ShieldCheck } from "lucide-react";
 import { useTranslation } from "../../i18n";
-import LanguageSwitcher from "../shared/LanguageSwitcher";
+import LanguageToggleButton from "../shared/LanguageToggleButton";
 import Button from "../ui/Button";
 import { BrandPlate, Wordmark } from "../ui/Brand";
 import TurnstileWidget, { type TurnstileWidgetRef } from "../ui/TurnstileWidget";
@@ -20,7 +20,7 @@ const LOCK_BASE_SECONDS = 30;
 const MAX_LOCK_SECONDS = 300;
 
 const inputClass =
-  "h-12 w-full border border-ink-900/15 bg-cream-50 pl-10 pr-10 text-[13px] text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15 disabled:opacity-60";
+  "h-12 w-full border border-ink-900/15 bg-cream-50 pl-10 pr-10 text-[14px] text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15 disabled:opacity-60";
 
 export default function AdminLogin({ toast }: AdminLoginProps) {
   const { t } = useTranslation();
@@ -85,7 +85,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
   };
 
   return (
-    <div className="min-h-dvh bg-cream-100">
+    <div className="app-shell min-h-dvh bg-cream-100">
       <div className="mx-auto grid min-h-dvh w-full max-w-[1480px] lg:grid-cols-[1.05fr_.95fr]">
         <aside className="grain grain-light relative hidden overflow-hidden bg-ink-950 p-10 text-cream-100 lg:flex lg:flex-col lg:justify-between lg:p-14">
           <div className="relative z-[2]">
@@ -94,7 +94,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
             <p className="mt-6 max-w-[10ch] font-display text-[clamp(3rem,5vw,5rem)] leading-[0.92] tracking-[-0.055em] text-cream-50">
               Kawal setiap <span className="italic text-peach-300">undangan.</span>
             </p>
-            <p className="mt-7 max-w-sm text-[13px] leading-relaxed text-cream-100/45">
+            <p className="mt-7 max-w-sm text-[14px] leading-relaxed text-cream-100/75">
               {t("admin.loginSubtitle")}
             </p>
           </div>
@@ -107,7 +107,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
             ].map((item) => (
               <div key={item.label}>
                 <p className="font-display text-xl tracking-[-0.04em] text-cream-50">{item.value}</p>
-                <p className="mt-1 font-data text-[8px] uppercase tracking-[0.16em] text-cream-100/30">
+                <p className="mt-1 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/70">
                   {item.label}
                 </p>
               </div>
@@ -121,7 +121,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
 
         <main className="relative flex items-center px-4 py-12 sm:px-8 lg:px-14">
           <div className="absolute right-4 top-4 sm:right-6 sm:top-6">
-            <LanguageSwitcher variant="light" />
+            <LanguageToggleButton variant="light" />
           </div>
 
           <div className="mx-auto w-full max-w-[420px]">
@@ -132,7 +132,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
               <span className="grid h-10 w-10 place-items-center border border-ink-900/12 bg-cream-50 text-ember-600">
                 <ShieldCheck className="h-5 w-5" strokeWidth={1.5} />
               </span>
-              <span className="font-data text-[9px] uppercase tracking-[0.2em] text-ink-400">
+              <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                 {t("admin.title")}
               </span>
             </div>
@@ -140,11 +140,11 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
             <h1 className="mt-8 font-display text-[clamp(2.3rem,4.4vw,3.4rem)] leading-[0.96] tracking-[-0.05em] text-ink-950">
               {t("admin.loginTitle")}
             </h1>
-            <p className="mt-3 text-[13px] leading-relaxed text-ink-500">{t("admin.loginSubtitle")}</p>
+            <p className="mt-3 text-[14px] leading-relaxed text-ink-500">{t("admin.loginSubtitle")}</p>
 
             <form onSubmit={handleLogin} className="mt-8 space-y-4">
               <div>
-                <label htmlFor="admin-email" className="font-data text-[8px] uppercase tracking-[0.16em] text-ink-400">
+                <label htmlFor="admin-email" className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                   {t("admin.loginEmail")}
                 </label>
                 <div className="relative mt-1.5">
@@ -165,7 +165,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
               </div>
 
               <div>
-                <label htmlFor="admin-password" className="font-data text-[8px] uppercase tracking-[0.16em] text-ink-400">
+                <label htmlFor="admin-password" className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                   {t("admin.loginPassword")}
                 </label>
                 <div className="relative mt-1.5">
@@ -215,7 +215,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
               </Button>
             </form>
 
-            <p className="mt-8 border-t border-ink-900/12 pt-5 text-[10px] leading-relaxed text-ink-400">
+            <p className="mt-8 border-t border-ink-900/12 pt-5 text-[14px] leading-relaxed text-ink-400">
               {t("admin.loginFooter")}
             </p>
           </div>

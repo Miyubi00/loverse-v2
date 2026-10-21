@@ -379,6 +379,7 @@ for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height });
     await mockAdmin(page);
     await page.goto(ADMIN_PATH);
+    await expect(page.getByRole("button", { name: "Ganti bahasa ke English" })).toBeVisible();
 
     if (width === 390) {
       await page.getByRole("button", { name: "Menu", exact: true }).click();

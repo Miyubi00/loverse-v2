@@ -14,7 +14,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useTranslation } from '../i18n';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { MASTER_TEMPLATES } from '../lib/constants';
-import LanguageSwitcher from '../components/shared/LanguageSwitcher';
+import LanguageToggleButton from '../components/shared/LanguageToggleButton';
 import { DemoSkeleton } from '../components/ui/SkeletonLoaders';
 import { buttonClass } from '../components/ui/buttonStyles';
 
@@ -105,15 +105,15 @@ export default function TemplateDemo() {
     <div className="theme-canvas relative">
       <nav
         aria-label="Demo"
-        className="fixed left-4 top-4 z-50 flex flex-wrap items-center gap-2 sm:left-6 sm:top-6"
+        className="fixed left-4 top-4 z-[100] flex flex-wrap items-center gap-2 sm:left-6 sm:top-6"
       >
         <Link
           to="/"
-          className="inline-flex min-h-10 items-center gap-2 rounded-[3px] border border-cream-100/25 bg-ink-950/80 px-3.5 font-data text-[10px] uppercase tracking-[0.16em] text-cream-50 shadow-header backdrop-blur-md transition-colors duration-200 hover:bg-ink-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300"
+          className="inline-flex min-h-10 items-center gap-2 rounded-[3px] border border-cream-100/25 bg-ink-950/80 px-3.5 font-data text-[14px] uppercase tracking-[0.06em] text-cream-50 shadow-header backdrop-blur-md transition-colors duration-200 hover:bg-ink-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300"
         >
           <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" /> {t('demo.back')}
         </Link>
-        <LanguageSwitcher variant="header" className="bg-ink-950/80 backdrop-blur-md" />
+        <LanguageToggleButton variant="dark" className="bg-ink-950/80 backdrop-blur-md" />
       </nav>
 
       <Suspense fallback={<DemoSkeleton />}>

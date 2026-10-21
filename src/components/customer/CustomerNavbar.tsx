@@ -9,7 +9,7 @@
 import { ExternalLink } from "lucide-react";
 import type { OrderRow } from "../../types/database";
 import { useTranslation } from "../../i18n";
-import LanguageSwitcher from "../shared/LanguageSwitcher";
+import LanguageToggleButton from "../shared/LanguageToggleButton";
 import { Wordmark } from "../ui/Brand";
 
 interface CustomerNavbarProps {
@@ -34,7 +34,7 @@ export default function CustomerNavbar({ order }: CustomerNavbarProps) {
           <span>{t("customer.viewInvitation")}</span>
           <ExternalLink size={14} />
         </a>
-        <LanguageSwitcher variant="header" mode="toggle" />
+        <LanguageToggleButton variant="dark" />
       </div>
     </header>
   );

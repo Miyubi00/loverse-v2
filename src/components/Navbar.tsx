@@ -1,8 +1,8 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useTranslation } from "../i18n";
-import LanguageSwitcher from "./shared/LanguageSwitcher";
+import LanguageToggleButton from "./shared/LanguageToggleButton";
 import { Wordmark } from "./ui/Brand";
 import { buttonClass } from "./ui/buttonStyles";
 import { cn } from "../lib/cn";
@@ -52,7 +52,7 @@ export default function Navbar() {
     <>
       <a
         href="#main-content"
-        className="fixed left-3 top-3 z-[80] -translate-y-20 bg-ink-950 px-4 py-3 text-xs font-semibold text-cream-50 transition-transform focus:translate-y-0"
+        className="fixed left-3 top-3 z-[80] -translate-y-20 bg-ink-950 px-4 py-3 text-[14px] font-semibold text-cream-50 transition-transform focus:translate-y-0"
       >
         {t("nav.skip")}
       </a>
@@ -78,7 +78,7 @@ export default function Navbar() {
                   key={link.href}
                   to={link.href}
                   className={cn(
-                    "group relative py-2 text-[12px] font-medium tracking-[0.01em] text-cream-100/65 transition-colors hover:text-cream-50",
+                    "group relative py-2 text-[14px] font-medium tracking-[0.01em] text-cream-100/65 transition-colors hover:text-cream-50",
                     active && "text-cream-50",
                   )}
                 >
@@ -90,10 +90,10 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <LanguageSwitcher variant="header" />
+            <LanguageToggleButton variant="dark" />
             <Link
               to="/login"
-              className="px-3 py-2 text-[12px] font-medium text-cream-100/65 transition-colors hover:text-cream-50"
+              className="px-3 py-2 text-[14px] font-medium text-cream-100/65 transition-colors hover:text-cream-50"
             >
               {t("nav.login")}
             </Link>
@@ -132,7 +132,7 @@ export default function Navbar() {
                   className="group flex items-baseline justify-between border-b border-ink-900/12 py-5"
                 >
                   <span className="flex items-baseline gap-4">
-                    <span className="font-data text-[9px] text-ink-400">0{index + 1}</span>
+                    <span className="font-data text-[14px] text-ink-400">0{index + 1}</span>
                     <span className="display-lg text-[clamp(2.2rem,10vw,3.4rem)] text-ink-950">
                       {t(link.key)}
                     </span>
@@ -153,10 +153,10 @@ export default function Navbar() {
             </div>
 
             <div className="mt-auto flex items-center justify-between gap-4 pt-10">
-              <p className="max-w-[22ch] text-[11px] leading-relaxed text-ink-400">
+              <p className="max-w-[22ch] text-[14px] leading-relaxed text-ink-400">
                 Undangan digital yang terasa seperti kamu.
               </p>
-              <LanguageSwitcher variant="light" />
+              <LanguageToggleButton variant="light" />
             </div>
           </div>
         </div>

@@ -22,7 +22,7 @@ import ShareTab from "../components/customer/ShareTab";
 import EditTab from "../components/customer/EditTab";
 import RsvpTab from "../components/customer/RsvpTab";
 import ConfirmDialog from "../components/ConfirmDialog";
-import LanguageSwitcher from "../components/shared/LanguageSwitcher";
+import LanguageToggleButton from "../components/shared/LanguageToggleButton";
 import { useTranslation } from "../i18n";
 import { Wordmark } from "../components/ui/Brand";
 
@@ -186,7 +186,7 @@ export default function Dashboard() {
               >
                 <ExternalLink size={18} />
               </a>
-              <LanguageSwitcher variant="header" mode="toggle" />
+              <LanguageToggleButton variant="dark" />
             </div>
           </header>
 
