@@ -154,3 +154,7 @@ Artifacts: `artifacts/ui/after/`, `artifacts/ui/revision/color/`, `artifacts/ui/
 5. Admin panel.
 6. Demo shell, accessibility fixes and audit script.
 7. Documentation, typography audit tooling, and progress artifacts.
+
+## Follow-up: theme catalog cards
+
+- [x] Removed the top-right template number and centered hover eye icon; retained category, preview, and selection links.

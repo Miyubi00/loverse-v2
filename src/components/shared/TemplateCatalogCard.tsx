@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Eye } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { SkeletonImage } from "../ui/SkeletonImage";
 import { useTranslation } from "../../i18n";
 import type { TemplateRow } from "../../types/database";
@@ -34,17 +34,11 @@ export default function TemplateCatalogCard({ template, priceLabel }: TemplateCa
           className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.045]"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/88 via-ink-950/10 to-ink-950/15" />
-        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-cream-50/40 bg-cream-50/12 text-cream-50 backdrop-blur-md">
-            <Eye className="h-4 w-4" />
-          </span>
-        </div>
 
         <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
           <span className="border border-cream-50/25 bg-ink-950/18 px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-cream-50/85 backdrop-blur-sm">
             {template.category ?? "Basic"}
           </span>
-          <span className="font-data text-[14px] text-cream-50/55">No. {String(template.id ?? "").padStart(2, "0") || "—"}</span>
         </div>
 
         <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
