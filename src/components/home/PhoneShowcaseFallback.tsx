@@ -12,14 +12,6 @@ export default function PhoneShowcaseFallback({
   return (
     <div className="relative flex h-full w-full items-center justify-center overflow-hidden px-4 pb-16 pt-8">
       <div
-        className="pointer-events-none absolute inset-0 opacity-70"
-        style={{
-          backgroundImage:
-            "radial-gradient(ellipse at 50% 48%, color-mix(in srgb, var(--color-peach-300) 14%, transparent), transparent 62%)",
-        }}
-        aria-hidden="true"
-      />
-      <div
         className="relative h-full max-h-[440px] w-full max-w-[260px]"
         style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
         role="img"

@@ -207,6 +207,16 @@ export default function Landing() {
         className="relative scroll-mt-20 overflow-hidden border-b border-cream-100/10 bg-ink-950 text-cream-100"
       >
         <div className="grain grain-light absolute inset-0" aria-hidden="true" />
+        <div
+          className="pointer-events-none absolute inset-y-0 z-[1]"
+          style={{
+            left: "30%",
+            right: "-20%",
+            backgroundImage:
+              "radial-gradient(ellipse 72% 78% at 62% 45%, color-mix(in srgb, var(--color-peach-300) 15%, transparent), transparent 72%), radial-gradient(ellipse 66% 60% at 76% 83%, color-mix(in srgb, var(--color-ember-600) 13%, transparent), transparent 76%), radial-gradient(ellipse at center, transparent 52%, color-mix(in srgb, var(--color-ink-950) 45%, transparent) 100%)",
+          }}
+          aria-hidden="true"
+        />
         <div className="pointer-events-none absolute inset-0 opacity-[0.16]" aria-hidden="true">
           <div className="absolute left-[8%] top-0 h-full w-px bg-cream-100/20" />
           <div className="absolute left-[38%] top-0 h-full w-px bg-cream-100/10" />

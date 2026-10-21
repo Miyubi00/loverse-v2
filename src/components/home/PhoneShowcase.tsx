@@ -292,14 +292,6 @@ export default function PhoneShowcase() {
         onPointerCancel={finishPointer}
       >
         <div
-          className="pointer-events-none absolute inset-0 z-0"
-          style={{
-            backgroundImage:
-              "radial-gradient(ellipse at 54% 44%, color-mix(in srgb, var(--color-peach-300) 17%, transparent), transparent 49%), radial-gradient(ellipse at 72% 82%, color-mix(in srgb, var(--color-ember-600) 15%, transparent), transparent 60%), radial-gradient(ellipse at center, transparent 40%, color-mix(in srgb, var(--color-ink-950) 82%, transparent) 100%)",
-          }}
-          aria-hidden="true"
-        />
-        <div
           className={cn(
             "absolute inset-0 z-[2] transition-opacity duration-500",
             sceneVisible ? "opacity-100" : "pointer-events-none opacity-0",

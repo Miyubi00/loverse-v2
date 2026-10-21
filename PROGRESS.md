@@ -43,6 +43,7 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete. The full
 - [x] Each shuffle straightens both phones into an almost-overlapped stack, offset slightly so only the rear phone's bezel and side edge peek out; after they exchange places, the V pose returns.
 - [x] The exchange now has a pronounced depth pass: the rear phone pushes through the front plane into the foreground as the current front phone recedes, then both settle into their new slots before the V rotations return.
 - [x] The incoming phone carries the next template through the exchange. Horizontal drag remains, and the CSS fallback keeps its layered card stack without yawing around the Y axis.
+- [x] Moved the showcase glow to a wider hero-level layer and removed panel-sized gradients so the right edge blends into the page background in both WebGL and fallback modes.
 - [x] `npm run lint` and `npm run typecheck` pass.
 
 ## Completed
