@@ -37,6 +37,12 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete. The full
 - [x] Lighthouse mobile audit on production preview: Performance 45, Accessibility 100, Best Practices 96, SEO 100; FCP 2.8s, LCP 8.1s, TBT 1,360ms, CLS 0.002, Speed Index 3.0s.
 - [x] Production build sizes: `PhoneShowcaseScene` 1,075,210 bytes / 297,350 bytes gzip; `public/models/phone.glb` 42,988 bytes / 10,516 bytes gzip.
 
+## Post-M4 follow-up — card transition
+
+- [x] Replaced the full 360° phone turn with a horizontal card-stack slide, small depth shift, and restrained Z-axis tilt. The orbit rings stay in place while the phone pair moves; the theme swaps midway.
+- [x] Drag follows the pointer horizontally. The CSS fallback keeps its layered card stack and no longer yaws cards around the Y axis.
+- [x] `npm run lint` and `npm run typecheck` pass.
+
 ## Completed
 
 ### Foundation

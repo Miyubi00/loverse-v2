@@ -1,4 +1,4 @@
-export interface ShowcaseSpinCommand {
+export interface ShowcaseTransitionCommand {
   id: number;
   direction: -1 | 0 | 1;
   nextIndex: number;
@@ -7,8 +7,8 @@ export interface ShowcaseSpinCommand {
 
 export interface PhoneShowcaseMotion {
   dragging: boolean;
-  dragRotation: number;
+  dragOffset: number;
   commandId: number;
-  command: ShowcaseSpinCommand | null;
+  command: ShowcaseTransitionCommand | null;
   requestFrame?: () => void;
 }

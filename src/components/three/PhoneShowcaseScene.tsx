@@ -38,7 +38,7 @@ interface SceneProps {
   activeIndex: number;
   motionRef: RefObject<PhoneShowcaseMotion>;
   onThemeChange: (index: number) => void;
-  onSpinComplete: () => void;
+  onTransitionComplete: () => void;
   onReady: () => void;
   onContextLost: () => void;
 }
@@ -343,16 +343,15 @@ function ShowcaseRig({
   onReady,
   motionRef,
   onThemeChange,
-  onSpinComplete,
-}: Pick<SceneProps, "activeIndex" | "motionRef" | "onReady" | "onThemeChange" | "onSpinComplete">) {
+  onTransitionComplete,
+}: Pick<SceneProps, "activeIndex" | "motionRef" | "onReady" | "onThemeChange" | "onTransitionComplete">) {
   const { gl, invalidate } = useThree();
-  const carouselRef = useRef<Group>(null);
+  const phoneStackRef = useRef<Group>(null);
   const animationRef = useRef({
     commandId: 0,
     active: false,
     direction: 0 as -1 | 0 | 1,
     from: 0,
-    to: 0,
     startedAt: 0,
     duration: 1,
     nextIndex: activeIndex,
@@ -372,7 +371,7 @@ function ShowcaseRig({
   );
 
   useFrame(() => {
-    const group = carouselRef.current;
+    const group = phoneStackRef.current;
     if (!group) return;
 
     const motion = motionRef.current;
@@ -383,8 +382,7 @@ function ShowcaseRig({
       animation.commandId = command.id;
       animation.active = true;
       animation.direction = command.direction;
-      animation.from = motion.dragRotation;
-      animation.to = command.direction === 0 ? 0 : command.direction * Math.PI * 2;
+      animation.from = motion.dragOffset;
       animation.startedAt = performance.now();
       animation.duration =
         command.direction === 0
@@ -395,11 +393,10 @@ function ShowcaseRig({
     }
 
     if (motion.dragging) {
-      group.rotation.y = motion.dragRotation;
-      const showRearCameras = Math.cos(group.rotation.y) < -0.15;
-      group.traverse((object) => {
-        if (object.userData.rearCameraPart) object.visible = showRearCameras;
-      });
+      group.position.x = motion.dragOffset;
+      group.position.z = -Math.abs(motion.dragOffset) * 0.06;
+      group.rotation.z = -motion.dragOffset * 0.075;
+      group.scale.setScalar(1 - Math.abs(motion.dragOffset) * 0.035);
       invalidate();
       return;
     }
@@ -414,11 +411,15 @@ function ShowcaseRig({
       progress < 0.5
         ? 4 * progress ** 3
         : 1 - (-2 * progress + 2) ** 3 / 2;
-    group.rotation.y = animation.from + (animation.to - animation.from) * eased;
-    const showRearCameras = Math.cos(group.rotation.y) < -0.15;
-    group.traverse((object) => {
-      if (object.userData.rearCameraPart) object.visible = showRearCameras;
-    });
+    const cardArc = Math.sin(progress * Math.PI);
+    group.position.x =
+      animation.from * (1 - eased) - animation.direction * 0.58 * cardArc;
+    group.position.z = -0.08 * cardArc;
+    group.rotation.z =
+      -animation.direction * 0.045 * cardArc - animation.from * 0.06 * (1 - eased);
+    group.scale.setScalar(
+      1 - 0.055 * cardArc - Math.abs(animation.from) * 0.035 * (1 - eased),
+    );
 
     if (animation.direction !== 0 && !animation.swapped && progress >= 0.5) {
       animation.swapped = true;
@@ -426,11 +427,13 @@ function ShowcaseRig({
     }
 
     if (progress >= 1) {
-      group.rotation.y = 0;
+      group.position.set(0, 0, 0);
+      group.rotation.set(0, 0, 0);
+      group.scale.setScalar(1);
       animation.active = false;
-      motion.dragRotation = 0;
+      motion.dragOffset = 0;
       motion.command = null;
-      onSpinComplete();
+      onTransitionComplete();
     } else {
       invalidate();
     }
@@ -541,13 +544,15 @@ function ShowcaseRig({
         <Lightformer form="rect" intensity={0.7} color={colors.cream} scale={[3, 3, 1]} position={[0, 5, 0]} target={[0, 0, 0]} />
       </Environment>
 
-      <group ref={carouselRef}>
+      <group>
         <OrbitRings peach={colors.peach} ember={colors.ember} />
-        <group position={[-0.62, -0.16, -0.62]} rotation={[0.035, -0.14, 0.19]} scale={0.93}>
-          <PhoneModel screen={screens[1]} materials={materials} />
-        </group>
-        <group position={[0.64, 0.04, 0.46]} rotation={[0.025, 0.16, -0.2]} scale={1.08}>
-          <PhoneModel screen={screens[0]} materials={materials} />
+        <group ref={phoneStackRef}>
+          <group position={[-0.62, -0.16, -0.62]} rotation={[0.035, -0.14, 0.19]} scale={0.93}>
+            <PhoneModel screen={screens[1]} materials={materials} />
+          </group>
+          <group position={[0.64, 0.04, 0.46]} rotation={[0.025, 0.16, -0.2]} scale={1.08}>
+            <PhoneModel screen={screens[0]} materials={materials} />
+          </group>
         </group>
         <ContactShadows
           position={[0, -2.18, 0]}
@@ -568,7 +573,7 @@ export default function PhoneShowcaseScene({
   activeIndex,
   motionRef,
   onThemeChange,
-  onSpinComplete,
+  onTransitionComplete,
   onReady,
   onContextLost,
 }: SceneProps) {
@@ -597,7 +602,7 @@ export default function PhoneShowcaseScene({
           activeIndex={activeIndex}
           motionRef={motionRef}
           onThemeChange={onThemeChange}
-          onSpinComplete={onSpinComplete}
+          onTransitionComplete={onTransitionComplete}
           onReady={onReady}
         />
       </Suspense>

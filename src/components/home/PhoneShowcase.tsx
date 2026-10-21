@@ -57,7 +57,7 @@ export default function PhoneShowcase() {
   const rootRef = useRef<HTMLDivElement>(null);
   const motionRef = useRef<PhoneShowcaseMotion>({
     dragging: false,
-    dragRotation: 0,
+    dragOffset: 0,
     commandId: 0,
     command: null,
   });
@@ -70,7 +70,7 @@ export default function PhoneShowcase() {
     velocity: 0,
   });
   const activeIndexRef = useRef(0);
-  const spinningRef = useRef(false);
+  const transitioningRef = useRef(false);
   const [inView, setInView] = useState(() => !("IntersectionObserver" in window));
   const [documentVisible, setDocumentVisible] = useState(
     () => document.visibilityState === "visible",
@@ -80,7 +80,7 @@ export default function PhoneShowcase() {
   const [contextLost, setContextLost] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isSpinning, setIsSpinning] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const active = SHOWCASE_TEMPLATES[activeIndex];
   const sceneActive = mounted && canRender3D && !contextLost && inView && documentVisible;
@@ -120,27 +120,29 @@ export default function PhoneShowcase() {
     setSceneReady(false);
     setContextLost(true);
   }, []);
-  const onSpinComplete = useCallback(() => {
-    spinningRef.current = false;
-    setIsSpinning(false);
+  const onTransitionComplete = useCallback(() => {
+    transitioningRef.current = false;
+    setIsTransitioning(false);
   }, []);
   const changeTheme = useCallback((index: number) => {
     activeIndexRef.current = index;
     setActiveIndex(index);
   }, []);
 
-  const queueSpin = useCallback((direction: -1 | 1, velocity = 0) => {
-    if (spinningRef.current) return;
+  const queueTransition = useCallback((direction: -1 | 1, velocity = 0) => {
+    if (transitioningRef.current) return;
 
     const motion = motionRef.current;
     const nextIndex = wrapIndex(activeIndexRef.current + direction);
     if (!sceneVisible) {
+      motion.dragging = false;
+      motion.dragOffset = 0;
       changeTheme(nextIndex);
       return;
     }
 
-    spinningRef.current = true;
-    setIsSpinning(true);
+    transitioningRef.current = true;
+    setIsTransitioning(true);
     motion.dragging = false;
     motion.commandId += 1;
     motion.command = {
@@ -155,16 +157,16 @@ export default function PhoneShowcase() {
   const queueSnapBack = useCallback(() => {
     const motion = motionRef.current;
     if (!sceneVisible) {
-      motion.dragRotation = 0;
+      motion.dragOffset = 0;
       motion.dragging = false;
       return;
     }
-    if (Math.abs(motion.dragRotation) < 0.015) {
+    if (Math.abs(motion.dragOffset) < 0.015) {
       motion.dragging = false;
       return;
     }
-    spinningRef.current = true;
-    setIsSpinning(true);
+    transitioningRef.current = true;
+    setIsTransitioning(true);
     motion.dragging = false;
     motion.commandId += 1;
     motion.command = {
@@ -177,7 +179,7 @@ export default function PhoneShowcase() {
   }, [sceneVisible]);
 
   const onPointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
-    if (event.button !== 0 || spinningRef.current) return;
+    if (event.button !== 0 || transitioningRef.current) return;
     if (event.target instanceof Element && event.target.closest("a, button, [data-carousel-control]")) {
       return;
     }
@@ -192,7 +194,7 @@ export default function PhoneShowcase() {
       velocity: 0,
     };
     motionRef.current.dragging = true;
-    motionRef.current.dragRotation = 0;
+    motionRef.current.dragOffset = 0;
     motionRef.current.requestFrame?.();
     setIsDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -210,9 +212,9 @@ export default function PhoneShowcase() {
     pointer.velocity = (-stepX / width) * Math.PI / elapsed;
     pointer.lastX = event.clientX;
     pointer.lastTime = now;
-    motionRef.current.dragRotation = Math.max(
-      -1.05,
-      Math.min(1.05, (-pointer.distanceX / width) * Math.PI * 1.6),
+    motionRef.current.dragOffset = Math.max(
+      -0.85,
+      Math.min(0.85, (pointer.distanceX / width) * 1.2),
     );
     motionRef.current.requestFrame?.();
     if (Math.abs(pointer.distanceX) > 5) event.preventDefault();
@@ -238,32 +240,32 @@ export default function PhoneShowcase() {
             : pointer.velocity < 0
               ? -1
               : 1;
-        queueSpin(direction, Math.min(Math.abs(pointer.velocity), 12));
+        queueTransition(direction, Math.min(Math.abs(pointer.velocity), 12));
       } else {
         queueSnapBack();
       }
     },
-    [queueSnapBack, queueSpin],
+    [queueSnapBack, queueTransition],
   );
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.key === "ArrowRight") {
         event.preventDefault();
-        queueSpin(1);
+        queueTransition(1);
       } else if (event.key === "ArrowLeft") {
         event.preventDefault();
-        queueSpin(-1);
+        queueTransition(-1);
       }
     },
-    [queueSpin],
+    [queueTransition],
   );
 
   useEffect(() => {
-    if (!isPlaying || reducedMotion || isSpinning || !inView || !documentVisible) return;
-    const timer = window.setTimeout(() => queueSpin(1), 6200);
+    if (!isPlaying || reducedMotion || isTransitioning || !inView || !documentVisible) return;
+    const timer = window.setTimeout(() => queueTransition(1), 6200);
     return () => window.clearTimeout(timer);
-  }, [documentVisible, inView, isPlaying, isSpinning, activeIndex, queueSpin, reducedMotion]);
+  }, [documentVisible, inView, isPlaying, isTransitioning, activeIndex, queueTransition, reducedMotion]);
 
   return (
     <div
@@ -311,7 +313,7 @@ export default function PhoneShowcase() {
                   activeIndex={activeIndex}
                   motionRef={motionRef}
                   onThemeChange={changeTheme}
-                  onSpinComplete={onSpinComplete}
+                  onTransitionComplete={onTransitionComplete}
                   onReady={onSceneReady}
                   onContextLost={onContextLost}
                 />
@@ -335,8 +337,8 @@ export default function PhoneShowcase() {
             type="button"
             data-carousel-control=""
             aria-label={t("home.showcasePrevious")}
-            disabled={isSpinning}
-            onClick={() => queueSpin(-1)}
+            disabled={isTransitioning}
+            onClick={() => queueTransition(-1)}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300 disabled:opacity-45"
           >
             <ChevronLeft className="h-4 w-4" aria-hidden="true" />
@@ -360,8 +362,8 @@ export default function PhoneShowcase() {
             type="button"
             data-carousel-control=""
             aria-label={t("home.showcaseNext")}
-            disabled={isSpinning}
-            onClick={() => queueSpin(1)}
+            disabled={isTransitioning}
+            onClick={() => queueTransition(1)}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300 disabled:opacity-45"
           >
             <ChevronRight className="h-4 w-4" aria-hidden="true" />

@@ -39,7 +39,7 @@ export default function PhoneShowcaseFallback({
               style={{
                 zIndex: 20 - distance,
                 opacity: distance > 2 ? 0 : 1,
-                transform: `translate3d(${signed * 15}%, ${distance * 1.4}%, ${-distance * 48}px) rotateY(${signed * 16}deg) rotateZ(${signed * 3.4}deg) scale(${
+                transform: `translate3d(${signed * 15}%, ${distance * 1.4}%, ${-distance * 48}px) rotateZ(${signed * 3.4}deg) scale(${
                   isActive ? 1 : 0.9
                 })`,
                 transformStyle: "preserve-3d",
