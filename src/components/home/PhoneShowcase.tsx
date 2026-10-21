@@ -53,7 +53,7 @@ const wrapIndex = (index: number) =>
 
 export default function PhoneShowcase() {
   const { t } = useTranslation();
-  const { ready, canRender3D } = useDeviceCapability();
+  const { ready, canRender3D, reducedMotion } = useDeviceCapability();
   const rootRef = useRef<HTMLDivElement>(null);
   const motionRef = useRef<PhoneShowcaseMotion>({
     dragging: false,
@@ -260,10 +260,10 @@ export default function PhoneShowcase() {
   );
 
   useEffect(() => {
-    if (!isPlaying || isSpinning || !inView || !documentVisible) return;
+    if (!isPlaying || reducedMotion || isSpinning || !inView || !documentVisible) return;
     const timer = window.setTimeout(() => queueSpin(1), 6200);
     return () => window.clearTimeout(timer);
-  }, [documentVisible, inView, isPlaying, isSpinning, activeIndex, queueSpin]);
+  }, [documentVisible, inView, isPlaying, isSpinning, activeIndex, queueSpin, reducedMotion]);
 
   return (
     <div
@@ -327,7 +327,7 @@ export default function PhoneShowcase() {
           )}
           aria-hidden={sceneVisible}
         >
-          <PhoneShowcaseFallback activeIndex={activeIndex} />
+          <PhoneShowcaseFallback activeIndex={activeIndex} reducedMotion={reducedMotion} />
         </div>
 
         <div className="absolute bottom-3 left-3 z-10 flex items-center gap-1.5 sm:bottom-4 sm:left-4">
@@ -344,8 +344,9 @@ export default function PhoneShowcase() {
           <button
             type="button"
             data-carousel-control=""
-            aria-label={isPlaying ? t("home.showcasePause") : t("home.showcasePlay")}
-            aria-pressed={isPlaying}
+            aria-label={reducedMotion ? t("home.showcaseMotionDisabled") : isPlaying ? t("home.showcasePause") : t("home.showcasePlay")}
+            aria-pressed={isPlaying && !reducedMotion}
+            disabled={reducedMotion}
             onClick={() => setIsPlaying((playing) => !playing)}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300"
           >

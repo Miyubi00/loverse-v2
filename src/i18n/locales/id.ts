@@ -98,6 +98,7 @@ export const id = {
     showcaseNext: "Tampilkan tema berikutnya",
     showcasePause: "Jeda rotasi tema otomatis",
     showcasePlay: "Lanjutkan rotasi tema otomatis",
+    showcaseMotionDisabled: "Rotasi otomatis dimatikan karena preferensi gerakan dikurangi",
     showcaseOf: "dari",
     tickerMap: "Peta lokasi",
     tickerGift: "Amplop digital",

@@ -21,7 +21,7 @@ function readCapability(): { canRender3D: boolean; reducedMotion: boolean } {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const nav = navigator as Navigator & {
     deviceMemory?: number;
-    connection?: { saveData?: boolean; effectiveType?: string };
+    connection?: EventTarget & { saveData?: boolean; effectiveType?: string };
   };
   const memory = nav.deviceMemory ?? 8;
   const cores = nav.hardwareConcurrency ?? 8;
@@ -44,11 +44,14 @@ export default function useDeviceCapability(): Capability {
   useEffect(() => {
     const frame = requestAnimationFrame(() => setState({ ready: true, ...readCapability() }));
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const connection = (navigator as Navigator & { connection?: EventTarget }).connection;
     const onChange = () => setState({ ready: true, ...readCapability() });
     media.addEventListener("change", onChange);
+    connection?.addEventListener("change", onChange);
     return () => {
       cancelAnimationFrame(frame);
       media.removeEventListener("change", onChange);
+      connection?.removeEventListener("change", onChange);
     };
   }, []);
 

@@ -1,6 +1,6 @@
 # LoVerse UI Redesign — Progress
 
-Status: **Revisions A–D committed; PhoneShowcase v2 M1–M2 complete; M3–M4 pending.**
+Status: **Revisions A–D committed; PhoneShowcase v2 M1–M3 complete; M4 pending.**
 
 ## PhoneShowcase v2 — M1
 
@@ -19,7 +19,15 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1–M2 complete; M3–M4 
 - [x] Template textures swap at the halfway point, while the screens face away. Autoplay advances every 6.2 seconds and can be paused or resumed.
 - [x] Added bilingual DOM controls, arrow-key navigation, a live announcement for the active theme, and touch-safe horizontal dragging.
 - [x] Checked the flow in WebGL and captured desktop and 390×844 mobile views at [M2 desktop](artifacts/ui/revision/phone-showcase-v2/m2-desktop-carousel.png) and [M2 mobile](artifacts/ui/revision/phone-showcase-v2/m2-mobile-carousel.png).
-- [x] `npm run lint` and `npm run typecheck` pass. M3 fallback coverage and M4 full validation remain.
+- [x] `npm run lint` and `npm run typecheck` pass.
+
+## PhoneShowcase v2 — M3
+
+- [x] Kept the same reserved showcase stage dimensions while the absolute WebGL and CSS layers switch, so loading or losing the model does not change layout size.
+- [x] CSS fallback now uses perspective, depth offsets, and Y rotation to render the theme cards as a 3D carousel.
+- [x] Reduced-motion users stay on the fallback, get no CSS transition or automatic rotation, and retain immediate previous/next controls.
+- [x] WebGL, device memory/core, and Save-Data checks choose the fallback; Save-Data preference changes are observed during the session. A failed or lost WebGL scene also exposes the fallback.
+- [x] `npm run lint` and `npm run typecheck` pass. M4 Playwright, Lighthouse, bundle/model sizing, and full validation remain.
 
 ## Completed
 
@@ -29,7 +37,7 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1–M2 complete; M3–M4 
 - [x] `src/lib/cn.ts` and UI primitives: `Button`/`buttonClass`, `Brand`, `PageHeader`, `StatusBadge`, `EmptyState`, `ConfirmDialog`, `PageTransition`, `Reveal`.
 - [x] Skeleton primitive and selected route/stat/catalog/demo presets tokenized.
 - [x] Logo-derived palette in `src/index.css`, documented in `docs/color-from-logo.md`, enforced by `scripts/audit-colors.mjs`.
-- [x] PhoneShowcase v2 M1 replaced the previous ring scene with the static GLB composition; M2 interaction work is recorded above and M3 fallback coverage remains.
+- [x] PhoneShowcase v2 M1 replaced the previous ring scene with the static GLB composition; M2 interaction and M3 fallback work are recorded above.
 - [x] Section 3 docs synchronized: `PhoneShowcaseScene`, five WebP previews, CSS fallback, and prior 253.95 kB gzip baseline; legacy hero references removed.
 
 ### Section 4 — Typography

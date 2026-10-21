@@ -100,6 +100,7 @@ export const en: TranslationDictionary = {
     showcaseNext: "Show next theme",
     showcasePause: "Pause automatic theme rotation",
     showcasePlay: "Resume automatic theme rotation",
+    showcaseMotionDisabled: "Automatic rotation is off because reduced motion is enabled",
     showcaseOf: "of",
     tickerMap: "Location map",
     tickerGift: "Digital envelope",

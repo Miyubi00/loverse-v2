@@ -1,6 +1,12 @@
 import { SHOWCASE_TEMPLATES } from "./showcaseTemplates";
 
-export default function PhoneShowcaseFallback({ activeIndex = 0 }: { activeIndex?: number }) {
+export default function PhoneShowcaseFallback({
+  activeIndex = 0,
+  reducedMotion = false,
+}: {
+  activeIndex?: number;
+  reducedMotion?: boolean;
+}) {
   const active = SHOWCASE_TEMPLATES[activeIndex];
 
   return (
@@ -15,6 +21,7 @@ export default function PhoneShowcaseFallback({ activeIndex = 0 }: { activeIndex
       />
       <div
         className="relative h-full max-h-[440px] w-full max-w-[260px]"
+        style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
         role="img"
         aria-label={`Pratinjau template ${active.name}`}
         data-showcase-fallback=""
@@ -32,11 +39,13 @@ export default function PhoneShowcaseFallback({ activeIndex = 0 }: { activeIndex
               style={{
                 zIndex: 20 - distance,
                 opacity: distance > 2 ? 0 : 1,
-                transform: `translate3d(${signed * 15}%, ${distance * 1.4}%, 0) rotate(${signed * 3.4}deg) scale(${
+                transform: `translate3d(${signed * 15}%, ${distance * 1.4}%, ${-distance * 48}px) rotateY(${signed * 16}deg) rotateZ(${signed * 3.4}deg) scale(${
                   isActive ? 1 : 0.9
                 })`,
-                transition:
-                  "transform 500ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms cubic-bezier(0.22, 1, 0.36, 1)",
+                transformStyle: "preserve-3d",
+                transition: reducedMotion
+                  ? "none"
+                  : "transform 500ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms cubic-bezier(0.22, 1, 0.36, 1)",
               }}
               aria-hidden={!isActive}
             >
