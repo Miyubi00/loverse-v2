@@ -21,30 +21,20 @@ export default function CustomerNavbar({ order }: CustomerNavbarProps) {
 
   return (
     <header className="hidden shrink-0 items-center justify-between border-b border-cream-100/12 bg-ink-950 px-6 py-3 lg:flex">
-      <div className="flex items-center gap-5">
-        <Wordmark imageClassName="h-7" />
-        <span className="h-5 w-px bg-cream-100/15" aria-hidden="true" />
-        <div>
-          <p className="font-data text-[8px] uppercase tracking-[0.22em] text-peach-300/70">
-            {t("customer.workspace")}
-          </p>
-          <p className="mt-0.5 text-[12px] font-medium text-cream-100/80">
-            {t("nav.dashboard")}
-          </p>
-        </div>
-      </div>
+      <Wordmark imageClassName="h-7" />
 
-      <div className="flex items-center gap-4">
-        <LanguageSwitcher variant="header" />
+      <div className="flex items-center gap-3">
         <a
           href={`/wedding/${order.slug}`}
           target="_blank"
-          rel="noreferrer"
-          className="inline-flex min-h-9 items-center gap-2 border border-cream-100/25 px-3.5 font-data text-[9px] uppercase tracking-[0.16em] text-cream-100 transition-colors hover:border-cream-50 hover:bg-cream-50 hover:text-ink-950"
+          rel="noopener noreferrer"
+          aria-label={t("customer.viewInvitation")}
+          className="inline-flex min-h-10 items-center gap-2 border border-cream-100/25 px-3.5 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100 transition-colors hover:border-cream-50 hover:bg-cream-50 hover:text-ink-950"
         >
           <span>{t("customer.viewInvitation")}</span>
-          <ExternalLink size={12} />
+          <ExternalLink size={14} />
         </a>
+        <LanguageSwitcher variant="header" mode="toggle" />
       </div>
     </header>
   );

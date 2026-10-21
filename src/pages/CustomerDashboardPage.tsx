@@ -8,7 +8,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowUpRight, Eye, LogOut, Menu, MessageSquare, Save, Share2 } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Menu, MessageSquare, Save, Share2 } from "lucide-react";
 import { BASIC_TEMPLATES_SLUGS } from "../lib/constants";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { DashboardSkeleton } from "../components/ui/SkeletonLoaders";
@@ -22,6 +22,7 @@ import ShareTab from "../components/customer/ShareTab";
 import EditTab from "../components/customer/EditTab";
 import RsvpTab from "../components/customer/RsvpTab";
 import ConfirmDialog from "../components/ConfirmDialog";
+import LanguageSwitcher from "../components/shared/LanguageSwitcher";
 import { useTranslation } from "../i18n";
 import { Wordmark } from "../components/ui/Brand";
 
@@ -131,7 +132,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex h-dvh w-full flex-col overflow-hidden bg-cream-100 font-sans text-ink-900">
+    <div className="app-shell flex h-dvh w-full flex-col overflow-hidden bg-cream-100 font-sans text-ink-900">
       <CustomerNavbar order={order} />
 
       <div className="relative flex min-h-0 flex-1 overflow-hidden">
@@ -165,38 +166,28 @@ export default function Dashboard() {
         />
 
         <div className="relative flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-          <header className="flex shrink-0 items-center gap-2 border-b border-cream-100/10 bg-ink-950 px-4 py-3 lg:hidden">
+          <header className="flex shrink-0 items-center gap-2 border-b border-cream-100/10 bg-ink-950 px-3 py-2 lg:hidden">
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
               aria-label={t("nav.menu")}
-              className="p-2 text-cream-100/80 transition-colors hover:text-cream-50"
+              className="-ml-1 flex h-10 w-10 shrink-0 items-center justify-center text-cream-100/80 transition-colors hover:text-cream-50"
             >
               <Menu size={20} />
             </button>
             <Wordmark imageClassName="h-6" />
-            <div className="min-w-0 flex-1 px-1">
-              <p className="truncate font-data text-[9px] uppercase tracking-[0.16em] text-cream-100/50">
-                {activeMenu.label}
-              </p>
+            <div className="ml-auto flex shrink-0 items-center gap-1">
+              <a
+                href={`/wedding/${order.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t("customer.viewInvitation")}
+                className="flex h-10 w-10 items-center justify-center text-cream-100/70 transition-colors hover:text-cream-50"
+              >
+                <ExternalLink size={18} />
+              </a>
+              <LanguageSwitcher variant="header" mode="toggle" />
             </div>
-            <a
-              href={`/wedding/${order.slug}`}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={t("customer.viewInvitation")}
-              className="p-2 text-cream-100/70 transition-colors hover:text-cream-50"
-            >
-              <Eye size={18} />
-            </a>
-            <button
-              type="button"
-              onClick={handleLogout}
-              aria-label={t("nav.logout")}
-              className="p-2 text-cream-100/50 transition-colors hover:text-cream-50"
-            >
-              <LogOut size={18} />
-            </button>
           </header>
 
           <main className="flex-1 overflow-y-auto">
@@ -205,7 +196,7 @@ export default function Dashboard() {
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <span className="eyebrow text-ember-600">{t("customer.workspaceEyebrow")}</span>
-                    <span className="font-data text-[9px] text-ink-400" aria-hidden="true">
+                    <span className="font-data text-[14px] text-ink-400" aria-hidden="true">
                       /{String(activeIndex).padStart(2, "0")}
                     </span>
                   </div>
@@ -213,7 +204,7 @@ export default function Dashboard() {
                     href={`/wedding/${order.slug}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="hidden items-center gap-2 font-data text-[9px] uppercase tracking-[0.14em] text-ink-500 transition-colors hover:text-ember-600 sm:inline-flex"
+                    className="hidden items-center gap-2 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500 transition-colors hover:text-ember-600 sm:inline-flex"
                   >
                     {t("customer.activeInvitation")}
                     <ArrowUpRight size={12} />
@@ -225,14 +216,14 @@ export default function Dashboard() {
                     <h1 className="font-display text-[clamp(2.5rem,6vw,4.6rem)] leading-[0.94] tracking-[-0.055em] text-ink-950">
                       {activeMenu.label}
                     </h1>
-                    <p className="mt-3 max-w-xl text-[13px] leading-relaxed text-ink-500 sm:text-sm">
+                    <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-ink-500 sm:text-sm">
                       {descriptions[activeMenu.id]}
                     </p>
                   </div>
 
                   <dl className="flex flex-wrap items-end gap-x-7 gap-y-3 lg:justify-end">
                     <div>
-                      <dt className="font-data text-[8px] uppercase tracking-[0.18em] text-ink-400">
+                      <dt className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                         {t("customer.weddingDay")}
                       </dt>
                       <dd className="mt-1 font-display text-lg tracking-[-0.02em] text-ink-900">
@@ -240,10 +231,10 @@ export default function Dashboard() {
                       </dd>
                     </div>
                     <div>
-                      <dt className="font-data text-[8px] uppercase tracking-[0.18em] text-ink-400">
+                      <dt className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                         {t("customer.viewInvitation")}
                       </dt>
-                      <dd className="mt-1.5 inline-flex items-center gap-1.5 border border-success-600/25 bg-success-600/[0.06] px-2 py-1 font-data text-[8px] uppercase tracking-[0.14em] text-success-700">
+                      <dd className="mt-1.5 inline-flex items-center gap-1.5 border border-success-600/25 bg-success-600/[0.06] px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-success-700">
                         <span className="h-1 w-1 bg-success-600" aria-hidden="true" />
                         {t("customer.activeInvitation")}
                       </dd>

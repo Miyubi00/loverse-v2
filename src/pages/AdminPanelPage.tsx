@@ -237,7 +237,7 @@ export default function AdminPanel() {
             </button>
             <Wordmark imageClassName="h-6" />
             <div className="ml-auto shrink-0">
-              <LanguageSwitcher variant="header" touchTarget />
+              <LanguageSwitcher variant="header" mode="toggle" />
             </div>
           </header>
 
