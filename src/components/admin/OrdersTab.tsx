@@ -26,13 +26,13 @@ interface OrdersTabProps {
 }
 
 const INPUT_CLASS =
-  "h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15";
+  "h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[14px] font-medium text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15";
 
 const LABEL_CLASS =
-  "mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500";
+  "mb-1.5 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500";
 
 const TH_CLASS =
-  "px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500";
+  "px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500";
 
 export default function OrdersTab({
   ordersSrv,
@@ -167,12 +167,12 @@ export default function OrdersTab({
           <h2 className="mt-2 font-display text-[clamp(2rem,4vw,3.1rem)] leading-none tracking-[-0.05em] text-ink-950">
             {viewMode === "pending" ? t("admin.whatsappTitle") : t("admin.ordersTitle")}
           </h2>
-          <p className="mt-2 max-w-xl text-[12px] leading-relaxed text-ink-500">
+          <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-ink-500">
             {viewMode === "pending" ? t("admin.whatsappSubtitle") : t("admin.ordersSubtitle")}
           </p>
         </div>
         {showOrders && (
-          <p className="font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
+          <p className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
             {ordersTotal.toLocaleString("id-ID")} {t("admin.thCoupleDate")}
           </p>
         )}
@@ -254,16 +254,16 @@ export default function OrdersTab({
         <section className="mb-8">
           <div className="mb-3 flex items-center justify-between">
             <p className="eyebrow text-ink-400">WhatsApp / Pending</p>
-            <span className="font-data text-[9px] text-ink-400">{filteredPending.length}</span>
+            <span className="font-data text-[14px] text-ink-400">{filteredPending.length}</span>
           </div>
           {filteredPending.length === 0 ? (
-            <div className="paper-panel px-6 py-10 text-center text-[12px] italic text-ink-400">
+            <div className="paper-panel px-6 py-10 text-center text-[14px] italic text-ink-400">
               {t("admin.noDataFound")}
             </div>
           ) : (
             <div className="paper-panel overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-[12px] text-ink-600">
+                <table className="w-full text-left text-[14px] text-ink-600">
                   <thead className="border-b border-ink-900/12 bg-cream-100">
                     <tr>
                       <th className={TH_CLASS}>{t("admin.thOrderDate")}</th>
@@ -277,7 +277,7 @@ export default function OrdersTab({
                     {pendingPg.pageItems.map((order) => (
                       <tr key={order.id} className="transition-colors hover:bg-cream-100/50">
                         <td className="px-4 py-4 whitespace-nowrap">
-                          <span className="font-data text-[9px] text-ink-400">
+                          <span className="font-data text-[14px] text-ink-400">
                             {(order.created_at ? new Date(order.created_at) : new Date()).toLocaleDateString(language === "en" ? "en-US" : "id-ID")}
                           </span>
                         </td>
@@ -285,10 +285,10 @@ export default function OrdersTab({
                           <div className="font-display text-lg leading-tight tracking-[-0.03em] text-ink-950">
                             {order.groom_name} & {order.bride_name}
                           </div>
-                          <div className="mt-1 text-[10px] text-ink-400">Acara: {order.wedding_date}</div>
+                          <div className="mt-1 text-[14px] text-ink-400">Acara: {order.wedding_date}</div>
                         </td>
                         <td className="px-4 py-4">
-                          <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[9px] text-ink-600">
+                          <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[14px] text-ink-600">
                             {order.template_slug}
                           </span>
                         </td>
@@ -297,7 +297,7 @@ export default function OrdersTab({
                             href={`https://wa.me/${order.whatsapp.replace(/[^0-9]/g, "")}`}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 border border-success-600/25 bg-success-600/[0.06] px-2.5 py-1.5 font-data text-[8px] uppercase tracking-[0.1em] text-success-700 transition-colors hover:bg-success-600/10"
+                            className="inline-flex items-center gap-1.5 border border-success-600/25 bg-success-600/[0.06] px-2.5 py-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-success-700 transition-colors hover:bg-success-600/10"
                           >
                             <FaWhatsapp className="h-3 w-3" /> {t("admin.btnChatCustomer")}
                           </a>
@@ -350,17 +350,17 @@ export default function OrdersTab({
       {showOrders && (
         <section>
           {ordersLoading ? (
-            <div className="paper-panel px-6 py-10 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
+            <div className="paper-panel px-6 py-10 text-center font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
               {t("common.loading")}
             </div>
           ) : ordersRows.length === 0 ? (
-            <div className="paper-panel px-6 py-10 text-center text-[12px] italic text-ink-400">
+            <div className="paper-panel px-6 py-10 text-center text-[14px] italic text-ink-400">
               {hasActiveFilter ? t("admin.noDataFound") : t("admin.noOrdersYet")}
             </div>
           ) : (
             <div className="paper-panel overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-[12px] text-ink-600">
+                <table className="w-full text-left text-[14px] text-ink-600">
                   <thead className="border-b border-ink-900/12 bg-cream-100">
                     <tr>
                       <th className={TH_CLASS}>{t("admin.thOrderInfo")}</th>
@@ -374,8 +374,8 @@ export default function OrdersTab({
                     {ordersRows.map((order) => (
                       <tr key={order.id} className="transition-colors hover:bg-cream-100/50">
                         <td className="px-4 py-4">
-                          <span className="block font-data text-[9px] text-ink-400">#{order.id.slice(0, 8)}</span>
-                          <span className="mt-1.5 inline-flex items-center gap-1 border border-ink-900/10 bg-cream-100 px-2 py-0.5 font-data text-[8px] uppercase tracking-[0.08em] text-ink-500">
+                          <span className="block font-data text-[14px] text-ink-400">#{order.id.slice(0, 8)}</span>
+                          <span className="mt-1.5 inline-flex items-center gap-1 border border-ink-900/10 bg-cream-100 px-2 py-0.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
                             <Clock className="h-2.5 w-2.5" />
                             {calculateDuration(order.created_at)} {t("admin.daysAgo")}
                           </span>
@@ -384,27 +384,27 @@ export default function OrdersTab({
                           <div className="font-display text-lg leading-tight tracking-[-0.03em] text-ink-950">
                             {order.groom_name} & {order.bride_name}
                           </div>
-                          <div className="mt-1 flex items-center gap-1 font-data text-[9px] text-ink-400">
+                          <div className="mt-1 flex items-center gap-1 font-data text-[14px] text-ink-400">
                             <Calendar className="h-2.5 w-2.5" /> {order.wedding_date}
                           </div>
                         </td>
                         <td className="px-4 py-4">
-                          <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[9px] text-ink-600">
+                          <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[14px] text-ink-600">
                             {order.template_slug}
                           </span>
                         </td>
                         <td className="px-4 py-4">
                           {order.payment_status === "success" ? (
-                            <span className="inline-flex items-center gap-1 border border-success-600/25 bg-success-600/[0.06] px-2 py-1 font-data text-[8px] uppercase tracking-[0.1em] text-success-700">
+                            <span className="inline-flex items-center gap-1 border border-success-600/25 bg-success-600/[0.06] px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-success-700">
                               <CheckCircle className="h-2.5 w-2.5" /> {t("admin.paymentSuccess")}
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 border border-danger-600/25 bg-danger-600/[0.06] px-2 py-1 font-data text-[8px] uppercase tracking-[0.1em] text-danger-600">
+                            <span className="inline-flex items-center gap-1 border border-danger-600/25 bg-danger-600/[0.06] px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-danger-600">
                               <XCircle className="h-2.5 w-2.5" /> {order.payment_status}
                             </span>
                           )}
                           {typeof (order.event_details as { payment_method?: unknown } | null)?.payment_method === "string" && (order.event_details as { payment_method: string }).payment_method ? (
-                            <span className="mt-1.5 block w-fit border border-ink-900/10 bg-cream-100 px-2 py-0.5 font-data text-[8px] text-ink-500">
+                            <span className="mt-1.5 block w-fit border border-ink-900/10 bg-cream-100 px-2 py-0.5 font-data text-[14px] text-ink-500">
                               {(order.event_details as { payment_method: string }).payment_method}
                             </span>
                           ) : null}

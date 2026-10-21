@@ -116,7 +116,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
 
                 {/* Message Content */}
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm font-semibold text-ink-800 leading-snug break-words">
+                  <p className="text-[14px] sm:text-sm font-semibold text-ink-800 leading-snug break-words">
                     {t.message}
                   </p>
                 </div>

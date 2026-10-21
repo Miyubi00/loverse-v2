@@ -32,7 +32,7 @@ import { INVOICE_SAMPLE, LOVERSE_CONTACT } from '../lib/invoiceData';
 function Field({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-ink-500">{label}</span>
+      <span className="mb-1 block text-[14px] font-bold uppercase tracking-wider text-ink-500">{label}</span>
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -52,9 +52,9 @@ function EmailHeader() {
         <Link to="/" aria-label="Loverse — Beranda" className="inline-flex">
           <img src="/logo.png" alt="Loverse" width={680} height={220} className="h-10 w-auto" />
         </Link>
-        <p className="mt-1 text-[12px] text-cream-200">Undangan Digital Pernikahan</p>
+        <p className="mt-1 text-[14px] text-cream-200">Undangan Digital Pernikahan</p>
       </div>
-      <div className="border-l border-white/30 pl-4 text-[10px] font-semibold uppercase leading-[1.9] tracking-[0.22em] text-cream-200">
+      <div className="border-l border-white/30 pl-4 text-[14px] font-semibold uppercase leading-[1.9] tracking-[0.06em] text-cream-200">
         Abadikan<br />Momen Spesial<br />Dalam Satu<br />Cerita Indah
       </div>
     </div>
@@ -68,13 +68,13 @@ function EmailFooter() {
         <span className="inline-flex bg-ink-950 px-2.5 py-2">
           <img src="/logo.png" alt="Loverse" width={680} height={220} className="h-6 w-auto" />
         </span>
-        <p className="mt-2 text-[12px] text-ink-400">Undangan Digital Pernikahan</p>
+        <p className="mt-2 text-[14px] text-ink-400">Undangan Digital Pernikahan</p>
       </div>
       <div className="text-right">
         <p className="flex items-center justify-end gap-2 font-serif text-[22px] italic text-ink-500">
           A Story for Forever <Heart className="h-5 w-5 text-cream-400" />
         </p>
-        <p className="mt-1 text-[11px] text-ink-400">Terima kasih telah menjadi bagian dari kisah indah ini.</p>
+        <p className="mt-1 text-[14px] text-ink-400">Terima kasih telah menjadi bagian dari kisah indah ini.</p>
       </div>
     </div>
   );
@@ -108,14 +108,14 @@ export default function EmailPreviewPage() {
         <div className="mb-4 flex items-center justify-between">
           <div>
             <h1 className="text-lg font-black text-ink-800">Preview Email Baru</h1>
-            <p className="text-xs text-ink-500">Hanya ada di dev — tidak ikut ke production. Pilih tab email, ubah form, pratinjau ikut berubah.</p>
+            <p className="text-[14px] text-ink-500">Hanya ada di dev — tidak ikut ke production. Pilih tab email, ubah form, pratinjau ikut berubah.</p>
             <div className="mt-2 flex gap-1.5">
               {TABS.map((t) => (
                 <button
                   key={t.id}
                   type="button"
                   onClick={() => setTab(t.id)}
-                  className={`rounded-lg px-3 py-1.5 text-xs font-bold ${
+                  className={`rounded-lg px-3 py-1.5 text-[14px] font-bold ${
                     tab === t.id ? 'bg-ink-900 text-white' : 'bg-cream-200 text-ink-500 hover:bg-cream-200'
                   }`}
                 >
@@ -124,7 +124,7 @@ export default function EmailPreviewPage() {
               ))}
             </div>
           </div>
-          <Link to="/" className="text-xs font-bold text-ink-900 underline">Beranda</Link>
+          <Link to="/" className="text-[14px] font-bold text-ink-900 underline">Beranda</Link>
         </div>
         <div className="grid gap-5 lg:grid-cols-[300px_1fr]">
           <div className="h-fit space-y-3 rounded-xl bg-white p-4 shadow">
@@ -135,11 +135,11 @@ export default function EmailPreviewPage() {
             <button
               type="button"
               onClick={reset}
-              className="w-full rounded-lg bg-cream-200 px-3 py-2 text-xs font-bold text-ink-600 hover:bg-cream-200"
+              className="w-full rounded-lg bg-cream-200 px-3 py-2 text-[14px] font-bold text-ink-600 hover:bg-cream-200"
             >
               Kembalikan contoh
             </button>
-            <p className="text-[11px] leading-relaxed text-ink-500">
+            <p className="text-[14px] leading-relaxed text-ink-500">
               Pratinjau kanan meniru lebar email (±600px). Template produksi menyusul setelah desain ini disetujui.
             </p>
           </div>
@@ -170,7 +170,7 @@ export default function EmailPreviewPage() {
 
                 {/* kotak PIN */}
                 <div className="mt-6 rounded-2xl border border-dashed border-cream-400 bg-cream-50 p-6">
-                  <p className="flex items-center justify-center gap-2 text-[13px] font-bold uppercase tracking-[0.18em] text-ink-500">
+                  <p className="flex items-center justify-center gap-2 text-[14px] font-bold uppercase tracking-[0.06em] text-ink-500">
                     <Lock className="h-4 w-4" /> Kode PIN Dashboard Anda
                   </p>
                   <div className="mt-4 flex justify-center gap-2">
@@ -183,11 +183,11 @@ export default function EmailPreviewPage() {
                       </span>
                     ))}
                   </div>
-                  <p className="mx-auto mt-4 max-w-[380px] text-[13px] leading-relaxed text-ink-500">
+                  <p className="mx-auto mt-4 max-w-[380px] text-[14px] leading-relaxed text-ink-500">
                     Gunakan kombinasi <strong className="text-ink-700">No. WhatsApp</strong> dan PIN di atas untuk masuk melalui
                   </p>
                   <p className="mt-2">
-                    <span className="inline-flex items-center gap-2 rounded-full bg-cream-200 px-4 py-1.5 text-[13px] font-bold text-ink-900">
+                    <span className="inline-flex items-center gap-2 rounded-full bg-cream-200 px-4 py-1.5 text-[14px] font-bold text-ink-900">
                       {loginUrl} <ExternalLink className="h-4 w-4" />
                     </span>
                   </p>
@@ -198,7 +198,7 @@ export default function EmailPreviewPage() {
                   <FileText className="h-10 w-10 shrink-0 text-danger-600" />
                   <div>
                     <p className="text-[15px] font-black text-ink-900">Invoice Resmi Terlampir</p>
-                    <p className="mt-1 text-[13px] leading-relaxed text-ink-500">
+                    <p className="mt-1 text-[14px] leading-relaxed text-ink-500">
                       Kami telah melampirkan berkas PDF bukti pembayaran resmi pada email ini untuk arsip Anda.
                     </p>
                   </div>
@@ -214,7 +214,7 @@ export default function EmailPreviewPage() {
                       <strong className="text-ink-950">Butuh bantuan?</strong>{' '}
                       <span className="text-ink-500">Kami siap membantu Anda.</span>
                     </p>
-                    <div className="mt-2.5 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-ink-600">
+                    <div className="mt-2.5 flex flex-wrap gap-x-6 gap-y-2 text-[14px] text-ink-600">
                       <span className="inline-flex items-center gap-2">
                         <Mail className="h-4 w-4 text-ink-900" /> {LOVERSE_CONTACT.email}
                       </span>
@@ -243,7 +243,7 @@ export default function EmailPreviewPage() {
                   </p>
                   <div className="mx-auto mt-4 flex max-w-[440px] items-start gap-3 rounded-xl bg-cream-50 p-4 text-left">
                     <ShieldAlert className="h-5 w-5 shrink-0 text-gold-600" />
-                    <p className="text-[13px] leading-relaxed text-ink-600">
+                    <p className="text-[14px] leading-relaxed text-ink-600">
                       <strong className="text-ink-800">Bukan Anda yang meminta?</strong> Klik “Bukan Saya” atau abaikan
                       email ini — PIN Anda <strong>TIDAK akan berubah</strong>. Link berlaku 30 menit.
                     </p>
@@ -254,9 +254,9 @@ export default function EmailPreviewPage() {
                     </span>
                   </div>
                   <p className="mt-3">
-                    <span className="text-[13px] font-bold text-ink-500 underline">Bukan Saya — Batalkan Permintaan</span>
+                    <span className="text-[14px] font-bold text-ink-500 underline">Bukan Saya — Batalkan Permintaan</span>
                   </p>
-                  <p className="mx-auto mt-4 max-w-[440px] text-[12px] leading-relaxed text-ink-500">
+                  <p className="mx-auto mt-4 max-w-[440px] text-[14px] leading-relaxed text-ink-500">
                     Tombol tidak berfungsi? Salin link ini ke browser:<br />
                     <span className="break-all text-gold-600">{loginUrl}/forgot-pin/confirm?token=…</span>
                   </p>
@@ -274,7 +274,7 @@ export default function EmailPreviewPage() {
                     PIN lama sudah tidak berlaku lagi.
                   </p>
                   <div className="mt-6 rounded-2xl border border-dashed border-cream-400 bg-cream-50 p-6">
-                    <p className="flex items-center justify-center gap-2 text-[13px] font-bold uppercase tracking-[0.18em] text-ink-500">
+                    <p className="flex items-center justify-center gap-2 text-[14px] font-bold uppercase tracking-[0.06em] text-ink-500">
                       <Lock className="h-4 w-4" /> Kode PIN Dashboard Anda
                     </p>
                     <div className="mt-4 flex justify-center gap-2">
@@ -287,11 +287,11 @@ export default function EmailPreviewPage() {
                         </span>
                       ))}
                     </div>
-                    <p className="mx-auto mt-4 max-w-[380px] text-[13px] leading-relaxed text-ink-500">
+                    <p className="mx-auto mt-4 max-w-[380px] text-[14px] leading-relaxed text-ink-500">
                       Gunakan kombinasi <strong className="text-ink-700">No. WhatsApp</strong> dan PIN di atas untuk masuk melalui
                     </p>
                     <p className="mt-2">
-                      <span className="inline-flex items-center gap-2 rounded-full bg-cream-200 px-4 py-1.5 text-[13px] font-bold text-ink-900">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-cream-200 px-4 py-1.5 text-[14px] font-bold text-ink-900">
                         {loginUrl} <ExternalLink className="h-4 w-4" />
                       </span>
                     </p>
@@ -300,7 +300,7 @@ export default function EmailPreviewPage() {
                     <FileText className="h-10 w-10 shrink-0 text-danger-600" />
                     <div>
                       <p className="text-[15px] font-black text-ink-900">Jaga kerahasiaan PIN Anda</p>
-                      <p className="mt-1 text-[13px] leading-relaxed text-ink-500">
+                      <p className="mt-1 text-[14px] leading-relaxed text-ink-500">
                         Jangan bagikan PIN ini kepada siapa pun. Jika Anda tidak merasa meminta PIN baru, segera hubungi kami.
                       </p>
                     </div>

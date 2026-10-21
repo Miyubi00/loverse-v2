@@ -24,7 +24,7 @@ import { useSectionHash } from "../hooks/useSectionHash";
 import type { TemplateRow } from "../types/database";
 import { useTranslation } from "../i18n";
 import { usePageMeta } from "../hooks/usePageMeta";
-import HeroVisual from "../components/three/HeroVisual";
+import PhoneShowcase from "../components/home/PhoneShowcase";
 import { buttonClass } from "../components/ui/buttonStyles";
 import Reveal from "../components/ui/Reveal";
 import { cn } from "../lib/cn";
@@ -248,7 +248,7 @@ export default function Landing() {
                 </Link>
               </div>
 
-              <p className="mt-5 font-data text-[9px] uppercase leading-relaxed tracking-[0.12em] text-cream-100/60">
+              <p className="mt-5 font-data text-[14px] uppercase leading-relaxed tracking-[0.06em] text-cream-100/60">
                 {t("home.heroNote")}
               </p>
             </div>
@@ -259,7 +259,7 @@ export default function Landing() {
                   {["R", "D", "A", "S"].map((initial, index) => (
                     <span
                       key={initial}
-                      className="flex h-8 w-8 items-center justify-center rounded-full border border-ink-950 bg-cream-200 font-display text-[11px] font-semibold text-ink-800"
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-ink-950 bg-cream-200 font-display text-[14px] font-semibold text-ink-800"
                       style={{ backgroundColor: ["var(--color-cream-200)", "var(--color-peach-300)", "var(--color-cream-300)", "var(--color-cream-100)"][index] }}
                     >
                       {initial}
@@ -272,29 +272,25 @@ export default function Landing() {
                       <Star key={index} className="h-3 w-3 fill-current" />
                     ))}
                   </div>
-                  <p className="mt-1 text-[10px] text-cream-100/48">
+                  <p className="mt-1 text-[14px] text-cream-100/48">
                     {t("home.heroRating", { count: displaySold })}</p>
                 </div>
               </div>
-              <p className="hidden font-data text-[9px] uppercase tracking-[0.18em] text-cream-100/55 sm:block">
+              <p className="hidden font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/55 sm:block">
                 {t("home.heroScroll")}
               </p>
             </div>
           </div>
 
           <div className="relative min-h-[430px] border-t border-cream-100/10 sm:min-h-[560px] lg:min-h-0 lg:border-l lg:border-t-0">
-            <div className="absolute left-5 top-6 z-10 flex items-center gap-2 font-data text-[8px] uppercase tracking-[0.2em] text-cream-100/60">
+            <div className="absolute left-5 top-6 z-10 flex items-center gap-2 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/60">
               <span className="h-1 w-1 rounded-full bg-peach-300" />
               Live / 2026
             </div>
-            <div className="absolute right-5 top-1/2 z-10 hidden -translate-y-1/2 rotate-90 font-data text-[8px] uppercase tracking-[0.28em] text-cream-100/55 sm:block">
+            <div className="absolute right-5 top-1/2 z-10 hidden -translate-y-1/2 rotate-90 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/55 sm:block">
               {t("home.heroStageLabel")}
             </div>
-            <HeroVisual />
-            <div className="absolute inset-x-5 bottom-6 z-10 flex items-end justify-between gap-4">
-              <span className="eyebrow text-cream-100/55">01 — {t("home.heroStageLabel")}</span>
-              <span className="font-data text-[8px] text-cream-100/55">06°12′S / 106°49′E</span>
-            </div>
+            <PhoneShowcase />
           </div>
         </div>
 
@@ -302,7 +298,7 @@ export default function Landing() {
           <div className="marquee-track flex w-max items-center" aria-hidden="true">
             {[...tickerItems, ...tickerItems].map((item, index) => (
               <span key={`${item}-${index}`} className="flex items-center gap-6 px-6">
-                <span className="whitespace-nowrap font-data text-[9px] uppercase tracking-[0.22em] text-cream-100/60">
+                <span className="whitespace-nowrap font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/60">
                   {item}
                 </span>
                 <Plus className="h-3 w-3 text-peach-300/50" />
@@ -324,7 +320,7 @@ export default function Landing() {
               <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-ink-500">{t("home.manifestoBody")}</p>
               <Link
                 to="/portfolio"
-                className="mt-8 inline-flex items-center gap-2 border-b border-ink-900/25 pb-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink-800 transition-colors hover:border-ember-600 hover:text-ember-600"
+                className="mt-8 inline-flex items-center gap-2 border-b border-ink-900/25 pb-1.5 text-[14px] font-semibold uppercase tracking-[0.06em] text-ink-800 transition-colors hover:border-ember-600 hover:text-ember-600"
               >
                 {t("home.heroPortfolioBtn")}
                 <ArrowUpRight className="h-3.5 w-3.5" />
@@ -336,7 +332,7 @@ export default function Landing() {
                 {features.map((feature, index) => (
                   <Reveal key={feature.title} delay={index * 60} as="article">
                     <div className="group grid grid-cols-[auto_1fr_auto] items-start gap-4 border-b border-ink-900/15 py-7 transition-colors duration-300 hover:bg-cream-50 sm:gap-7 sm:py-9">
-                      <span className="pt-1 font-data text-[9px] tracking-[0.15em] text-ink-400">
+                      <span className="pt-1 font-data text-[14px] tracking-[0.06em] text-ink-400">
                         0{index + 1}
                       </span>
                       <div>
@@ -346,7 +342,7 @@ export default function Landing() {
                             {feature.title}
                           </h3>
                         </div>
-                        <p className="mt-3 max-w-[52ch] text-[13px] leading-relaxed text-ink-500 sm:pl-7">
+                        <p className="mt-3 max-w-[52ch] text-[14px] leading-relaxed text-ink-500 sm:pl-7">
                           {feature.desc}
                         </p>
                       </div>
@@ -365,18 +361,18 @@ export default function Landing() {
         <div className="mx-auto w-full max-w-[1480px] px-4 py-14 sm:px-7 sm:py-20 lg:px-10">
           <div className="flex items-center justify-between gap-4 border-b border-ink-900/18 pb-6">
             <span className="eyebrow text-ink-800">{t("home.statsEyebrow")}</span>
-            <span className="font-data text-[9px] uppercase tracking-[0.18em] text-ink-800/75">LoVerse / ID</span>
+            <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-800/75">LoVerse / ID</span>
           </div>
           <div className="grid grid-cols-2 divide-ink-900/15 pt-8 sm:grid-cols-3 sm:divide-x">
             <div className="pb-8 sm:pb-0">
               <StatNumber value={displaySold} suffix="+" />
-              <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-700">
+              <p className="mt-3 text-[14px] font-medium uppercase tracking-[0.06em] text-ink-700">
                 {t("home.stats.sold")}
               </p>
             </div>
             <div className="border-l border-ink-900/15 pb-8 pl-5 sm:border-l-0 sm:pb-0 sm:pl-8">
               <StatNumber value={activeCount} />
-              <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-700">
+              <p className="mt-3 text-[14px] font-medium uppercase tracking-[0.06em] text-ink-700">
                 {t("home.stats.templates")}
               </p>
             </div>
@@ -387,7 +383,7 @@ export default function Landing() {
                 </span>
                 <Star className="mb-2 h-5 w-5 fill-ink-900 text-ink-900" />
               </div>
-              <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-700">
+              <p className="mt-3 text-[14px] font-medium uppercase tracking-[0.06em] text-ink-700">
                 {t("home.stats.rating")}
               </p>
             </div>
@@ -407,7 +403,7 @@ export default function Landing() {
             </div>
             <div className="max-w-sm lg:text-right">
               <p className="text-[14px] leading-relaxed text-ink-500">{t("home.catalogDesc")}</p>
-              <p className="mt-2 font-data text-[9px] uppercase tracking-[0.15em] text-ink-400">
+              <p className="mt-2 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                 {t("home.catalogNote")}
               </p>
             </div>
@@ -422,7 +418,7 @@ export default function Landing() {
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder={t("home.catalogSearchPlaceholder")}
-                className="w-full border-0 bg-transparent py-2 text-[13px] text-ink-900 outline-none placeholder:text-ink-400"
+                className="w-full border-0 bg-transparent py-2 text-[14px] text-ink-900 outline-none placeholder:text-ink-400"
               />
             </label>
 
@@ -440,7 +436,7 @@ export default function Landing() {
                   onClick={() => setCategoryFilter(value)}
                   aria-pressed={categoryFilter === value}
                   className={cn(
-                    "shrink-0 border px-3.5 py-2 font-data text-[9px] uppercase tracking-[0.12em] transition-colors",
+                    "shrink-0 border px-3.5 py-2 font-data text-[14px] uppercase tracking-[0.06em] transition-colors",
                     categoryFilter === value
                       ? "border-ink-950 bg-ink-950 text-cream-50"
                       : "border-transparent text-ink-500 hover:border-ink-900/20 hover:text-ink-900",
@@ -449,7 +445,7 @@ export default function Landing() {
                   {label}
                 </button>
               ))}
-              <span className="ml-2 shrink-0 font-data text-[9px] text-ink-400">
+              <span className="ml-2 shrink-0 font-data text-[14px] text-ink-400">
                 {t("home.catalogCount", { count: filteredTemplates.length })}
               </span>
             </div>
@@ -479,7 +475,7 @@ export default function Landing() {
                   setSearchTerm("");
                   setCategoryFilter("All");
                 }}
-                className="mt-5 font-data text-[10px] uppercase tracking-[0.14em] text-ember-600 underline-offset-4 hover:underline"
+                className="mt-5 font-data text-[14px] uppercase tracking-[0.06em] text-ember-600 underline-offset-4 hover:underline"
               >
                 {t("common.resetFilter")}
               </button>
@@ -499,7 +495,7 @@ export default function Landing() {
             <p className="mt-6 max-w-sm text-[14px] leading-relaxed text-cream-100/55">{t("home.stepsDesc")}</p>
             <div className="mt-10 inline-flex items-end gap-3 border border-cream-100/15 px-4 py-3">
               <span className="font-display text-4xl leading-none text-peach-300">3</span>
-              <span className="max-w-[14ch] font-data text-[8px] uppercase leading-relaxed tracking-[0.12em] text-cream-100/60">
+              <span className="max-w-[14ch] font-data text-[14px] uppercase leading-relaxed tracking-[0.06em] text-cream-100/60">
                 langkah, tanpa drama
               </span>
             </div>
@@ -520,7 +516,7 @@ export default function Landing() {
                       <h3 className="font-display text-[clamp(1.5rem,2.6vw,2rem)] leading-tight tracking-[-0.025em] text-cream-50">
                         {step.title}
                       </h3>
-                      <p className="mt-3 max-w-[46ch] text-[13px] leading-relaxed text-cream-100/50">{step.desc}</p>
+                      <p className="mt-3 max-w-[46ch] text-[14px] leading-relaxed text-cream-100/50">{step.desc}</p>
                     </div>
                   </article>
                 </Reveal>
@@ -528,7 +524,7 @@ export default function Landing() {
             </div>
             <Link
               to="/tutorial"
-              className="mt-8 inline-flex items-center gap-2 font-data text-[9px] uppercase tracking-[0.16em] text-peach-300 transition-colors hover:text-cream-50"
+              className="mt-8 inline-flex items-center gap-2 font-data text-[14px] uppercase tracking-[0.06em] text-peach-300 transition-colors hover:text-cream-50"
             >
               {t("home.faqTutorialBtn")}
               <ArrowUpRight className="h-3.5 w-3.5" />
@@ -550,7 +546,7 @@ export default function Landing() {
             <div className="flex items-center gap-3">
               <Star className="h-4 w-4 fill-ember-500 text-ember-500" />
               <span className="font-display text-2xl leading-none text-ink-900">4.9</span>
-              <span className="max-w-[12ch] text-[10px] leading-tight text-ink-400">
+              <span className="max-w-[12ch] text-[14px] leading-tight text-ink-400">
                 {t("home.heroRating", { count: displaySold })}
               </span>
             </div>
@@ -566,17 +562,17 @@ export default function Landing() {
                   </blockquote>
                   <figcaption className="mt-6 flex items-center justify-between gap-4 border-t border-ink-900/10 pt-4">
                     <div className="flex items-center gap-2.5">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-peach-300 font-display text-xs font-semibold text-ink-900">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-peach-300 font-display text-[14px] font-semibold text-ink-900">
                         {testimonial.name.charAt(0)}
                       </span>
                       <div>
-                        <p className="text-[11px] font-semibold text-ink-900">{testimonial.name}</p>
-                        <p className="font-data text-[8px] uppercase tracking-[0.12em] text-ink-400">
+                        <p className="text-[14px] font-semibold text-ink-900">{testimonial.name}</p>
+                        <p className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                           {t("home.testimonialsBought", { template: testimonial.template })}
                         </p>
                       </div>
                     </div>
-                    <span className="font-data text-[8px] text-ink-300">0{index + 1}</span>
+                    <span className="font-data text-[14px] text-ink-300">0{index + 1}</span>
                   </figcaption>
                 </figure>
               </Reveal>
@@ -598,7 +594,7 @@ export default function Landing() {
               href={`https://wa.me/${ADMIN_WHATSAPP}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-7 inline-flex items-center gap-2 border border-ink-900/20 px-4 py-3 text-[11px] font-semibold text-ink-800 transition-colors hover:border-ink-900 hover:bg-ink-950 hover:text-cream-50"
+              className="mt-7 inline-flex items-center gap-2 border border-ink-900/20 px-4 py-3 text-[14px] font-semibold text-ink-800 transition-colors hover:border-ink-900 hover:bg-ink-950 hover:text-cream-50"
             >
               {t("contact.whatsappMainBtn", { name: "Admin" })}
               <ArrowUpRight className="h-3.5 w-3.5" />
@@ -620,7 +616,7 @@ export default function Landing() {
                         className="flex w-full items-start justify-between gap-6 py-5 text-left sm:py-6"
                       >
                         <span className="flex items-start gap-4">
-                          <span className="pt-1.5 font-data text-[9px] text-ink-400">0{index + 1}</span>
+                          <span className="pt-1.5 font-data text-[14px] text-ink-400">0{index + 1}</span>
                           <span className="font-display text-[clamp(1.2rem,2.2vw,1.55rem)] leading-snug tracking-[-0.02em] text-ink-900">
                             {faq.q}
                           </span>
@@ -635,13 +631,13 @@ export default function Landing() {
                         </span>
                       </button>
                     </h3>
-                    <div
+                    <p
                       id={`faq-panel-${index}`}
                       hidden={!isOpen}
-                      className="animate-fade-in pb-6 pl-8 pr-12 text-[13px] leading-relaxed text-ink-500 sm:pl-9"
+                      className="animate-fade-in pb-6 pl-8 pr-12 leading-relaxed text-ink-500 sm:pl-9"
                     >
                       {faq.a}
-                    </div>
+                    </p>
                   </div>
                 );
               })}
@@ -677,14 +673,14 @@ export default function Landing() {
 
           <div className="relative z-[2] hidden w-[260px] shrink-0 rotate-[-4deg] border border-cream-100/20 bg-cream-50 p-5 text-ink-900 shadow-deep lg:block">
             <div className="flex items-center justify-between border-b border-ink-900/15 pb-3">
-              <span className="font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">Save the date</span>
+              <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">Save the date</span>
               <span className="h-1.5 w-1.5 rounded-full bg-ember-500" />
             </div>
             <p className="mt-5 font-display text-3xl leading-none tracking-[-0.04em]">Dimas &amp; Sarah</p>
             <p className="mt-2 font-display text-sm italic text-ink-500">24 . 10 . 2026</p>
             <div className="mt-6 flex items-end justify-between border-t border-ink-900/15 pt-3">
-              <span className="font-data text-[8px] uppercase tracking-[0.15em] text-ink-400">loverse.id</span>
-              <span className="font-data text-[8px] text-ember-600">No. 0142</span>
+              <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">loverse.id</span>
+              <span className="font-data text-[14px] text-ember-600">No. 0142</span>
             </div>
           </div>
 

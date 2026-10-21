@@ -6,6 +6,16 @@ interface Capability {
   reducedMotion: boolean;
 }
 
+function supportsWebGL() {
+  if (!("WebGLRenderingContext" in window)) return false;
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
 function readCapability(): { canRender3D: boolean; reducedMotion: boolean } {
   if (typeof window === "undefined") return { canRender3D: false, reducedMotion: false };
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -19,7 +29,8 @@ function readCapability(): { canRender3D: boolean; reducedMotion: boolean } {
   const slowNetwork = /(^|-)2g$/.test(nav.connection?.effectiveType ?? "");
   return {
     reducedMotion,
-    canRender3D: !reducedMotion && !saveData && !slowNetwork && memory >= 3 && cores >= 4,
+    canRender3D:
+      !reducedMotion && !saveData && !slowNetwork && memory >= 3 && cores >= 4 && supportsWebGL(),
   };
 }
 

@@ -104,7 +104,7 @@ function OrderAside({
         <div className="border border-ink-900/15 bg-white p-4">
           <div className="flex items-center justify-between gap-3">
             <p className="eyebrow text-ink-400">{t("order.asideTitle")}</p>
-            <span className="font-data text-[9px] text-ink-400">0{step} / 03</span>
+            <span className="font-data text-[14px] text-ink-400">0{step} / 03</span>
           </div>
           <div className="mt-4 flex gap-3">
             <div className="aspect-[3/4] w-[64px] shrink-0 overflow-hidden border border-ink-900/10 bg-cream-100">
@@ -112,12 +112,12 @@ function OrderAside({
             </div>
             <div className="min-w-0">
               <p className="truncate font-display text-lg leading-tight tracking-[-0.03em] text-ink-950">{template.name}</p>
-              <p className="mt-1 text-[10px] text-ink-400">{t("order.packageLabel")} {template.category}</p>
-              <p className="mt-1.5 font-data text-[11px] text-ink-700">{formatIDR(template.price)}</p>
+              <p className="mt-1 text-[14px] text-ink-400">{t("order.packageLabel")} {template.category}</p>
+              <p className="mt-1.5 font-data text-[14px] text-ink-700">{formatIDR(template.price)}</p>
             </div>
           </div>
 
-          <div className="mt-4 space-y-1.5 border-t border-ink-900/10 pt-3 text-[11px]">
+          <div className="mt-4 space-y-1.5 border-t border-ink-900/10 pt-3 text-[14px]">
             <div className="flex items-center justify-between gap-3">
               <span className="text-ink-400">{t("order.templatePrice")}</span>
               <span className="font-data text-ink-700">{formatIDR(template.price)}</span>
@@ -129,23 +129,23 @@ function OrderAside({
               </div>
             )}
             <div className="flex items-center justify-between gap-3 pt-2">
-              <span className="text-[11px] font-semibold text-ink-950">{t("order.totalPayment")}</span>
+              <span className="text-[14px] font-semibold text-ink-950">{t("order.totalPayment")}</span>
               <span className="font-display text-xl tracking-[-0.03em] text-ink-950">{formatIDR(template.price + fee)}</span>
             </div>
           </div>
-          <p className="mt-2 text-[9px] leading-relaxed text-ink-400">{t("order.asideLockedNote")}</p>
+          <p className="mt-2 text-[14px] leading-relaxed text-ink-400">{t("order.asideLockedNote")}</p>
         </div>
 
         <div className="border border-ink-900/12 bg-cream-50 p-4">
           <ul className="space-y-2.5">
             {perks.map((perk) => (
-              <li key={perk} className="flex items-start gap-2.5 text-[11px] leading-relaxed text-ink-600">
+              <li key={perk} className="flex items-start gap-2.5 text-[14px] leading-relaxed text-ink-600">
                 <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-ember-600" />
                 {perk}
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex items-center gap-2 border-t border-ink-900/10 pt-3 text-[10px] text-ink-400">
+          <div className="mt-4 flex items-center gap-2 border-t border-ink-900/10 pt-3 text-[14px] text-ink-400">
             <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-ember-600" />
             {t("order.secureDesc")}
           </div>
@@ -159,8 +159,8 @@ function OrderAside({
             <MessageCircle className="h-4 w-4" />
           </span>
           <span className="min-w-0">
-            <span className="block text-[11px] font-semibold text-ink-900">{t("order.asideHelp")}</span>
-            <span className="mt-0.5 block text-[10px] leading-snug text-ink-400">{t("order.asideHelpDesc")}</span>
+            <span className="block text-[14px] font-semibold text-ink-900">{t("order.asideHelp")}</span>
+            <span className="mt-0.5 block text-[14px] leading-snug text-ink-400">{t("order.asideHelpDesc")}</span>
           </span>
         </Link>
       </div>
@@ -341,7 +341,7 @@ export default function OrderForm() {
         <button
           type="button"
           onClick={handleBack}
-          className="inline-flex items-center gap-1.5 font-data text-[9px] uppercase tracking-[0.16em] text-ink-400 transition-colors hover:text-ink-900"
+          className="inline-flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 transition-colors hover:text-ink-900"
         >
           <ArrowLeft size={13} /> {step > 1 ? t("order.btnBack") : t("order.back")}
         </button>
@@ -352,7 +352,7 @@ export default function OrderForm() {
             <h1 className="mt-3 font-display text-[clamp(2.6rem,6vw,4.5rem)] leading-[0.94] tracking-[-0.05em] text-ink-950">
               Pesan <span className="italic text-ember-600">undangan.</span>
             </h1>
-            <p className="mt-4 max-w-xl text-[12px] leading-relaxed text-ink-500 sm:text-[13px]">
+            <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-ink-500 sm:text-[14px]">
               {t("order.desc")}{" "}
               <Link to="/tutorial" className="inline-flex items-center gap-1 font-semibold text-ember-600 underline-offset-4 hover:underline">
                 <GraduationCap size={13} /> {t("order.tutorialLink")}
@@ -361,11 +361,11 @@ export default function OrderForm() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="hidden font-data text-[9px] uppercase tracking-[0.14em] text-ink-400 sm:inline">Langkah 0{step} / 03</span>
+            <span className="hidden font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 sm:inline">Langkah 0{step} / 03</span>
             <button
               type="button"
               onClick={() => setShowConfirm(true)}
-              className="inline-flex items-center gap-1.5 border border-ink-900/15 px-3 py-2 text-[11px] font-medium text-ink-500 transition-colors hover:border-danger-600/40 hover:text-danger-700"
+              className="inline-flex items-center gap-1.5 border border-ink-900/15 px-3 py-2 text-[14px] font-medium text-ink-500 transition-colors hover:border-danger-600/40 hover:text-danger-700"
               title={t("order.resetForm")}
             >
               <RotateCcw className="h-3.5 w-3.5" />
@@ -383,7 +383,7 @@ export default function OrderForm() {
                 <p className="eyebrow text-ember-600">Terakhir</p>
                 <h2 className="mt-2 font-display text-2xl tracking-[-0.03em] text-ink-950 sm:text-3xl">Periksa sebelum bayar.</h2>
               </div>
-              <span className="hidden font-data text-[9px] uppercase tracking-[0.12em] text-ink-400 sm:block">Invoice / draft</span>
+              <span className="hidden font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 sm:block">Invoice / draft</span>
             </div>
             <OrderSummary
               formData={formData}
@@ -409,7 +409,7 @@ export default function OrderForm() {
                     onMidtransCheckout={handleMidtransCheckout}
                     onWhatsappCheckout={handleWhatsappCheckout}
                   />
-                  <p className="text-center text-[10px] leading-relaxed text-ink-400">
+                  <p className="text-center text-[14px] leading-relaxed text-ink-400">
                     Dengan melanjutkan, kamu menyetujui{" "}
                     <Link to="/terms" className="underline underline-offset-2 hover:text-ember-600">Syarat & Ketentuan</Link> LoVerse.
                   </p>

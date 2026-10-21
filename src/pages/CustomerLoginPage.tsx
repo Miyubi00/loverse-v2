@@ -129,7 +129,7 @@ export default function DashboardLogin() {
               placeholder={t("login.pinPlaceholder")}
               value={pinValue}
               onChange={handlePinChange}
-              className={`${inputClass} font-data tracking-[0.36em]`}
+              className={`${inputClass} font-data tracking-[0.06em]`}
             />
             <button
               type="button"

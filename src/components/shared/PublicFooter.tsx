@@ -50,14 +50,14 @@ export default function PublicFooter() {
         <div className="grid gap-12 border-b border-cream-100/12 pb-14 lg:grid-cols-[1.35fr_.7fr_.7fr_.8fr]">
           <div>
             <Wordmark />
-            <p className="mt-5 max-w-xs text-[13px] leading-relaxed text-cream-100/58">
+            <p className="mt-5 max-w-xs text-[14px] leading-relaxed text-cream-100/58">
               {t("home.footerTagline")}
             </p>
             <a
               href={`https://wa.me/${ADMIN_WHATSAPP}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 border-b border-peach-300/35 pb-1 font-data text-[11px] text-peach-300 transition-colors hover:border-peach-300 hover:text-peach-200"
+              className="mt-6 inline-flex items-center gap-2 border-b border-peach-300/35 pb-1 font-data text-[14px] text-peach-300 transition-colors hover:border-peach-300 hover:text-peach-200"
             >
               <MessageCircle className="h-3.5 w-3.5" />
               {ADMIN_PHONE_LABEL}
@@ -74,7 +74,7 @@ export default function PublicFooter() {
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="text-[13px] text-cream-100/65 transition-colors hover:text-peach-300"
+                    className="text-[14px] text-cream-100/65 transition-colors hover:text-peach-300"
                   >
                     {link.label}
                   </Link>
@@ -82,7 +82,7 @@ export default function PublicFooter() {
               ))}
             </ul>
             <p className="eyebrow mt-8 text-cream-100/36">{t("home.footerContact")}</p>
-            <div className="mt-4 flex flex-col gap-2.5 text-[12px] text-cream-100/62">
+            <div className="mt-4 flex flex-col gap-2.5 text-[14px] text-cream-100/62">
               <a
                 href="https://instagram.com/loverse.id"
                 target="_blank"
@@ -128,13 +128,13 @@ export default function PublicFooter() {
               ))}
             </div>
           </div>
-          <p className="text-[10px] leading-relaxed text-cream-100/35">
+          <p className="text-[14px] leading-relaxed text-cream-100/35">
             {t("home.footerPaymentsSub")}
           </p>
         </div>
 
         <div className="relative flex flex-col gap-4 pt-8 sm:flex-row sm:items-end sm:justify-between">
-          <p className="text-[12px] text-cream-100/55">
+          <p className="text-[14px] text-cream-100/55">
             {t("home.footerText", { year: new Date().getFullYear() })}
           </p>
         </div>
@@ -158,7 +158,7 @@ function FooterColumn({
           <li key={link.to}>
             <Link
               to={link.to}
-              className="inline-flex items-center gap-1.5 text-[13px] text-cream-100/65 transition-colors hover:text-peach-300"
+              className="inline-flex items-center gap-1.5 text-[14px] text-cream-100/65 transition-colors hover:text-peach-300"
             >
               {link.label}
             </Link>

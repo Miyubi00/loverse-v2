@@ -31,7 +31,7 @@ export default function PageHeader({
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         {eyebrow && <span className="eyebrow text-ember-600">{eyebrow}</span>}
         {index && (
-          <span className="font-data text-[10px] text-ink-400" aria-hidden="true">
+          <span className="font-data text-[14px] text-ink-400" aria-hidden="true">
             /{index}
           </span>
         )}

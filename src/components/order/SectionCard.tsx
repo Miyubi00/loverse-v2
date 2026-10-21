@@ -12,7 +12,7 @@ export function SectionHeading({
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       {step ? (
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-ink-900/20 bg-cream-100 font-data text-[10px] font-semibold text-ember-600">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-ink-900/20 bg-cream-100 font-data text-[14px] font-semibold text-ember-600">
           {step}
         </span>
       ) : null}
@@ -52,7 +52,7 @@ export function SummaryRow({
   mono?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3 text-xs">
+    <div className="flex items-center justify-between gap-3 text-[14px]">
       <span className="shrink-0 font-medium text-ink-400">{label}</span>
       <span
         className={`truncate ${muted ? "italic text-ink-300" : "text-ink-800"} ${mono ? "font-data" : ""}`}

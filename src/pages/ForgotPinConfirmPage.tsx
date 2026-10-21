@@ -63,7 +63,7 @@ export default function ForgotPinConfirmPage() {
           {status === "confirmed" ? "Berhasil" : status === "canceled" ? "Dibatalkan" : "Tidak valid"}
         </p>
         <h1 className="mt-3 font-display text-[clamp(2rem,4vw,2.8rem)] leading-[1] tracking-[-0.04em] text-ink-950">{copy.title}</h1>
-        <p className="mt-3 text-[13px] leading-relaxed text-ink-500">{copy.desc}</p>
+        <p className="mt-3 text-[14px] leading-relaxed text-ink-500">{copy.desc}</p>
 
         <div className="mt-7 flex flex-col gap-2 sm:flex-row">
           {status === "confirmed" && (
@@ -89,7 +89,7 @@ export default function ForgotPinConfirmPage() {
         </div>
 
         {status !== "confirmed" && (
-          <Link to="/contact" className="mt-5 inline-flex items-center gap-1.5 font-data text-[9px] uppercase tracking-[0.12em] text-ink-400 hover:text-ember-600">
+          <Link to="/contact" className="mt-5 inline-flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 hover:text-ember-600">
             {t("forgotPin.contactAdmin")} <ArrowUpRight className="h-3 w-3" />
           </Link>
         )}

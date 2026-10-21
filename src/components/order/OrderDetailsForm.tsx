@@ -42,13 +42,13 @@ export function OrderDetailsForm({
         ) : null}
         <div className="flex min-w-0 flex-1 flex-col justify-between py-0.5">
           <div>
-            <span className="inline-flex border border-ink-900/15 px-1.5 py-0.5 font-data text-[8px] uppercase tracking-[0.12em] text-ink-500">
+            <span className="inline-flex border border-ink-900/15 px-1.5 py-0.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
               {selectedTemplate.category}
             </span>
             <p className="mt-2 truncate font-display text-2xl leading-none tracking-[-0.03em] text-ink-950">
               {selectedTemplate.name}
             </p>
-            <p className="mt-2 font-data text-[11px] text-ink-500">
+            <p className="mt-2 font-data text-[14px] text-ink-500">
               Rp {selectedTemplate.price.toLocaleString("id-ID")}
               <span className="text-ink-400"> / sekali bayar</span>
             </p>
@@ -56,13 +56,13 @@ export function OrderDetailsForm({
           <button
             type="button"
             onClick={onChangeTemplate}
-            className="mt-3 inline-flex w-fit items-center gap-1.5 border-b border-ink-900/25 pb-0.5 text-[11px] font-semibold text-ink-700 transition-colors hover:border-ember-500 hover:text-ember-600"
+            className="mt-3 inline-flex w-fit items-center gap-1.5 border-b border-ink-900/25 pb-0.5 text-[14px] font-semibold text-ink-700 transition-colors hover:border-ember-500 hover:text-ember-600"
           >
             <ArrowLeft size={12} /> {t("order.changeTemplate")} <ArrowUpRight size={11} />
           </button>
         </div>
       </div>
-      <p className="-mt-2 text-[11px] leading-relaxed text-ink-400">{t("order.step1LockedDesc")}</p>
+      <p className="-mt-2 text-[14px] leading-relaxed text-ink-400">{t("order.step1LockedDesc")}</p>
 
       <div className="border-t border-ink-900/12 pt-5">
         <div className="flex items-start justify-between gap-4">
@@ -73,7 +73,7 @@ export function OrderDetailsForm({
         <div className="w-full min-w-0 space-y-4">
           <div className="grid w-full min-w-0 grid-cols-1 gap-4 md:grid-cols-2">
             <div className="w-full min-w-0">
-              <label htmlFor="order-groom-name" className="mb-1.5 block font-data text-[9px] uppercase tracking-[0.14em] text-ink-500">
+              <label htmlFor="order-groom-name" className="mb-1.5 block font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
                 {t("order.groomName")}
               </label>
               <div className="relative w-full min-w-0">
@@ -92,7 +92,7 @@ export function OrderDetailsForm({
               </div>
             </div>
             <div className="w-full min-w-0">
-              <label htmlFor="order-bride-name" className="mb-1.5 block font-data text-[9px] uppercase tracking-[0.14em] text-ink-500">
+              <label htmlFor="order-bride-name" className="mb-1.5 block font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
                 {t("order.brideName")}
               </label>
               <div className="relative w-full min-w-0">
@@ -113,7 +113,7 @@ export function OrderDetailsForm({
           </div>
 
           <div className="w-full min-w-0">
-            <label htmlFor="order-wedding-date" className="mb-1.5 block font-data text-[9px] uppercase tracking-[0.14em] text-ink-500">
+            <label htmlFor="order-wedding-date" className="mb-1.5 block font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
               {t("order.weddingDate")}
             </label>
             <div className="relative w-full min-w-0">
@@ -129,12 +129,12 @@ export function OrderDetailsForm({
                 className={INPUT_CLASS}
               />
             </div>
-            <p className="mt-1.5 text-[10px] text-ink-400">Tanggal ini akan tampil di countdown dan halaman tamu.</p>
+            <p className="mt-1.5 text-[14px] text-ink-400">Tanggal ini akan tampil di countdown dan halaman tamu.</p>
           </div>
 
           <div className="grid w-full min-w-0 grid-cols-1 gap-4 border-t border-ink-900/10 pt-5 md:grid-cols-2">
             <div className="w-full min-w-0">
-              <label htmlFor="order-email" className="mb-1.5 block font-data text-[9px] uppercase tracking-[0.14em] text-ink-500">
+              <label htmlFor="order-email" className="mb-1.5 block font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
                 {t("order.email")}
               </label>
               <div className="relative w-full min-w-0">
@@ -151,11 +151,11 @@ export function OrderDetailsForm({
                   className={INPUT_CLASS}
                 />
               </div>
-              <p className="mt-1.5 text-[10px] text-ink-400">Invoice dan PIN dikirim ke email ini.</p>
+              <p className="mt-1.5 text-[14px] text-ink-400">Invoice dan PIN dikirim ke email ini.</p>
             </div>
 
             <div className="w-full min-w-0">
-              <label htmlFor="order-whatsapp" className="mb-1.5 block font-data text-[9px] uppercase tracking-[0.14em] text-ink-500">
+              <label htmlFor="order-whatsapp" className="mb-1.5 block font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
                 {t("order.whatsapp")}
               </label>
               <div className="relative w-full min-w-0">
@@ -173,7 +173,7 @@ export function OrderDetailsForm({
                   className={INPUT_CLASS}
                 />
               </div>
-              <p className="mt-1.5 text-[10px] text-ink-400">Diawali tanpa 0 — contoh 81234567890.</p>
+              <p className="mt-1.5 text-[14px] text-ink-400">Diawali tanpa 0 — contoh 81234567890.</p>
             </div>
           </div>
         </div>

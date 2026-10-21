@@ -188,7 +188,7 @@ export default function InvitationRender() {
               {t('invitation.unpaidDesc')}
             </p>
 
-            <div className="bg-cream-100 p-4 rounded-xl border border-cream-300 text-xs text-ink-500 mb-6 flex items-start gap-3 text-left">
+            <div className="bg-cream-100 p-4 rounded-xl border border-cream-300 text-[14px] text-ink-500 mb-6 flex items-start gap-3 text-left">
               <Clock className="w-5 h-5 text-ember-600 shrink-0" />
               <div>
                 <p className="font-bold text-ink-700">{t('invitation.ownerQuestion')}</p>

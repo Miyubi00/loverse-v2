@@ -222,17 +222,18 @@
   }
 
   .font-data {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
   }
 
   .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    line-height: 1;
-    letter-spacing: 0.22em;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .display-xl {
@@ -308,12 +309,53 @@
 
   .app-shell {
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
   }
 
   .app-shell h1,
   .app-shell h2,
   .app-shell h3 {
     text-wrap: balance;
+  }
+
+  .app-shell p:not(.font-display):not(.eyebrow):not(.font-data):not(.font-mono),
+  .app-shell li:not(.font-display):not(.eyebrow):not(.font-data):not(.font-mono),
+  .app-shell dd:not(.font-display):not(.eyebrow):not(.font-data):not(.font-mono) {
+    max-width: 65ch;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .app-shell p:not(.font-display):not(.eyebrow):not(.font-data):not(.font-mono),
+    .app-shell li:not(.font-display):not(.eyebrow):not(.font-data):not(.font-mono),
+    .app-shell dd:not(.font-display):not(.eyebrow):not(.font-data):not(.font-mono) {
+      font-size: 0.9375rem;
+    }
+  }
+
+  .app-shell label,
+  .app-shell th,
+  .app-shell td,
+  .app-shell button {
+    text-transform: none;
+    letter-spacing: 0.01em;
+  }
+
+  .app-shell input,
+  .app-shell select,
+  .app-shell textarea {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .app-shell table,
+  .app-shell th,
+  .app-shell td {
+    font-size: 0.875rem;
+    line-height: 1.5;
   }
 
   .theme-canvas {

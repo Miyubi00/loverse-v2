@@ -1,0 +1,612 @@
+[
+  {
+    "route": "home",
+    "path": "/",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "portfolio",
+    "path": "/portfolio",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "tutorial",
+    "path": "/tutorial",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "privacy",
+    "path": "/privacy",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "terms",
+    "path": "/terms",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "order",
+    "path": "/order",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "order-success",
+    "path": "/order/success",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "login",
+    "path": "/login",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ]
+  },
+  {
+    "route": "forgot-pin",
+    "path": "/forgot-pin",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ]
+  },
+  {
+    "route": "forgot-pin-confirm",
+    "path": "/forgot-pin/confirm",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "payment-status",
+    "path": "/payment-status",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "demo",
+    "path": "/demo/motion-flow",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Received `%s` for a non-boolean attribute `%s`.\n\nIf you want to write it to the DOM, pass a string instead: %s=\"%s\" or %s={value.toString()}. true cursor-pointer cursor-pointer true cursor-pointer"
+    ]
+  },
+  {
+    "route": "not-found",
+    "path": "/halaman-yang-tidak-ada",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "dashboard-share",
+    "path": "/dashboard/demo-order-123?tab=share",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "dashboard-edit",
+    "path": "/dashboard/demo-order-123?tab=edit",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "dashboard-rsvp",
+    "path": "/dashboard/demo-order-123?tab=rsvp",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-login",
+    "path": "/panel-daffa11",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ]
+  },
+  {
+    "route": "admin-orders",
+    "path": "/panel-daffa11?tab=orders",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-whatsapp",
+    "path": "/panel-daffa11?tab=whatsapp",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-templates",
+    "path": "/panel-daffa11?tab=templates",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-notices",
+    "path": "/panel-daffa11?tab=notices",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-inbox",
+    "path": "/panel-daffa11?tab=inbox",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-audit",
+    "path": "/panel-daffa11?tab=audit",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "wedding",
+    "path": "/wedding/dimas-sarah?to=Keluarga%20Budi",
+    "size": "mobile",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Received `%s` for a non-boolean attribute `%s`.\n\nIf you want to write it to the DOM, pass a string instead: %s=\"%s\" or %s={value.toString()}. true cursor-pointer cursor-pointer true cursor-pointer"
+    ]
+  },
+  {
+    "route": "home",
+    "path": "/",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "portfolio",
+    "path": "/portfolio",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "tutorial",
+    "path": "/tutorial",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "privacy",
+    "path": "/privacy",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "terms",
+    "path": "/terms",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "order",
+    "path": "/order",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "order-success",
+    "path": "/order/success",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "login",
+    "path": "/login",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ]
+  },
+  {
+    "route": "forgot-pin",
+    "path": "/forgot-pin",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ]
+  },
+  {
+    "route": "forgot-pin-confirm",
+    "path": "/forgot-pin/confirm",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "payment-status",
+    "path": "/payment-status",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "demo",
+    "path": "/demo/motion-flow",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Received `%s` for a non-boolean attribute `%s`.\n\nIf you want to write it to the DOM, pass a string instead: %s=\"%s\" or %s={value.toString()}. true cursor-pointer cursor-pointer true cursor-pointer"
+    ]
+  },
+  {
+    "route": "not-found",
+    "path": "/halaman-yang-tidak-ada",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "dashboard-share",
+    "path": "/dashboard/demo-order-123?tab=share",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "dashboard-edit",
+    "path": "/dashboard/demo-order-123?tab=edit",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "dashboard-rsvp",
+    "path": "/dashboard/demo-order-123?tab=rsvp",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-login",
+    "path": "/panel-daffa11",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ]
+  },
+  {
+    "route": "admin-orders",
+    "path": "/panel-daffa11?tab=orders",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-whatsapp",
+    "path": "/panel-daffa11?tab=whatsapp",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-templates",
+    "path": "/panel-daffa11?tab=templates",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-notices",
+    "path": "/panel-daffa11?tab=notices",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-inbox",
+    "path": "/panel-daffa11?tab=inbox",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "admin-audit",
+    "path": "/panel-daffa11?tab=audit",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    ]
+  },
+  {
+    "route": "wedding",
+    "path": "/wedding/dimas-sarah?to=Keluarga%20Budi",
+    "size": "desktop",
+    "violations": [],
+    "groups": [],
+    "contrast": [],
+    "monoRatio": 0,
+    "consoleErrors": [
+      "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://snap-assets.sandbox.midtrans.com https://api.sandbox.midtrans.com https://pay.google.com https://gwk.gopayapi.com/sdk/stable/gp-container.min.js https://www.googletagmanager.com https://o.alicdn.com https://g.alicdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-DueWcbxgRVJl6J5x2OBGlMjJ0RI9aTrwDoqaA4GHDhs='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Received `%s` for a non-boolean attribute `%s`.\n\nIf you want to write it to the DOM, pass a string instead: %s=\"%s\" or %s={value.toString()}. true cursor-pointer cursor-pointer true cursor-pointer"
+    ]
+  }
+]

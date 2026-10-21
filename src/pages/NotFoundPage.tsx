@@ -34,7 +34,7 @@ export default function NotFound() {
                 <ArrowLeft className="h-4 w-4" /> {t("common.back")}
               </button>
             </div>
-            <p className="mt-8 font-data text-[8px] uppercase tracking-[0.16em] text-cream-100/25">
+            <p className="mt-8 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/75">
               {t("notFound.footer", { year: new Date().getFullYear() })}
             </p>
           </div>

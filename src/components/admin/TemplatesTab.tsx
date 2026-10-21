@@ -20,13 +20,13 @@ interface TemplatesTabProps {
 }
 
 const INPUT_CLASS =
-  "h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15";
+  "h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[14px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15";
 
 const LABEL_CLASS =
-  "mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500";
+  "mb-1.5 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500";
 
 const TH_CLASS =
-  "px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500";
+  "px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500";
 
 export default function TemplatesTab({ templates, searchTerm, setSearchTerm, confirmAction, fetchData, toast, loading }: TemplatesTabProps) {
   const { t } = useTranslation();
@@ -131,7 +131,7 @@ export default function TemplatesTab({ templates, searchTerm, setSearchTerm, con
         <h2 className="mt-2 font-display text-[clamp(2rem,4vw,3.1rem)] leading-none tracking-[-0.05em] text-ink-950">
           {t("admin.templatesTitle")}
         </h2>
-        <p className="mt-2 max-w-xl text-[12px] leading-relaxed text-ink-500">
+        <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-ink-500">
           {t("admin.templatesSubtitle")}
         </p>
       </div>
@@ -195,17 +195,17 @@ export default function TemplatesTab({ templates, searchTerm, setSearchTerm, con
 
         <div className="flex items-end gap-2 border border-ink-900/12 bg-cream-100/70 p-3">
           <div>
-            <label className="mb-1 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.14em] text-ember-600">
+            <label className="mb-1 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ember-600">
               <Zap size={12} /> {t("admin.bulkPriceLabel")}
             </label>
             <div className="relative">
-              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 font-data text-[10px] text-ink-400">Rp</span>
+              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 font-data text-[14px] text-ink-400">Rp</span>
               <input
                 type="number"
                 placeholder={t("admin.bulkPricePlaceholder")}
                 value={bulkPrice}
                 onChange={(e) => setBulkPrice(e.target.value)}
-                className="h-10 w-32 border border-ink-900/15 bg-cream-50 pl-8 pr-2 text-[12px] font-semibold text-ink-900 outline-none transition focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15"
+                className="h-10 w-32 border border-ink-900/15 bg-cream-50 pl-8 pr-2 text-[14px] font-semibold text-ink-900 outline-none transition focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15"
               />
             </div>
           </div>
@@ -217,7 +217,7 @@ export default function TemplatesTab({ templates, searchTerm, setSearchTerm, con
 
       <div className="paper-panel overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-[12px] text-ink-600">
+          <table className="w-full text-left text-[14px] text-ink-600">
             <thead className="border-b border-ink-900/12 bg-cream-100">
               <tr>
                 <th className={TH_CLASS}>{t("admin.thTemplateName")}</th>
@@ -229,13 +229,13 @@ export default function TemplatesTab({ templates, searchTerm, setSearchTerm, con
             <tbody className="divide-y divide-ink-900/10">
               {loading ? (
                 <tr>
-                  <td colSpan={4} className="px-4 py-12 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
+                  <td colSpan={4} className="px-4 py-12 text-center font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                     {t("admin.loadingTemplates")}
                   </td>
                 </tr>
               ) : filteredTemplates.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-4 py-12 text-center text-[12px] italic text-ink-400">
+                  <td colSpan={4} className="px-4 py-12 text-center text-[14px] italic text-ink-400">
                     {t("admin.templateNotFound")}
                   </td>
                 </tr>
@@ -247,11 +247,11 @@ export default function TemplatesTab({ templates, searchTerm, setSearchTerm, con
                   >
                     <td className="px-4 py-4">
                       <div className="font-display text-lg leading-tight tracking-[-0.03em] text-ink-950">{template.name}</div>
-                      <div className="mt-1 font-data text-[9px] text-ink-400">/{template.slug}</div>
+                      <div className="mt-1 font-data text-[14px] text-ink-400">/{template.slug}</div>
                     </td>
                     <td className="px-4 py-4">
                       <span
-                        className={`inline-block border px-2 py-1 font-data text-[8px] uppercase tracking-[0.1em] ${
+                        className={`inline-block border px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] ${
                           template.category === "RSVP"
                             ? "border-ember-500/30 bg-peach-100 text-ember-600"
                             : "border-ink-900/15 bg-cream-100 text-ink-600"
@@ -263,13 +263,13 @@ export default function TemplatesTab({ templates, searchTerm, setSearchTerm, con
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-2">
                         <div className="relative">
-                          <span className="absolute left-2.5 top-1/2 -translate-y-1/2 font-data text-[10px] text-ink-400">Rp</span>
+                          <span className="absolute left-2.5 top-1/2 -translate-y-1/2 font-data text-[14px] text-ink-400">Rp</span>
                           <input
                             type="number"
                             value={editPrices[template.slug] ?? template.price}
                             onChange={(e) => setEditPrices((prev) => ({ ...prev, [template.slug]: e.target.value }))}
                             aria-label={`${t("admin.thPrice")} ${template.name}`}
-                            className="h-10 w-32 border border-ink-900/15 bg-cream-50 pl-8 pr-2 text-[12px] font-semibold text-ink-900 outline-none transition focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15"
+                            className="h-10 w-32 border border-ink-900/15 bg-cream-50 pl-8 pr-2 text-[14px] font-semibold text-ink-900 outline-none transition focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15"
                           />
                         </div>
                         {Number(editPrices[template.slug]) != template.price && (
@@ -288,7 +288,7 @@ export default function TemplatesTab({ templates, searchTerm, setSearchTerm, con
                       <button
                         type="button"
                         onClick={() => handleToggleTemplateActive(template.slug, template.is_active ?? false)}
-                        className={`mx-auto flex w-full max-w-[132px] items-center justify-center gap-2 border px-3 py-2 font-data text-[8px] uppercase tracking-[0.1em] transition-colors ${
+                        className={`mx-auto flex w-full max-w-[132px] items-center justify-center gap-2 border px-3 py-2 font-data text-[14px] uppercase tracking-[0.06em] transition-colors ${
                           template.is_active
                             ? "border-success-600/25 bg-success-600/[0.06] text-success-700 hover:bg-success-600/10"
                             : "border-danger-600/25 bg-danger-600/[0.06] text-danger-600 hover:bg-danger-600/10"

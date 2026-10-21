@@ -10,7 +10,7 @@ function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (entry.name === "templates" || entry.name === "three") continue;
+      if (entry.name === "templates") continue;
       walk(full);
     } else if (/\.(ts|tsx)$/.test(entry.name)) {
       files.push(full);

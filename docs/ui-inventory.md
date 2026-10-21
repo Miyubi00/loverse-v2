@@ -6,7 +6,7 @@ Scope: LoVerse app surfaces redesigned in this pass. Invitation themes are inten
 
 | Route | Layout / shell | Primary components | Status |
 | --- | --- | --- | --- |
-| `/` | `PublicLayout` | `Navbar`, `HeroVisual`/`HeroScene`, `PublicFooter`, `HomePage`, `TemplateCatalogCard` | Redesigned |
+| `/` | `PublicLayout` | `Navbar`, `PhoneShowcase`/`PhoneShowcaseScene`/`PhoneShowcaseFallback`, `PublicFooter`, `HomePage`, `TemplateCatalogCard` | Redesigned |
 | `/portfolio` | `PublicLayout` | `PortfolioPage`, `PageHeader`, `Reveal` | Redesigned |
 | `/contact` | `PublicLayout` | `ContactPage`, `PageHeader`, form primitives | Redesigned |
 | `/tutorial` | `PublicLayout` | `TutorialPage`, video modal, step cards | Redesigned |

@@ -75,10 +75,10 @@ export default function ShareTab({
                   : "text-ink-500 hover:bg-cream-100 hover:text-ink-900"
               }`}
             >
-              <span className={`font-data text-[8px] ${active ? "text-peach-300" : "text-ink-400"}`}>
+              <span className={`font-data text-[14px] ${active ? "text-peach-300" : "text-ink-400"}`}>
                 {mode.index}
               </span>
-              <span className="text-[12px] font-semibold tracking-[-0.01em]">{mode.label}</span>
+              <span className="text-[14px] font-semibold tracking-[-0.01em]">{mode.label}</span>
             </button>
           );
         })}
@@ -89,14 +89,14 @@ export default function ShareTab({
           <section className="paper-panel p-5 sm:p-7">
             <div className="flex items-start justify-between gap-4 border-b border-ink-900/12 pb-5">
               <div className="flex max-w-md gap-4">
-                <span className="mt-1 font-display text-[2.6rem] leading-none tracking-[-0.06em] text-ink-400/70">
+                <span className="mt-1 font-display text-[2.6rem] leading-none tracking-[-0.06em] text-ink-400">
                   01
                 </span>
                 <div>
                   <h2 className="font-display text-[clamp(1.5rem,3vw,2.1rem)] leading-[1.02] tracking-[-0.04em] text-ink-950">
                     {t("customer.share.manualHeading")}
                   </h2>
-                  <p className="mt-2 text-[13px] leading-relaxed text-ink-500">
+                  <p className="mt-2 text-[14px] leading-relaxed text-ink-500">
                     {t("customer.share.manualSub")}
                   </p>
                 </div>
@@ -108,7 +108,7 @@ export default function ShareTab({
               <div>
                 <label
                   htmlFor="share-guest-name"
-                  className="font-data text-[8px] uppercase tracking-[0.18em] text-ink-400"
+                  className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400"
                 >
                   {t("customer.share.thGuestName")}
                 </label>
@@ -153,10 +153,10 @@ export default function ShareTab({
                 </div>
 
                 <div className="mt-5 border border-cream-100/15 bg-cream-50/[0.04] p-3">
-                  <p className="font-data text-[8px] uppercase tracking-[0.16em] text-cream-100/45">
+                  <p className="font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/75">
                     {t("customer.share.previewLabel")}
                   </p>
-                  <p className="mt-1.5 break-all font-data text-[10px] leading-relaxed text-cream-100/75">
+                  <p className="mt-1.5 break-all font-data text-[14px] leading-relaxed text-cream-100/75">
                     {generatedLink}
                   </p>
                 </div>
@@ -189,14 +189,14 @@ export default function ShareTab({
                   <ArrowUpRight className="h-4 w-4 text-ink-400" strokeWidth={1.5} />
                 </div>
                 <div className="py-10 text-center">
-                  <p className="font-display text-[clamp(3rem,8vw,5rem)] leading-none tracking-[-0.07em] text-ink-400/60">
+                  <p className="font-display text-[clamp(3rem,8vw,5rem)] leading-none tracking-[-0.07em] text-ink-400">
                     Aa
                   </p>
-                  <p className="mx-auto mt-4 max-w-[26ch] text-[12px] leading-relaxed text-ink-400">
+                  <p className="mx-auto mt-4 max-w-[26ch] text-[14px] leading-relaxed text-ink-400">
                     {t("customer.share.manualSub")}
                   </p>
                 </div>
-                <div className="flex items-center justify-between border-t border-ink-900/10 pt-3 font-data text-[8px] uppercase tracking-[0.14em] text-ink-400">
+                <div className="flex items-center justify-between border-t border-ink-900/10 pt-3 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                   <span>LoVerse</span>
                   <span>Personal link</span>
                 </div>
@@ -217,7 +217,7 @@ export default function ShareTab({
                 <span className="mt-2 font-display text-[1.6rem] tracking-[-0.04em] text-ink-950">
                   {t("customer.share.excelHeading")}
                 </span>
-                <span className="max-w-sm text-[12px] leading-relaxed text-ink-500">
+                <span className="max-w-sm text-[14px] leading-relaxed text-ink-500">
                   {t("customer.share.excelSub")}
                 </span>
               </span>
@@ -225,7 +225,7 @@ export default function ShareTab({
                 type="file"
                 accept=".csv,text/csv"
                 onChange={handleFileUploadExcel}
-                className="mx-auto mt-6 block w-full max-w-xs cursor-pointer text-[11px] text-ink-500 file:mr-3 file:cursor-pointer file:border-0 file:bg-ink-950 file:px-3.5 file:py-2.5 file:text-[10px] file:font-semibold file:uppercase file:tracking-[0.12em] file:text-cream-50 hover:file:bg-ember-600"
+                className="mx-auto mt-6 block w-full max-w-xs cursor-pointer text-[14px] text-ink-500 file:mr-3 file:cursor-pointer file:border-0 file:bg-ink-950 file:px-3.5 file:py-2.5 file:text-[14px] file:font-semibold file:uppercase file:tracking-[0.06em] file:text-cream-50 hover:file:bg-ember-600"
               />
             </label>
 
@@ -233,7 +233,7 @@ export default function ShareTab({
               <div className="flex items-start justify-between gap-4 border-b border-ink-900/12 pb-4">
                 <div>
                   <p className="eyebrow text-ink-400">{t("customer.share.csvExampleTitle")}</p>
-                  <p className="mt-2 text-[12px] leading-relaxed text-ink-500">
+                  <p className="mt-2 text-[14px] leading-relaxed text-ink-500">
                     {t("customer.share.csvExampleSub")}
                   </p>
                 </div>
@@ -241,8 +241,8 @@ export default function ShareTab({
               </div>
 
               <div className="mt-4 overflow-hidden border border-ink-900/12">
-                <table className="w-full text-left text-[12px] text-ink-600">
-                  <thead className="border-b border-ink-900/12 bg-cream-100 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+                <table className="w-full text-left text-[14px] text-ink-600">
+                  <thead className="border-b border-ink-900/12 bg-cream-100 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
                     <tr>
                       <th className="px-3 py-2.5 font-medium">{t("customer.share.thGuestName")}</th>
                     </tr>
@@ -260,7 +260,7 @@ export default function ShareTab({
                 </table>
               </div>
 
-              <ul className="mt-4 space-y-1.5 border-t border-ink-900/10 pt-3 text-[11px] leading-relaxed text-ink-400">
+              <ul className="mt-4 space-y-1.5 border-t border-ink-900/10 pt-3 text-[14px] leading-relaxed text-ink-400">
                 <li>{t("customer.share.csvTip1")}</li>
                 <li>{t("customer.share.csvTip2")}</li>
               </ul>
@@ -283,14 +283,14 @@ export default function ShareTab({
               <div className="flex items-center justify-between gap-4 border-b border-ink-900/12 px-5 py-4">
                 <div className="flex items-center gap-3">
                   <Users size={15} className="text-ember-600" strokeWidth={1.5} />
-                  <h2 className="text-[13px] font-semibold text-ink-900">
+                  <h2 className="text-[14px] font-semibold text-ink-900">
                     {t("customer.share.guestListTitle", { count: excelGuests.length })}
                   </h2>
                 </div>
                 <button
                   type="button"
                   onClick={() => setExcelGuests([])}
-                  className="font-data text-[9px] uppercase tracking-[0.1em] text-danger-600 transition-colors hover:text-danger-700"
+                  className="font-data text-[14px] uppercase tracking-[0.06em] text-danger-600 transition-colors hover:text-danger-700"
                 >
                   {t("customer.share.btnClearAll")}
                 </button>
@@ -302,10 +302,10 @@ export default function ShareTab({
                     className="flex items-center justify-between gap-3 px-5 py-3 transition-colors hover:bg-cream-100/60"
                   >
                     <div className="flex min-w-0 items-center gap-3">
-                      <span className="w-6 shrink-0 font-data text-[9px] text-ink-400">
+                      <span className="w-6 shrink-0 font-data text-[14px] text-ink-400">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <span className="truncate text-[13px] font-medium text-ink-900">{name}</span>
+                      <span className="truncate text-[14px] font-medium text-ink-900">{name}</span>
                     </div>
                     <div className="flex shrink-0 items-center gap-1">
                       <button

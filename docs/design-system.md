@@ -5,7 +5,7 @@ Status: implemented in the `ui-redesign` worktree. Source of truth is `src/index
 ## 1. Principles
 
 1. **Warm love universe.** Cream paper, peach light, ember accent, ink typography. No purple/blue gradients, neon, or starfields.
-2. **Editorial, not generic SaaS.** Asymmetric grids, expressive display type, hairline rules, mono metadata, deliberate whitespace.
+2. **Editorial, not generic SaaS.** Asymmetric grids, expressive display type, hairline rules, tabular metadata, deliberate whitespace.
 3. **One accent does the work.** Ember marks action and emphasis. Peach is a surface, not a second action color.
 4. **Quiet depth.** Sharp 2–3px corners, hairline borders, grain, and restrained shadow. Avoid stacked `rounded-2xl + shadow-lg` cards.
 5. **Behavior is untouchable.** Styling may change markup wrappers, but routes, requests, auth, pricing, payment, and invitation contracts do not.
@@ -63,13 +63,20 @@ Legacy `brand-*` aliases remain for older components. Invitation palette tokens 
 | --- | --- | --- |
 | Display | Fraunces | `font-display`, `.display-xl`, `.display-lg` |
 | Body/UI | Instrument Sans | `font-sans` (default) |
-| Data/labels | JetBrains Mono | `font-mono`, `.eyebrow` |
+| Numbers/labels | Instrument Sans + tabular figures | `.font-data` |
+| Technical data | JetBrains Mono (optional) | `font-mono`; IDs, dates, and codes only |
 
-- `.eyebrow`: 10px mono, `0.22em` tracking, uppercase.
+- `.eyebrow`: 13px (`0.8125rem`) Instrument Sans, 600, `0.06em` tracking, `1.35` line-height, uppercase.
+- `.font-data`: Instrument Sans with tabular figures and `0.01em` tracking; use for counts, prices, step numbers, and labels.
+- Body copy is 16px mobile / 15px desktop, `1.6` line-height, max `65ch`. Do not set body copy below 15px.
+- Controls are 15px; tables are 14px. Functional text never goes below 12px; captions/badges stay at 13px or larger.
+- Labels, buttons, table headers, and cells use sentence case with `0.01em` tracking. Uppercase is reserved for short kickers with tracking `≤0.08em`.
 - `.display-xl`: Fraunces, `-0.035em`, `0.94` line-height, SOFT 40/WONK 1.
 - `.display-lg`: Fraunces, `-0.03em`, line-height `1`.
 - Headings use `text-wrap: balance`; prose uses `.text-pretty`.
+- JetBrains Mono is optional for machine-readable data only; keep it at 14px or larger and under 10% of visible text.
 - Do not add Inter, Roboto, Arial, Poppins, Playfair, or Space Grotesk to app UI. Themes keep their own fonts under `.theme-canvas`.
+- Run `node scripts/audit-typography.mjs` after UI typography changes; it checks sizes, uppercase tracking, line-height, sentence case, color contrast, and mono ratio on all app routes.
 
 ### Layout and shape
 
@@ -108,15 +115,15 @@ Sizes: `sm` 36px, `md` 44px (`min-h-11`), `lg` 52px. All use 3px radius, 600 wei
 ### Forms
 
 - Shared field styling lives in `src/components/shared/form/ui.ts`; form primitives in `FormKit.tsx`.
-- Label above input, mono uppercase hint optional, 2–3px radius, cream/white field on paper.
+- Label above input, sentence-case hint at 14px or larger, 2–3px radius, cream/white field on paper. Controls use 15px text.
 - Every control needs an associated label (`htmlFor`/`id`) or `aria-label`; errors use `role="alert"`/`aria-live` and visible text, not color alone.
 - Order form labels use `order-*` ids and are locked by tests.
 
 ### Status and data
 
 - `StatusBadge` for order/payment/RSVP state; pair color with text.
-- Table header uses mono uppercase microcopy; rows use hairline rules, no zebra stripes.
-- Counts and IDs use `font-mono`.
+- Table headers and rows use 14px sentence-case text; rows use hairline rules, no zebra stripes.
+- Counts, prices, and IDs use tabular `.font-data`; `font-mono` is optional for machine-readable values only.
 - `EmptyState` for zero-data cases with one clear action.
 - Loading uses `Skeleton` (`pulse` default, `wave` shimmer) and the tokenized `PageSkeleton`, `StatsSkeleton`, `TemplateCardSkeleton`, `DemoSkeleton`. Legacy presets may remain until touched.
 
@@ -129,11 +136,11 @@ Sizes: `sm` 36px, `md` 44px (`min-h-11`), `lg` 52px. All use 3px radius, 600 wei
 
 ## 4. Page Patterns
 
-- **Public:** editorial hero → proof strip → asymmetric feature grid → catalog → process → FAQ → CTA. Section eyebrows in mono; generous vertical rhythm (`py-20`–`py-28`).
+- **Public:** editorial hero → proof strip → asymmetric feature grid → catalog → process → FAQ → CTA. Section eyebrows use 13px Instrument Sans with `0.06em` tracking; generous vertical rhythm (`py-20`–`py-28`).
 - **Order:** two-column form with sticky summary on desktop; stepper with ember-600 active state; single paper panel per section, hairline dividers.
 - **Payment:** status-first header, ticket-shaped total, explicit manual-transfer instructions, accessible copy buttons, success tokens for paid state.
 - **Dashboard:** sidebar + content header; tabs share `Pagination`, form primitives, and paper panels; mobile tabs scroll horizontally.
-- **Admin:** dense but calm; mono metadata, compact tables, row actions in ghost buttons, modals for edits; preserve all handlers and `data-*` hooks.
+- **Admin:** dense but calm; tabular metadata, compact 14px tables, row actions in ghost buttons, modals for edits; preserve all handlers and `data-*` hooks.
 - **Invitations:** untouched visual system. `.theme-canvas` isolates theme fonts from app typography. Only layout/font-isolation/a11y fixes belong here.
 
 ## 5. Accessibility Baseline
@@ -150,14 +157,14 @@ Sizes: `sm` 36px, `md` 44px (`min-h-11`), `lg` 52px. All use 3px radius, 600 wei
 
 Allowed: landing hero, optional catalog accent, payment success. Never dashboard/admin.
 
-- Procedural geometry only; no external models/textures.
+- `PhoneShowcase` renders local WebP previews on rounded-box phone geometry; no external models or remote textures.
 - Lazy-load with `React.lazy`/dynamic import; DPR capped at 1.5–2.
-- Fallback to static art on reduced motion, Save-Data, low GPU, or load failure.
-- Canvas is `aria-hidden`; meaningful copy stays in DOM.
-- Keep `HeroScene` as a separate chunk; current build warns it exceeds 500 kB, which is expected and non-fatal.
+- Fallback to a CSS phone stack on reduced motion, Save-Data, low GPU, no WebGL, or load failure.
+- Canvas is `aria-hidden`; meaningful copy, active template name, and demo link stay in DOM.
+- Keep `PhoneShowcaseScene` as a separate chunk; the current build emits the standard >500 kB warning, but gzip size is ~254 kB, within the 300 kB target.
 
 ## 7. Do / Don't
 
-Do: use tokens, Fraunces for display, mono for data, hairline rules, peach/ember/ink, 2–3px radii, one primary action per view.
+Do: use tokens, Fraunces for display, tabular `.font-data` for numbers, mono only for technical data, hairline rules, peach/ember/ink, 2–3px radii, one primary action per view.
 
 Don't: add new raw hex values, use `ink-300` for copy, use ember-500 for small text on cream, introduce purple/neon, stack identical rounded cards, hide content in canvas, or restyle invitation themes.

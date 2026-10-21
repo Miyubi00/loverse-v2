@@ -221,7 +221,7 @@ export default function AuditTab({ toast }: AuditTabProps) {
         <h2 className="mt-2 font-display text-[clamp(2rem,4vw,3.1rem)] leading-none tracking-[-0.05em] text-ink-950">
           {t('admin.auditTitle')}
         </h2>
-        <p className="mt-2 max-w-xl text-[12px] leading-relaxed text-ink-500">{t('admin.auditSubtitle')}</p>
+        <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-ink-500">{t('admin.auditSubtitle')}</p>
       </div>
 
       <form
@@ -232,14 +232,14 @@ export default function AuditTab({ toast }: AuditTabProps) {
         className="mb-6 paper-panel flex flex-col gap-3 p-4 md:flex-row md:items-end"
       >
         <div className="min-w-[160px]">
-          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
             <Filter size={12} className="text-ember-600" />
             <span>{t('admin.auditFilterKind')}</span>
           </label>
           <select
             value={kindInput}
             onChange={(e) => setKindInput(e.target.value)}
-            className="h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
+            className="h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[14px] font-medium text-ink-900 outline-none transition focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
           >
             <option value="all">{t('admin.auditKindAll')}</option>
             <option value="admin">admin</option>
@@ -251,14 +251,14 @@ export default function AuditTab({ toast }: AuditTabProps) {
         </div>
 
         <div className="min-w-[170px]">
-          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
             <Filter size={12} className="text-ember-600" />
             <span>{t('admin.auditFilterAction')}</span>
           </label>
           <select
             value={actionInput}
             onChange={(e) => setActionInput(e.target.value)}
-            className="h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
+            className="h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[14px] font-medium text-ink-900 outline-none transition focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
           >
             <option value="">{t('admin.auditActionAll')}</option>
             {ACTION_OPTIONS.map((a) => (
@@ -270,7 +270,7 @@ export default function AuditTab({ toast }: AuditTabProps) {
         </div>
 
         <div className="min-w-[220px] flex-1">
-          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
             <Search size={12} className="text-ember-600" />
             <span>{t('admin.auditSearchPh')}</span>
           </label>
@@ -281,13 +281,13 @@ export default function AuditTab({ toast }: AuditTabProps) {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder={t('admin.auditSearchPh')}
-              className="h-10 w-full border border-ink-900/15 bg-cream-50 pl-9 pr-3 text-[12px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
+              className="h-10 w-full border border-ink-900/15 bg-cream-50 pl-9 pr-3 text-[14px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
             />
           </div>
         </div>
 
         <div className="min-w-[160px]">
-          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
             <Calendar size={12} className="text-ember-600" />
             <span>{t('admin.dateFilterLabel')}</span>
           </label>
@@ -295,7 +295,7 @@ export default function AuditTab({ toast }: AuditTabProps) {
             type="date"
             value={dateInput}
             onChange={(e) => setDateInput(e.target.value)}
-            className="h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
+            className="h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[14px] font-medium text-ink-900 outline-none transition focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
           />
         </div>
 
@@ -325,25 +325,25 @@ export default function AuditTab({ toast }: AuditTabProps) {
       </form>
 
       {loading ? (
-        <div className="paper-panel px-6 py-12 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
+        <div className="paper-panel px-6 py-12 text-center font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
           {t('common.loading')}
         </div>
       ) : pg.total === 0 ? (
-        <div className="paper-panel px-6 py-12 text-center text-[12px] italic text-ink-400">
+        <div className="paper-panel px-6 py-12 text-center text-[14px] italic text-ink-400">
           {t('admin.auditEmpty')}
         </div>
       ) : (
         <div className="paper-panel overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-[12px] text-ink-600">
+            <table className="w-full text-left text-[14px] text-ink-600">
               <thead className="border-b border-ink-900/12 bg-cream-100">
                 <tr>
-                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThTime')}</th>
-                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThActor')}</th>
-                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThAction')}</th>
-                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThSummary')}</th>
-                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThTarget')}</th>
-                  <th className="px-4 py-3.5 text-center font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThDetail')}</th>
+                  <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.auditThTime')}</th>
+                  <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.auditThActor')}</th>
+                  <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.auditThAction')}</th>
+                  <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.auditThSummary')}</th>
+                  <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.auditThTarget')}</th>
+                  <th className="px-4 py-3.5 text-center font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.auditThDetail')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink-900/10">
@@ -355,17 +355,17 @@ export default function AuditTab({ toast }: AuditTabProps) {
                   return (
                     <Fragment key={g.key}>
                       <tr key={g.key} className="transition-colors hover:bg-cream-100/50">
-                        <td className="px-4 py-4 font-data text-[9px] text-ink-500">
+                        <td className="px-4 py-4 font-data text-[14px] text-ink-500">
                           {formatDateTime(main.created_at, language)}
                         </td>
                         <td className="px-4 py-4">
-                          <span className={`inline-flex w-fit items-center gap-1 border px-2 py-1 font-data text-[8px] uppercase tracking-[0.08em] ${style.pill}`}>
+                          <span className={`inline-flex w-fit items-center gap-1 border px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] ${style.pill}`}>
                             <Icon size={11} /> {main.actor_kind}
                           </span>
-                          <div className="mt-1 max-w-[220px] truncate text-[10px] text-ink-400">{actorLabel(main)}</div>
+                          <div className="mt-1 max-w-[220px] truncate text-[14px] text-ink-400">{actorLabel(main)}</div>
                         </td>
                         <td className="px-4 py-4">
-                          <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[8px] text-ink-600">
+                          <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[14px] text-ink-600">
                             {main.action}
                           </span>
                         </td>
@@ -375,21 +375,21 @@ export default function AuditTab({ toast }: AuditTabProps) {
                               <span className="text-ink-300">—</span>
                             ) : (
                               summarize(main, t).map((s, i) => (
-                                <p key={i} className="truncate text-[11px] font-medium text-ink-600" title={s}>
+                                <p key={i} className="truncate text-[14px] font-medium text-ink-600" title={s}>
                                   {s}
                                 </p>
                               ))
                             )}
                             {g.rows.length > 1 && (
-                              <p className="font-data text-[8px] text-ink-400">
+                              <p className="font-data text-[14px] text-ink-400">
                                 +{g.rows.length - 1} {t('admin.auditGrouped')}
                               </p>
                             )}
                           </div>
                         </td>
                         <td className="px-4 py-4">
-                          <span className="mb-1 block font-data text-[9px] text-ink-400">#{main.row_id.slice(0, 8)}</span>
-                          <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[8px] text-ink-600">
+                          <span className="mb-1 block font-data text-[14px] text-ink-400">#{main.row_id.slice(0, 8)}</span>
+                          <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[14px] text-ink-600">
                             {main.table_name}
                           </span>
                         </td>
@@ -408,7 +408,7 @@ export default function AuditTab({ toast }: AuditTabProps) {
                         <tr key={`${g.key}-detail`} className="bg-cream-100/50">
                           <td colSpan={6} className="space-y-2 p-4">
                             {g.rows.map((r) => (
-                              <div key={r.id} className="border border-ink-900/10 bg-cream-50 p-3 text-[11px]">
+                              <div key={r.id} className="border border-ink-900/10 bg-cream-50 p-3 text-[14px]">
                                 <p className="font-semibold text-ink-800">
                                   {r.action}{' '}
                                   <span className="font-normal text-ink-400">
@@ -418,7 +418,7 @@ export default function AuditTab({ toast }: AuditTabProps) {
                                 <p className="mt-0.5 text-ink-500">
                                   {actorLabel(r)} · {formatDateTime(r.created_at, language)}
                                 </p>
-                                <pre className="mt-2 overflow-x-auto bg-ink-950 p-2.5 font-data text-[9px] leading-relaxed text-cream-100">
+                                <pre className="mt-2 overflow-x-auto bg-ink-950 p-2.5 font-data text-[14px] leading-relaxed text-cream-100">
                                   {JSON.stringify(r.details ?? {}, null, 2)}
                                 </pre>
                               </div>

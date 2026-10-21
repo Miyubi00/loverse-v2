@@ -123,7 +123,7 @@ export default function ForgotPinPage() {
               className={inputClass}
             />
           </div>
-          <p className="mt-2 text-[11px] text-ink-400">{t("forgotPin.dateHelp")}</p>
+          <p className="mt-2 text-[14px] text-ink-400">{t("forgotPin.dateHelp")}</p>
         </div>
 
         <TurnstileWidget

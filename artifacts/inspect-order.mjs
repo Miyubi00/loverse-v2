@@ -1,0 +1,25 @@
+﻿import { chromium } from '@playwright/test';
+const browser = await chromium.launch({ channel: 'chrome', args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+const page = await browser.newPage({ viewport: { width: 1440, height: 1400 } });
+await page.goto('http://127.0.0.1:5173/order?template=rustic-floral', { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(1600);
+await page.screenshot({ path: 'artifacts/ui/after/order-step1-fields.png' });
+await page.fill('input[name="groom_name"]', 'Dimas');
+await page.fill('input[name="bride_name"]', 'Sarah');
+await page.fill('input[name="wedding_date"]', '2026-11-22');
+await page.fill('input[name="email"]', 'dimas@example.com');
+await page.fill('input[name="whatsapp"]', '81234567890');
+await page.getByRole('button', { name: /^Lanjut$/i }).click();
+await page.waitForTimeout(700);
+await page.evaluate(() => window.scrollTo(0, 0));
+await page.screenshot({ path: 'artifacts/ui/after/order-step2.png' });
+await page.getByText('E-Wallet', { exact: false }).first().click();
+await page.waitForTimeout(300);
+await page.screenshot({ path: 'artifacts/ui/after/order-step2-ewallet.png' });
+const va = page.getByText('Virtual Account', { exact: false }).first();
+if (await va.count()) { await va.click(); await page.waitForTimeout(300); await page.screenshot({ path: 'artifacts/ui/after/order-step2-va.png' }); }
+await page.getByRole('button', { name: /^Lanjut$/i }).click();
+await page.waitForTimeout(800);
+await page.evaluate(() => window.scrollTo(0, 0));
+await page.screenshot({ path: 'artifacts/ui/after/order-step3.png' });
+await browser.close();

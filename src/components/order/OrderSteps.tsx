@@ -23,7 +23,7 @@ export function OrderSteps({ current }: OrderStepsProps) {
             aria-current={isCurrent ? "step" : undefined}
           >
             <span
-              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[10px] font-semibold transition-colors sm:h-8 sm:w-8 ${
+              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[14px] font-semibold transition-colors sm:h-8 sm:w-8 ${
                 isDone
                   ? "border-ink-950 bg-ink-950 text-cream-50"
                   : isCurrent
@@ -34,7 +34,7 @@ export function OrderSteps({ current }: OrderStepsProps) {
               {isDone ? <Check className="h-3.5 w-3.5" /> : `0${stepNo}`}
             </span>
             <span
-              className={`truncate text-[10px] font-semibold leading-tight sm:text-xs ${
+              className={`truncate text-[14px] font-semibold leading-tight sm:text-[14px] ${
                 isDone ? "text-ink-700" : isCurrent ? "text-ink-950" : "text-ink-400"
               }`}
             >

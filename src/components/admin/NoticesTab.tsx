@@ -35,13 +35,13 @@ interface NoticeFormState {
 }
 
 const INPUT_CLASS =
-  'h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15';
+  'h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[14px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15';
 
 const TEXTAREA_CLASS =
-  'w-full border border-ink-900/15 bg-cream-50 px-3 py-2.5 text-[12px] font-medium leading-relaxed text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15';
+  'w-full border border-ink-900/15 bg-cream-50 px-3 py-2.5 text-[14px] font-medium leading-relaxed text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15';
 
 const LABEL_CLASS =
-  'mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500';
+  'mb-1.5 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500';
 
 const TYPE_STYLE: Record<SiteNoticeType, string> = {
   info: 'border-ink-900/15 bg-cream-100 text-ink-600',
@@ -262,7 +262,7 @@ export default function NoticesTab({ toast, confirmAction }: NoticesTabProps) {
           <h2 className="mt-2 font-display text-[clamp(2rem,4vw,3.1rem)] leading-none tracking-[-0.05em] text-ink-950">
             {t('admin.noticesTitle')}
           </h2>
-          <p className="mt-2 max-w-xl text-[12px] leading-relaxed text-ink-500">{t('admin.noticesSubtitle')}</p>
+          <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-ink-500">{t('admin.noticesSubtitle')}</p>
         </div>
         {!formOpen && (
           <Button type="button" onClick={openCreate} size="sm" icon={<Plus size={14} />}>
@@ -401,24 +401,24 @@ export default function NoticesTab({ toast, confirmAction }: NoticesTabProps) {
       )}
 
       {loading ? (
-        <div className="paper-panel px-6 py-12 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
+        <div className="paper-panel px-6 py-12 text-center font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
           {t('common.loading')}
         </div>
       ) : rows.length === 0 ? (
-        <div className="paper-panel px-6 py-12 text-center text-[12px] italic text-ink-400">
+        <div className="paper-panel px-6 py-12 text-center text-[14px] italic text-ink-400">
           {t('admin.noticesEmpty')}
         </div>
       ) : (
         <div className="paper-panel overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-[12px] text-ink-600">
+            <table className="w-full text-left text-[14px] text-ink-600">
               <thead className="border-b border-ink-900/12 bg-cream-100">
                 <tr>
-                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.noticesThNotice')}</th>
-                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.noticesThMode')}</th>
-                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.noticesThSchedule')}</th>
-                  <th className="px-4 py-3.5 text-center font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.noticesThStatus')}</th>
-                  <th className="px-4 py-3.5 text-center font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.noticesThActions')}</th>
+                  <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.noticesThNotice')}</th>
+                  <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.noticesThMode')}</th>
+                  <th className="px-4 py-3.5 font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.noticesThSchedule')}</th>
+                  <th className="px-4 py-3.5 text-center font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.noticesThStatus')}</th>
+                  <th className="px-4 py-3.5 text-center font-data text-[14px] font-medium uppercase tracking-[0.06em] text-ink-500">{t('admin.noticesThActions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink-900/10">
@@ -432,29 +432,29 @@ export default function NoticesTab({ toast, confirmAction }: NoticesTabProps) {
                     >
                       <td className="px-4 py-4">
                         <span
-                          className={`inline-flex w-fit items-center border px-2 py-0.5 font-data text-[8px] uppercase tracking-[0.1em] ${TYPE_STYLE[row.type] ?? TYPE_STYLE.info}`}
+                          className={`inline-flex w-fit items-center border px-2 py-0.5 font-data text-[14px] uppercase tracking-[0.06em] ${TYPE_STYLE[row.type] ?? TYPE_STYLE.info}`}
                         >
                           {row.type}
                         </span>
                         <div className="mt-1.5 max-w-[320px] font-display text-lg leading-tight tracking-[-0.03em] text-ink-950">{row.title}</div>
                         {row.body && (
-                          <div className="mt-1 max-w-[320px] truncate text-[11px] text-ink-400" title={row.body}>
+                          <div className="mt-1 max-w-[320px] truncate text-[14px] text-ink-400" title={row.body}>
                             {row.body}
                           </div>
                         )}
                       </td>
                       <td className="px-4 py-4">
-                        <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[8px] uppercase tracking-[0.1em] text-ink-600">
+                        <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-ink-600">
                           {modeLabel(row.mode)}
                         </span>
                       </td>
-                      <td className="px-4 py-4 font-data text-[9px] text-ink-500">
+                      <td className="px-4 py-4 font-data text-[14px] text-ink-500">
                         <div>{schedule.start}</div>
                         <div className="mt-1 text-ink-400">→ {schedule.end}</div>
                       </td>
                       <td className="px-4 py-4 text-center">
                         <span
-                          className={`inline-flex items-center border px-2.5 py-1 font-data text-[8px] uppercase tracking-[0.1em] ${STATUS_STYLE[status]}`}
+                          className={`inline-flex items-center border px-2.5 py-1 font-data text-[14px] uppercase tracking-[0.06em] ${STATUS_STYLE[status]}`}
                         >
                           {statusLabel[status]}
                         </span>

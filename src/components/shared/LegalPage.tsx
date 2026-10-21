@@ -22,7 +22,7 @@ export default function LegalPageLayout({ title, metaDescription, updated, secti
       <div className="mx-auto w-full max-w-[1180px] px-4 pb-20 pt-10 sm:px-7 sm:pt-16 lg:px-10">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 font-data text-[9px] uppercase tracking-[0.16em] text-ink-500 transition-colors hover:text-ink-950"
+          className="inline-flex items-center gap-2 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500 transition-colors hover:text-ink-950"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Kembali ke beranda
@@ -34,7 +34,7 @@ export default function LegalPageLayout({ title, metaDescription, updated, secti
             <span className="h-px w-10 bg-ink-900/20" />
           </div>
           <h1 className="display-xl mt-6 max-w-[15ch] text-[clamp(3.2rem,8vw,7rem)] text-ink-950">{title}</h1>
-          <p className="mt-5 font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
+          <p className="mt-5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
             Terakhir diperbarui: {updated}
           </p>
         </header>
@@ -48,16 +48,16 @@ export default function LegalPageLayout({ title, metaDescription, updated, secti
                   <a
                     key={section.title}
                     href={`#bagian-${index + 1}`}
-                    className="group flex items-baseline gap-3 border-b border-ink-900/12 py-3 text-[12px] text-ink-500 transition-colors hover:text-ink-950"
+                    className="group flex items-baseline gap-3 border-b border-ink-900/12 py-3 text-[14px] text-ink-500 transition-colors hover:text-ink-950"
                   >
-                    <span className="font-data text-[8px] text-ink-400">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="font-data text-[14px] text-ink-400">{String(index + 1).padStart(2, "0")}</span>
                     <span className="transition-transform group-hover:translate-x-0.5">{section.title}</span>
                   </a>
                 ))}
               </nav>
               <Link
                 to="/contact"
-                className="mt-8 inline-flex items-center gap-2 border-b border-ink-900/25 pb-1.5 text-[11px] font-semibold text-ink-800 transition-colors hover:border-ember-600 hover:text-ember-600"
+                className="mt-8 inline-flex items-center gap-2 border-b border-ink-900/25 pb-1.5 text-[14px] font-semibold text-ink-800 transition-colors hover:border-ember-600 hover:text-ember-600"
               >
                 Ada pertanyaan? Hubungi kami
                 <ArrowUpRight className="h-3.5 w-3.5" />
@@ -73,7 +73,7 @@ export default function LegalPageLayout({ title, metaDescription, updated, secti
                 className="scroll-mt-28 border-t border-ink-900/15 py-8 first:border-t-0 first:pt-0 sm:py-10"
               >
                 <div className="flex items-baseline gap-4">
-                  <span className="font-data text-[9px] text-ink-400">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="font-data text-[14px] text-ink-400">{String(index + 1).padStart(2, "0")}</span>
                   <h2 className="font-display text-[clamp(1.5rem,2.6vw,2rem)] leading-tight tracking-[-0.03em] text-ink-950">
                     {section.title}
                   </h2>

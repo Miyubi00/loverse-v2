@@ -48,11 +48,11 @@ function formatTanggal(iso: string): string {
 function DetailRow({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
     <div className="flex items-center justify-between gap-4 py-2.5">
-      <span className="flex shrink-0 items-center gap-2 text-[11px] text-ink-400">
+      <span className="flex shrink-0 items-center gap-2 text-[14px] text-ink-400">
         <span className="text-ink-400">{icon}</span>
         {label}
       </span>
-      <span className="min-w-0 truncate text-right text-[12px] font-medium text-ink-800">{value}</span>
+      <span className="min-w-0 truncate text-right text-[14px] font-medium text-ink-800">{value}</span>
     </div>
   );
 }
@@ -89,13 +89,13 @@ export function OrderSummary({
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-3">
-              <span className="border border-ink-900/15 px-1.5 py-0.5 font-data text-[8px] uppercase tracking-[0.12em] text-ink-500">
+              <span className="border border-ink-900/15 px-1.5 py-0.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
                 {t("order.packageLabel")} {selectedTemplate.category}
               </span>
               <button
                 type="button"
                 onClick={onEdit}
-                className="inline-flex shrink-0 items-center gap-1.5 border-b border-ink-900/25 pb-0.5 text-[10px] font-semibold text-ink-600 transition-colors hover:border-ember-500 hover:text-ember-600"
+                className="inline-flex shrink-0 items-center gap-1.5 border-b border-ink-900/25 pb-0.5 text-[14px] font-semibold text-ink-600 transition-colors hover:border-ember-500 hover:text-ember-600"
               >
                 <Pencil size={11} /> {t("order.confirmEdit")}
               </button>
@@ -103,10 +103,10 @@ export function OrderSummary({
             <h2 className="mt-2 truncate font-display text-[26px] leading-none tracking-[-0.04em] text-ink-950 sm:text-3xl">
               {selectedTemplate.name}
             </h2>
-            <p className="mt-2 text-[11px] text-ink-400">{t("order.templateSubtitle")}</p>
+            <p className="mt-2 text-[14px] text-ink-400">{t("order.templateSubtitle")}</p>
           </div>
         </div>
-        <p className="mt-4 font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">Konfirmasi pesanan / 03</p>
+        <p className="mt-4 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">Konfirmasi pesanan / 03</p>
       </div>
 
       <div className="divide-y divide-ink-900/10">
@@ -115,7 +115,7 @@ export function OrderSummary({
             <p className="flex items-center gap-2 font-display text-[17px] tracking-[-0.02em] text-ink-950">
               <Users size={15} className="shrink-0 text-ember-600" /> {t("order.dataContactTitle")}
             </p>
-            <span className="font-data text-[8px] uppercase tracking-[0.12em] text-ink-400">Data acara</span>
+            <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">Data acara</span>
           </div>
           <div className="mt-2">
             <DetailRow icon={<Users size={13} />} label={t("order.coupleNameLabel")} value={`${formData.groom_name} & ${formData.bride_name}`} />
@@ -133,7 +133,7 @@ export function OrderSummary({
             <button
               type="button"
               onClick={onChangeMethod}
-              className="inline-flex shrink-0 items-center gap-1.5 border-b border-ink-900/25 pb-0.5 text-[10px] font-semibold text-ink-600 transition-colors hover:border-ember-500 hover:text-ember-600"
+              className="inline-flex shrink-0 items-center gap-1.5 border-b border-ink-900/25 pb-0.5 text-[14px] font-semibold text-ink-600 transition-colors hover:border-ember-500 hover:text-ember-600"
             >
               <ArrowLeftRight size={11} /> {t("order.changeMethod")}
             </button>
@@ -153,8 +153,8 @@ export function OrderSummary({
               </span>
             )}
             <span className="min-w-0">
-              <span className="block truncate text-[12px] font-semibold text-ink-950">{methodLabel}</span>
-              <span className="mt-0.5 block text-[10px] text-ink-400">
+              <span className="block truncate text-[14px] font-semibold text-ink-950">{methodLabel}</span>
+              <span className="mt-0.5 block text-[14px] text-ink-400">
                 {paymentMethod === "whatsapp" ? t("order.waDesc") : t("order.autoMethodDesc")}
               </span>
             </span>
@@ -165,7 +165,7 @@ export function OrderSummary({
           <p className="flex items-center gap-2 font-display text-[17px] tracking-[-0.02em] text-ink-950">
             <ReceiptText size={15} className="shrink-0 text-ember-600" /> {t("order.paymentDetails")}
           </p>
-          <div className="mt-3 space-y-2.5 text-[12px]">
+          <div className="mt-3 space-y-2.5 text-[14px]">
             <div className="flex items-center justify-between gap-3">
               <span className="text-ink-400">{t("order.templatePrice")}</span>
               <span className="font-data text-ink-800">{formatIDR(selectedTemplate.price)}</span>
@@ -176,10 +176,10 @@ export function OrderSummary({
               </span>
               <span className="font-data text-ink-800">{fee > 0 ? `+ ${formatIDR(fee)}` : formatIDR(0)}</span>
             </div>
-            <p className="text-[10px] leading-relaxed text-ink-400">{t("order.feeNotePpn")}</p>
+            <p className="text-[14px] leading-relaxed text-ink-400">{t("order.feeNotePpn")}</p>
           </div>
           <div className="mt-4 flex items-end justify-between gap-4 bg-ink-950 px-4 py-4 text-cream-50">
-            <span className="text-[11px] font-medium text-cream-100/60">{t("order.totalPayment")}</span>
+            <span className="text-[14px] font-medium text-cream-100/60">{t("order.totalPayment")}</span>
             <span className="font-display text-[26px] leading-none tracking-[-0.04em] text-peach-200 sm:text-3xl">
               {formatIDR(total)}
             </span>
@@ -188,10 +188,10 @@ export function OrderSummary({
 
         <div className="flex items-center gap-3 bg-cream-50 px-4 py-3.5 sm:px-6">
           <ShieldCheck size={20} className="shrink-0 text-ember-600" />
-          <p className="min-w-0 flex-1 text-[10px] leading-relaxed text-ink-500">
+          <p className="min-w-0 flex-1 text-[14px] leading-relaxed text-ink-500">
             <strong className="font-semibold text-ink-800">{t("order.secureTitle")}</strong> {t("order.secureDesc")}
           </p>
-          <span className="shrink-0 font-display text-[13px] italic text-ink-500">midtrans</span>
+          <span className="shrink-0 font-display text-[14px] italic text-ink-500">midtrans</span>
         </div>
 
         {actions ? <div className="space-y-2.5 p-4 sm:p-6">{actions}</div> : null}

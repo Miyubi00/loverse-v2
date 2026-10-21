@@ -33,10 +33,10 @@ interface RsvpTabProps {
 type StatusFilter = RsvpStatusFilter;
 
 const INPUT_CLASS =
-  "h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15";
+  "h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[14px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15";
 
 const LABEL_CLASS =
-  "mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500";
+  "mb-1.5 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500";
 
 export default function RsvpTab({ orderId }: RsvpTabProps) {
   const { t, language } = useTranslation();
@@ -161,8 +161,8 @@ export default function RsvpTab({ orderId }: RsvpTabProps) {
 
       <div className="paper-panel overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-[13px] text-ink-600">
-            <thead className="border-b border-ink-900/12 bg-cream-100 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+          <table className="w-full text-left text-[14px] text-ink-600">
+            <thead className="border-b border-ink-900/12 bg-cream-100 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
               <tr>
                 <th className="px-5 py-3.5 font-medium">{t("customer.rsvp.thGuest")}</th>
                 <th className="px-4 py-3.5 font-medium">{t("customer.rsvp.thStatus")}</th>
@@ -173,13 +173,13 @@ export default function RsvpTab({ orderId }: RsvpTabProps) {
             <tbody className="divide-y divide-ink-900/10">
               {loading ? (
                 <tr>
-                  <td colSpan={4} className="px-5 py-14 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
+                  <td colSpan={4} className="px-5 py-14 text-center font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                     {t("common.loading")}
                   </td>
                 </tr>
               ) : rows.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-5 py-14 text-center text-[12px] italic text-ink-400">
+                  <td colSpan={4} className="px-5 py-14 text-center text-[14px] italic text-ink-400">
                     {hasActiveFilter ? t("customer.rsvp.emptyFiltered") : t("customer.rsvp.emptyDefault")}
                   </td>
                 </tr>
@@ -187,9 +187,9 @@ export default function RsvpTab({ orderId }: RsvpTabProps) {
                 rows.map((rsvp) => (
                   <tr key={rsvp.id} className="align-top transition-colors hover:bg-cream-100/50">
                     <td className="whitespace-nowrap px-5 py-4">
-                      <span className="text-[13px] font-semibold text-ink-900">{rsvp.guest_name}</span>
+                      <span className="text-[14px] font-semibold text-ink-900">{rsvp.guest_name}</span>
                       <br />
-                      <span className="font-data text-[8px] uppercase tracking-[0.1em] text-ink-400">
+                      <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                         {rsvp.created_at
                           ? new Date(rsvp.created_at).toLocaleDateString(language === "en" ? "en-US" : "id-ID")
                           : "-"}
@@ -199,10 +199,10 @@ export default function RsvpTab({ orderId }: RsvpTabProps) {
                       <StatusBadge status={rsvp.status} pax={rsvp.pax} />
                     </td>
                     <td className="max-w-xs px-4 py-4">
-                      <p className="text-[12px] leading-relaxed text-ink-600">“{rsvp.message}”</p>
+                      <p className="text-[14px] leading-relaxed text-ink-600">“{rsvp.message}”</p>
                       {rsvp.reply && (
-                        <div className="mt-2 border-l-2 border-ember-500/40 bg-cream-100/70 px-3 py-2 text-[11px] leading-relaxed text-ink-600">
-                          <span className="mb-0.5 block font-data text-[8px] uppercase tracking-[0.12em] text-ember-600">
+                        <div className="mt-2 border-l-2 border-ember-500/40 bg-cream-100/70 px-3 py-2 text-[14px] leading-relaxed text-ink-600">
+                          <span className="mb-0.5 block font-data text-[14px] uppercase tracking-[0.06em] text-ember-600">
                             {t("customer.rsvp.yourReply")}
                           </span>
                           {rsvp.reply}
@@ -220,7 +220,7 @@ export default function RsvpTab({ orderId }: RsvpTabProps) {
                             }));
                             setActiveReplyModal(rsvp);
                           }}
-                          className="inline-flex items-center gap-1.5 border border-ink-900/12 bg-cream-50 px-2.5 py-1.5 font-data text-[8px] uppercase tracking-[0.1em] text-ink-600 transition-colors hover:border-ink-900/30 hover:text-ink-900 active:translate-y-px"
+                          className="inline-flex items-center gap-1.5 border border-ink-900/12 bg-cream-50 px-2.5 py-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-600 transition-colors hover:border-ink-900/30 hover:text-ink-900 active:translate-y-px"
                         >
                           <MessageSquareReply size={12} />
                           <span>{rsvp.reply ? t("customer.rsvp.btnEditReply") : t("customer.rsvp.btnReply")}</span>
@@ -283,7 +283,7 @@ function StatCell({
       <p className={cn("font-display text-[clamp(2rem,4vw,3rem)] leading-none tracking-[-0.05em]", accent)}>
         {value}
       </p>
-      <p className="mt-2 font-data text-[8px] uppercase tracking-[0.14em] text-ink-400">{label}</p>
+      <p className="mt-2 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">{label}</p>
     </div>
   );
 }
@@ -299,20 +299,20 @@ function StatusBadge({
 
   if (status === "hadir") {
     return (
-      <span className="inline-flex w-fit items-center gap-1 border border-success-600/25 bg-success-600/[0.06] px-2 py-1 font-data text-[8px] uppercase tracking-[0.1em] text-success-700">
+      <span className="inline-flex w-fit items-center gap-1 border border-success-600/25 bg-success-600/[0.06] px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-success-700">
         <CheckCircle2 size={10} /> {t("customer.rsvp.statusAttending")} ({pax})
       </span>
     );
   }
   if (status === "tidak_hadir") {
     return (
-      <span className="inline-flex w-fit border border-danger-600/25 bg-danger-600/[0.06] px-2 py-1 font-data text-[8px] uppercase tracking-[0.1em] text-danger-600">
+      <span className="inline-flex w-fit border border-danger-600/25 bg-danger-600/[0.06] px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-danger-600">
         {t("customer.rsvp.statusNotAttending")}
       </span>
     );
   }
   return (
-    <span className="inline-flex w-fit border border-gold-600/30 bg-gold-600/[0.07] px-2 py-1 font-data text-[8px] uppercase tracking-[0.1em] text-gold-600">
+    <span className="inline-flex w-fit border border-gold-600/30 bg-gold-600/[0.07] px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-gold-600">
       {t("customer.rsvp.statusUncertain")}
     </span>
   );

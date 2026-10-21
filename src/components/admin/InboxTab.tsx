@@ -268,7 +268,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
           <h2 className="mt-2 font-display text-[clamp(2rem,4vw,3.1rem)] leading-none tracking-[-0.05em] text-ink-950">
             {t('admin.inboxTitle')}
           </h2>
-          <p className="mt-2 max-w-xl text-[12px] leading-relaxed text-ink-500">{t('admin.inboxSubtitle')}</p>
+          <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-ink-500">{t('admin.inboxSubtitle')}</p>
         </div>
         <Button
           type="button"
@@ -282,7 +282,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
       </div>
 
       {loading && messages.length === 0 ? (
-        <div className="paper-panel px-6 py-12 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
+        <div className="paper-panel px-6 py-12 text-center font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
           {t('common.loading')}
         </div>
       ) : messages.length === 0 ? (
@@ -290,14 +290,14 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
           <span className="grid h-12 w-12 place-items-center border border-ink-900/12 bg-cream-100 text-ember-600">
             <Inbox size={22} />
           </span>
-          <p className="mt-4 text-[12px] italic text-ink-400">{t('admin.inboxEmpty')}</p>
+          <p className="mt-4 text-[14px] italic text-ink-400">{t('admin.inboxEmpty')}</p>
         </div>
       ) : (
         <div className="grid items-start gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
           <div className="paper-panel overflow-hidden">
             <div className="flex items-center justify-between border-b border-ink-900/10 bg-cream-100 px-4 py-3">
-              <span className="font-data text-[8px] uppercase tracking-[0.14em] text-ink-500">Messages</span>
-              <span className="font-data text-[9px] text-ink-400">{messages.length}</span>
+              <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">Messages</span>
+              <span className="font-data text-[14px] text-ink-400">{messages.length}</span>
             </div>
             <div className="max-h-[calc(100vh-16rem)] divide-y divide-ink-900/10 overflow-y-auto">
               {messages.map((m) => (
@@ -312,7 +312,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                   }`}
                 >
                   <span
-                    className={`grid h-9 w-9 shrink-0 place-items-center border font-data text-[11px] font-semibold ${
+                    className={`grid h-9 w-9 shrink-0 place-items-center border font-data text-[14px] font-semibold ${
                       m.is_read
                         ? 'border-ink-900/12 bg-cream-100 text-ink-400'
                         : 'border-ember-500/30 bg-ember-600 text-cream-50'
@@ -327,18 +327,18 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                       ) : (
                         <Mail size={12} className="shrink-0 text-ember-600" />
                       )}
-                      <span className={`truncate text-[11px] ${m.is_read ? 'font-medium text-ink-500' : 'font-semibold text-ink-900'}`}>
+                      <span className={`truncate text-[14px] ${m.is_read ? 'font-medium text-ink-500' : 'font-semibold text-ink-900'}`}>
                         {m.from_addr}
                       </span>
                       {!m.is_read && <span className="ml-auto h-1.5 w-1.5 shrink-0 bg-ember-600" />}
                     </span>
-                    <span className={`mt-1 block truncate text-[12px] ${m.is_read ? 'font-medium text-ink-600' : 'font-semibold text-ink-900'}`}>
+                    <span className={`mt-1 block truncate text-[14px] ${m.is_read ? 'font-medium text-ink-600' : 'font-semibold text-ink-900'}`}>
                       {m.subject}
                     </span>
-                    <span className="mt-1 block truncate text-[10px] text-ink-400">
+                    <span className="mt-1 block truncate text-[14px] text-ink-400">
                       {(m.text_body || '').split('\n')[0]}
                     </span>
-                    <span className="mt-2 flex items-center justify-between font-data text-[8px] uppercase tracking-[0.08em] text-ink-400">
+                    <span className="mt-2 flex items-center justify-between font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                       <span className="inline-flex items-center gap-1">
                         <CalendarDays size={10} /> {formatDate(m.received_at)}
                       </span>
@@ -356,7 +356,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
 
           <div className="paper-panel overflow-hidden">
             {!selected ? (
-              <p className="flex items-center justify-center gap-2 px-6 py-16 text-center text-[12px] italic text-ink-400">
+              <p className="flex items-center justify-center gap-2 px-6 py-16 text-center text-[14px] italic text-ink-400">
                 <MailOpen size={15} /> {t('admin.inboxSelectHint')}
               </p>
             ) : (
@@ -366,7 +366,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                     <FileText size={17} className="mt-0.5 shrink-0 text-ember-600" />
                     <span className="font-display text-xl leading-snug tracking-[-0.03em] text-ink-950">{selected.subject}</span>
                   </p>
-                  <div className="mt-3 grid gap-1.5 text-[11px] text-ink-500 sm:grid-cols-2">
+                  <div className="mt-3 grid gap-1.5 text-[14px] text-ink-500 sm:grid-cols-2">
                     <p className="flex items-center gap-2">
                       <User size={12} className="shrink-0 text-ember-600" />
                       {t('admin.inboxFrom')} <strong className="font-semibold text-ink-800">{selected.from_addr}</strong>
@@ -388,7 +388,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
 
                 <div className="px-5 py-4">
                   <div className="mb-2 flex items-center justify-between gap-2">
-                    <p className="font-data text-[8px] uppercase tracking-[0.14em] text-ink-400">
+                    <p className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                       {t('admin.inboxMessageLabel')}
                     </p>
                     {selected.html_body ? (
@@ -396,14 +396,14 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                         <button
                           type="button"
                           onClick={() => setViewHtml(true)}
-                          className={`px-2.5 py-1 font-data text-[8px] uppercase tracking-[0.08em] transition-colors ${viewHtml ? 'bg-ink-950 text-cream-50' : 'bg-cream-50 text-ink-500 hover:bg-cream-100'}`}
+                          className={`px-2.5 py-1 font-data text-[14px] uppercase tracking-[0.06em] transition-colors ${viewHtml ? 'bg-ink-950 text-cream-50' : 'bg-cream-50 text-ink-500 hover:bg-cream-100'}`}
                         >
                           {t('admin.inboxViewHtml')}
                         </button>
                         <button
                           type="button"
                           onClick={() => setViewHtml(false)}
-                          className={`border-l border-ink-900/12 px-2.5 py-1 font-data text-[8px] uppercase tracking-[0.08em] transition-colors ${!viewHtml ? 'bg-ink-950 text-cream-50' : 'bg-cream-50 text-ink-500 hover:bg-cream-100'}`}
+                          className={`border-l border-ink-900/12 px-2.5 py-1 font-data text-[14px] uppercase tracking-[0.06em] transition-colors ${!viewHtml ? 'bg-ink-950 text-cream-50' : 'bg-cream-50 text-ink-500 hover:bg-cream-100'}`}
                         >
                           {t('admin.inboxViewText')}
                         </button>
@@ -419,7 +419,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                     />
                   ) : (
                     <div className="border-l-2 border-ember-500 bg-cream-100/60 p-4">
-                      <p className="max-h-72 overflow-y-auto whitespace-pre-wrap text-[12px] leading-relaxed text-ink-700">
+                      <p className="max-h-72 overflow-y-auto whitespace-pre-wrap text-[14px] leading-relaxed text-ink-700">
                         {selected.text_body ? renderLinkified(selected.text_body) : `(${t('admin.inboxNoBody')})`}
                       </p>
                     </div>
@@ -428,7 +428,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
 
                 {(selected.attachments ?? []).length > 0 && (
                   <div className="px-5 pb-1">
-                    <p className="mb-2 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.14em] text-ink-400">
+                    <p className="mb-2 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                       <Paperclip size={11} /> {t('admin.inboxAttachments')} ({(selected.attachments ?? []).length})
                     </p>
                     <div className="flex flex-wrap gap-2.5">
@@ -443,7 +443,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                             className="group relative block h-20 w-20 overflow-hidden border border-ink-900/12 bg-cream-100 hover:border-ember-500"
                           >
                             <img src={a.url} alt={a.name} className="h-full w-full object-cover" loading="lazy" />
-                            <span className="absolute inset-x-0 bottom-0 truncate bg-ink-950/75 px-1.5 py-0.5 text-[9px] font-medium text-cream-50">
+                            <span className="absolute inset-x-0 bottom-0 truncate bg-ink-950/75 px-1.5 py-0.5 text-[14px] font-medium text-cream-50">
                               {a.name}
                             </span>
                           </a>
@@ -457,15 +457,15 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                             className="flex w-44 items-center gap-2.5 border border-ink-900/12 bg-cream-50 p-2.5 hover:border-ember-500"
                           >
                             <span
-                              className={`grid h-9 w-9 shrink-0 place-items-center font-data text-[8px] font-semibold ${
+                              className={`grid h-9 w-9 shrink-0 place-items-center font-data text-[14px] font-semibold ${
                                 isPdfAtt(a) ? 'bg-danger-600/10 text-danger-600' : 'bg-cream-100 text-ink-500'
                               }`}
                             >
                               {isPdfAtt(a) ? 'PDF' : <FileText size={16} />}
                             </span>
                             <span className="min-w-0">
-                              <span className="block truncate text-[11px] font-semibold text-ink-800">{a.name}</span>
-                              <span className="block font-data text-[9px] text-ink-400">{formatSize(a.size)}</span>
+                              <span className="block truncate text-[14px] font-semibold text-ink-800">{a.name}</span>
+                              <span className="block font-data text-[14px] text-ink-400">{formatSize(a.size)}</span>
                             </span>
                           </a>
                         ),
@@ -481,7 +481,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                     </Button>
                   ) : (
                     <div>
-                      <label className="mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.14em] text-ink-500">
+                      <label className="mb-1.5 flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
                         <Reply size={12} className="text-ember-600" /> {t('admin.inboxReplyLabel')}
                       </label>
                       <textarea
@@ -489,7 +489,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                         onChange={(e) => setReply(e.target.value)}
                         rows={4}
                         placeholder={t('admin.inboxReplyPlaceholder')}
-                        className="w-full border border-ink-900/15 bg-cream-50 p-3 text-[12px] text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
+                        className="w-full border border-ink-900/15 bg-cream-50 p-3 text-[14px] text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
                       />
                       <input
                         ref={fileInputRef}
@@ -517,11 +517,11 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                                       pdf ? 'bg-danger-600/10 text-danger-600' : 'bg-cream-100 text-ink-500'
                                     }`}
                                   >
-                                    {pdf ? <span className="text-[10px] font-semibold">PDF</span> : <FileText size={18} />}
-                                    <span className="max-w-[64px] truncate px-1 text-[8px] font-medium">{a.file.name}</span>
+                                    {pdf ? <span className="text-[14px] font-semibold">PDF</span> : <FileText size={18} />}
+                                    <span className="max-w-[64px] truncate px-1 text-[14px] font-medium">{a.file.name}</span>
                                   </span>
                                 )}
-                                <span className="absolute -bottom-1 left-1 bg-ink-950/75 px-1.5 font-data text-[8px] text-cream-50">
+                                <span className="absolute -bottom-1 left-1 bg-ink-950/75 px-1.5 font-data text-[14px] text-cream-50">
                                   {formatSize(a.file.size)}
                                 </span>
                                 <button
@@ -568,7 +568,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                           {t('admin.inboxCancel')}
                         </Button>
                       </div>
-                      <p className="mt-1.5 font-data text-[8px] text-ink-400">{t('admin.inboxAttachHint')}</p>
+                      <p className="mt-1.5 font-data text-[14px] text-ink-400">{t('admin.inboxAttachHint')}</p>
                     </div>
                   )}
                 </div>

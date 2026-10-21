@@ -107,16 +107,16 @@ function CategoryRow({
         </div>
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-[13px] font-semibold text-ink-950 sm:text-sm">{title}</h3>
+            <h3 className="text-[14px] font-semibold text-ink-950 sm:text-sm">{title}</h3>
             {badge}
           </div>
           {logos ? <div className="mt-2 flex flex-wrap items-center gap-1.5">{logos}</div> : null}
-          {description ? <p className="mt-1.5 text-[11px] leading-relaxed text-ink-400">{description}</p> : null}
+          {description ? <p className="mt-1.5 text-[14px] leading-relaxed text-ink-400">{description}</p> : null}
         </div>
       </div>
       <div className="flex shrink-0 flex-col items-end gap-1 pt-0.5">
         <div className="flex items-center gap-2.5">
-          <span className="whitespace-nowrap font-data text-[11px] text-ink-800">{price}</span>
+          <span className="whitespace-nowrap font-data text-[14px] text-ink-800">{price}</span>
           {trailing}
           {mark}
         </div>
@@ -148,7 +148,7 @@ export function PaymentMethodPicker({
         <SectionHeading step="03" title={t("order.step3Title")} />
         <span className="eyebrow shrink-0 pt-1 text-ink-400">Satu kali bayar</span>
       </div>
-      <p className="-mt-2 text-[12px] leading-relaxed text-ink-400">{t("order.step3Desc")}</p>
+      <p className="-mt-2 text-[14px] leading-relaxed text-ink-400">{t("order.step3Desc")}</p>
 
       <div className="space-y-2.5" role="radiogroup" aria-label={t("order.step3Title")}>
         <CategoryRow
@@ -205,10 +205,10 @@ export function PaymentMethodPicker({
                           <img key={logo.alt} src={logo.src} alt={logo.alt} className={logo.className} />
                         ))}
                       </span>
-                      <span className="truncate text-[11px] font-medium text-ink-700">{option.name}</span>
+                      <span className="truncate text-[14px] font-medium text-ink-700">{option.name}</span>
                     </span>
                     <span className="flex shrink-0 items-center gap-2.5">
-                      <span className="font-data text-[11px] text-ink-800">
+                      <span className="font-data text-[14px] text-ink-800">
                         {formatIDR(basePrice + getPaymentMethodFee(basePrice, option.id))}
                       </span>
                       <SelectMark selected={active} />
@@ -266,7 +266,7 @@ export function PaymentMethodPicker({
                     {bank.logo ? (
                       <img src={bank.logo} alt={bank.name} className="h-5 w-auto max-w-full object-contain sm:h-6" />
                     ) : (
-                      <span className="text-[11px] font-semibold text-ink-700">{bank.name}</span>
+                      <span className="text-[14px] font-semibold text-ink-700">{bank.name}</span>
                     )}
                   </button>
                 );
@@ -285,7 +285,7 @@ export function PaymentMethodPicker({
           icon={<FaWhatsapp size={17} />}
           title={t("order.methodWaTitle")}
           badge={
-            <span className="border border-whatsapp-600/25 bg-success-600/10 px-1.5 py-0.5 font-data text-[8px] uppercase tracking-[0.1em] text-success-700">
+            <span className="border border-whatsapp-600/25 bg-success-600/10 px-1.5 py-0.5 font-data text-[14px] uppercase tracking-[0.06em] text-success-700">
               {t("order.feeFreeBadge")}
             </span>
           }
@@ -295,7 +295,7 @@ export function PaymentMethodPicker({
         />
       </div>
 
-      <p className="text-[10px] leading-relaxed text-ink-400">
+      <p className="text-[14px] leading-relaxed text-ink-400">
         Pembayaran otomatis diproses Midtrans. Biaya kanal dan PPN ditampilkan transparan di ringkasan.
       </p>
     </SectionCard>

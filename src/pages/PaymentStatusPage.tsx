@@ -41,7 +41,7 @@ function OrderSummary({ order }: { order: PaymentStatusResponse }) {
 
   return (
     <div className="border border-ink-900/12 bg-cream-50">
-      <dl className="divide-y divide-ink-900/10 text-[11px]">
+      <dl className="divide-y divide-ink-900/10 text-[14px]">
         {rows.map(([label, value]) => (
           <div key={label} className="flex items-center justify-between gap-4 px-4 py-2.5">
             <dt className="shrink-0 text-ink-400">{label}</dt>
@@ -50,11 +50,11 @@ function OrderSummary({ order }: { order: PaymentStatusResponse }) {
         ))}
       </dl>
       <div className="flex items-end justify-between gap-4 border-t border-ink-900/10 bg-ink-950 px-4 py-4">
-        <dt className="text-[10px] font-medium text-cream-100/55">{t("paymentStatus.sumTotal")}</dt>
+        <dt className="text-[14px] font-medium text-cream-100/55">{t("paymentStatus.sumTotal")}</dt>
         <dd className="font-display text-2xl leading-none tracking-[-0.04em] text-peach-200">{formatIDR(total)}</dd>
       </div>
       {order.order_id ? (
-        <p className="select-all border-t border-dashed border-ink-900/15 px-4 py-2.5 text-center font-data text-[9px] tracking-[0.08em] text-ink-400">
+        <p className="select-all border-t border-dashed border-ink-900/15 px-4 py-2.5 text-center font-data text-[14px] tracking-[0.06em] text-ink-400">
           {order.order_id}
         </p>
       ) : null}
@@ -128,10 +128,10 @@ function StatusShell({
 
       <div className="relative mx-auto w-full max-w-xl px-4 py-8 sm:px-6 sm:py-12">
         <div className="flex items-center justify-between gap-4">
-          <Link to="/" className="inline-flex items-center gap-1.5 font-data text-[9px] uppercase tracking-[0.14em] text-ink-400 transition-colors hover:text-ink-900">
+          <Link to="/" className="inline-flex items-center gap-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 transition-colors hover:text-ink-900">
             <Home className="h-3.5 w-3.5" /> LoVerse
           </Link>
-          <Link to="/contact" className="inline-flex items-center gap-1 font-data text-[9px] uppercase tracking-[0.14em] text-ink-400 transition-colors hover:text-ember-600">
+          <Link to="/contact" className="inline-flex items-center gap-1 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 transition-colors hover:text-ember-600">
             {t("contact.title")} <ArrowUpRight className="h-3 w-3" />
           </Link>
         </div>
@@ -144,14 +144,14 @@ function StatusShell({
           <h1 className="mx-auto mt-3 max-w-[16ch] font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[0.98] tracking-[-0.045em] text-ink-950">
             {title}
           </h1>
-          <p className="mx-auto mt-4 max-w-md text-[12px] leading-relaxed text-ink-500">{description}</p>
+          <p className="mx-auto mt-4 max-w-md text-[14px] leading-relaxed text-ink-500">{description}</p>
         </div>
 
         <div className="mt-8">{children}</div>
 
         <div className="mt-7 flex items-center justify-center gap-2">
           <span className={`h-1.5 w-1.5 rounded-full ${styles.dot}`} />
-          <p className="font-data text-[9px] uppercase tracking-[0.12em] text-ink-400">
+          <p className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
             LoVerse · Midtrans · WhatsApp
           </p>
         </div>
@@ -253,7 +253,7 @@ export default function PaymentStatus() {
         description={t("paymentStatus.manualDesc")}
       >
         <div className="border border-ink-900/12 bg-white p-5 sm:p-6">
-          <p className="text-[11px] leading-relaxed text-ink-500">{t("paymentStatus.manualNote")}</p>
+          <p className="text-[14px] leading-relaxed text-ink-500">{t("paymentStatus.manualNote")}</p>
           <div className="mt-5 flex flex-col gap-2.5">
             <a
               href={`https://wa.me/${ADMIN_WHATSAPP}`}
@@ -310,7 +310,7 @@ export default function PaymentStatus() {
             <OrderSummary order={order} />
             <div className="mt-4 flex items-start gap-2.5 border border-dashed border-ember-500/35 bg-cream-50 p-3">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-ember-600" />
-              <p className="text-[11px] leading-relaxed text-ink-500">
+              <p className="text-[14px] leading-relaxed text-ink-500">
                 {t("paymentStatus.pinNote", { email: order.email || "email" })}
               </p>
             </div>
@@ -340,7 +340,7 @@ export default function PaymentStatus() {
         <div className="overflow-hidden border border-ink-900/15 bg-white">
           <div className="p-4 sm:p-5">
             <OrderSummary order={order} />
-            <p className="mt-3 flex items-center gap-2 text-[10px] text-ink-400">
+            <p className="mt-3 flex items-center gap-2 text-[14px] text-ink-400">
               <Clock className="h-3.5 w-3.5" /> {t("paymentStatus.autoRefreshNote")}
             </p>
           </div>

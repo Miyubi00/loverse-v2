@@ -41,10 +41,10 @@ export default function TemplateCatalogCard({ template, priceLabel }: TemplateCa
         </div>
 
         <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
-          <span className="border border-cream-50/25 bg-ink-950/18 px-2 py-1 font-data text-[8px] uppercase tracking-[0.18em] text-cream-50/85 backdrop-blur-sm">
+          <span className="border border-cream-50/25 bg-ink-950/18 px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-cream-50/85 backdrop-blur-sm">
             {template.category ?? "Basic"}
           </span>
-          <span className="font-data text-[9px] text-cream-50/55">No. {String(template.id ?? "").padStart(2, "0") || "—"}</span>
+          <span className="font-data text-[14px] text-cream-50/55">No. {String(template.id ?? "").padStart(2, "0") || "—"}</span>
         </div>
 
         <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
@@ -58,10 +58,10 @@ export default function TemplateCatalogCard({ template, priceLabel }: TemplateCa
       <div className="flex items-stretch justify-between border-b border-ink-900/15">
         <Link
           to={orderUrl}
-          className="flex min-h-11 flex-1 items-center justify-between px-1 py-3 text-[11px] font-semibold tracking-[0.01em] text-ink-800 transition-colors hover:text-ember-600"
+          className="flex min-h-11 flex-1 items-center justify-between px-1 py-3 text-[14px] font-semibold tracking-[0.01em] text-ink-800 transition-colors hover:text-ember-600"
         >
           <span>{t("home.catalogCreate")}</span>
-          <span className="font-data text-[10px] text-ink-500">{priceLabel}</span>
+          <span className="font-data text-[14px] text-ink-500">{priceLabel}</span>
         </Link>
         <Link
           to={demoUrl}

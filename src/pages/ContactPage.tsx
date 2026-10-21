@@ -85,11 +85,11 @@ export default function Contact() {
           description={t("contact.subtitle")}
           aside={
             <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-2 border border-ink-900/15 px-3 py-2 font-data text-[9px] uppercase tracking-[0.12em] text-ink-600">
+              <span className="inline-flex items-center gap-2 border border-ink-900/15 px-3 py-2 font-data text-[14px] uppercase tracking-[0.06em] text-ink-600">
                 <span className="h-1.5 w-1.5 rounded-full bg-success-600" />
                 {t("contact.onlineChip")}
               </span>
-              <span className="inline-flex items-center gap-2 border border-ink-900/15 px-3 py-2 font-data text-[9px] uppercase tracking-[0.12em] text-ink-600">
+              <span className="inline-flex items-center gap-2 border border-ink-900/15 px-3 py-2 font-data text-[14px] uppercase tracking-[0.06em] text-ink-600">
                 <Clock className="h-3 w-3" />
                 {t("contact.openNow")} · {wibInfo.timeString}
               </span>
@@ -98,11 +98,11 @@ export default function Contact() {
         />
 
         <div className="grid gap-8 py-12 lg:grid-cols-12 lg:gap-10 lg:py-16">
-          <section className="lg:col-span-7">
+          <section className="min-w-0 lg:col-span-7">
             <div className="mb-4 flex items-end justify-between gap-4 border-b border-ink-900/15 pb-3">
               <div>
                 <p className="eyebrow text-ember-600">{t("contact.sectionAi")}</p>
-                <p className="mt-1 text-[12px] text-ink-500">{t("contact.sectionAiDesc")}</p>
+                <p className="mt-1 text-[14px] text-ink-500">{t("contact.sectionAiDesc")}</p>
               </div>
               <Sparkles className="h-4 w-4 text-ember-500" />
             </div>
@@ -123,22 +123,22 @@ export default function Contact() {
                     <FaWhatsapp className="h-4 w-4" />
                   </span>
                 </div>
-                <p className="mt-3 max-w-sm text-[13px] leading-relaxed text-cream-100/55">
+                <p className="mt-3 max-w-sm text-[14px] leading-relaxed text-cream-100/55">
                   {t("contact.whatsappMainDesc")}
                 </p>
 
                 <div className="mt-7 border-y border-cream-100/12 py-4">
                   <div className="flex items-center justify-between gap-4">
-                    <span className="font-data text-[9px] uppercase tracking-[0.16em] text-cream-100/35">
+                    <span className="font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/35">
                       WhatsApp
                     </span>
-                    <span className="font-data text-[12px] text-cream-100/80">{displayNumber}</span>
+                    <span className="font-data text-[14px] text-cream-100/80">{displayNumber}</span>
                   </div>
                   <div className="mt-3 flex items-center justify-between gap-4">
-                    <span className="font-data text-[9px] uppercase tracking-[0.16em] text-cream-100/35">
+                    <span className="font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/35">
                       Jam operasional
                     </span>
-                    <span className="text-[12px] text-cream-100/80">09.00 — 21.00 WIB</span>
+                    <span className="text-[14px] text-cream-100/80">09.00 — 21.00 WIB</span>
                   </div>
                 </div>
 
@@ -155,7 +155,7 @@ export default function Contact() {
                   <button
                     type="button"
                     onClick={() => handleCopy(whatsappNumber, "Nomor WhatsApp Utama", "wa-main")}
-                    className="inline-flex min-h-10 items-center justify-center gap-2 border border-cream-100/15 px-3 text-[11px] text-cream-100/65 transition-colors hover:border-cream-100/35 hover:text-cream-50"
+                    className="inline-flex min-h-10 items-center justify-center gap-2 border border-cream-100/15 px-3 text-[14px] text-cream-100/65 transition-colors hover:border-cream-100/35 hover:text-cream-50"
                   >
                     {copiedKey === "wa-main" ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                     {copiedKey === "wa-main" ? t("common.copied") : t("common.copy")}
@@ -164,14 +164,14 @@ export default function Contact() {
                     href="https://instagram.com/loverse.id"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-10 items-center justify-center gap-2 border border-cream-100/15 px-3 text-[11px] text-cream-100/65 transition-colors hover:border-cream-100/35 hover:text-cream-50"
+                    className="inline-flex min-h-10 items-center justify-center gap-2 border border-cream-100/15 px-3 text-[14px] text-cream-100/65 transition-colors hover:border-cream-100/35 hover:text-cream-50"
                   >
                     <Instagram className="h-3.5 w-3.5" />
                     {t("contact.instagramFollow")}
                   </a>
                 </div>
 
-                <p className="mt-6 flex items-start gap-2 text-[10px] leading-relaxed text-cream-100/35">
+                <p className="mt-6 flex items-start gap-2 text-[14px] leading-relaxed text-cream-100/35">
                   <Clock className="mt-0.5 h-3 w-3 shrink-0" />
                   {t("contact.operatingHours")}
                 </p>
@@ -184,7 +184,7 @@ export default function Contact() {
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="eyebrow text-ink-400">{t("contact.instagramTitle")}</p>
-                  <p className="mt-2 text-[13px] text-ink-600">{t("contact.instagramSubtitle")}</p>
+                  <p className="mt-2 text-[14px] text-ink-600">{t("contact.instagramSubtitle")}</p>
                 </div>
                 <a href="https://instagram.com/loverse.id" target="_blank" rel="noopener noreferrer" aria-label="Instagram LoVerse" className="flex h-10 w-10 items-center justify-center border border-ink-900/15 text-ink-700 transition-colors hover:bg-ink-950 hover:text-cream-50">
                   <Instagram className="h-4 w-4" />
@@ -202,7 +202,7 @@ export default function Contact() {
                   <link.icon className="mt-0.5 h-4 w-4 text-ember-600" strokeWidth={1.5} />
                   <div>
                     <p className="font-display text-xl leading-tight tracking-[-0.02em] text-ink-900">{t(link.label)}</p>
-                    <p className="mt-1 text-[11px] text-ink-400">{t(link.desc)}</p>
+                    <p className="mt-1 text-[14px] text-ink-400">{t(link.desc)}</p>
                   </div>
                 </div>
                 <ArrowUpRight className="h-4 w-4 text-ink-300 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ember-600" />

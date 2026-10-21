@@ -39,13 +39,13 @@ export default function Pagination({
   const end = Math.min(page * pageSize, total);
 
   const navButton =
-    "grid h-8 min-w-8 place-items-center border px-2 font-data text-[9px] transition active:translate-y-px disabled:cursor-not-allowed disabled:opacity-35";
+    "grid h-8 min-w-8 place-items-center border px-2 font-data text-[14px] transition active:translate-y-px disabled:cursor-not-allowed disabled:opacity-35";
   const idleButton = `${navButton} border-ink-900/12 bg-cream-50 text-ink-600 hover:border-ink-900/30 hover:text-ink-900`;
 
   return (
     <div className="flex flex-col gap-3 border-t border-ink-900/12 bg-cream-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-wrap items-center gap-3">
-        <p className="text-[10px] text-ink-500">
+        <p className="text-[14px] text-ink-500">
           {language === "en" ? (
             <>
               Showing <span className="font-semibold text-ink-800">{start}–{end}</span> of{" "}
@@ -62,7 +62,7 @@ export default function Pagination({
           value={pageSize}
           onChange={(e) => onPageSizeChange(Number(e.target.value))}
           aria-label={language === "en" ? "Rows per page" : "Baris per halaman"}
-          className="h-8 border border-ink-900/12 bg-cream-50 px-2 font-data text-[9px] text-ink-600 outline-none transition focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15"
+          className="h-8 border border-ink-900/12 bg-cream-50 px-2 font-data text-[14px] text-ink-600 outline-none transition focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15"
         >
           {PAGE_SIZES.map((size) => (
             <option key={size} value={size}>
@@ -85,7 +85,7 @@ export default function Pagination({
 
         {buildPageNumbers(page, totalPages).map((p, idx) =>
           p === "…" ? (
-            <span key={`ellipsis-${idx}`} className="px-1 font-data text-[9px] text-ink-400">
+            <span key={`ellipsis-${idx}`} className="px-1 font-data text-[14px] text-ink-400">
               …
             </span>
           ) : (
