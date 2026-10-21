@@ -37,8 +37,8 @@ type PhoneId = 0 | 1;
 
 const BACK_POSITION = new Vector3(-0.62, -0.16, -0.62);
 const FRONT_POSITION = new Vector3(0.64, 0.04, 0.46);
-const STRAIGHT_BACK_POSITION = new Vector3(-0.78, -0.06, -0.62);
-const STRAIGHT_FRONT_POSITION = new Vector3(0.78, -0.06, 0.46);
+const STRAIGHT_BACK_POSITION = new Vector3(-0.68, -0.06, -0.62);
+const STRAIGHT_FRONT_POSITION = new Vector3(0.68, -0.06, 0.46);
 const BACK_ROTATION = new Vector3(0.035, -0.14, 0.19);
 const FRONT_ROTATION = new Vector3(0.025, 0.16, -0.2);
 const BACK_SCALE = 0.93;
