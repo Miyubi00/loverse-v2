@@ -158,3 +158,7 @@ Artifacts: `artifacts/ui/after/`, `artifacts/ui/revision/color/`, `artifacts/ui/
 ## Follow-up: theme catalog cards
 
 - [x] Removed the top-right template number and centered hover eye icon; retained category, preview, and selection links.
+
+## Follow-up: order confirmation
+
+- [x] Removed the Midtrans security note below the total in the confirmation summary.

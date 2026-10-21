@@ -7,7 +7,6 @@ import {
   Mail,
   Pencil,
   ReceiptText,
-  ShieldCheck,
   Users,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
@@ -184,14 +183,6 @@ export function OrderSummary({
               {formatIDR(total)}
             </span>
           </div>
-        </div>
-
-        <div className="flex items-center gap-3 bg-cream-50 px-4 py-3.5 sm:px-6">
-          <ShieldCheck size={20} className="shrink-0 text-ember-600" />
-          <p className="min-w-0 flex-1 text-[14px] leading-relaxed text-ink-500">
-            <strong className="font-semibold text-ink-800">{t("order.secureTitle")}</strong> {t("order.secureDesc")}
-          </p>
-          <span className="shrink-0 font-display text-[14px] italic text-ink-500">midtrans</span>
         </div>
 
         {actions ? <div className="space-y-2.5 p-4 sm:p-6">{actions}</div> : null}
