@@ -4,9 +4,14 @@ import { cn } from "../../lib/cn";
 interface LanguageSwitcherProps {
   variant?: "header" | "light" | "minimal" | "dark";
   className?: string;
+  touchTarget?: boolean;
 }
 
-export default function LanguageSwitcher({ variant = "header", className = "" }: LanguageSwitcherProps) {
+export default function LanguageSwitcher({
+  variant = "header",
+  className = "",
+  touchTarget = false,
+}: LanguageSwitcherProps) {
   const { language, setLanguage } = useTranslation();
   const onDark = variant === "header" || variant === "dark";
   const minimal = variant === "minimal";
@@ -31,9 +36,11 @@ export default function LanguageSwitcher({ variant = "header", className = "" }:
             key={lang}
             type="button"
             onClick={() => handleSelect(lang)}
+            aria-label={lang === "id" ? "Bahasa Indonesia" : "English"}
             aria-pressed={active}
             className={cn(
-              "min-h-8 min-w-8 px-2 font-data text-[9px] uppercase tracking-[0.14em] transition-colors duration-200",
+              "px-2 font-data text-[14px] uppercase tracking-[0.06em] transition-colors duration-200",
+              touchTarget ? "min-h-10 min-w-10" : "min-h-8 min-w-8",
               onDark
                 ? active
                   ? "bg-peach-300 text-ink-950"

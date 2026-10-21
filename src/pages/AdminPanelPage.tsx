@@ -16,7 +16,9 @@ import AuditTab from "../components/admin/AuditTab";
 import NoticesTab from "../components/admin/NoticesTab";
 import EditOrderModal from "../components/admin/EditOrderModal";
 import { AdminSkeleton } from "../components/ui/SkeletonLoaders";
-import { ClipboardList, Clock, Palette, Mail, ScrollText, LogOut, Menu, Megaphone } from "lucide-react";
+import { Wordmark } from "../components/ui/Brand";
+import LanguageSwitcher from "../components/shared/LanguageSwitcher";
+import { ClipboardList, Clock, Palette, Mail, ScrollText, Menu, Megaphone } from "lucide-react";
 import { useTranslation } from "../i18n";
 
 interface DialogState {
@@ -31,7 +33,7 @@ interface DialogState {
 function CapNotice({ total, shown, label }: { total: number | null; shown: number; label: string }) {
   if (typeof total !== "number" || total <= shown) return null;
   return (
-    <div className="border border-gold-600/30 bg-gold-600/[0.07] px-4 py-3 font-data text-[9px] uppercase tracking-[0.08em] text-gold-600">
+    <div className="border border-gold-600/30 bg-gold-600/[0.07] px-4 py-3 font-data text-[14px] uppercase tracking-[0.06em] text-gold-600">
       Menampilkan {shown.toLocaleString("id-ID")} {label} terbaru dari total{" "}
       {total.toLocaleString("id-ID")}. Data lebih lama tidak termuat dalam daftar ini.
     </div>
@@ -191,8 +193,8 @@ export default function AdminPanel() {
   }
 
   return (
-    <div className="relative flex h-dvh w-full flex-col overflow-hidden bg-cream-100 font-sans text-ink-900">
-      <AdminNavbar userEmail={userEmail} />
+    <div className="app-shell relative flex h-dvh w-full flex-col overflow-hidden bg-cream-100 font-sans text-ink-900">
+      <AdminNavbar />
 
       <div className="relative flex min-h-0 w-full flex-1 overflow-hidden">
         {sidebarOpen && (
@@ -224,31 +226,19 @@ export default function AdminPanel() {
         />
 
         <div className="relative flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-          <header className="flex shrink-0 items-center gap-2 border-b border-cream-100/10 bg-ink-950 px-4 py-3 lg:hidden">
+          <header className="flex shrink-0 items-center gap-2 border-b border-cream-100/10 bg-ink-950 px-3 py-2 lg:hidden">
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
               aria-label={t("nav.menu")}
-              className="p-2 text-cream-100/80 transition-colors hover:text-cream-50"
+              className="-ml-1 flex h-10 w-10 shrink-0 items-center justify-center text-cream-100/80 transition-colors hover:text-cream-50"
             >
               <Menu size={20} />
             </button>
-            <div className="min-w-0 flex-1 px-1">
-              <p className="font-data text-[8px] uppercase tracking-[0.18em] text-peach-300/65">
-                {t("admin.title")}
-              </p>
-              <h2 className="mt-0.5 truncate text-[12px] font-semibold text-cream-50">
-                {menuItems.find((m) => m.id === activeTab)?.label ?? t("admin.editInvitationTitle")}
-              </h2>
+            <Wordmark imageClassName="h-6" />
+            <div className="ml-auto shrink-0">
+              <LanguageSwitcher variant="header" touchTarget />
             </div>
-            <button
-              type="button"
-              onClick={handleLogout}
-              aria-label={t("nav.logout")}
-              className="p-2 text-cream-100/50 transition-colors hover:text-cream-50"
-            >
-              <LogOut size={18} />
-            </button>
           </header>
 
           <main className="flex-1 overflow-y-auto">
@@ -317,7 +307,7 @@ export default function AdminPanel() {
                   {activeTab === "audit" && <AuditTab toast={toast} />}
 
                   {activeTab === "edit" && !editingOrder && (
-                    <p className="py-10 text-[12px] text-ink-400">
+                    <p className="py-10 text-[14px] text-ink-400">
                       Pilih pesanan dari menu Data Pesanan, lalu klik tombol Edit untuk mengubah data.
                     </p>
                   )}
