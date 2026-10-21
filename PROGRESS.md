@@ -1,6 +1,6 @@
 # LoVerse UI Redesign — Progress
 
-Status: **Revisions A–D committed; PhoneShowcase v2 M1–M3 complete; M4 pending.**
+Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete. The full Playwright suite has two unrelated language-toggle failures on `/demo/motion-flow`.**
 
 ## PhoneShowcase v2 — M1
 
@@ -27,7 +27,15 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1–M3 complete; M4 pendi
 - [x] CSS fallback now uses perspective, depth offsets, and Y rotation to render the theme cards as a 3D carousel.
 - [x] Reduced-motion users stay on the fallback, get no CSS transition or automatic rotation, and retain immediate previous/next controls.
 - [x] WebGL, device memory/core, and Save-Data checks choose the fallback; Save-Data preference changes are observed during the session. A failed or lost WebGL scene also exposes the fallback.
-- [x] `npm run lint` and `npm run typecheck` pass. M4 Playwright, Lighthouse, bundle/model sizing, and full validation remain.
+- [x] `npm run lint` and `npm run typecheck` pass.
+
+## PhoneShowcase v2 — M4
+
+- [x] Added four focused Playwright tests for previous/next controls, reduced motion and no autoplay, Save-Data/weak-device fallback, and unavailable WebGL. All 4 pass.
+- [x] Full Playwright suite: 28 passed, 2 failed in the existing `language-toggle.spec.ts` while it visits `/demo/motion-flow`. At 1440px the page shows its generic error screen after switching back to Indonesian; at 390px the demo language toggle is missing. These failures are outside the showcase component.
+- [x] `npm run lint`, `npm run typecheck`, and production build pass. `npm test` passes 44/44.
+- [x] Lighthouse mobile audit on production preview: Performance 45, Accessibility 100, Best Practices 96, SEO 100; FCP 2.8s, LCP 8.1s, TBT 1,360ms, CLS 0.002, Speed Index 3.0s.
+- [x] Production build sizes: `PhoneShowcaseScene` 1,075,210 bytes / 297,350 bytes gzip; `public/models/phone.glb` 42,988 bytes / 10,516 bytes gzip.
 
 ## Completed
 
@@ -37,7 +45,7 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1–M3 complete; M4 pendi
 - [x] `src/lib/cn.ts` and UI primitives: `Button`/`buttonClass`, `Brand`, `PageHeader`, `StatusBadge`, `EmptyState`, `ConfirmDialog`, `PageTransition`, `Reveal`.
 - [x] Skeleton primitive and selected route/stat/catalog/demo presets tokenized.
 - [x] Logo-derived palette in `src/index.css`, documented in `docs/color-from-logo.md`, enforced by `scripts/audit-colors.mjs`.
-- [x] PhoneShowcase v2 M1 replaced the previous ring scene with the static GLB composition; M2 interaction and M3 fallback work are recorded above.
+- [x] PhoneShowcase v2 M1 replaced the previous ring scene with the static GLB composition; M2 interaction, M3 fallback, and M4 validation are recorded above.
 - [x] Section 3 docs synchronized: `PhoneShowcaseScene`, five WebP previews, CSS fallback, and prior 253.95 kB gzip baseline; legacy hero references removed.
 
 ### Section 4 — Typography
