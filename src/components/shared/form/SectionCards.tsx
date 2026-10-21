@@ -6,7 +6,7 @@
 // Keterikatan : ./FormKit, ./ui, types/database, hooks/useEditActions (PhotoField)
 // ============================================================
 
-import type { ChangeEvent } from "react";
+import { useRef, type ChangeEvent } from "react";
 import {
   Camera,
   CreditCard,
@@ -88,7 +88,7 @@ export function LocationCard({ data, handleChange }: DataCardProps) {
           handleChange={handleChange}
         />
       </div>
-      <p className="-mt-2 text-[11px] italic text-ink-400">
+      <p className="-mt-2 text-[14px] italic text-ink-400">
         {t('customer.edit.dateHint')}
       </p>
       <div className="grid grid-cols-2 gap-3">
@@ -157,6 +157,7 @@ export function PhotosCard({
   onRemovePhoto: (field: PhotoField, label: string) => void;
 }) {
   const { t } = useTranslation();
+  const coverInputRef = useRef<HTMLInputElement>(null);
   const isGroomUploading = isUploading && activeUploadField === "groom_photo";
   const isBrideUploading = isUploading && activeUploadField === "bride_photo";
   const isCoverUploading = isUploading && activeUploadField === "cover_photo";
@@ -172,11 +173,6 @@ export function PhotosCard({
           alt={t('customer.edit.groomPhoto')}
           uploading={isGroomUploading}
           onPick={(e) => handleFileUpload(e, "groom_photo")}
-          onPreview={() =>
-            data.groom_photo &&
-            onPreview(data.groom_photo, t('customer.edit.groomPhoto'))
-          }
-          onRemove={() => onRemovePhoto("groom_photo", t('customer.edit.groomPhoto'))}
         />
         <PhotoPicker
           label={t('customer.edit.bridePhoto')}
@@ -184,11 +180,6 @@ export function PhotosCard({
           alt={t('customer.edit.bridePhoto')}
           uploading={isBrideUploading}
           onPick={(e) => handleFileUpload(e, "bride_photo")}
-          onPreview={() =>
-            data.bride_photo &&
-            onPreview(data.bride_photo, t('customer.edit.bridePhoto'))
-          }
-          onRemove={() => onRemovePhoto("bride_photo", t('customer.edit.bridePhoto'))}
         />
       </div>
 
@@ -199,61 +190,79 @@ export function PhotosCard({
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() =>
-                  data.cover_photo &&
-                  onPreview(data.cover_photo, t('customer.edit.coverBanner'))
-                }
-                className="flex items-center gap-1 font-data text-[8px] uppercase tracking-[0.1em] text-ink-600 transition hover:text-ember-600"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  if (data.cover_photo) {
+                    onPreview(data.cover_photo, t('customer.edit.coverBanner'));
+                  }
+                }}
+                className="flex items-center gap-1 font-data text-[14px] uppercase tracking-[0.06em] text-ink-600 transition hover:text-ember-600"
               >
-                <Eye size={13} /> {t('common.view')}
+                <Eye size={13} aria-hidden="true" /> {t('common.view')}
               </button>
-              <span className="text-ink-300">•</span>
+              <span className="text-ink-300" aria-hidden="true">·</span>
               <button
                 type="button"
-                onClick={() => onRemovePhoto("cover_photo", t('customer.edit.coverBanner'))}
-                className="flex items-center gap-1 font-data text-[8px] uppercase tracking-[0.1em] text-danger-600 transition hover:text-danger-700"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onRemovePhoto("cover_photo", t('customer.edit.coverBanner'));
+                }}
+                className="flex items-center gap-1 font-data text-[14px] uppercase tracking-[0.06em] text-danger-600 transition hover:text-danger-700"
               >
-                <Trash2 size={13} /> {t('common.delete')}
+                <Trash2 size={13} aria-hidden="true" /> {t('common.delete')}
               </button>
             </div>
           )}
         </div>
 
-        <div className="group relative flex h-40 w-full flex-col items-center justify-center gap-3 overflow-hidden border border-dashed border-ink-900/20 bg-cream-100/60 transition-colors hover:border-ember-500">
-          {data.cover_photo ? (
-            <>
-              <img
-                src={data.cover_photo}
-                className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                alt="Cover"
-              />
-              <div className="absolute inset-0 bg-ink-950/30 opacity-0 transition group-hover:opacity-100" />
-            </>
-          ) : (
-            <div className="flex flex-col items-center gap-1.5 text-ink-400">
-              <Camera size={26} strokeWidth={1.4} />
-              <span className="text-[11px] font-medium">
-                {t('customer.edit.noCover')}
+        <div className="group relative">
+          <input
+            ref={coverInputRef}
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleFileUpload(e, "cover_photo")}
+            className="hidden"
+            disabled={isCoverUploading}
+          />
+          <button
+            type="button"
+            onClick={() => coverInputRef.current?.click()}
+            disabled={isCoverUploading}
+            aria-label={
+              data.cover_photo ? t('customer.edit.changePhoto') : t('customer.edit.uploadPhoto')
+            }
+            aria-busy={isCoverUploading}
+            className="flex h-40 w-full flex-col items-center justify-center gap-1.5 overflow-hidden border border-dashed border-ink-900/20 bg-cream-100/60 text-ink-400 transition-colors hover:border-ember-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500 disabled:cursor-wait disabled:opacity-80"
+          >
+            {data.cover_photo ? (
+              <>
+                <img
+                  src={data.cover_photo}
+                  className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                  alt="Cover"
+                />
+                <span className="absolute inset-0 flex items-center justify-center bg-ink-950/30 opacity-0 transition duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
+                  <Camera
+                    size={24}
+                    strokeWidth={1.5}
+                    className="text-cream-50"
+                    aria-hidden="true"
+                  />
+                </span>
+              </>
+            ) : (
+              <>
+                <Camera size={26} strokeWidth={1.4} aria-hidden="true" />
+                <span className="text-[14px] font-medium">{t('customer.edit.noCover')}</span>
+              </>
+            )}
+
+            {isCoverUploading && (
+              <span className="absolute inset-0 z-20 grid place-items-center bg-ink-950/50 backdrop-blur-sm">
+                <Loader2 size={26} className="animate-spin text-white" aria-hidden="true" />
               </span>
-            </div>
-          )}
-
-          <label className="relative z-10 cursor-pointer border border-ink-900/10 bg-cream-50/90 px-4 py-2 font-data text-[8px] uppercase tracking-[0.12em] text-ink-800 shadow-sm backdrop-blur-sm transition hover:bg-cream-50 active:scale-95">
-            {data.cover_photo ? t('customer.edit.btnChangeCover') : t('customer.edit.btnUploadCover')}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleFileUpload(e, "cover_photo")}
-              className="hidden"
-              disabled={isCoverUploading}
-            />
-          </label>
-
-          {isCoverUploading && (
-            <div className="absolute inset-0 z-20 grid place-items-center bg-ink-950/50 backdrop-blur-sm">
-              <Loader2 size={26} className="animate-spin text-white" />
-            </div>
-          )}
+            )}
+          </button>
         </div>
       </div>
     </section>
@@ -276,6 +285,7 @@ export function GalleryCard({
   onPreview: (url: string, title: string) => void;
 }) {
   const { t } = useTranslation();
+  const galleryInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <section className={CARD}>
@@ -283,33 +293,43 @@ export function GalleryCard({
         icon={<ImagePlus size={16} />}
         title={t('customer.edit.cardGallery')}
         action={
-          <span className="font-data text-[9px] text-ink-400">
+          <span className="font-data text-[14px] text-ink-400">
             {t('customer.edit.galleryCount', { count: gallery.length })}
           </span>
         }
       />
 
-      <label className="flex w-full cursor-pointer items-center justify-center gap-2 border border-dashed border-ink-900/20 bg-cream-100/50 py-4 text-[11px] font-semibold text-ink-600 transition-colors hover:border-ember-500 hover:bg-cream-100 hover:text-ember-600 active:scale-[0.99]">
+      <input
+        ref={galleryInputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={(e) => handleFileUpload(e, "gallery", true)}
+        className="hidden"
+        disabled={isUploading}
+      />
+      <button
+        type="button"
+        onClick={() => galleryInputRef.current?.click()}
+        disabled={isUploading}
+        aria-label={
+          isUploading ? t('customer.edit.btnUploadingGallery') : t('customer.edit.btnUploadGallery')
+        }
+        aria-busy={isUploading}
+        className="flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 border border-dashed border-ink-900/20 bg-cream-100/50 px-4 py-4 text-[14px] font-semibold text-ink-600 transition-colors hover:border-ember-500 hover:bg-cream-100 hover:text-ember-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500 active:scale-[0.99] disabled:cursor-wait disabled:opacity-80"
+      >
         {isUploading ? (
-          <Loader2 size={18} className="animate-spin text-ember-500" />
+          <Loader2 size={18} className="animate-spin text-ember-500" aria-hidden="true" />
         ) : (
-          <ImagePlus size={18} />
+          <ImagePlus size={18} aria-hidden="true" />
         )}
         <span>
           {isUploading ? t('customer.edit.btnUploadingGallery') : t('customer.edit.btnUploadGallery')}
         </span>
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={(e) => handleFileUpload(e, "gallery", true)}
-          className="hidden"
-          disabled={isUploading}
-        />
-      </label>
+      </button>
 
       {gallery.length === 0 ? (
-        <div className="border border-dashed border-ink-900/15 py-10 text-center text-[11px] italic text-ink-400">
+        <div className="border border-dashed border-ink-900/15 py-10 text-center text-[14px] italic text-ink-400">
           {t('customer.edit.galleryEmpty')}
         </div>
       ) : (
@@ -394,7 +414,7 @@ export function MusicQuoteCard({
       <CardHeader icon={<Music size={16} />} title={t('customer.edit.cardMusicQuote')} />
       <div className="flex items-center gap-3 border border-ink-900/12 bg-cream-100/60 p-3">
         <div className="min-w-0 flex-1">
-          <p className={`font-data text-[8px] uppercase tracking-[0.12em] ${isAudioUploading || converting || removing ? 'italic text-ink-400' : 'text-ink-600'}`}>
+          <p className={`font-data text-[14px] uppercase tracking-[0.06em] ${isAudioUploading || converting || removing ? 'italic text-ink-400' : 'text-ink-600'}`}>
             {statusText}
           </p>
           {hasMusic && !removing && (
@@ -409,7 +429,7 @@ export function MusicQuoteCard({
               onClick={() => void onRemoveMusic()}
               disabled={busy}
               title={t('common.delete')}
-              className="flex shrink-0 cursor-pointer items-center gap-1.5 border border-danger-600/25 bg-danger-600/[0.06] px-3 py-1.5 text-[10px] font-semibold text-danger-600 transition-colors hover:bg-danger-600/10 disabled:cursor-wait disabled:opacity-60"
+              className="flex shrink-0 cursor-pointer items-center gap-1.5 border border-danger-600/25 bg-danger-600/[0.06] px-3 py-1.5 text-[14px] font-semibold text-danger-600 transition-colors hover:bg-danger-600/10 disabled:cursor-wait disabled:opacity-60"
             >
               {removing ? (
                 <>
@@ -424,7 +444,7 @@ export function MusicQuoteCard({
           )
         ) : (
           <label
-            className={`flex shrink-0 cursor-pointer items-center gap-1.5 border border-ink-950 bg-ink-950 px-3 py-1.5 text-[10px] font-semibold text-cream-50 transition-colors hover:bg-ember-600 ${
+            className={`flex shrink-0 cursor-pointer items-center gap-1.5 border border-ink-950 bg-ink-950 px-3 py-1.5 text-[14px] font-semibold text-cream-50 transition-colors hover:bg-ember-600 ${
               isAudioUploading || converting ? 'pointer-events-none cursor-wait opacity-70' : ''
             }`}
           >
@@ -494,14 +514,14 @@ export function BanksCard({
           <button
             type="button"
             onClick={onAdd}
-            className="border border-ink-900/15 bg-ink-950 px-3 py-1.5 font-data text-[8px] uppercase tracking-[0.12em] text-cream-50 transition-colors hover:bg-ember-600"
+            className="border border-ink-900/15 bg-ink-950 px-3 py-1.5 font-data text-[14px] uppercase tracking-[0.06em] text-cream-50 transition-colors hover:bg-ember-600"
           >
             {t('customer.edit.btnAddBank')}
           </button>
         }
       />
       {banks.length === 0 && (
-        <p className="py-2 text-[11px] italic text-ink-400">
+        <p className="py-2 text-[14px] italic text-ink-400">
           {t('customer.edit.banksEmpty')}
         </p>
       )}

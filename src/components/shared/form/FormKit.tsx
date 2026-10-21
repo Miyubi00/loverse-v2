@@ -1,4 +1,4 @@
-import type { ChangeEvent, ReactNode } from "react";
+import { useRef, type ChangeEvent, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { Camera, Eye, Loader2, Trash2, X } from "lucide-react";
 import { CARD_TITLE, FIELD_LABEL, ICON_CHIP, INPUT } from "./ui";
@@ -43,7 +43,7 @@ export function SubTabButton({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`flex min-h-10 items-center gap-2 px-3.5 text-[11px] font-semibold tracking-[-0.01em] transition-colors ${
+      className={`flex min-h-10 items-center gap-2 px-3.5 text-[14px] font-semibold tracking-[-0.01em] transition-colors ${
         active
           ? "bg-ink-950 text-cream-50"
           : "text-ink-500 hover:bg-cream-50 hover:text-ink-900"
@@ -125,7 +125,7 @@ export function BankInput({
     <input
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`w-full border-b border-dashed border-ink-900/20 bg-transparent p-1 text-[12px] font-semibold text-ink-900 outline-none transition placeholder:font-normal placeholder:text-ink-300 focus:border-ember-500 ${
+      className={`w-full border-b border-dashed border-ink-900/20 bg-transparent p-1 text-[14px] font-semibold text-ink-900 outline-none transition placeholder:font-normal placeholder:text-ink-300 focus:border-ember-500 ${
         mono ? "font-data" : ""
       }`}
       placeholder={placeholder}
@@ -139,84 +139,64 @@ export function PhotoPicker({
   alt,
   uploading,
   onPick,
-  onPreview,
-  onRemove,
 }: {
   label: string;
   src: string | undefined;
   alt: string;
   uploading: boolean;
   onPick: (e: ChangeEvent<HTMLInputElement>) => void;
-  onPreview: () => void;
-  onRemove: () => void;
 }) {
   const { t } = useTranslation();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="flex flex-col items-center gap-3 border border-ink-900/12 bg-cream-100/50 p-3.5 transition-colors hover:bg-cream-100">
-      <div className="group relative block aspect-square w-full max-w-[150px] overflow-hidden border border-ink-900/10 bg-cream-50">
-        {src ? (
-          <>
-            <img
-              src={src}
-              alt={alt}
-              className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 flex items-center justify-center gap-2 bg-ink-950/55 opacity-0 transition duration-200 group-hover:opacity-100">
-              <button
-                type="button"
-                onClick={onPreview}
-                title={t("common.view")}
-                className="grid h-8 w-8 place-items-center bg-cream-50/25 text-cream-50 backdrop-blur-sm transition hover:bg-cream-50/40 active:scale-95"
-              >
-                <Eye size={15} />
-              </button>
-              <button
-                type="button"
-                onClick={onRemove}
-                title={t("common.delete")}
-                className="grid h-8 w-8 place-items-center bg-danger-600/80 text-white backdrop-blur-sm transition hover:bg-danger-700 active:scale-95"
-              >
-                <Trash2 size={15} />
-              </button>
-            </div>
-          </>
-        ) : (
-          <label className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1.5 text-ink-400 transition hover:bg-cream-100">
-            <Camera size={26} strokeWidth={1.4} />
-            <span className="font-data text-[8px] uppercase tracking-[0.12em]">
-              {t("customer.edit.pickPhoto")}
+    <div className="group relative">
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        onChange={onPick}
+        className="hidden"
+        disabled={uploading}
+      />
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        disabled={uploading}
+        aria-label={src ? t("customer.edit.changePhoto") : t("customer.edit.uploadPhoto")}
+        aria-busy={uploading}
+        className="flex w-full flex-col items-center gap-3 border border-ink-900/12 bg-cream-100/50 p-3.5 text-center transition-colors hover:bg-cream-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500 disabled:cursor-wait disabled:opacity-80"
+      >
+        <span className="relative block aspect-square w-full max-w-[150px] overflow-hidden border border-ink-900/10 bg-cream-50">
+          {src ? (
+            <>
+              <img
+                src={src}
+                alt={alt}
+                className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+              />
+              <span className="absolute inset-0 flex items-center justify-center bg-ink-950/30 opacity-0 transition duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
+                <Camera size={24} strokeWidth={1.5} className="text-cream-50" aria-hidden="true" />
+              </span>
+            </>
+          ) : (
+            <span className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-ink-400">
+              <Camera size={26} strokeWidth={1.4} aria-hidden="true" />
+              <span className="font-data text-[14px] uppercase tracking-[0.06em]">
+                {t("customer.edit.pickPhoto")}
+              </span>
             </span>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={onPick}
-              className="hidden"
-              disabled={uploading}
-            />
-          </label>
-        )}
+          )}
 
-        {uploading && (
-          <div className="absolute inset-0 z-10 grid place-items-center bg-ink-950/55 backdrop-blur-sm">
-            <Loader2 size={22} className="animate-spin text-cream-50" />
-          </div>
-        )}
-      </div>
+          {uploading && (
+            <span className="absolute inset-0 z-10 grid place-items-center bg-ink-950/55 backdrop-blur-sm">
+              <Loader2 size={22} className="animate-spin text-cream-50" aria-hidden="true" />
+            </span>
+          )}
+        </span>
 
-      <div className="text-center">
-        <p className="text-[11px] font-semibold text-ink-900">{label}</p>
-        <label className="mt-1 inline-block cursor-pointer font-data text-[8px] uppercase tracking-[0.12em] text-ember-600 transition hover:text-ember-700">
-          {src ? t("customer.edit.changePhoto") : t("customer.edit.uploadPhoto")}
-          <input
-            type="file"
-            accept="image/*"
-            onChange={onPick}
-            className="hidden"
-            disabled={uploading}
-          />
-        </label>
-      </div>
+        <span className="text-[14px] font-semibold text-ink-900">{label}</span>
+      </button>
     </div>
   );
 }
@@ -239,7 +219,7 @@ export function LightboxPreview({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex w-full items-center justify-between border-b border-cream-100/10 px-1 pb-2.5">
-          <span className="font-data text-[9px] uppercase tracking-[0.14em] text-cream-100/70">
+          <span className="font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/70">
             {image.title}
           </span>
           <button
