@@ -94,7 +94,9 @@ export default function InvoicePreviewPage() {
           <div className="overflow-hidden rounded-xl bg-white shadow">
             <div className="bg-[#712E1E] px-6 py-6 flex items-start justify-between gap-4">
               <div>
-                <img src="/logo.png" alt="LoVerse" className="h-10 w-auto" />
+                <Link to="/" aria-label="Loverse — Beranda" className="inline-flex">
+                  <img src="/logo.png" alt="Loverse" width={680} height={220} className="h-10 w-auto" />
+                </Link>
                 <p className="mt-1.5 text-[13px] text-[#FFD5AF]/90">Undangan Pernikahan Digital</p>
                 <p className="mt-2 text-[12px] italic text-[#FFD5AF]/80">Abadikan Momen Spesial, Dalam Satu Cerita Indah</p>
               </div>

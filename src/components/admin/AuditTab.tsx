@@ -17,6 +17,7 @@ import type { ToastApi } from '../GlobalToast';
 import { useTranslation } from '../../i18n';
 import { usePagination } from '../../hooks/usePagination';
 import Pagination from '../shared/Pagination';
+import Button from '../ui/Button';
 
 export interface AuditRow {
   id: number;
@@ -34,11 +35,11 @@ interface AuditTabProps {
 }
 
 const KIND_STYLE: Record<string, { pill: string; icon: typeof User }> = {
-  admin: { pill: 'text-[#712E1E] bg-[#faf3e9] border-[#EBDFCE]', icon: ShieldCheck },
-  customer: { pill: 'text-blue-700 bg-blue-50 border-blue-100', icon: User },
-  service: { pill: 'text-stone-600 bg-stone-100 border-stone-200', icon: Cpu },
-  midtrans: { pill: 'text-green-700 bg-green-50 border-green-100', icon: CreditCard },
-  system: { pill: 'text-purple-700 bg-purple-50 border-purple-100', icon: Bot },
+  admin: { pill: 'text-ember-600 bg-peach-100 border-ember-500/30', icon: ShieldCheck },
+  customer: { pill: 'text-ink-600 bg-cream-100 border-ink-900/15', icon: User },
+  service: { pill: 'text-ink-600 bg-cream-100 border-ink-900/15', icon: Cpu },
+  midtrans: { pill: 'text-success-700 bg-success-600/[0.06] border-success-600/25', icon: CreditCard },
+  system: { pill: 'text-wine-600 bg-wine-600/[0.06] border-wine-600/20', icon: Bot },
 };
 
 /** Daftar aksi yang dikenal — dropdown agar tidak salah ketik. */
@@ -214,30 +215,31 @@ export default function AuditTab({ toast }: AuditTabProps) {
   const pg = usePagination(groups, `${applied.kind}|${applied.action}|${applied.search}|${applied.date}`, 10);
 
   return (
-    <div className="animate-fade-in">
-      {/* Header Halaman */}
+    <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-stone-800">{t('admin.auditTitle')}</h2>
-        <p className="mt-1 text-sm text-stone-500">{t('admin.auditSubtitle')}</p>
+        <p className="eyebrow text-ember-600">Control / Audit</p>
+        <h2 className="mt-2 font-display text-[clamp(2rem,4vw,3.1rem)] leading-none tracking-[-0.05em] text-ink-950">
+          {t('admin.auditTitle')}
+        </h2>
+        <p className="mt-2 max-w-xl text-[12px] leading-relaxed text-ink-500">{t('admin.auditSubtitle')}</p>
       </div>
 
-      {/* Filter Toolbar */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
           setApplied({ kind: kindInput, action: actionInput, search: searchInput, date: dateInput });
         }}
-        className="mb-6 flex flex-col gap-3 rounded-2xl border border-[#EBDFCE] bg-white p-4 shadow-sm md:flex-row md:items-end"
+        className="mb-6 paper-panel flex flex-col gap-3 p-4 md:flex-row md:items-end"
       >
-        <div className="min-w-[170px]">
-          <label className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#712E1E]">
-            <Filter size={13} className="text-[#E59A59]" />
+        <div className="min-w-[160px]">
+          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+            <Filter size={12} className="text-ember-600" />
             <span>{t('admin.auditFilterKind')}</span>
           </label>
           <select
             value={kindInput}
             onChange={(e) => setKindInput(e.target.value)}
-            className="h-10 w-full rounded-xl border border-[#EBDFCE] bg-[#FAF6EE] px-3 text-xs font-medium text-stone-800 outline-none transition focus:border-[#E59A59] focus:bg-white focus:ring-2 focus:ring-[#E59A59]/20"
+            className="h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
           >
             <option value="all">{t('admin.auditKindAll')}</option>
             <option value="admin">admin</option>
@@ -249,14 +251,14 @@ export default function AuditTab({ toast }: AuditTabProps) {
         </div>
 
         <div className="min-w-[170px]">
-          <label className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#712E1E]">
-            <Filter size={13} className="text-[#E59A59]" />
+          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+            <Filter size={12} className="text-ember-600" />
             <span>{t('admin.auditFilterAction')}</span>
           </label>
           <select
             value={actionInput}
             onChange={(e) => setActionInput(e.target.value)}
-            className="h-10 w-full rounded-xl border border-[#EBDFCE] bg-[#FAF6EE] px-3 text-xs font-medium text-stone-800 outline-none transition focus:border-[#E59A59] focus:bg-white focus:ring-2 focus:ring-[#E59A59]/20"
+            className="h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
           >
             <option value="">{t('admin.auditActionAll')}</option>
             {ACTION_OPTIONS.map((a) => (
@@ -267,40 +269,42 @@ export default function AuditTab({ toast }: AuditTabProps) {
           </select>
         </div>
 
-        <div className="min-w-[240px] flex-1">
-          <label className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#712E1E]">
-            <Search size={13} className="text-[#E59A59]" />
+        <div className="min-w-[220px] flex-1">
+          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+            <Search size={12} className="text-ember-600" />
             <span>{t('admin.auditSearchPh')}</span>
           </label>
           <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-300" />
             <input
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder={t('admin.auditSearchPh')}
-              className="h-10 w-full rounded-xl border border-[#EBDFCE] bg-[#FAF6EE] pl-9 pr-3 text-xs font-medium text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-[#E59A59] focus:bg-white focus:ring-2 focus:ring-[#E59A59]/20"
+              className="h-10 w-full border border-ink-900/15 bg-cream-50 pl-9 pr-3 text-[12px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
             />
           </div>
         </div>
 
-        <div className="min-w-[170px]">
-          <label className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#712E1E]">
-            <Calendar size={13} className="text-[#E59A59]" />
+        <div className="min-w-[160px]">
+          <label className="mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+            <Calendar size={12} className="text-ember-600" />
             <span>{t('admin.dateFilterLabel')}</span>
           </label>
           <input
             type="date"
             value={dateInput}
             onChange={(e) => setDateInput(e.target.value)}
-            className="h-10 w-full rounded-xl border border-[#EBDFCE] bg-[#FAF6EE] px-3 text-xs font-medium text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-[#E59A59] focus:bg-white focus:ring-2 focus:ring-[#E59A59]/20"
+            className="h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
           />
         </div>
 
-        <div className="flex shrink-0 gap-2">
+        <div className="flex shrink-0 gap-1.5">
           {hasActiveFilter && (
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="sm"
               onClick={() => {
                 setKindInput('all');
                 setActionInput('');
@@ -308,46 +312,41 @@ export default function AuditTab({ toast }: AuditTabProps) {
                 setDateInput('');
                 setApplied({ kind: 'all', action: '', search: '', date: '' });
               }}
-              className="flex h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-rose-200 bg-rose-50 px-4 text-xs font-bold text-rose-600 transition hover:bg-rose-100 active:scale-95"
+              icon={<Trash2 size={12} />}
+              className="h-10 text-danger-600 hover:bg-danger-600/5 hover:text-danger-700"
             >
-              <Trash2 size={13} />
-              <span>{t('admin.btnResetFilter')}</span>
-            </button>
+              {t('admin.btnResetFilter')}
+            </Button>
           )}
-          <button
-            type="submit"
-            className="flex h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#E59A59] px-4 text-xs font-bold text-white shadow-sm transition hover:bg-[#d48b4b] active:scale-95"
-          >
-            <Search size={13} />
-            <span>{t('admin.btnSearch')}</span>
-          </button>
+          <Button type="submit" size="sm" icon={<Search size={12} />} className="h-10 whitespace-nowrap">
+            {t('admin.btnSearch')}
+          </Button>
         </div>
       </form>
 
-      {/* Tabel Audit */}
       {loading ? (
-        <div className="rounded-2xl border border-[#EBDFCE] bg-white p-10 text-center text-sm text-stone-400 shadow-sm">
+        <div className="paper-panel px-6 py-12 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
           {t('common.loading')}
         </div>
       ) : pg.total === 0 ? (
-        <div className="rounded-2xl border border-[#EBDFCE] bg-white p-10 text-center text-sm text-stone-400 shadow-sm">
+        <div className="paper-panel px-6 py-12 text-center text-[12px] italic text-ink-400">
           {t('admin.auditEmpty')}
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-[#EBDFCE] bg-white shadow-sm">
+        <div className="paper-panel overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-stone-600">
-              <thead className="border-b border-[#EBDFCE] bg-[#FAF6EE] text-xs font-bold uppercase tracking-wider text-[#712E1E]">
+            <table className="w-full text-left text-[12px] text-ink-600">
+              <thead className="border-b border-ink-900/12 bg-cream-100">
                 <tr>
-                  <th className="p-4">{t('admin.auditThTime')}</th>
-                  <th className="p-4">{t('admin.auditThActor')}</th>
-                  <th className="p-4">{t('admin.auditThAction')}</th>
-                  <th className="p-4">{t('admin.auditThSummary')}</th>
-                  <th className="p-4">{t('admin.auditThTarget')}</th>
-                  <th className="p-4 text-center">{t('admin.auditThDetail')}</th>
+                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThTime')}</th>
+                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThActor')}</th>
+                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThAction')}</th>
+                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThSummary')}</th>
+                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThTarget')}</th>
+                  <th className="px-4 py-3.5 text-center font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.auditThDetail')}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F3EBDF]">
+              <tbody className="divide-y divide-ink-900/10">
                 {pg.pageItems.map((g) => {
                   const main = g.rows[0];
                   const style = KIND_STYLE[main.actor_kind] ?? KIND_STYLE.service;
@@ -355,75 +354,71 @@ export default function AuditTab({ toast }: AuditTabProps) {
                   const isOpen = !!open[g.key];
                   return (
                     <Fragment key={g.key}>
-                      <tr key={g.key} className="transition hover:bg-[#FAF6EE]/60">
-                        <td className="p-4">
-                          <span className="text-xs font-medium text-stone-500">
-                            {formatDateTime(main.created_at, language)}
-                          </span>
+                      <tr key={g.key} className="transition-colors hover:bg-cream-100/50">
+                        <td className="px-4 py-4 font-data text-[9px] text-ink-500">
+                          {formatDateTime(main.created_at, language)}
                         </td>
-                        <td className="p-4">
-                          <span
-                            className={`inline-flex w-fit items-center gap-1 rounded-full border px-3 py-1 text-xs font-bold ${style.pill}`}
-                          >
-                            <Icon size={12} /> {main.actor_kind}
+                        <td className="px-4 py-4">
+                          <span className={`inline-flex w-fit items-center gap-1 border px-2 py-1 font-data text-[8px] uppercase tracking-[0.08em] ${style.pill}`}>
+                            <Icon size={11} /> {main.actor_kind}
                           </span>
-                          <div className="mt-1 max-w-[220px] truncate text-xs text-stone-500">{actorLabel(main)}</div>
+                          <div className="mt-1 max-w-[220px] truncate text-[10px] text-ink-400">{actorLabel(main)}</div>
                         </td>
-                        <td className="p-4">
-                          <span className="rounded-lg border border-[#EBDFCE] bg-[#F7EEE3] px-2 py-1 text-xs font-medium text-[#B4693F]">
+                        <td className="px-4 py-4">
+                          <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[8px] text-ink-600">
                             {main.action}
                           </span>
                         </td>
-                        <td className="p-4">
+                        <td className="px-4 py-4">
                           <div className="max-w-[260px] space-y-1">
                             {summarize(main, t).length === 0 ? (
-                              <span className="text-xs text-stone-300">—</span>
+                              <span className="text-ink-300">—</span>
                             ) : (
                               summarize(main, t).map((s, i) => (
-                                <p key={i} className="truncate text-xs font-medium text-stone-600" title={s}>
+                                <p key={i} className="truncate text-[11px] font-medium text-ink-600" title={s}>
                                   {s}
                                 </p>
                               ))
                             )}
                             {g.rows.length > 1 && (
-                              <p className="text-[11px] font-bold text-stone-400">
+                              <p className="font-data text-[8px] text-ink-400">
                                 +{g.rows.length - 1} {t('admin.auditGrouped')}
                               </p>
                             )}
                           </div>
                         </td>
-                        <td className="p-4">
-                          <span className="mb-1 block font-mono text-xs text-stone-400">#{main.row_id.slice(0, 8)}</span>
-                          <span className="rounded-lg border border-[#EBDFCE] bg-[#FAF6EE] px-2 py-1 text-[10px] text-stone-600">
+                        <td className="px-4 py-4">
+                          <span className="mb-1 block font-data text-[9px] text-ink-400">#{main.row_id.slice(0, 8)}</span>
+                          <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[8px] text-ink-600">
                             {main.table_name}
                           </span>
                         </td>
-                        <td className="p-4 text-center">
+                        <td className="px-4 py-4 text-center">
                           <button
                             type="button"
                             onClick={() => setOpen((p) => ({ ...p, [g.key]: !p[g.key] }))}
-                            className="border border-blue-200 bg-blue-50 p-2 text-blue-600 transition hover:bg-blue-100 rounded-xl"
+                            className="grid h-8 w-8 place-items-center border border-ink-900/12 text-ink-500 transition-colors hover:border-ink-900/30 hover:text-ink-900"
                             title={isOpen ? t('admin.auditHideDetail') : t('admin.auditShowDetail')}
                           >
-                            {isOpen ? <EyeOff size={16} /> : <Eye size={16} />}
+                            {isOpen ? <EyeOff size={14} /> : <Eye size={14} />}
                           </button>
                         </td>
                       </tr>
                       {isOpen && (
-                        <tr key={`${g.key}-detail`} className="bg-[#FAF6EE]/40">
+                        <tr key={`${g.key}-detail`} className="bg-cream-100/50">
                           <td colSpan={6} className="space-y-2 p-4">
                             {g.rows.map((r) => (
-                              <div key={r.id} className="rounded-xl bg-white p-3 text-xs shadow-sm">
-                                <p className="font-bold text-stone-700">
+                              <div key={r.id} className="border border-ink-900/10 bg-cream-50 p-3 text-[11px]">
+                                <p className="font-semibold text-ink-800">
                                   {r.action}{' '}
-                                  <span className="font-normal text-stone-400">
+                                  <span className="font-normal text-ink-400">
                                     · {r.table_name} · {r.row_id.slice(0, 13)}
                                   </span>
                                 </p>
-                                <p className="mt-0.5 text-stone-500">
+                                <p className="mt-0.5 text-ink-500">
                                   {actorLabel(r)} · {formatDateTime(r.created_at, language)}
                                 </p>
-                                <pre className="mt-2 overflow-x-auto rounded-lg bg-stone-900 p-2.5 text-[11px] leading-relaxed text-stone-100">
+                                <pre className="mt-2 overflow-x-auto bg-ink-950 p-2.5 font-data text-[9px] leading-relaxed text-cream-100">
                                   {JSON.stringify(r.details ?? {}, null, 2)}
                                 </pre>
                               </div>

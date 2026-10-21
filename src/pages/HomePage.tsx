@@ -1,173 +1,71 @@
-// ============================================================
-// src/pages/HomePage.tsx
-// ------------------------------------------------------------
-// Halaman utama (/) - Landing page LoVerse:
-// Hero Split Layout Kiri-Kanan (dengan Interactive Multi-Template Carousel Mockup),
-// Value Pillars, Cara Buat (3 Steps), Katalog Tema + Search & Filter,
-// Testimoni, FAQ Accordion, & Bottom CTA.
-// Dipakai di  : App.tsx
-// Keterikatan : lib/constants (katalog), lib/supabaseClient (statistik), types/database
-// ============================================================
-
-import { useState, useEffect, useMemo, type ReactNode } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
-import { supabase } from '../lib/supabaseClient';
-import { MASTER_TEMPLATES, TESTIMONIALS } from '../lib/constants';
-import { TemplateCardSkeleton } from '../components/ui/SkeletonLoaders';
-import SiteNoticeView from '../components/shared/SiteNoticeView';
-import TemplateCatalogCard from '../components/shared/TemplateCatalogCard';
-import { useSiteNotices } from '../hooks/useSiteNotices';
-import { useSectionHash } from '../hooks/useSectionHash';
-import type { TemplateRow } from '../types/database';
-import { useTranslation } from '../i18n';
-import { usePageMeta } from '../hooks/usePageMeta';
+import { useEffect, useMemo, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
-  Search, Eye, Edit3, Sparkles, MessageSquare,
-  Star, ShoppingBag, LayoutTemplate, ArrowRight, Images,
-  CheckCircle2, Music, Share2, ShieldCheck, HelpCircle, ChevronDown,
-  Calendar, Users, GraduationCap, Instagram, MessageCircle, Mail,
-  Phone
-} from 'lucide-react';
-import { ADMIN_WHATSAPP } from '../lib/constants';
-import { MIDTRANS_LOGOS } from '../components/order/constants';
+  ArrowRight,
+  ArrowUpRight,
+  Edit3,
+  LayoutTemplate,
+  MessageSquare,
+  Plus,
+  Quote,
+  Search,
+  Share2,
+  ShieldCheck,
+  Sparkles,
+  Star,
+} from "lucide-react";
+import { supabase } from "../lib/supabaseClient";
+import { ADMIN_WHATSAPP, MASTER_TEMPLATES, TESTIMONIALS } from "../lib/constants";
+import { TemplateCardSkeleton } from "../components/ui/SkeletonLoaders";
+import SiteNoticeView from "../components/shared/SiteNoticeView";
+import TemplateCatalogCard from "../components/shared/TemplateCatalogCard";
+import { useSiteNotices } from "../hooks/useSiteNotices";
+import { useSectionHash } from "../hooks/useSectionHash";
+import type { TemplateRow } from "../types/database";
+import { useTranslation } from "../i18n";
+import { usePageMeta } from "../hooks/usePageMeta";
+import HeroVisual from "../components/three/HeroVisual";
+import { buttonClass } from "../components/ui/buttonStyles";
+import Reveal from "../components/ui/Reveal";
+import { cn } from "../lib/cn";
 
-type CategoryFilter = 'All' | 'Basic' | 'RSVP';
+type CategoryFilter = "All" | "Basic" | "RSVP";
 
-// Logo kanal pembayaran footer (QRIS, e-wallet, dan bank VA) — di-host R2.
-const PAY_FOOTER_LOGOS: Array<{ src: string; alt: string }> = [
-  { src: MIDTRANS_LOGOS.qris, alt: 'QRIS' },
-  { src: MIDTRANS_LOGOS.gopay, alt: 'GoPay' },
-  { src: MIDTRANS_LOGOS.dana, alt: 'DANA' },
-  { src: MIDTRANS_LOGOS.shopeepay, alt: 'ShopeePay' },
-  { src: MIDTRANS_LOGOS.bca, alt: 'BCA Virtual Account' },
-  { src: MIDTRANS_LOGOS.mandiri, alt: 'Mandiri Virtual Account' },
-  { src: MIDTRANS_LOGOS.bni, alt: 'BNI Virtual Account' },
-  { src: MIDTRANS_LOGOS.bri, alt: 'BRI Virtual Account' },
-  { src: MIDTRANS_LOGOS.cimb, alt: 'CIMB Niaga Virtual Account' },
-  { src: MIDTRANS_LOGOS.permata, alt: 'Permata Virtual Account' },
-  { src: MIDTRANS_LOGOS.seabank, alt: 'SeaBank Virtual Account' },
-];
-
-// Nomor WhatsApp admin utk footer: "6285179880092" → "+62 851-7988-0092".
-const ADMIN_PHONE_LABEL = '+62 ' + ADMIN_WHATSAPP.slice(2, 5) + '-' + ADMIN_WHATSAPP.slice(5, 9) + '-' + ADMIN_WHATSAPP.slice(9);
-
-// Dummy data showcase multi-template carousel pada Hero section
-const SHOWCASE_SLIDES = [
-  {
-    slug: 'botanical-gold',
-    name: 'Botanical Gold',
-    category: 'Basic',
-    image: 'https://r2.loverse.id/themes/botanical-gold.webp',
-    couple: 'Dimas & Sarah',
-    date: 'Sabtu, 24 Oktober 2026',
-    rsvpCount: 142,
-    songTitle: 'Sampai Jadi Debu',
-    days: 48,
-    hours: 14,
-    mins: 32,
-    secs: 10,
-  },
-  {
-    slug: 'cinamon',
-    name: 'Cinnamon Blue',
-    category: 'RSVP',
-    image: 'https://r2.loverse.id/themes/cinamon.webp',
-    couple: 'Radit & Anisa',
-    date: 'Minggu, 15 November 2026',
-    rsvpCount: 218,
-    songTitle: 'Akad - Payung Teduh',
-    days: 70,
-    hours: 9,
-    mins: 15,
-    secs: 45,
-  },
-  {
-    slug: 'rustic-floral',
-    name: 'Rustic Floral',
-    category: 'Basic',
-    image: 'https://r2.loverse.id/themes/rustic-floral.webp',
-    couple: 'Kevin & Jessica',
-    date: 'Jumat, 18 Desember 2026',
-    rsvpCount: 185,
-    songTitle: 'A Thousand Years',
-    days: 103,
-    hours: 16,
-    mins: 40,
-    secs: 20,
-  },
-  {
-    slug: 'modern-dark',
-    name: 'Modern Dark',
-    category: 'Basic',
-    image: 'https://r2.loverse.id/themes/modern-dark.webp',
-    couple: 'Arya & Nabila',
-    date: 'Sabtu, 09 Januari 2027',
-    rsvpCount: 310,
-    songTitle: 'Kisah Romantis',
-    days: 125,
-    hours: 11,
-    mins: 20,
-    secs: 55,
-  },
-  {
-    slug: 'playful-pop',
-    name: 'Playful Pop',
-    category: 'RSVP',
-    image: 'https://r2.loverse.id/themes/playful-pop.webp',
-    couple: 'Fajar & Tiara',
-    date: 'Minggu, 14 Februari 2027',
-    rsvpCount: 164,
-    songTitle: 'Cinta Luar Biasa',
-    days: 160,
-    hours: 8,
-    mins: 5,
-    secs: 30,
-  },
-];
-
-// Offset dasar dummy (misal 60 + data pesanan asli 7 = 67)
 const BASE_DUMMY_SOLD = 60;
-
-// Harga minimum (source of truth): kolom `price` dari template aktif di DB.
-// Fallback mengikuti harga terendah Basic di database supaya tampilan & meta
-// SEO tidak berkedip dengan angka salah saat fetch pertama masih berjalan.
 const FALLBACK_MIN_PRICE = 50000;
+const SECTION_IDS = ["beranda", "fitur", "statistik", "katalog", "alur", "testimoni", "faq", "mulai"] as const;
 
 const formatIDR = (value: number) =>
-  new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
+  new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(value);
 
-// Format ringkas harga utk chip kartu katalog: 50000 → "Rp 50K".
-const formatPriceK = (value: number) => `Rp ${new Intl.NumberFormat('id-ID').format(value / 1000)}K`;
+const formatPriceK = (value: number) => `Rp ${new Intl.NumberFormat("id-ID").format(value / 1000)}K`;
 
-// Urutan section beranda (utk identitas hash URL & scrollspy).
-const SECTION_IDS = ['beranda', 'fitur', 'alur', 'statistik', 'katalog', 'testimoni', 'faq', 'mulai'] as const;
+function StatNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const [display, setDisplay] = useState(0);
 
-// Wrapper animasi scroll-reveal (framer-motion): masuk saat elemen terlihat,
-// sekali saja; hilang total bila user memakai prefers-reduced-motion.
-function Reveal({
-  children,
-  className,
-  delay = 0,
-  y = 26,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-  y?: number;
-}) {
-  const reduce = useReducedMotion();
-  if (reduce) return <div className={className}>{children}</div>;
+  useEffect(() => {
+    let frame = 0;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      frame = requestAnimationFrame(() => setDisplay(value));
+      return () => cancelAnimationFrame(frame);
+    }
+    const duration = 1300;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplay(Math.round(value * eased));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [value]);
+
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.6, delay, ease: 'easeOut' }}
-    >
-      {children}
-    </motion.div>
+    <span className="font-display text-[clamp(3.8rem,9vw,7.6rem)] font-light leading-[0.8] tracking-[-0.055em]">
+      {display}
+      {suffix}
+    </span>
   );
 }
 
@@ -175,92 +73,24 @@ export default function Landing() {
   const { t } = useTranslation();
   const siteNotices = useSiteNotices();
   useSectionHash(SECTION_IDS);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('All');
+  const location = useLocation();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("All");
   const [templates, setTemplates] = useState<Array<TemplateRow & { image: string }>>([]);
   const [loading, setLoading] = useState(true);
   const [soldCount, setSoldCount] = useState<number | null>(null);
   const [minPrice, setMinPrice] = useState<number | null>(null);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  // Harga minimum yang ditampilkan: dari DB bila sudah ter-fetch, selain itu fallback.
   const displayMinPrice = minPrice ?? FALLBACK_MIN_PRICE;
   const minPriceLabel = formatIDR(displayMinPrice);
 
-  // Meta SEO memakai harga aktual (dinamis dari DB), bukan angka hardcode.
   usePageMeta(
-    'LoVerse — Undangan Pernikahan Digital Elegan & Modern',
+    "LoVerse — Undangan Pernikahan Digital Elegan & Modern",
     `LoVerse — undangan pernikahan digital elegan & modern. Pilih 40+ tema, RSVP online, musik, galeri foto, dan buku tamu. Buat dalam hitungan menit mulai ${minPriceLabel}.`,
   );
 
-  // Carousel State for Hero Showcase (Otomatis berganti tema)
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
-
-  useEffect(() => {
-    if (isCarouselHovered) return;
-    const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % SHOWCASE_SLIDES.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [isCarouselHovered]);
-
-  const currentSlide = SHOWCASE_SLIDES[activeSlide];
-
-  const featuresList = [
-    {
-      icon: Sparkles,
-      title: t('home.features.f1Title'),
-      desc: t('home.features.f1Desc'),
-    },
-    {
-      icon: MessageSquare,
-      title: t('home.features.f2Title'),
-      desc: t('home.features.f2Desc'),
-    },
-    {
-      icon: Edit3,
-      title: t('home.features.f3Title'),
-      desc: t('home.features.f3Desc'),
-    },
-    {
-      icon: ShieldCheck,
-      title: t('home.features.f4Title'),
-      desc: t('home.features.f4Desc', { price: minPriceLabel }),
-    },
-  ];
-
-  const stepsList = [
-    {
-      num: t('home.step1Num'),
-      title: t('home.step1Title'),
-      desc: t('home.step1Desc'),
-      icon: LayoutTemplate,
-    },
-    {
-      num: t('home.step2Num'),
-      title: t('home.step2Title'),
-      desc: t('home.step2Desc'),
-      icon: Edit3,
-    },
-    {
-      num: t('home.step3Num'),
-      title: t('home.step3Title'),
-      desc: t('home.step3Desc'),
-      icon: Share2,
-    },
-  ];
-
-  const faqList = [
-    { q: t('home.faq1Q'), a: t('home.faq1A') },
-    { q: t('home.faq2Q'), a: t('home.faq2A') },
-    { q: t('home.faq3Q'), a: t('home.faq3A') },
-    { q: t('home.faq4Q'), a: t('home.faq4A') },
-  ];
-
-  // Scroll tepat ke kartu tema tertentu (dari "Ganti Template" di halaman order):
-  // router membawa state.scrollToTemplate, kartu dicari via data-template-slug.
-  const location = useLocation();
   useEffect(() => {
     if (loading) return;
     const slug = (location.state as { scrollToTemplate?: string } | null)?.scrollToTemplate;
@@ -271,7 +101,7 @@ export default function Landing() {
       if (cancelled) return;
       const el = document.querySelector(`#katalog [data-template-slug="${slug}"]`);
       if (el) {
-        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, left: 0, behavior: 'auto' });
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, left: 0, behavior: "auto" });
         return;
       }
       if ((attempt += 1) < 8) window.setTimeout(scroll, 400);
@@ -286,30 +116,21 @@ export default function Landing() {
     const fetchTemplates = async () => {
       try {
         const { data: dbTemplates, error } = await supabase
-          .from('templates')
-          .select('*')
-          .order('name', { ascending: true });
-
+          .from("templates")
+          .select("*")
+          .order("name", { ascending: true });
         if (error) throw error;
-
         if (dbTemplates) {
           const combinedData = dbTemplates.map((dbItem) => {
-            const localTemplate = MASTER_TEMPLATES.find((t) => t.slug === dbItem.slug);
-            return {
-              ...dbItem,
-              image: localTemplate ? localTemplate.image : '/themes/placeholder.svg',
-            };
+            const localTemplate = MASTER_TEMPLATES.find((item) => item.slug === dbItem.slug);
+            return { ...dbItem, image: localTemplate ? localTemplate.image : "/themes/placeholder.svg" };
           });
           setTemplates(combinedData);
-
-          // Harga minimum dari database (hanya template aktif) untuk heroDesc
-          const active = combinedData.filter((t) => t.is_active && typeof t.price === 'number');
-          if (active.length > 0) {
-            setMinPrice(Math.min(...active.map((t) => t.price as number)));
-          }
+          const active = combinedData.filter((item) => item.is_active && typeof item.price === "number");
+          if (active.length > 0) setMinPrice(Math.min(...active.map((item) => item.price as number)));
         }
       } catch (error) {
-        console.error('Gagal mengambil data template:', error);
+        console.error("Gagal mengambil data template:", error);
       } finally {
         setLoading(false);
       }
@@ -317,13 +138,10 @@ export default function Landing() {
 
     const fetchSoldCount = async () => {
       const { count, error } = await supabase
-        .from('public_invitations')
-        .select('*', { count: 'exact', head: true });
-      if (!error && count !== null) {
-        setSoldCount(BASE_DUMMY_SOLD + count);
-      } else {
-        setSoldCount(BASE_DUMMY_SOLD + 7);
-      }
+        .from("public_invitations")
+        .select("*", { count: "exact", head: true });
+      if (!error && count !== null) setSoldCount(BASE_DUMMY_SOLD + count);
+      else setSoldCount(BASE_DUMMY_SOLD + 7);
     };
 
     fetchTemplates();
@@ -333,772 +151,547 @@ export default function Landing() {
   const filteredTemplates = useMemo(
     () =>
       templates
-        .filter((tpl) => tpl.is_active)
-        .filter((tpl) => categoryFilter === 'All' || tpl.category === categoryFilter)
-        .filter((tpl) => tpl.name.toLowerCase().includes(searchTerm.toLowerCase())),
+        .filter((template) => template.is_active)
+        .filter((template) => categoryFilter === "All" || template.category === categoryFilter)
+        .filter((template) => template.name.toLowerCase().includes(searchTerm.toLowerCase())),
     [templates, searchTerm, categoryFilter],
   );
 
-  const toggleFaq = (idx: number) => {
-    setOpenFaq((prev) => (prev === idx ? null : idx));
-  };
+  const features = [
+    { icon: Sparkles, title: t("home.features.f1Title"), desc: t("home.features.f1Desc") },
+    { icon: MessageSquare, title: t("home.features.f2Title"), desc: t("home.features.f2Desc") },
+    { icon: Edit3, title: t("home.features.f3Title"), desc: t("home.features.f3Desc") },
+    {
+      icon: ShieldCheck,
+      title: t("home.features.f4Title"),
+      desc: t("home.features.f4Desc", { price: minPriceLabel }),
+    },
+  ];
 
-  const displaySold = soldCount ?? (BASE_DUMMY_SOLD + 7);
+  const steps = [
+    {
+      num: t("home.step1Num"),
+      title: t("home.step1Title"),
+      desc: t("home.step1Desc"),
+      icon: LayoutTemplate,
+    },
+    { num: t("home.step2Num"), title: t("home.step2Title"), desc: t("home.step2Desc"), icon: Edit3 },
+    { num: t("home.step3Num"), title: t("home.step3Title"), desc: t("home.step3Desc"), icon: Share2 },
+  ];
+
+  const faqs = [
+    { q: t("home.faq1Q"), a: t("home.faq1A") },
+    { q: t("home.faq2Q"), a: t("home.faq2A") },
+    { q: t("home.faq3Q"), a: t("home.faq3A") },
+    { q: t("home.faq4Q"), a: t("home.faq4A") },
+  ];
+
+  const displaySold = soldCount ?? BASE_DUMMY_SOLD + 7;
+  const activeCount = templates.filter((template) => template.is_active).length || 40;
+  const tickerItems = [
+    t("home.heroTrustRsvp"),
+    t("home.tickerMusic"),
+    t("home.tickerPhoto"),
+    t("home.tickerMap"),
+    t("home.tickerGift"),
+    t("home.heroTrustInstant"),
+  ];
 
   return (
-    <div className="min-h-screen bg-[#F1E8DC] font-sans text-stone-800 selection:bg-[#E59A59] selection:text-white">
-
-      {/* Notice situs (promo / maintenance) dari admin */}
+    <div className="min-h-screen bg-cream-100 font-sans text-ink-900">
       <SiteNoticeView notices={siteNotices} />
 
-      {/* --- HERO SECTION: SPLIT LAYOUT KIRI - KANAN --- */}
-      <section id="beranda" className="relative pt-8 pb-16 md:pt-14 md:pb-24 overflow-hidden border-b border-[#EBDFCE]/60 scroll-mt-20">
-        {/* Subtle decorative mesh backdrops */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          <div className="absolute top-10 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-[#E59A59]/15 to-transparent rounded-full blur-3xl" />
-          <div className="absolute top-40 right-10 w-[450px] h-[450px] bg-gradient-to-bl from-[#712E1E]/10 to-transparent rounded-full blur-3xl" />
+      {/* HERO */}
+      <section
+        id="beranda"
+        className="relative scroll-mt-20 overflow-hidden border-b border-cream-100/10 bg-ink-950 text-cream-100"
+      >
+        <div className="grain grain-light absolute inset-0" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.16]" aria-hidden="true">
+          <div className="absolute left-[8%] top-0 h-full w-px bg-cream-100/20" />
+          <div className="absolute left-[38%] top-0 h-full w-px bg-cream-100/10" />
+          <div className="absolute right-[8%] top-0 h-full w-px bg-cream-100/15" />
+          <div className="absolute inset-x-0 top-[24%] h-px bg-cream-100/10" />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-
-            {/* SISI KIRI: Headline, Subtitle, CTA & Trust Points */}
-            <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
-              
-              {/* Badge Pill */}
-              <Reveal>
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-[#EBDFCE] shadow-sm backdrop-blur-sm">
-                  <Sparkles size={14} className="text-[#E59A59]" />
-                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#712E1E]">
-                    {t('home.badge')}
-                  </span>
-                </div>
-              </Reveal>
-
-              {/* Main Headline */}
-              <Reveal delay={0.08}>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold text-[#712E1E] leading-[1.18] tracking-tight">
-                  {t('home.heroTitlePrefix')}{' '}
-                  <span
-                    className="text-[#E59A59] inline-block relative font-brand italic font-bold text-[1.06em] [text-shadow:0_2px_14px_rgba(229,154,89,0.45)]"
-                  >
-                    {t('home.heroTitleHighlight')}
-                    <span className="absolute -bottom-1.5 left-0 right-0 h-1.5 bg-[#E59A59]/25 rounded-full" />
-                  </span>{' '}
-                  {t('home.heroTitleSuffix')}
-                </h1>
-              </Reveal>
-
-              {/* Persuasive Description */}
-              <Reveal delay={0.16}>
-                <p className="text-stone-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl">
-                  {t('home.heroDesc', { price: minPriceLabel })}
-                </p>
-              </Reveal>
-
-              {/* Dual Action Buttons: satu CTA utama (buat/pesan) + satu sekunder (jelajah) */}
-              <Reveal delay={0.22} className="w-full">
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto pt-2">
-                  <Link
-                    to="/order"
-                    className="flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#E59A59] text-white font-bold text-sm md:text-base hover:bg-[#d48b4b] shadow-lg shadow-[#E59A59]/25 transition duration-200 active:scale-95"
-                  >
-                    <span>{t('home.heroCtaOrder')}</span>
-                    <ArrowRight size={16} />
-                  </Link>
-                  <a
-                    href="#katalog"
-                    className="flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-white text-[#712E1E] font-bold text-sm md:text-base border border-[#EBDFCE] hover:bg-[#FAF6EE] hover:border-[#712E1E]/30 shadow-sm transition duration-200 active:scale-95"
-                  >
-                    <LayoutTemplate size={18} />
-                    <span>{t('home.heroCtaCatalog')}</span>
-                  </a>
-                </div>
-              </Reveal>
-
-              {/* Tautan portofolio: pindah ke text-link agar tidak merebut atensi CTA utama */}
-              <Reveal delay={0.28}>
-                <div>
-                  <Link
-                    to="/portfolio"
-                    className="inline-flex items-center gap-1.5 text-sm font-bold text-[#712E1E]/80 hover:text-[#E59A59] underline-offset-4 hover:underline transition"
-                  >
-                    <Images size={15} className="text-[#E59A59]" />
-                    <span>{t('home.heroPortfolioBtn')}</span>
-                  </Link>
-                </div>
-              </Reveal>
-
-              {/* Social Proof & Rating Strip */}
-              <Reveal delay={0.3} className="w-full">
-                <div className="pt-4 border-t border-[#EBDFCE] w-full flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-                {/* Avatars */}
-                <div className="flex items-center -space-x-2.5">
-                  <div className="w-9 h-9 rounded-full bg-[#712E1E] text-white font-bold text-xs flex items-center justify-center ring-2 ring-white">
-                    RA
-                  </div>
-                  <div className="w-9 h-9 rounded-full bg-[#E59A59] text-white font-bold text-xs flex items-center justify-center ring-2 ring-white">
-                    DP
-                  </div>
-                  <div className="w-9 h-9 rounded-full bg-stone-700 text-white font-bold text-xs flex items-center justify-center ring-2 ring-white">
-                    MR
-                  </div>
-                  <div className="w-9 h-9 rounded-full bg-[#FAF6EE] text-[#712E1E] border border-[#EBDFCE] font-bold text-[10px] flex items-center justify-center ring-2 ring-white">
-                    +{displaySold}
-                  </div>
-                </div>
-
-                {/* Rating & Review */}
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-1">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} size={14} className="text-amber-400 fill-amber-400" />
-                    ))}
-                    <span className="text-xs font-black text-[#712E1E] ml-1">4.9 / 5.0</span>
-                  </div>
-                  <p className="text-xs font-medium text-stone-500">
-                    {t('home.heroRating', { count: displaySold })}
-                  </p>
-                </div>
-                </div>
-              </Reveal>
-
-              {/* Key Trust Highlights */}
-              <Reveal delay={0.34} className="w-full">
-                <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-stone-600 pt-1">
-                  <span className="flex items-center gap-1.5 bg-white/70 px-3 py-1.5 rounded-lg border border-[#EBDFCE]/80">
-                    <CheckCircle2 size={14} className="text-emerald-600" />
-                    {t('home.heroTrustInstant')}
-                  </span>
-                  <span className="flex items-center gap-1.5 bg-white/70 px-3 py-1.5 rounded-lg border border-[#EBDFCE]/80">
-                    <CheckCircle2 size={14} className="text-emerald-600" />
-                    {t('home.heroTrustMedia')}
-                  </span>
-                  <span className="flex items-center gap-1.5 bg-white/70 px-3 py-1.5 rounded-lg border border-[#EBDFCE]/80">
-                    <CheckCircle2 size={14} className="text-emerald-600" />
-                    {t('home.heroTrustRsvp')}
-                  </span>
-                </div>
-              </Reveal>
-
-            </div>
-
-            {/* SISI KANAN: Interactive Multi-Template Carousel Showcase */}
-            <Reveal className="lg:col-span-5 mt-4 lg:mt-0" delay={0.12} y={34}>
-              <div
-                className="relative flex flex-col items-center w-full"
-                onMouseEnter={() => setIsCarouselHovered(true)}
-                onMouseLeave={() => setIsCarouselHovered(false)}
-              >
-              
-              {/* Phone Showcase Frame */}
-              <div className="relative w-full max-w-[340px] sm:max-w-[360px] bg-white rounded-[36px] p-3.5 shadow-2xl border-4 border-white/90 ring-1 ring-stone-900/5 transition duration-300">
-                
-                {/* Smartphone Speaker Notch & Status Bar */}
-                <div className="flex items-center justify-between px-3 mb-2">
-                  <span className="text-[10px] font-bold text-stone-400 tracking-wider">
-                    {currentSlide.category}
-                  </span>
-                  <div className="w-14 h-3 bg-stone-100 rounded-full flex items-center justify-center">
-                    <div className="w-6 h-1 bg-stone-300 rounded-full" />
-                  </div>
-                  <span className="text-[10px] font-bold text-[#E59A59] truncate max-w-[90px]">
-                    {currentSlide.name}
-                  </span>
-                </div>
-
-                {/* Inner Screen Card with Smooth Fade/Slide */}
-                <div 
-                  key={currentSlide.slug}
-                  className="rounded-[28px] overflow-hidden bg-gradient-to-b from-[#FAF6EE] to-[#F1E8DC] border border-[#EBDFCE] p-4 text-center relative transition-all duration-500 animate-fade-in"
-                >
-                  
-                  {/* Photo Preview Frame */}
-                  <div className="relative h-44 rounded-2xl overflow-hidden mb-4 shadow-sm group">
-                    <img
-                      src={currentSlide.image}
-                      alt={currentSlide.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent flex items-end justify-between p-2.5">
-                      <span className="text-white text-[10px] font-bold tracking-widest uppercase bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20">
-                        {currentSlide.name}
-                      </span>
-                      <span className="text-white text-[9px] font-bold bg-[#E59A59] px-2 py-0.5 rounded-full">
-                        {activeSlide + 1} / {SHOWCASE_SLIDES.length}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Couple Name */}
-                  <h3 className="text-xl sm:text-2xl font-black text-[#712E1E] tracking-tight mb-1">
-                    {currentSlide.couple}
-                  </h3>
-
-                  {/* Wedding Date */}
-                  <p className="text-xs font-semibold text-[#E59A59] mb-4 flex items-center justify-center gap-1.5">
-                    <Calendar size={13} />
-                    {currentSlide.date}
-                  </p>
-
-                  {/* Mini Countdown Timer */}
-                  <div className="bg-white/80 backdrop-blur-sm rounded-xl p-2.5 border border-[#EBDFCE] mb-4">
-                    <p className="text-[10px] uppercase font-bold text-stone-400 tracking-wider mb-1.5">
-                      {t('home.mockupCountdownDays')}
-                    </p>
-                    <div className="grid grid-cols-4 gap-1.5 text-center">
-                      <div className="bg-[#FAF6EE] rounded-lg p-1 border border-[#EBDFCE]">
-                        <span className="block text-sm font-black text-[#712E1E]">{currentSlide.days}</span>
-                        <span className="text-[8px] text-stone-500 font-semibold">Hari</span>
-                      </div>
-                      <div className="bg-[#FAF6EE] rounded-lg p-1 border border-[#EBDFCE]">
-                        <span className="block text-sm font-black text-[#712E1E]">{currentSlide.hours}</span>
-                        <span className="text-[8px] text-stone-500 font-semibold">Jam</span>
-                      </div>
-                      <div className="bg-[#FAF6EE] rounded-lg p-1 border border-[#EBDFCE]">
-                        <span className="block text-sm font-black text-[#712E1E]">{currentSlide.mins}</span>
-                        <span className="text-[8px] text-stone-500 font-semibold">Mnt</span>
-                      </div>
-                      <div className="bg-[#FAF6EE] rounded-lg p-1 border border-[#EBDFCE]">
-                        <span className="block text-sm font-black text-[#712E1E]">{currentSlide.secs}</span>
-                        <span className="text-[8px] text-stone-500 font-semibold">Dtk</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Direct Demo Link */}
-                  <Link
-                    to={`/demo/${currentSlide.slug}`}
-                    className="w-full py-2.5 rounded-xl bg-[#712E1E] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm hover:bg-[#8E3B27] transition"
-                  >
-                    <Eye size={13} className="text-[#FFD5AF]" />
-                    <span>Lihat Demo Template Ini</span>
-                  </Link>
-                </div>
-
+        <div className="relative z-[2] mx-auto grid w-full max-w-[1480px] lg:grid-cols-[1.04fr_.96fr]">
+          <div className="flex flex-col justify-between px-4 pb-10 pt-12 sm:px-7 sm:pt-16 lg:min-h-[calc(100svh-68px)] lg:px-10 lg:pb-12 lg:pt-20">
+            <div>
+              <div className="flex items-center gap-3">
+                <span className="h-px w-8 bg-peach-300/60" />
+                <p className="eyebrow text-peach-300/80">{t("home.heroEyebrow")}</p>
               </div>
 
-              {/* Carousel Dot Indicators */}
-              <div className="flex items-center gap-2 mt-4 z-20">
-                {SHOWCASE_SLIDES.map((slide, idx) => (
-                  <button
-                    key={slide.slug}
-                    type="button"
-                    onClick={() => setActiveSlide(idx)}
-                    aria-label={`Slide ${idx + 1}: ${slide.name}`}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      activeSlide === idx
-                        ? 'w-7 bg-[#712E1E]'
-                        : 'w-2 bg-[#EBDFCE] hover:bg-[#E59A59]'
-                    }`}
-                  />
-                ))}
-              </div>
+              <h1 className="display-xl mt-8 max-w-[10.5ch] text-[clamp(3.9rem,9.4vw,8.8rem)] text-cream-50">
+                <span className="block">{t("home.heroLine1")}</span>
+                <span className="block">
+                  <span className="italic text-peach-300">{t("home.heroLine2").split(" ")[0]}</span>{" "}
+                  {t("home.heroLine2").split(" ").slice(1).join(" ")}
+                </span>
+              </h1>
 
-              {/* Floating Card 1: Dynamic RSVP Status */}
-              <div className="absolute -top-3 -right-2 sm:-right-6 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-xl border border-[#EBDFCE] flex items-center gap-3 z-20 transition-all duration-300">
-                <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
-                  <Users size={18} />
-                </div>
-                <div className="text-left pr-1">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <p className="text-xs font-extrabold text-stone-800">
-                      {currentSlide.rsvpCount} Tamu Hadir
-                    </p>
-                  </div>
-                  <p className="text-[10px] font-medium text-stone-400">RSVP Terkonfirmasi</p>
-                </div>
-              </div>
-
-              {/* Floating Card 2: Dynamic Audio Player */}
-              <div className="absolute -bottom-4 -left-2 sm:-left-6 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-xl border border-[#EBDFCE] flex items-center gap-3 z-20 transition-all duration-300">
-                <div className="w-9 h-9 rounded-xl bg-[#E59A59]/15 text-[#E59A59] flex items-center justify-center shrink-0 border border-[#E59A59]/20">
-                  <Music size={18} />
-                </div>
-                <div className="text-left pr-1">
-                  <p className="text-xs font-bold text-stone-800">{t('home.mockupMusicStatus')}</p>
-                  <div className="flex items-center gap-1 mt-0.5">
-                    <span className="w-1 h-3 bg-[#E59A59] rounded-full animate-pulse" />
-                    <span className="w-1 h-4 bg-[#E59A59] rounded-full animate-pulse delay-75" />
-                    <span className="w-1 h-2 bg-[#E59A59] rounded-full animate-pulse delay-150" />
-                    <span className="text-[10px] text-stone-500 font-bold ml-1 truncate max-w-[120px]">
-                      {currentSlide.songTitle}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            </Reveal>
-
-          </div>
-        </div>
-      </section>
-
-      {/* --- SECTION: VALUE PILLARS (MENGAPA MEMILIH LOVERSE) --- */}
-      <section id="fitur" className="container mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20 scroll-mt-20">
-        <Reveal className="text-center mb-10 md:mb-14">
-          <span className="text-[11px] md:text-xs font-bold uppercase tracking-widest text-[#E59A59] bg-white px-3.5 py-1 rounded-full border border-[#EBDFCE]">
-            Keunggulan Layanan
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-brand font-semibold text-[#712E1E] mt-3">
-            {t('home.aboutTitle')}
-          </h2>
-          <p className="mt-2 text-sm md:text-base text-stone-600 max-w-xl mx-auto">
-            {t('home.aboutDesc')}
-          </p>
-        </Reveal>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 max-w-7xl mx-auto">
-          {featuresList.map((feature, fi) => (
-            <Reveal key={feature.title} delay={(fi % 4) * 0.08}>
-              <div
-                className="bg-white rounded-2xl border border-[#EBDFCE] shadow-sm p-6 text-left hover:-translate-y-1.5 hover:shadow-md transition duration-300 flex flex-col justify-between h-full"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-[#F7EEE3] text-[#B4693F] flex items-center justify-center mb-5 border border-[#EBDFCE]/60">
-                    <feature.icon size={22} />
-                  </div>
-                  <h3 className="text-base md:text-lg font-bold text-[#712E1E] mb-2 leading-snug">
-                    {feature.title}
-                  </h3>
-                  <p className="text-xs md:text-sm text-stone-500 leading-relaxed">
-                    {feature.desc}
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* --- SECTION: 3 LANGKAH MUDAH (HOW IT WORKS) --- */}
-      <section id="alur" className="bg-[#FAF6EE] py-14 md:py-20 border-y border-[#EBDFCE] scroll-mt-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal className="text-center mb-12">
-            <span className="text-[11px] md:text-xs font-bold uppercase tracking-widest text-[#E59A59] bg-white px-3.5 py-1 rounded-full border border-[#EBDFCE]">
-              Alur Praktis
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-brand font-semibold text-[#712E1E] mt-3">
-              {t('home.stepsTitle')}
-            </h2>
-            <p className="mt-2 text-sm md:text-base text-stone-600 max-w-xl mx-auto">
-              {t('home.stepsDesc')}
-            </p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {stepsList.map((step, si) => (
-              <Reveal key={step.num} delay={si * 0.1}>
-                <div
-                  className="bg-white rounded-2xl border border-[#EBDFCE] p-7 text-left relative shadow-sm hover:shadow-md transition duration-300 h-full"
-                >
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-11 h-11 rounded-xl bg-[#E59A59]/15 text-[#E59A59] flex items-center justify-center font-bold">
-                      <step.icon size={20} />
-                    </div>
-                    <span className="text-2xl font-black text-[#EBDFCE] font-mono">
-                      {step.num}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-bold text-[#712E1E] mb-2">{step.title}</h3>
-                  <p className="text-xs md:text-sm text-stone-500 leading-relaxed">{step.desc}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* --- STATS STRIP --- */}
-      <section id="statistik" className="bg-[#712E1E] text-white scroll-mt-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12">
-          <Reveal>
-            <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-4xl mx-auto text-center divide-x divide-white/10">
-            <div className="px-2">
-              <div className="flex items-center justify-center gap-1.5 text-2xl sm:text-3xl md:text-4xl font-black text-white">
-                <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-[#E59A59]" />
-                <span>{displaySold}</span>
-                <span className="text-[#E59A59] text-xl md:text-3xl">+</span>
-              </div>
-              <p className="mt-1 text-[10px] md:text-xs font-bold uppercase tracking-wider text-[#FFD5AF]">
-                {t('home.stats.sold')}
+              <p className="mt-6 max-w-md font-display text-[clamp(1.25rem,2.1vw,1.8rem)] italic leading-[1.2] text-cream-100/62 sm:mt-8">
+                {t("home.heroLine3")}
               </p>
-            </div>
 
-            <div className="px-2">
-              <div className="flex items-center justify-center gap-1.5 text-2xl sm:text-3xl md:text-4xl font-black text-white">
-                <LayoutTemplate className="w-5 h-5 md:w-7 md:h-7 text-[#E59A59]" />
-                <span>{templates.filter((t) => t.is_active).length || MASTER_TEMPLATES.length}</span>
-              </div>
-              <p className="mt-1 text-[10px] md:text-xs font-bold uppercase tracking-wider text-[#FFD5AF]">
-                {t('home.stats.templates')}
+              <p className="mt-7 max-w-[46ch] text-pretty text-[14px] leading-relaxed text-cream-100/62 sm:text-[15px]">
+                {t("home.heroLede")}
               </p>
-            </div>
 
-            <div className="px-2">
-              <div className="flex items-center justify-center gap-1.5 text-2xl sm:text-3xl md:text-4xl font-black text-white">
-                <Star className="w-5 h-5 md:w-7 md:h-7 text-amber-400 fill-amber-400" />
-                <span>4.9</span>
-                <span className="text-xs md:text-base font-normal text-stone-300">/5</span>
-              </div>
-              <p className="mt-1 text-[10px] md:text-xs font-bold uppercase tracking-wider text-[#FFD5AF]">
-                {t('home.stats.rating')}
-              </p>
-            </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* --- KATALOG TEMA --- */}
-      <section id="katalog" className="container mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-24 scroll-mt-20">
-        <Reveal className="text-center mb-8 md:mb-10">
-          <span className="text-[11px] md:text-xs font-bold uppercase tracking-widest text-[#E59A59] bg-white px-3.5 py-1 rounded-full border border-[#EBDFCE]">
-            Katalog Desain
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-brand font-semibold text-[#712E1E] mt-3">
-            {t('home.catalogTitle')}
-          </h2>
-          <p className="mt-2 text-sm md:text-base text-stone-600 max-w-xl mx-auto">
-            {t('home.catalogDesc')}
-          </p>
-        </Reveal>
-
-        {/* Search + Filter Bar */}
-        <Reveal className="max-w-3xl mx-auto mb-3">
-          <div className="flex flex-col sm:flex-row gap-3">
-          <div className="relative flex items-center w-full group">
-            <Search className="absolute left-4 w-4 h-4 text-stone-400 pointer-events-none" />
-            <input
-              type="text"
-              placeholder={t('home.catalogSearchPlaceholder')}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full h-11 pl-11 pr-12 rounded-xl bg-white border border-[#EBDFCE] outline-none text-[#712E1E] placeholder:text-stone-400 focus:border-[#E59A59] focus:ring-2 focus:ring-[#E59A59]/20 transition-all text-xs sm:text-sm font-medium"
-            />
-            {searchTerm && (
-              <button
-                type="button"
-                onClick={() => setSearchTerm('')}
-                className="absolute right-3 text-xs text-stone-400 hover:text-stone-600 font-bold"
-              >
-                Reset
-              </button>
-            )}
-          </div>
-
-          <div className="flex gap-1 rounded-xl border border-[#EBDFCE] bg-white p-1 shrink-0 self-start sm:self-auto">
-            {(['All', 'Basic', 'RSVP'] as CategoryFilter[]).map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setCategoryFilter(cat)}
-                className={`px-3.5 h-9 rounded-lg text-xs font-bold transition-all ${
-                  categoryFilter === cat
-                    ? 'bg-[#712E1E] text-white shadow-sm'
-                    : 'text-stone-500 hover:bg-[#FAF6EE] hover:text-[#712E1E]'
-                }`}
-              >
-                {cat === 'All' ? t('home.catalogCategoryAll') : cat}
-              </button>
-            ))}
-          </div>
-          </div>
-        </Reveal>
-
-        {/* Jumlah hasil pencarian */}
-        <div className="max-w-3xl mx-auto mb-8 flex items-center justify-between gap-3">
-          <p className="text-xs font-semibold text-stone-400">
-            {t('home.catalogCount', { count: loading ? '…' : filteredTemplates.length })}
-          </p>
-        </div>
-
-        {/* Loading / Skeleton */}
-        {loading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 mx-auto">
-            <TemplateCardSkeleton count={8} />
-          </div>
-        ) : filteredTemplates.length > 0 ? (
-          /* Grid Template Cards */
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 md:gap-6 lg:gap-7 mx-auto">
-            {filteredTemplates.map((template, ci) => (
-              <Reveal key={template.slug} delay={(ci % 4) * 0.05} y={20}>
-                <TemplateCatalogCard template={template} priceLabel={formatPriceK(template.price)} />
-              </Reveal>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 text-stone-400 bg-white rounded-2xl border border-[#EBDFCE]">
-            <p className="text-lg font-bold text-stone-600">{t('home.catalogEmpty')}</p>
-            <p className="text-xs text-stone-400 mt-1">{t('home.catalogEmptySub')}</p>
-          </div>
-        )}
-      </section>
-
-      {/* --- SECTION: TESTIMONI --- */}
-      <section id="testimoni" className="bg-[#FAF6EE] py-14 md:py-20 border-t border-[#EBDFCE] scroll-mt-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal className="text-center mb-10 md:mb-12">
-            <span className="text-[11px] md:text-xs font-bold uppercase tracking-widest text-[#E59A59] bg-white px-3.5 py-1 rounded-full border border-[#EBDFCE]">
-              Testimoni
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-brand font-semibold text-[#712E1E] mt-3">
-              {t('home.testimonialsTitle')}
-            </h2>
-            <p className="mt-2 text-sm md:text-base text-stone-600 max-w-xl mx-auto">
-              {t('home.testimonialsDesc')}
-            </p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 max-w-6xl mx-auto">
-            {TESTIMONIALS.map((item, ti) => (
-              <Reveal key={item.name} delay={(ti % 3) * 0.09}>
-                <figure
-                  className="bg-white rounded-2xl border border-[#EBDFCE] shadow-sm p-6 flex flex-col justify-between h-full"
-                >
-                <div>
-                  <div className="flex gap-1 mb-3">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} size={14} className="text-amber-400 fill-amber-400" />
-                    ))}
-                  </div>
-                  <blockquote className="text-xs md:text-sm text-stone-600 italic leading-relaxed">
-                    "{item.message}"
-                  </blockquote>
-                </div>
-                <figcaption className="mt-5 pt-4 border-t border-[#F3EBDF] flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#F7EEE3] text-[#B4693F] grid place-items-center font-bold text-xs shrink-0 border border-[#EBDFCE]">
-                    {item.name.charAt(0)}
-                  </div>
-                  <div className="min-w-0 text-left">
-                    <p className="font-bold text-xs md:text-sm text-stone-800 truncate">{item.name}</p>
-                    <p className="text-[11px] text-stone-400 truncate">
-                      {t('home.testimonialsBought', { template: item.template })}
-                    </p>
-                  </div>
-                </figcaption>
-              </figure>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* --- SECTION: FAQ ACCORDION --- */}
-      <section id="faq" className="container mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20 scroll-mt-20">
-        <Reveal className="text-center mb-10 md:mb-12">
-          <span className="text-[11px] md:text-xs font-bold uppercase tracking-widest text-[#E59A59] bg-white px-3.5 py-1 rounded-full border border-[#EBDFCE]">
-            Bantuan & Jawaban
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-brand font-semibold text-[#712E1E] mt-3">
-            {t('home.faqTitle')}
-          </h2>
-          <p className="mt-2 text-sm md:text-base text-stone-600 max-w-xl mx-auto">
-            {t('home.faqDesc')}
-          </p>
-        </Reveal>
-
-        <div className="max-w-3xl mx-auto space-y-3.5">
-          {faqList.map((faq, idx) => {
-            const isOpen = openFaq === idx;
-            return (
-              <Reveal key={faq.q} delay={idx * 0.05} y={18}>
-              <div
-                className="bg-white rounded-2xl border border-[#EBDFCE] overflow-hidden transition-all shadow-sm"
-              >
-                <button
-                  type="button"
-                  onClick={() => toggleFaq(idx)}
-                  className="w-full p-5 text-left font-bold text-sm md:text-base text-[#712E1E] flex items-center justify-between gap-4 hover:bg-[#FAF6EE] transition"
-                >
-                  <span className="flex items-center gap-2.5">
-                    <HelpCircle size={18} className="text-[#E59A59] shrink-0" />
-                    {faq.q}
-                  </span>
-                  <ChevronDown
-                    size={18}
-                    className={`text-stone-400 shrink-0 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 text-[#712E1E]' : ''
-                    }`}
-                  />
-                </button>
-                {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs md:text-sm text-stone-600 leading-relaxed border-t border-[#FAF6EE]">
-                    {faq.a}
-                  </div>
-                )}
-              </div>
-              </Reveal>
-            );
-          })}
-        </div>
-
-        <div className="mx-auto mt-6 max-w-3xl text-center">
-          <Link
-            to="/tutorial"
-            className="inline-flex items-center gap-2 rounded-xl border border-[#EBDFCE] bg-white px-5 py-2.5 text-xs font-bold text-[#712E1E] shadow-sm transition hover:border-[#E59A59]/60 hover:bg-[#FAF6EE] active:scale-95 sm:text-sm"
-          >
-            <GraduationCap size={16} className="text-[#E59A59]" />
-            {t('home.faqTutorialBtn')}
-          </Link>
-        </div>
-      </section>
-
-      {/* --- BOTTOM CTA BANNER --- */}
-      <section id="mulai" className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24 scroll-mt-20">
-        <Reveal y={34}>
-          <div className="bg-gradient-to-r from-[#712E1E] to-[#8E3B27] rounded-3xl p-8 sm:p-12 md:p-14 text-center text-white shadow-xl relative overflow-hidden">
-            <div className="relative z-10 max-w-2xl mx-auto space-y-4">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
-                {t('home.ctaBannerTitle')}
-              </h2>
-              <p className="text-xs sm:text-sm md:text-base text-[#FFD5AF] leading-relaxed">
-                {t('home.ctaBannerDesc')}
-              </p>
-              <div className="pt-3">
-                <Link
-                  to="/order"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#E59A59] text-white font-bold text-sm md:text-base hover:bg-[#d48b4b] shadow-lg shadow-black/20 transition active:scale-95"
-                >
-                  <span>{t('home.ctaBannerBtn')}</span>
-                  <ArrowRight size={18} />
+              <div className="mt-8 flex flex-col gap-2.5 xs:flex-row sm:mt-10">
+                <Link to="/order" className={buttonClass("peach", "lg", "group h-13")}>
+                  {t("home.heroCtaOrder")}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+                <Link to="/#katalog" className={buttonClass("outlineLight", "lg", "h-13")}>
+                  {t("home.heroCtaCatalog")}
                 </Link>
               </div>
-            </div>
-          </div>
-        </Reveal>
-      </section>
 
-      {/* --- FOOTER (lengkap: brand, menu, bantuan, legal) --- */}
-      <footer className="bg-[#712E1E] text-[#FFD5AF]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-          <div className="grid grid-cols-2 gap-x-6 gap-y-7 sm:gap-y-8 lg:grid-cols-4 lg:gap-8">
-
-            {/* Brand + tagline + sosial */}
-            <div className="col-span-2 space-y-3.5 text-center sm:col-span-1 sm:text-left">
-              <img src="/logo.png" alt="LoVerse" className="h-8 w-auto mx-auto sm:mx-0" />
-              <p className="text-xs leading-relaxed text-[#FFD5AF]/70 max-w-xs mx-auto sm:mx-0">
-                {t('home.footerTagline')}
+              <p className="mt-5 font-data text-[9px] uppercase leading-relaxed tracking-[0.12em] text-cream-100/60">
+                {t("home.heroNote")}
               </p>
-              <div className="flex items-center justify-center sm:justify-start gap-2.5">
-                {[
-                  { Icon: Instagram, label: 'Instagram LoVerse' },
-                  { Icon: MessageCircle, label: 'WhatsApp LoVerse' },
-                  { Icon: Mail, label: 'Email LoVerse' },
-                ].map(({ Icon, label }) => (
-                  <Link
-                    key={label}
-                    to="/contact"
-                    aria-label={label}
-                    className="w-9 h-9 grid place-items-center rounded-xl bg-white/10 hover:bg-[#E59A59] text-[#FFD5AF] hover:text-white transition active:scale-95"
-                  >
-                    <Icon size={17} />
-                  </Link>
-                ))}
-              </div>
             </div>
 
-            {/* Jelajah */}
-            <nav aria-label={t('home.footerExplore')}>
-              <h3 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/45 mb-2.5 sm:mb-3">
-                {t('home.footerExplore')}
-              </h3>
-              <ul className="grid grid-cols-2 gap-x-5 gap-y-2 text-xs font-semibold sm:grid-cols-1 sm:gap-y-2.5 sm:text-sm">
-                <li><a href="#katalog" className="hover:text-white transition">{t('home.footerNavCatalog')}</a></li>
-                <li><Link to="/order" className="hover:text-white transition">{t('home.footerNavOrder')}</Link></li>
-                <li><Link to="/portfolio" className="hover:text-white transition">{t('home.footerNavPortfolio')}</Link></li>
-                <li><Link to="/tutorial" className="hover:text-white transition">{t('home.footerNavTutorial')}</Link></li>
-              </ul>
-            </nav>
-
-            {/* Bantuan */}
-            <nav aria-label={t('home.footerHelp')}>
-              <h3 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/45 mb-2.5 sm:mb-3">
-                {t('home.footerHelp')}
-              </h3>
-              <ul className="flex flex-wrap gap-x-4 gap-y-2 text-xs font-semibold sm:grid sm:grid-cols-1 sm:gap-y-2.5 sm:text-sm">
-                <li><a href="#faq" className="hover:text-white transition">{t('home.footerNavFaq')}</a></li>
-                <li><Link to="/contact" className="hover:text-white transition">{t('nav.contact')}</Link></li>
-                <li><Link to="/login" className="hover:text-white transition">{t('nav.login')}</Link></li>
-              </ul>
-            </nav>
-
-            {/* Legal */}
-            <nav aria-label={t('home.footerLegal')}>
-              <h3 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/45 mb-2.5 sm:mb-3">
-                {t('home.footerLegal')}
-              </h3>
-              <ul className="flex flex-wrap gap-x-4 gap-y-2 text-xs font-semibold sm:grid sm:grid-cols-1 sm:gap-y-2.5 sm:text-sm">
-                <li><Link to="/privacy" className="hover:text-white transition">{t('home.footerNavPrivacy')}</Link></li>
-                <li><Link to="/terms" className="hover:text-white transition">{t('home.footerNavTerms')}</Link></li>
-              </ul>
-            </nav>
-
-          </div>
-
-          {/* Strip pembayaran & kontak: logo kanal bayar + nomor WhatsApp admin */}
-          <div className="mt-7 pt-5 sm:mt-10 sm:pt-7 border-t border-white/10">
-            <div className="flex flex-col items-center justify-between gap-4 lg:flex-row lg:gap-5">
-              <div className="flex items-center gap-3 text-center lg:text-left">
-                <span className="w-10 h-10 shrink-0 rounded-xl bg-[#E59A59]/15 grid place-items-center">
-                  <ShieldCheck size={20} className="text-[#E59A59]" />
-                </span>
+            <div className="mt-12 flex flex-wrap items-end justify-between gap-6 border-t border-cream-100/12 pt-6">
+              <div className="flex items-center gap-4">
+                <div className="flex -space-x-2">
+                  {["R", "D", "A", "S"].map((initial, index) => (
+                    <span
+                      key={initial}
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-ink-950 bg-cream-200 font-display text-[11px] font-semibold text-ink-800"
+                      style={{ backgroundColor: ["#f0e5d2", "#ffd6b2", "#e4d4bb", "#f8f1e4"][index] }}
+                    >
+                      {initial}
+                    </span>
+                  ))}
+                </div>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-white/80">
-                    {t('home.footerPayments')}
-                  </p>
-                  <p className="text-[11px] text-[#FFD5AF]/60 font-medium">
-                    {t('home.footerPaymentsSub')}
-                  </p>
+                  <div className="flex items-center gap-1 text-peach-300">
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <Star key={index} className="h-3 w-3 fill-current" />
+                    ))}
+                  </div>
+                  <p className="mt-1 text-[10px] text-cream-100/48">
+                    {t("home.heroRating", { count: displaySold })}</p>
                 </div>
               </div>
-
-              <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-1.5 max-w-[600px] min-[1400px]:max-w-none">
-                {PAY_FOOTER_LOGOS.map((logo) => (
-                  <span
-                    key={logo.alt}
-                    className="h-6 px-1.5 sm:h-7 rounded-md bg-white/95 flex items-center"
-                    title={logo.alt}
-                  >
-                    <img src={logo.src} alt={logo.alt} className="h-3 sm:h-3.5 w-auto" />
-                  </span>
-                ))}
-              </div>
-
-              <a
-                href={`https://wa.me/${ADMIN_WHATSAPP}`}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white/10 border border-white/15 hover:bg-[#E59A59] hover:border-[#E59A59] transition group sm:gap-3 sm:px-4 sm:py-2.5"
-              >
-                <span className="w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-lg bg-[#E59A59]/20 group-hover:bg-white/20 grid place-items-center">
-                  <Phone size={16} className="sm:hidden text-[#E59A59] group-hover:text-white" />
-                  <Phone size={17} className="hidden sm:block text-[#E59A59] group-hover:text-white" />
-                </span>
-                <span className="text-left">
-                  <span className="block text-[10px] font-bold uppercase tracking-widest text-white/60">
-                    {t('home.footerContact')}
-                  </span>
-                  <span className="block text-xs sm:text-sm font-bold text-white whitespace-nowrap">{ADMIN_PHONE_LABEL}</span>
-                </span>
-              </a>
+              <p className="hidden font-data text-[9px] uppercase tracking-[0.18em] text-cream-100/55 sm:block">
+                {t("home.heroScroll")}
+              </p>
             </div>
           </div>
 
-          {/* Baris bawah */}
-          <div className="mt-7 sm:mt-10 pt-5 sm:pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-center">
-            <p className="text-[#FFD5AF]/70 text-xs font-medium">
-              {t('home.footerText', { year: new Date().getFullYear() })}
-            </p>
-            <p className="text-[#FFD5AF]/50 text-[11px] font-medium">
-              LoVerse — Undangan Digital Elegan & Modern
-            </p>
+          <div className="relative min-h-[430px] border-t border-cream-100/10 sm:min-h-[560px] lg:min-h-0 lg:border-l lg:border-t-0">
+            <div className="absolute left-5 top-6 z-10 flex items-center gap-2 font-data text-[8px] uppercase tracking-[0.2em] text-cream-100/60">
+              <span className="h-1 w-1 rounded-full bg-peach-300" />
+              Live / 2026
+            </div>
+            <div className="absolute right-5 top-1/2 z-10 hidden -translate-y-1/2 rotate-90 font-data text-[8px] uppercase tracking-[0.28em] text-cream-100/55 sm:block">
+              {t("home.heroStageLabel")}
+            </div>
+            <HeroVisual />
+            <div className="absolute inset-x-5 bottom-6 z-10 flex items-end justify-between gap-4">
+              <span className="eyebrow text-cream-100/55">01 — {t("home.heroStageLabel")}</span>
+              <span className="font-data text-[8px] text-cream-100/55">06°12′S / 106°49′E</span>
+            </div>
           </div>
         </div>
-      </footer>
 
+        <div className="marquee relative z-[2] overflow-hidden border-t border-cream-100/12 bg-ink-900/60 py-4">
+          <div className="marquee-track flex w-max items-center" aria-hidden="true">
+            {[...tickerItems, ...tickerItems].map((item, index) => (
+              <span key={`${item}-${index}`} className="flex items-center gap-6 px-6">
+                <span className="whitespace-nowrap font-data text-[9px] uppercase tracking-[0.22em] text-cream-100/60">
+                  {item}
+                </span>
+                <Plus className="h-3 w-3 text-peach-300/50" />
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MANIFESTO + FEATURES */}
+      <section id="fitur" className="scroll-mt-20 border-b border-ink-900/12">
+        <div className="mx-auto w-full max-w-[1480px] px-4 py-20 sm:px-7 sm:py-28 lg:px-10">
+          <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
+              <span className="eyebrow text-ember-600">{t("home.manifestoEyebrow")}</span>
+              <h2 className="display-lg mt-5 max-w-[11ch] text-[clamp(2.6rem,5.4vw,4.8rem)] text-ink-950">
+                {t("home.manifestoTitle")}
+              </h2>
+              <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-ink-500">{t("home.manifestoBody")}</p>
+              <Link
+                to="/portfolio"
+                className="mt-8 inline-flex items-center gap-2 border-b border-ink-900/25 pb-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink-800 transition-colors hover:border-ember-600 hover:text-ember-600"
+              >
+                {t("home.heroPortfolioBtn")}
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+
+            <div className="lg:col-span-7">
+              <div className="border-t border-ink-900/15">
+                {features.map((feature, index) => (
+                  <Reveal key={feature.title} delay={index * 60} as="article">
+                    <div className="group grid grid-cols-[auto_1fr_auto] items-start gap-4 border-b border-ink-900/15 py-7 transition-colors duration-300 hover:bg-cream-50 sm:gap-7 sm:py-9">
+                      <span className="pt-1 font-data text-[9px] tracking-[0.15em] text-ink-400">
+                        0{index + 1}
+                      </span>
+                      <div>
+                        <div className="flex items-center gap-2.5">
+                          <feature.icon className="h-4 w-4 text-ember-600" strokeWidth={1.5} />
+                          <h3 className="font-display text-[clamp(1.5rem,2.6vw,2rem)] leading-tight tracking-[-0.025em] text-ink-900">
+                            {feature.title}
+                          </h3>
+                        </div>
+                        <p className="mt-3 max-w-[52ch] text-[13px] leading-relaxed text-ink-500 sm:pl-7">
+                          {feature.desc}
+                        </p>
+                      </div>
+                      <ArrowUpRight className="mt-1 hidden h-5 w-5 text-ink-300 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ember-600 sm:block" />
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section id="statistik" className="scroll-mt-20 border-b border-ink-900/12 bg-peach-300">
+        <div className="mx-auto w-full max-w-[1480px] px-4 py-14 sm:px-7 sm:py-20 lg:px-10">
+          <div className="flex items-center justify-between gap-4 border-b border-ink-900/18 pb-6">
+            <span className="eyebrow text-ink-800">{t("home.statsEyebrow")}</span>
+            <span className="font-data text-[9px] uppercase tracking-[0.18em] text-ink-800/75">LoVerse / ID</span>
+          </div>
+          <div className="grid grid-cols-2 divide-ink-900/15 pt-8 sm:grid-cols-3 sm:divide-x">
+            <div className="pb-8 sm:pb-0">
+              <StatNumber value={displaySold} suffix="+" />
+              <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-700">
+                {t("home.stats.sold")}
+              </p>
+            </div>
+            <div className="border-l border-ink-900/15 pb-8 pl-5 sm:border-l-0 sm:pb-0 sm:pl-8">
+              <StatNumber value={activeCount} />
+              <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-700">
+                {t("home.stats.templates")}
+              </p>
+            </div>
+            <div className="col-span-2 mt-4 border-t border-ink-900/15 pt-6 sm:col-span-1 sm:mt-0 sm:border-t-0 sm:pl-8 sm:pt-0">
+              <div className="flex items-end gap-1.5">
+                <span className="font-display text-[clamp(3.8rem,9vw,7.6rem)] font-light leading-[0.8] tracking-[-0.055em]">
+                  4.9
+                </span>
+                <Star className="mb-2 h-5 w-5 fill-ink-900 text-ink-900" />
+              </div>
+              <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.1em] text-ink-700">
+                {t("home.stats.rating")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CATALOG */}
+      <section id="katalog" className="scroll-mt-20 border-b border-ink-900/12">
+        <div className="mx-auto w-full max-w-[1480px] px-4 py-20 sm:px-7 sm:py-28 lg:px-10">
+          <div className="flex flex-col gap-6 border-b border-ink-900/15 pb-8 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <span className="eyebrow text-ember-600">{t("home.catalogEyebrow")}</span>
+              <h2 className="display-lg mt-4 text-[clamp(2.8rem,6.4vw,5.8rem)] text-ink-950">
+                {t("home.catalogTitle")}
+              </h2>
+            </div>
+            <div className="max-w-sm lg:text-right">
+              <p className="text-[14px] leading-relaxed text-ink-500">{t("home.catalogDesc")}</p>
+              <p className="mt-2 font-data text-[9px] uppercase tracking-[0.15em] text-ink-400">
+                {t("home.catalogNote")}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 border-b border-ink-900/12 py-5 lg:flex-row lg:items-center lg:justify-between">
+            <label className="group flex min-h-11 flex-1 items-center gap-3 border-b border-ink-900/20 pb-1 transition-colors focus-within:border-ink-900 lg:max-w-sm">
+              <Search className="h-4 w-4 text-ink-400" />
+              <span className="sr-only">{t("home.catalogSearchPlaceholder")}</span>
+              <input
+                type="search"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder={t("home.catalogSearchPlaceholder")}
+                className="w-full border-0 bg-transparent py-2 text-[13px] text-ink-900 outline-none placeholder:text-ink-400"
+              />
+            </label>
+
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" role="group" aria-label="Filter kategori">
+              {(
+                [
+                  ["All", t("home.catalogCategoryAll")],
+                  ["Basic", t("home.catalogCategoryBasic")],
+                  ["RSVP", t("home.catalogCategoryRsvp")],
+                ] as Array<[CategoryFilter, string]>
+              ).map(([value, label]) => (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => setCategoryFilter(value)}
+                  aria-pressed={categoryFilter === value}
+                  className={cn(
+                    "shrink-0 border px-3.5 py-2 font-data text-[9px] uppercase tracking-[0.12em] transition-colors",
+                    categoryFilter === value
+                      ? "border-ink-950 bg-ink-950 text-cream-50"
+                      : "border-transparent text-ink-500 hover:border-ink-900/20 hover:text-ink-900",
+                  )}
+                >
+                  {label}
+                </button>
+              ))}
+              <span className="ml-2 shrink-0 font-data text-[9px] text-ink-400">
+                {t("home.catalogCount", { count: filteredTemplates.length })}
+              </span>
+            </div>
+          </div>
+
+          {loading ? (
+            <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4 lg:gap-x-6">
+              <TemplateCardSkeleton count={8} />
+            </div>
+          ) : filteredTemplates.length > 0 ? (
+            <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4 lg:gap-x-6">
+              {filteredTemplates.map((template) => (
+                <TemplateCatalogCard
+                  key={template.slug}
+                  template={template}
+                  priceLabel={formatPriceK(template.price ?? FALLBACK_MIN_PRICE)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8 border border-dashed border-ink-900/20 px-6 py-16 text-center">
+              <p className="font-display text-2xl tracking-[-0.02em] text-ink-900">{t("home.catalogEmpty")}</p>
+              <p className="mx-auto mt-2 max-w-sm text-sm text-ink-500">{t("home.catalogEmptySub")}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchTerm("");
+                  setCategoryFilter("All");
+                }}
+                className="mt-5 font-data text-[10px] uppercase tracking-[0.14em] text-ember-600 underline-offset-4 hover:underline"
+              >
+                {t("common.resetFilter")}
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* PROCESS */}
+      <section id="alur" className="scroll-mt-20 bg-ink-950 text-cream-100">
+        <div className="mx-auto grid w-full max-w-[1480px] gap-12 px-4 py-20 sm:px-7 sm:py-28 lg:grid-cols-12 lg:gap-16 lg:px-10">
+          <div className="lg:col-span-5">
+            <span className="eyebrow text-peach-300/80">{t("home.stepsEyebrow")}</span>
+            <h2 className="display-lg mt-5 max-w-[11ch] text-[clamp(2.7rem,5.4vw,5rem)] text-cream-50">
+              {t("home.stepsTitle")}
+            </h2>
+            <p className="mt-6 max-w-sm text-[14px] leading-relaxed text-cream-100/55">{t("home.stepsDesc")}</p>
+            <div className="mt-10 inline-flex items-end gap-3 border border-cream-100/15 px-4 py-3">
+              <span className="font-display text-4xl leading-none text-peach-300">3</span>
+              <span className="max-w-[14ch] font-data text-[8px] uppercase leading-relaxed tracking-[0.12em] text-cream-100/60">
+                langkah, tanpa drama
+              </span>
+            </div>
+          </div>
+
+          <div className="lg:col-span-7">
+            <div className="border-t border-cream-100/15">
+              {steps.map((step, index) => (
+                <Reveal key={step.num} delay={index * 80}>
+                  <article className="group grid grid-cols-[auto_1fr] gap-5 border-b border-cream-100/15 py-7 sm:gap-8 sm:py-9">
+                    <div className="flex flex-col items-start gap-4">
+                      <span className="font-display text-[clamp(2.6rem,5vw,4rem)] font-light leading-none text-peach-300/90">
+                        {step.num}
+                      </span>
+                      <step.icon className="h-4 w-4 text-cream-100/30 transition-colors group-hover:text-peach-300" />
+                    </div>
+                    <div className="pt-1">
+                      <h3 className="font-display text-[clamp(1.5rem,2.6vw,2rem)] leading-tight tracking-[-0.025em] text-cream-50">
+                        {step.title}
+                      </h3>
+                      <p className="mt-3 max-w-[46ch] text-[13px] leading-relaxed text-cream-100/50">{step.desc}</p>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+            <Link
+              to="/tutorial"
+              className="mt-8 inline-flex items-center gap-2 font-data text-[9px] uppercase tracking-[0.16em] text-peach-300 transition-colors hover:text-cream-50"
+            >
+              {t("home.faqTutorialBtn")}
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section id="testimoni" className="scroll-mt-20 border-b border-ink-900/12 bg-cream-50">
+        <div className="mx-auto w-full max-w-[1480px] px-4 py-20 sm:px-7 sm:py-28 lg:px-10">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <span className="eyebrow text-ember-600">{t("home.testimonialsEyebrow")}</span>
+              <h2 className="display-lg mt-4 max-w-[15ch] text-[clamp(2.6rem,5.4vw,4.8rem)] text-ink-950">
+                {t("home.testimonialsTitle")}
+              </h2>
+            </div>
+            <div className="flex items-center gap-3">
+              <Star className="h-4 w-4 fill-ember-500 text-ember-500" />
+              <span className="font-display text-2xl leading-none text-ink-900">4.9</span>
+              <span className="max-w-[12ch] text-[10px] leading-tight text-ink-400">
+                {t("home.heroRating", { count: displaySold })}
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-12 columns-1 gap-6 sm:columns-2 lg:columns-3">
+            {TESTIMONIALS.map((testimonial, index) => (
+              <Reveal key={testimonial.name} delay={index * 45} className="mb-6 break-inside-avoid">
+                <figure className="border-t border-ink-900/20 pt-6">
+                  <Quote className="h-5 w-5 text-ember-500/60" />
+                  <blockquote className="mt-4 font-display text-[clamp(1.25rem,2vw,1.65rem)] leading-[1.32] tracking-[-0.015em] text-ink-800">
+                    “{testimonial.message}”
+                  </blockquote>
+                  <figcaption className="mt-6 flex items-center justify-between gap-4 border-t border-ink-900/10 pt-4">
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-peach-300 font-display text-xs font-semibold text-ink-900">
+                        {testimonial.name.charAt(0)}
+                      </span>
+                      <div>
+                        <p className="text-[11px] font-semibold text-ink-900">{testimonial.name}</p>
+                        <p className="font-data text-[8px] uppercase tracking-[0.12em] text-ink-400">
+                          {t("home.testimonialsBought", { template: testimonial.template })}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="font-data text-[8px] text-ink-300">0{index + 1}</span>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="scroll-mt-20 border-b border-ink-900/12">
+        <div className="mx-auto grid w-full max-w-[1480px] gap-12 px-4 py-20 sm:px-7 sm:py-28 lg:grid-cols-12 lg:gap-16 lg:px-10">
+          <div className="lg:col-span-4 lg:sticky lg:top-28 lg:self-start">
+            <span className="eyebrow text-ember-600">{t("home.faqEyebrow")}</span>
+            <h2 className="display-lg mt-5 max-w-[10ch] text-[clamp(2.6rem,5vw,4.4rem)] text-ink-950">
+              {t("home.faqTitle")}
+            </h2>
+            <p className="mt-5 max-w-sm text-[14px] leading-relaxed text-ink-500">{t("home.faqDesc")}</p>
+            <a
+              href={`https://wa.me/${ADMIN_WHATSAPP}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-7 inline-flex items-center gap-2 border border-ink-900/20 px-4 py-3 text-[11px] font-semibold text-ink-800 transition-colors hover:border-ink-900 hover:bg-ink-950 hover:text-cream-50"
+            >
+              {t("contact.whatsappMainBtn", { name: "Admin" })}
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+          </div>
+
+          <div className="lg:col-span-8">
+            <div className="border-t border-ink-900/15">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div key={faq.q} className="border-b border-ink-900/15">
+                    <h3>
+                      <button
+                        type="button"
+                        onClick={() => setOpenFaq(isOpen ? null : index)}
+                        aria-expanded={isOpen}
+                        aria-controls={`faq-panel-${index}`}
+                        className="flex w-full items-start justify-between gap-6 py-5 text-left sm:py-6"
+                      >
+                        <span className="flex items-start gap-4">
+                          <span className="pt-1.5 font-data text-[9px] text-ink-400">0{index + 1}</span>
+                          <span className="font-display text-[clamp(1.2rem,2.2vw,1.55rem)] leading-snug tracking-[-0.02em] text-ink-900">
+                            {faq.q}
+                          </span>
+                        </span>
+                        <span
+                          className={cn(
+                            "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center border border-ink-900/20 transition-transform duration-300",
+                            isOpen && "rotate-45 bg-ink-950 text-cream-50",
+                          )}
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                        </span>
+                      </button>
+                    </h3>
+                    <div
+                      id={`faq-panel-${index}`}
+                      hidden={!isOpen}
+                      className="animate-fade-in pb-6 pl-8 pr-12 text-[13px] leading-relaxed text-ink-500 sm:pl-9"
+                    >
+                      {faq.a}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section id="mulai" className="scroll-mt-20 overflow-hidden bg-wine-900 text-cream-100">
+        <div className="grain relative mx-auto flex w-full max-w-[1480px] flex-col items-start justify-between gap-10 px-4 py-20 sm:px-7 sm:py-28 lg:flex-row lg:items-end lg:px-10">
+          <div className="relative z-[2]">
+            <div className="flex items-center gap-3">
+              <span className="h-px w-8 bg-peach-300/60" />
+              <span className="eyebrow text-peach-300/80">{t("home.ctaEyebrow")}</span>
+            </div>
+            <h2 className="display-xl mt-6 max-w-[13ch] text-[clamp(3rem,7vw,6.8rem)] text-cream-50">
+              {t("home.ctaTitleNew")}
+            </h2>
+            <p className="mt-6 max-w-md text-[14px] leading-relaxed text-cream-100/58">
+              {t("home.ctaBannerDesc")}
+            </p>
+            <div className="mt-8 flex flex-col gap-2.5 xs:flex-row">
+              <Link to="/order" className={buttonClass("peach", "lg", "group h-13")}>
+                {t("home.ctaBannerBtn")}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+              <Link to="/contact" className={buttonClass("outlineLight", "lg", "h-13")}>
+                {t("home.footerContact")}
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative z-[2] hidden w-[260px] shrink-0 rotate-[-4deg] border border-cream-100/20 bg-cream-50 p-5 text-ink-900 shadow-deep lg:block">
+            <div className="flex items-center justify-between border-b border-ink-900/15 pb-3">
+              <span className="font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">Save the date</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-ember-500" />
+            </div>
+            <p className="mt-5 font-display text-3xl leading-none tracking-[-0.04em]">Dimas &amp; Sarah</p>
+            <p className="mt-2 font-display text-sm italic text-ink-500">24 . 10 . 2026</p>
+            <div className="mt-6 flex items-end justify-between border-t border-ink-900/15 pt-3">
+              <span className="font-data text-[8px] uppercase tracking-[0.15em] text-ink-400">loverse.id</span>
+              <span className="font-data text-[8px] text-ember-600">No. 0142</span>
+            </div>
+          </div>
+
+          <div className="pointer-events-none absolute -right-20 top-0 h-[420px] w-[420px] rounded-full border border-cream-100/10" aria-hidden="true" />
+          <div className="pointer-events-none absolute -right-6 top-24 h-[220px] w-[220px] rounded-full border border-peach-300/15" aria-hidden="true" />
+        </div>
+      </section>
     </div>
   );
 }

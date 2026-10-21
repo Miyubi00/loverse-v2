@@ -23,8 +23,8 @@ export function Skeleton({ className, variant = 'pulse', ...props }: SkeletonPro
       className={cn(
         'rounded-[inherit]',
         variant === 'wave'
-          ? 'bg-gradient-to-r from-[#E5E0DA]/70 via-[#D4C5B5]/70 to-[#E5E0DA]/70 bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]'
-          : 'bg-[#E5E0DA]/70 animate-pulse',
+          ? 'bg-gradient-to-r from-ink-900/[0.05] via-ink-900/[0.13] to-ink-900/[0.05] bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]'
+          : 'bg-ink-900/[0.08] animate-pulse',
         className,
       )}
       {...props}

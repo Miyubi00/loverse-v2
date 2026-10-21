@@ -6,20 +6,9 @@
 // Keterikatan : components/customer/*, hooks/useDashboardData, useUrlTab, lib/customerClient
 // ============================================================
 
-// Halaman Dashboard mempelai: shell layout (sidebar + area konten)
-// dan orkestrasi antar tab. Logika data ada di hooks, UI per tab
-// ada di src/components/customer/*.
-
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Eye,
-  LogOut,
-  Menu,
-  MessageSquare,
-  Save,
-  Share2,
-} from "lucide-react";
+import { ArrowUpRight, Eye, LogOut, Menu, MessageSquare, Save, Share2 } from "lucide-react";
 import { BASIC_TEMPLATES_SLUGS } from "../lib/constants";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { DashboardSkeleton } from "../components/ui/SkeletonLoaders";
@@ -28,19 +17,18 @@ import { useFileUpload } from "../hooks/useFileUpload";
 import { useShareLink } from "../hooks/useShareLink";
 import { useUrlTab } from "../hooks/useUrlTab";
 import CustomerNavbar from "../components/customer/CustomerNavbar";
-import CustomerSidebar, {
-  type MenuItem,
-} from "../components/customer/CustomerSidebar";
+import CustomerSidebar, { type MenuItem } from "../components/customer/CustomerSidebar";
 import ShareTab from "../components/customer/ShareTab";
 import EditTab from "../components/customer/EditTab";
 import RsvpTab from "../components/customer/RsvpTab";
 import ConfirmDialog from "../components/ConfirmDialog";
 import { useTranslation } from "../i18n";
+import { Wordmark } from "../components/ui/Brand";
 
 export default function Dashboard() {
   const { orderId } = useParams();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const {
     order,
@@ -63,7 +51,7 @@ export default function Dashboard() {
   const shareLink = useShareLink(order);
 
   // Tab aktif disinkronkan dengan URL (?tab=...) agar refresh tidak reset.
-  // Template Basic tidak punya tab RSVP → param itu difallback ke share.
+  // Template Basic tidak punya tab RSVP — param itu difallback ke share.
   const isBasic = BASIC_TEMPLATES_SLUGS.includes(order?.template_slug ?? "");
   const [urlTab, setUrlTab] = useUrlTab(["share", "edit", "rsvp"], "share");
   const activeTab = isBasic && urlTab === "rsvp" ? "share" : urlTab;
@@ -83,7 +71,7 @@ export default function Dashboard() {
       }
     }, 5 * 60 * 1000);
     return () => clearInterval(id);
-    }, [navigate]);
+  }, [navigate]);
 
   if (dataLoading) {
     return <DashboardSkeleton />;
@@ -91,15 +79,7 @@ export default function Dashboard() {
 
   if (!order) {
     return (
-      <div
-        className="
-          flex
-          h-dvh w-full
-          text-red-500 font-sans
-          bg-[#F1E8DC]
-          items-center justify-center
-        "
-      >
+      <div className="flex h-dvh w-full items-center justify-center bg-cream-100 px-6 text-center font-sans text-ink-600">
         Data Order Tidak Ditemukan.
       </div>
     );
@@ -120,6 +100,18 @@ export default function Dashboard() {
       : []),
   ];
 
+  const activeMenu = menuItems.find((item) => item.id === activeTab) ?? menuItems[0];
+  const activeIndex = menuItems.findIndex((item) => item.id === activeMenu.id) + 1;
+  const descriptions: Record<string, string> = {
+    share: t("customer.share.desc"),
+    edit: t("customer.edit.desc"),
+    rsvp: t("customer.rsvp.desc"),
+  };
+  const dateLabel = new Date(order.wedding_date).toLocaleDateString(
+    language === "en" ? "en-US" : "id-ID",
+    { day: "2-digit", month: "short", year: "numeric" },
+  );
+
   const handleMenuClick = (id: string) => {
     setActiveTab(id);
     setSidebarOpen(false);
@@ -139,37 +131,16 @@ export default function Dashboard() {
   };
 
   return (
-    // Fullscreen app shell (tanpa Navbar publik): h-dvh mengikuti tinggi
-    // viewport dinamis (aman dari URL bar mobile) dan overflow-hidden membuat
-    // dokumen tidak pernah scroll — hanya <main> yang scroll.
-    <div
-      className="
-        flex flex-col overflow-hidden
-        h-dvh w-full
-        font-sans
-        bg-[#F1E8DC]
-        relative
-      "
-    >
+    <div className="flex h-dvh w-full flex-col overflow-hidden bg-cream-100 font-sans text-ink-900">
       <CustomerNavbar order={order} />
 
-      <div
-        className="
-          flex flex-1 overflow-hidden
-          min-h-0 w-full
-          relative
-        "
-      >
-        {/* Mobile Backdrop */}
+      <div className="relative flex min-h-0 flex-1 overflow-hidden">
         {sidebarOpen && (
-          <div
+          <button
+            type="button"
+            aria-label={t("nav.close")}
             onClick={() => setSidebarOpen(false)}
-            className="
-              z-40
-              bg-black/40
-              fixed inset-0
-              lg:hidden
-            "
+            className="fixed inset-0 z-40 bg-ink-950/55 backdrop-blur-[2px] lg:hidden"
           />
         )}
 
@@ -188,122 +159,122 @@ export default function Dashboard() {
           isOpen={showLogoutDialog}
           title={t("nav.logoutConfirmTitle")}
           message={t("nav.logoutConfirm")}
-          isDanger={true}
+          isDanger
           onCancel={() => setShowLogoutDialog(false)}
           onConfirm={performLogout}
         />
 
-        <div
-          className="
-            flex flex-1 flex-col overflow-hidden
-            h-full min-h-0 min-w-0
-            relative
-          "
-        >
-          {/* Mobile Header */}
-          <header
-            className="
-              flex
-              px-4 py-3
-              bg-[#712E1E]
-              border-b border-black/20
-              shrink-0 items-center gap-2
-              lg:hidden
-            "
-          >
+        <div className="relative flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+          <header className="flex shrink-0 items-center gap-2 border-b border-cream-100/10 bg-ink-950 px-4 py-3 lg:hidden">
             <button
+              type="button"
               onClick={() => setSidebarOpen(true)}
-              className="
-                p-2
-                rounded-xl
-                hover:bg-white/10
-              "
+              aria-label={t("nav.menu")}
+              className="p-2 text-cream-100/80 transition-colors hover:text-cream-50"
             >
-              <Menu
-                size={20}
-                className="
-                  text-[#FFD5AF]
-                "
-              />
+              <Menu size={20} />
             </button>
-            <div
-              className="
-                flex-1
-              "
-            >
-              <h2
-                className="
-                  text-sm font-bold text-white
-                "
-              >
-                {menuItems.find((m) => m.id === activeTab)?.label}
-              </h2>
+            <Wordmark imageClassName="h-6" />
+            <div className="min-w-0 flex-1 px-1">
+              <p className="truncate font-data text-[9px] uppercase tracking-[0.16em] text-cream-100/50">
+                {activeMenu.label}
+              </p>
             </div>
             <a
               href={`/wedding/${order.slug}`}
               target="_blank"
               rel="noreferrer"
-              className="
-                p-2
-                rounded-xl
-                hover:bg-white/10
-              "
+              aria-label={t("customer.viewInvitation")}
+              className="p-2 text-cream-100/70 transition-colors hover:text-cream-50"
             >
-              <Eye
-                size={18}
-                className="
-                  text-[#FFD5AF]
-                "
-              />
+              <Eye size={18} />
             </a>
             <button
+              type="button"
               onClick={handleLogout}
-              className="
-                p-2
-                rounded-xl
-                hover:bg-white/10
-              "
+              aria-label={t("nav.logout")}
+              className="p-2 text-cream-100/50 transition-colors hover:text-cream-50"
             >
-              <LogOut
-                size={18}
-                className="
-                  text-red-300
-                "
-              />
+              <LogOut size={18} />
             </button>
           </header>
 
-          {/* Scrollable Main Body (satu-satunya area yang scroll) */}
-          <main
-            className="
-              flex-1 overflow-y-auto
-              p-4
-              md:p-6
-              lg:p-8
-            "
-          >
-            {activeTab === "share" && <ShareTab {...shareLink} />}
+          <main className="flex-1 overflow-y-auto">
+            <div className="mx-auto w-full max-w-[1180px] px-4 pb-16 pt-7 sm:px-7 lg:px-10 lg:pt-10">
+              <header className="border-b border-ink-900/12 pb-7 sm:pb-9">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="eyebrow text-ember-600">{t("customer.workspaceEyebrow")}</span>
+                    <span className="font-data text-[9px] text-ink-400" aria-hidden="true">
+                      /{String(activeIndex).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <a
+                    href={`/wedding/${order.slug}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hidden items-center gap-2 font-data text-[9px] uppercase tracking-[0.14em] text-ink-500 transition-colors hover:text-ember-600 sm:inline-flex"
+                  >
+                    {t("customer.activeInvitation")}
+                    <ArrowUpRight size={12} />
+                  </a>
+                </div>
 
-            {activeTab === "edit" && (
-              <EditTab
-                formData={formData}
-                setFormData={setFormData}
-                handleChange={handleChange}
-                handleSaveData={handleSaveData}
-                loading={loading}
-                uploading={uploading}
-                activeUploadField={activeUploadField}
-                handleFileUpload={handleFileUpload}
-                orderId={orderId}
-                converting={converting}
-                removing={removing}
-                onRemoveMusic={removeAudio}
-              />
-            )}
+                <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+                  <div>
+                    <h1 className="font-display text-[clamp(2.5rem,6vw,4.6rem)] leading-[0.94] tracking-[-0.055em] text-ink-950">
+                      {activeMenu.label}
+                    </h1>
+                    <p className="mt-3 max-w-xl text-[13px] leading-relaxed text-ink-500 sm:text-sm">
+                      {descriptions[activeMenu.id]}
+                    </p>
+                  </div>
 
-            {activeTab === "rsvp" && !isBasic && (
-              <RsvpTab orderId={orderId ?? ""} />
-            )}
+                  <dl className="flex flex-wrap items-end gap-x-7 gap-y-3 lg:justify-end">
+                    <div>
+                      <dt className="font-data text-[8px] uppercase tracking-[0.18em] text-ink-400">
+                        {t("customer.weddingDay")}
+                      </dt>
+                      <dd className="mt-1 font-display text-lg tracking-[-0.02em] text-ink-900">
+                        {dateLabel}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="font-data text-[8px] uppercase tracking-[0.18em] text-ink-400">
+                        {t("customer.viewInvitation")}
+                      </dt>
+                      <dd className="mt-1.5 inline-flex items-center gap-1.5 border border-success-600/25 bg-success-600/[0.06] px-2 py-1 font-data text-[8px] uppercase tracking-[0.14em] text-success-700">
+                        <span className="h-1 w-1 bg-success-600" aria-hidden="true" />
+                        {t("customer.activeInvitation")}
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+              </header>
+
+              <div key={activeTab} className="animate-msg-in pt-7 sm:pt-9">
+                {activeTab === "share" && <ShareTab {...shareLink} />}
+
+                {activeTab === "edit" && (
+                  <EditTab
+                    formData={formData}
+                    setFormData={setFormData}
+                    handleChange={handleChange}
+                    handleSaveData={handleSaveData}
+                    loading={loading}
+                    uploading={uploading}
+                    activeUploadField={activeUploadField}
+                    handleFileUpload={handleFileUpload}
+                    orderId={orderId}
+                    converting={converting}
+                    removing={removing}
+                    onRemoveMusic={removeAudio}
+                  />
+                )}
+
+                {activeTab === "rsvp" && !isBasic && <RsvpTab orderId={orderId ?? ""} />}
+              </div>
+            </div>
           </main>
         </div>
       </div>

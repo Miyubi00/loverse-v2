@@ -6,19 +6,17 @@
 // Keterikatan : hooks/useShareLink, components/shared/form/ui
 // ============================================================
 
-// Tab "Sebar Undangan": buat link personal per tamu (manual) atau
-// upload daftar tamu dari file CSV (.csv).
-
 import {
   type ChangeEvent,
   type Dispatch,
   type FormEvent,
   type SetStateAction,
-} from 'react';
-import { Copy, Download, FileSpreadsheet, Phone, Send } from 'lucide-react';
-import { useCopyToClipboard } from '../../hooks/useCopyToClipboard';
-import { CARD, INPUT } from '../shared/form/ui';
-import { useTranslation } from '../../i18n';
+} from "react";
+import { ArrowUpRight, Copy, Download, FileSpreadsheet, Phone, Send, Users } from "lucide-react";
+import { useCopyToClipboard } from "../../hooks/useCopyToClipboard";
+import Button from "../ui/Button";
+import { buttonClass } from "../ui/buttonStyles";
+import { useTranslation } from "../../i18n";
 
 interface ShareTabProps {
   shareMode: string;
@@ -34,6 +32,9 @@ interface ShareTabProps {
   copyLink: (name: string) => void;
   downloadExampleCsv: () => void;
 }
+
+const inputClass =
+  "h-12 w-full border border-ink-900/15 bg-cream-50 px-3.5 text-sm text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15";
 
 export default function ShareTab({
   shareMode,
@@ -52,196 +53,283 @@ export default function ShareTab({
   const { t } = useTranslation();
   const copyToClipboard = useCopyToClipboard();
 
+  const modes = [
+    { id: "manual", label: t("customer.share.tabManual"), index: "01" },
+    { id: "excel", label: t("customer.share.tabExcel"), index: "02" },
+  ] as const;
+
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-stone-800">{t('customer.share.title')}</h2>
-        <p className="text-stone-500 text-sm mt-1">
-          {t('customer.share.desc')}
-        </p>
-      </div>
-
-      {/* Toggle mode */}
-      <div className="flex gap-2 mb-6 bg-[#EBDFCE]/60 p-1 rounded-xl w-fit">
-        <button
-          onClick={() => setShareMode('manual')}
-          className={`px-5 py-2 rounded-xl text-sm font-bold transition ${
-            shareMode === 'manual'
-              ? 'bg-white text-[#B4693F] shadow-sm'
-              : 'text-stone-500 hover:text-stone-700'
-          }`}
-        >
-          {t('customer.share.tabManual')}
-        </button>
-        <button
-          onClick={() => setShareMode('excel')}
-          className={`px-5 py-2 rounded-xl text-sm font-bold transition ${
-            shareMode === 'excel'
-              ? 'bg-white text-[#B4693F] shadow-sm'
-              : 'text-stone-500 hover:text-stone-700'
-          }`}
-        >
-          {t('customer.share.tabExcel')}
-        </button>
-      </div>
-
-      {shareMode === 'manual' && (
-        <section className={CARD}>
-          <h3 className="font-bold text-base text-stone-800">
-            {t('customer.share.manualHeading')}
-          </h3>
-          <p className="text-stone-500 text-sm">
-            {t('customer.share.manualSub')}
-          </p>
-          <form onSubmit={handleGenerateManual} className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="text"
-              value={guestName}
-              onChange={(e) => setGuestName(e.target.value)}
-              placeholder={t('customer.share.guestNamePlaceholder')}
-              className={`sm:flex-1 ${INPUT}`}
-            />
+    <div className="space-y-7">
+      <div className="flex w-full flex-col gap-1 border border-ink-900/12 bg-cream-50 p-1.5 sm:w-fit sm:flex-row">
+        {modes.map((mode) => {
+          const active = shareMode === mode.id;
+          return (
             <button
-              type="submit"
-              className="shrink-0 bg-[#E59A59] hover:bg-[#d48b4b] text-white px-6 py-3 rounded-xl font-bold text-sm transition shadow-md"
+              key={mode.id}
+              type="button"
+              onClick={() => setShareMode(mode.id)}
+              aria-pressed={active}
+              className={`flex min-h-11 items-center justify-start gap-4 px-4 text-left transition-colors ${
+                active
+                  ? "bg-ink-950 text-cream-50"
+                  : "text-ink-500 hover:bg-cream-100 hover:text-ink-900"
+              }`}
             >
-              {t('customer.share.btnCreateLink')}
+              <span className={`font-data text-[8px] ${active ? "text-peach-300" : "text-ink-400"}`}>
+                {mode.index}
+              </span>
+              <span className="text-[12px] font-semibold tracking-[-0.01em]">{mode.label}</span>
             </button>
-          </form>
+          );
+        })}
+      </div>
 
-          {generatedLink && (
-            <div className="rounded-xl border border-[#F0E2CE] bg-[#FBF6EE] p-5">
-              <p className="text-xs font-bold text-[#B4693F] uppercase tracking-widest mb-3">
-                {t('customer.share.successTitle')}
-              </p>
-              <div className="flex gap-2 mb-4">
-                <button
-                  onClick={() => handleShareWa(guestName)}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md transition"
-                >
-                  <Phone size={16} /> {t('customer.share.btnSendWa')}
-                </button>
-                <button
-                  onClick={() => void copyToClipboard(generatedLink, 'Link')}
-                  title={t('customer.share.btnCopy')}
-                  className="bg-white border border-stone-200 text-stone-600 px-4 rounded-xl transition hover:bg-[#FAF6EE]"
-                >
-                  <Copy size={16} />
-                </button>
+      {shareMode === "manual" && (
+        <div className="grid gap-5 lg:grid-cols-[1.1fr_.9fr]">
+          <section className="paper-panel p-5 sm:p-7">
+            <div className="flex items-start justify-between gap-4 border-b border-ink-900/12 pb-5">
+              <div className="flex max-w-md gap-4">
+                <span className="mt-1 font-display text-[2.6rem] leading-none tracking-[-0.06em] text-ink-400/70">
+                  01
+                </span>
+                <div>
+                  <h2 className="font-display text-[clamp(1.5rem,3vw,2.1rem)] leading-[1.02] tracking-[-0.04em] text-ink-950">
+                    {t("customer.share.manualHeading")}
+                  </h2>
+                  <p className="mt-2 text-[13px] leading-relaxed text-ink-500">
+                    {t("customer.share.manualSub")}
+                  </p>
+                </div>
               </div>
-              <div className="p-3 bg-white rounded-xl border border-[#EBDFCE] text-left">
-                <p className="text-[10px] text-stone-400 mb-1">{t('customer.share.previewLabel')}</p>
-                <p className="text-xs text-stone-600 break-all">{generatedLink}</p>
-              </div>
+              <Send className="mt-1 h-4 w-4 shrink-0 text-ember-600" strokeWidth={1.5} />
             </div>
-          )}
-        </section>
+
+            <form onSubmit={handleGenerateManual} className="mt-5 space-y-4">
+              <div>
+                <label
+                  htmlFor="share-guest-name"
+                  className="font-data text-[8px] uppercase tracking-[0.18em] text-ink-400"
+                >
+                  {t("customer.share.thGuestName")}
+                </label>
+                <input
+                  id="share-guest-name"
+                  type="text"
+                  value={guestName}
+                  onChange={(e) => setGuestName(e.target.value)}
+                  placeholder={t("customer.share.guestNamePlaceholder")}
+                  className={`${inputClass} mt-2`}
+                />
+              </div>
+              <Button type="submit" size="lg" className="w-full sm:w-auto" iconRight={<ArrowUpRight size={14} />}>
+                {t("customer.share.btnCreateLink")}
+              </Button>
+            </form>
+          </section>
+
+          <section
+            className={`relative flex min-h-[320px] flex-col overflow-hidden p-5 sm:p-7 ${
+              generatedLink ? "grain bg-ink-950 text-cream-100" : "paper-panel"
+            }`}
+          >
+            {generatedLink ? (
+              <div className="relative z-[2] flex h-full flex-col">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="eyebrow text-peach-300">{t("customer.share.successTitle")}</p>
+                    <p className="mt-3 font-display text-2xl tracking-[-0.03em] text-cream-50">
+                      {guestName || "—"}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => void copyToClipboard(generatedLink, "Link")}
+                    aria-label={t("customer.share.btnCopy")}
+                    title={t("customer.share.btnCopy")}
+                    className={buttonClass("outlineLight", "sm", "shrink-0 px-3")}
+                  >
+                    <Copy size={14} />
+                  </button>
+                </div>
+
+                <div className="mt-5 border border-cream-100/15 bg-cream-50/[0.04] p-3">
+                  <p className="font-data text-[8px] uppercase tracking-[0.16em] text-cream-100/45">
+                    {t("customer.share.previewLabel")}
+                  </p>
+                  <p className="mt-1.5 break-all font-data text-[10px] leading-relaxed text-cream-100/75">
+                    {generatedLink}
+                  </p>
+                </div>
+
+                <div className="mt-auto grid gap-2 pt-6 sm:grid-cols-[1fr_auto]">
+                  <Button
+                    type="button"
+                    variant="peach"
+                    size="lg"
+                    onClick={() => handleShareWa(guestName)}
+                    icon={<Phone size={15} />}
+                  >
+                    {t("customer.share.btnSendWa")}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outlineLight"
+                    size="lg"
+                    onClick={() => void copyToClipboard(generatedLink, "Link")}
+                    icon={<Copy size={15} />}
+                  >
+                    {t("customer.share.btnCopy")}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex h-full flex-col justify-between">
+                <div className="flex items-start justify-between">
+                  <p className="eyebrow text-ink-400">{t("customer.share.previewLabel")}</p>
+                  <ArrowUpRight className="h-4 w-4 text-ink-400" strokeWidth={1.5} />
+                </div>
+                <div className="py-10 text-center">
+                  <p className="font-display text-[clamp(3rem,8vw,5rem)] leading-none tracking-[-0.07em] text-ink-400/60">
+                    Aa
+                  </p>
+                  <p className="mx-auto mt-4 max-w-[26ch] text-[12px] leading-relaxed text-ink-400">
+                    {t("customer.share.manualSub")}
+                  </p>
+                </div>
+                <div className="flex items-center justify-between border-t border-ink-900/10 pt-3 font-data text-[8px] uppercase tracking-[0.14em] text-ink-400">
+                  <span>LoVerse</span>
+                  <span>Personal link</span>
+                </div>
+              </div>
+            )}
+          </section>
+        </div>
       )}
 
-      {shareMode === 'excel' && (
-        <div className="space-y-6">
-          <section className={CARD}>
-            <label className="flex cursor-pointer flex-col items-center gap-1 rounded-xl border-2 border-dashed border-stone-300 bg-[#FAF6EE] p-6 text-center transition hover:border-[#E59A59] hover:bg-[#FBF6EE]">
-              <FileSpreadsheet className="h-10 w-10 text-[#B4693F]" />
-              <span className="mt-2 font-bold text-stone-800">{t('customer.share.excelHeading')}</span>
-              <span className="text-xs text-stone-500">
-                {t('customer.share.excelSub')}
+      {shareMode === "excel" && (
+        <div className="space-y-5">
+          <section className="grid gap-5 lg:grid-cols-[1.1fr_.9fr]">
+            <label className="group flex cursor-pointer flex-col justify-between border border-dashed border-ink-900/25 bg-cream-50 p-6 text-center transition-colors hover:border-ember-500 hover:bg-peach-100/40 sm:p-10">
+              <span className="flex flex-col items-center gap-3">
+                <span className="flex h-14 w-14 items-center justify-center border border-ink-900/12 bg-cream-100 text-ember-600 transition-colors group-hover:border-ember-500/40 group-hover:bg-peach-200">
+                  <FileSpreadsheet className="h-6 w-6" strokeWidth={1.5} />
+                </span>
+                <span className="mt-2 font-display text-[1.6rem] tracking-[-0.04em] text-ink-950">
+                  {t("customer.share.excelHeading")}
+                </span>
+                <span className="max-w-sm text-[12px] leading-relaxed text-ink-500">
+                  {t("customer.share.excelSub")}
+                </span>
               </span>
               <input
                 type="file"
                 accept=".csv,text/csv"
                 onChange={handleFileUploadExcel}
-                className="mt-3 block w-full max-w-xs mx-auto text-sm text-stone-500 file:mr-4 file:cursor-pointer file:rounded-xl file:border-0 file:bg-[#E59A59] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-[#d48b4b]"
+                className="mx-auto mt-6 block w-full max-w-xs cursor-pointer text-[11px] text-ink-500 file:mr-3 file:cursor-pointer file:border-0 file:bg-ink-950 file:px-3.5 file:py-2.5 file:text-[10px] file:font-semibold file:uppercase file:tracking-[0.12em] file:text-cream-50 hover:file:bg-ember-600"
               />
             </label>
-          </section>
 
-          {/* Contoh format + unduh template CSV */}
-          <section className={CARD}>
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h3 className="font-bold text-base text-stone-800">{t('customer.share.csvExampleTitle')}</h3>
-                <p className="text-stone-500 text-sm mt-0.5">
-                  {t('customer.share.csvExampleSub')}
-                </p>
+            <div className="paper-panel flex flex-col p-5 sm:p-7">
+              <div className="flex items-start justify-between gap-4 border-b border-ink-900/12 pb-4">
+                <div>
+                  <p className="eyebrow text-ink-400">{t("customer.share.csvExampleTitle")}</p>
+                  <p className="mt-2 text-[12px] leading-relaxed text-ink-500">
+                    {t("customer.share.csvExampleSub")}
+                  </p>
+                </div>
+                <Download className="h-4 w-4 shrink-0 text-ember-600" strokeWidth={1.5} />
               </div>
-              <button
-                type="button"
-                onClick={downloadExampleCsv}
-                className="shrink-0 flex items-center justify-center gap-2 bg-[#712E1E] hover:bg-[#5a2418] text-white px-4 py-2.5 rounded-xl font-bold text-xs transition shadow-sm"
-              >
-                <Download size={14} /> {t('customer.share.btnDownloadCsv')}
-              </button>
-            </div>
 
-            {/* Pratinjau tampilan format */}
-            <div className="overflow-hidden rounded-xl border border-[#EBDFCE]">
-              <table className="w-full text-left text-sm text-stone-600">
-                <thead className="bg-[#FAF6EE] text-[#712E1E] uppercase font-bold text-xs tracking-wider border-b border-[#EBDFCE]">
-                  <tr>
-                    <th className="px-4 py-2.5">{t('customer.share.thGuestName')}</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#F3EBDF]">
-                  {["Budi & Keluarga", "Rina Dewi", "Keluarga Besar Haji Ahmad"].map((name) => (
-                    <tr key={name} className="hover:bg-[#FAF6EE]/60 transition">
-                      <td className="px-4 py-2.5">{name}</td>
+              <div className="mt-4 overflow-hidden border border-ink-900/12">
+                <table className="w-full text-left text-[12px] text-ink-600">
+                  <thead className="border-b border-ink-900/12 bg-cream-100 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500">
+                    <tr>
+                      <th className="px-3 py-2.5 font-medium">{t("customer.share.thGuestName")}</th>
                     </tr>
-                  ))}
-                  <tr className="text-stone-400 italic">
-                    <td className="px-4 py-2.5">…dst.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {["Budi & Keluarga", "Rina Dewi", "Keluarga Besar Haji Ahmad"].map((name) => (
+                      <tr key={name} className="border-b border-ink-900/10 last:border-0">
+                        <td className="px-3 py-2.5">{name}</td>
+                      </tr>
+                    ))}
+                    <tr className="text-ink-400">
+                      <td className="px-3 py-2.5 italic">…dst.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-            <ul className="text-xs text-stone-500 space-y-1 list-disc list-inside">
-              <li>{t('customer.share.csvTip1')}</li>
-              <li>{t('customer.share.csvTip2')}</li>
-            </ul>
+              <ul className="mt-4 space-y-1.5 border-t border-ink-900/10 pt-3 text-[11px] leading-relaxed text-ink-400">
+                <li>{t("customer.share.csvTip1")}</li>
+                <li>{t("customer.share.csvTip2")}</li>
+              </ul>
+
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                onClick={downloadExampleCsv}
+                className="mt-4 self-start"
+                icon={<Download size={13} />}
+              >
+                {t("customer.share.btnDownloadCsv")}
+              </Button>
+            </div>
           </section>
 
           {excelGuests.length > 0 && (
-            <div className="bg-white rounded-2xl border border-[#EBDFCE] shadow-sm overflow-hidden">
-              <div className="p-4 bg-[#FAF6EE] border-b border-[#EBDFCE] flex justify-between items-center">
-                <h3 className="font-bold text-stone-700 text-sm">
-                  {t('customer.share.guestListTitle', { count: excelGuests.length })}
-                </h3>
+            <section className="paper-panel overflow-hidden">
+              <div className="flex items-center justify-between gap-4 border-b border-ink-900/12 px-5 py-4">
+                <div className="flex items-center gap-3">
+                  <Users size={15} className="text-ember-600" strokeWidth={1.5} />
+                  <h2 className="text-[13px] font-semibold text-ink-900">
+                    {t("customer.share.guestListTitle", { count: excelGuests.length })}
+                  </h2>
+                </div>
                 <button
+                  type="button"
                   onClick={() => setExcelGuests([])}
-                  className="text-xs text-red-500 hover:underline"
+                  className="font-data text-[9px] uppercase tracking-[0.1em] text-danger-600 transition-colors hover:text-danger-700"
                 >
-                  {t('customer.share.btnClearAll')}
+                  {t("customer.share.btnClearAll")}
                 </button>
               </div>
-              <div className="max-h-[400px] overflow-y-auto divide-y divide-[#F3EBDF]">
+              <div className="max-h-[420px] divide-y divide-ink-900/10 overflow-y-auto">
                 {excelGuests.map((name, i) => (
                   <div
-                    key={i}
-                    className="p-3 px-4 flex items-center justify-between hover:bg-[#FAF6EE] transition"
+                    key={`${name}-${i}`}
+                    className="flex items-center justify-between gap-3 px-5 py-3 transition-colors hover:bg-cream-100/60"
                   >
-                    <span className="text-sm font-medium text-stone-800 truncate">
-                      {name}
-                    </span>
-                    <div className="flex gap-2 shrink-0 ml-3">
+                    <div className="flex min-w-0 items-center gap-3">
+                      <span className="w-6 shrink-0 font-data text-[9px] text-ink-400">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="truncate text-[13px] font-medium text-ink-900">{name}</span>
+                    </div>
+                    <div className="flex shrink-0 items-center gap-1">
                       <button
+                        type="button"
                         onClick={() => copyLink(name)}
-                        title={t('customer.share.btnCopy')}
-                        className="p-1.5 text-stone-400 rounded-xl transition hover:text-[#B4693F] hover:bg-[#FBF6EE]"
+                        title={t("customer.share.btnCopy")}
+                        aria-label={t("customer.share.btnCopy")}
+                        className="grid h-8 w-8 place-items-center text-ink-400 transition-colors hover:bg-cream-100 hover:text-ember-600"
                       >
                         <Copy size={14} />
                       </button>
-                      <button
+                      <Button
+                        type="button"
+                        size="sm"
                         onClick={() => handleShareWa(name)}
-                        className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm transition"
+                        icon={<Send size={12} />}
                       >
-                        <Send size={10} /> {t('customer.share.btnSendWa')}
-                      </button>
+                        {t("customer.share.btnSendWa")}
+                      </Button>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
+            </section>
           )}
         </div>
       )}

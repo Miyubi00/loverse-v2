@@ -6,24 +6,19 @@
 // Keterikatan : -(murni konstanta string Tailwind)
 // ============================================================
 
-// Design token form bersama: satu sumber untuk gaya card, field, dan label
-// agar radius, padding, shadow, dan tipografi seragam di seluruh dashboard.
-
-// Palet tema: terracotta/warm brown (#712E1E, #E59A59), cream (#F1E8DC),
-// netral gelap untuk teks (stone).
 export const CARD =
-  'rounded-2xl border border-[#EBDFCE] bg-white p-6 shadow-sm space-y-5';
+  'space-y-5 border border-ink-900/12 bg-cream-50 p-5 sm:p-6';
 
 export const CARD_TITLE =
-  'flex items-center gap-2.5 font-bold text-sm text-stone-800';
+  'flex items-center gap-2.5 text-[13px] font-semibold tracking-[-0.01em] text-ink-900';
 
 export const ICON_CHIP =
-  'rounded-lg bg-[#F7EEE3] p-1.5 text-[#B4693F]';
+  'grid h-8 w-8 place-items-center border border-ink-900/10 bg-cream-100 text-ember-600';
 
 export const FIELD_LABEL =
-  'block text-[10px] font-bold uppercase tracking-wider text-stone-500';
+  'block font-data text-[8px] uppercase tracking-[0.16em] text-ink-400';
 
 export const INPUT =
-  'w-full rounded-xl border border-stone-200 bg-white p-3 text-sm text-stone-800 ' +
-  'placeholder:text-stone-400 outline-none transition ' +
-  'focus:border-[#E59A59] focus:ring-2 focus:ring-[#E59A59]/20';
+  'w-full border border-ink-900/15 bg-cream-50 px-3 py-2.5 text-[13px] text-ink-900 ' +
+  'placeholder:text-ink-300 outline-none transition ' +
+  'focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15';

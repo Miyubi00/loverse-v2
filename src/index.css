@@ -1,109 +1,327 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  /* Kita set default font ke Poppins */
-  --font-sans: "Poppins", sans-serif;
+  /* ----------------------------------------------------------
+     LoVerse "Cahaya Hangat" — app design system
+     Display: Fraunces (warm editorial serif)
+     UI/body: Instrument Sans
+     Data/labels: JetBrains Mono
+     ---------------------------------------------------------- */
+  --font-sans: "Instrument Sans", "Segoe UI", sans-serif;
+  --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", serif;
+  --font-brand: "Fraunces", "Iowan Old Style", "Palatino Linotype", serif;
+  --font-mono: "JetBrains Mono", "Cascadia Mono", monospace;
 
-  /* Breakpoint ekstra di bawah sm (640px): ikon-only utk tombol navbar */
   --breakpoint-xs: 420px;
 
-  /* Font brand "Loverse" (wordmark serif) */
-  --font-brand: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  
-  /* Font script untuk kaligrafi / aksen romantis */
-  --font-script: "Great Vibes", "Dancing Script", cursive;
-  
-  /* Definisi Warna Custom sesuai request (Opsional, biar rapi) */
-  --color-brand-nav: #712E1E;
-  --color-brand-nav-text: #FFD5AF;
-  --color-brand-bg: #FFD5AF;
-  --color-brand-text: #712E1E;
-  --color-brand-muted: #888870;
-  --color-brand-primary: #E59A59;
+  /* Ink / warm neutrals */
+  --color-ink-950: #17100c;
+  --color-ink-900: #241813;
+  --color-ink-800: #34231b;
+  --color-ink-700: #4a3328;
+  --color-ink-600: #5f4638;
+  --color-ink-500: #7a6152;
+  --color-ink-400: #7f6a5c;
+  --color-ink-300: #bfae9f;
 
-  /* Palet milik tema Motion Flow (independen dari warna halaman di atas) */
-  --color-mf-deep: #3D1832;      /* Plum gelap — latar gelap amplop/countdown   */
-  --color-mf-cream: #FFEDDF;     /* Ivory hangat — teks di atas gelap           */
-  --color-mf-ink: #2B1122;       /* Ink — teks utama di latar terang            */
-  --color-mf-muted: #A28EA6;     /* Mauve redup — label/teks sekunder           */
-  --color-mf-rose: #D65A73;      /* Rose — aksen utama tema                     */
+  /* Paper / cream */
+  --color-cream-50: #fdfaf3;
+  --color-cream-100: #f8f1e4;
+  --color-cream-200: #f0e5d2;
+  --color-cream-300: #e4d4bb;
+  --color-cream-400: #d4bfa0;
 
-  /* Palet milik tema Pop Card Fiesta (independen dari warna halaman di atas) */
-  --color-pc-cream: #FFF6E9;     /* Krem permen — latar utama                   */
-  --color-pc-ink: #33224B;       /* Ungu tua — teks utama/kartu kontras         */
-  --color-pc-coral: #FF5D73;     /* Coral — aksen utama                         */
-  --color-pc-sun: #FFC93C;       /* Kuning matahari — aksen sekunder            */
-  --color-pc-mint: #2EC4B6;      /* Mint — aksen segar (sukses)                 */
+  /* Peach light + ember accent */
+  --color-peach-100: #fff1e2;
+  --color-peach-200: #ffe3c9;
+  --color-peach-300: #ffd6b2;
+  --color-peach-400: #f3bb8b;
+  --color-ember-400: #d87844;
+  --color-ember-500: #b85a28;
+  --color-ember-600: #9e4319;
+  --color-ember-700: #7f3414;
 
-  /* Palet milik tema Lantern Night (independen dari warna halaman di atas) */
-  --color-ln-night: #191033;     /* Indigo malam — latar utama                  */
-  --color-ln-deep: #100A26;      /* Indigo tergelap — kartu/amplop              */
-  --color-ln-glow: #FFC15E;      /* Amber lentera — aksen utama bercahaya       */
-  --color-ln-plum: #8A4E7D;      /* Plum lembut — aksen sekunder                */
-  --color-ln-mist: #E8E6FF;      /* Lavender pucat — teks terang                */
+  /* Support */
+  --color-wine-800: #4a1f2a;
+  --color-wine-900: #35141d;
+  --color-forest-800: #1e3b30;
+  --color-forest-900: #142c24;
+  --color-gold-500: #b08a4f;
+  --color-gold-600: #96713b;
+  --color-success-600: #2f6b4f;
+  --color-success-700: #24543e;
+  --color-danger-600: #a83a2c;
+  --color-danger-700: #8b2d23;
 
-  /* Sakura Breeze (klon world-map CloudSky berpalet taman sakura).     */
-  --color-sk-blossom: #FFF0F5;   /* Pink pucat — latar utama langit taman       */
-  --color-sk-blush: #FFC9DC;     /* Blush — ujung gradasi & bunga jauh          */
-  --color-sk-deep: #59223F;      /* Plum tua — teks utama                       */
-  --color-sk-rose: #F25CA2;      /* Rose — aksen utama tombol/ikon              */
-  --color-sk-leaf: #57B894;      /* Hijau daun — aksen lokasi/sukses            */
-  --color-sk-gold: #E9B44C;      /* Emas — kutipan/kado                         */
+  /* Backwards-compatible brand aliases used by older components */
+  --color-brand-nav: #241813;
+  --color-brand-nav-text: #ffd6b2;
+  --color-brand-bg: #f8f1e4;
+  --color-brand-text: #241813;
+  --color-brand-muted: #7a6152;
+  --color-brand-primary: #b85a28;
 
-  /* Palet milik tema Dice Voyage / board game (independen & mencolok)  */
-  --color-bg-cream: #FFF6E0;     /* Krem papan permainan — latar utama          */
-  --color-bg-ink: #221B45;       /* Biru-tinta gelap — teks & garis papan       */
-  --color-bg-tomato: #FF4D3D;    /* Merah tomat menyala — aksen utama           */
-  --color-bg-teal: #00B8A9;      /* Teal elektrik — aksen sekunder              */
-  --color-bg-mustard: #FFC53D;   /* Kuning mustard — aksen tersier/highlight    */
+  /* Palet tema undangan (JANGAN diubah — kontrak visual template) */
+  --color-mf-deep: #3D1832;
+  --color-mf-cream: #FFEDDF;
+  --color-mf-ink: #2B1122;
+  --color-mf-muted: #A28EA6;
+  --color-mf-rose: #D65A73;
 
-  /* Palet milik tema Ocean Vows (parallax laut dalam)                 */
-  --color-ow-deep: #04202C;      /* Palung tergelap — latar utama              */
-  --color-ow-mid: #0B4A57;       /* Kedalaman — kartu/amplop                   */
-  --color-ow-surface: #7BD8E6;   /* Permukaan aqua — aksen terang              */
-  --color-ow-coral: #FF7A59;     /* Karang coral — aksen utama mencolok        */
-  --color-ow-foam: #D7F5EC;      /* Buih — teks utama di atas gelap            */
-  --color-ow-sand: #FFE2A8;      /* Pasir emas — aksen sekunder/garis          */
+  --color-pc-cream: #FFF6E9;
+  --color-pc-ink: #33224B;
+  --color-pc-coral: #FF5D73;
+  --color-pc-sun: #FFC93C;
+  --color-pc-mint: #2EC4B6;
 
-  /* Palet milik tema Chiikawa Days (slide deck horizontal, tanpa scroll) */
-  --color-cw-cream: #FFF9EC;     /* Krem lembut — latar utama                 */
-  --color-cw-mint: #E0F2EE;      /* Mint seafoam — kartu & aksen terang       */
-  --color-cw-blue: #8ECBE0;      /* Biru langit (khas Chiikawa) — aksen utama */
-  --color-cw-pink: #F9BCCB;      /* Pink Usagi — aksen                 */
-  --color-cw-yellow: #FFE27A;    /* Kuning Hachiware — highlight              */
-  --color-cw-ink: #5C4633;       /* Cokelat tinta — teks utama                */
-  --color-cw-coral: #F2797E;     /* Coral — aksen tombol                      */
+  --color-ln-night: #191033;
+  --color-ln-deep: #100A26;
+  --color-ln-glow: #FFC15E;
+  --color-ln-plum: #8A4E7D;
+  --color-ln-mist: #E8E6FF;
 
-  /* Palet milik tema Neumorph Soft UI (monokrom lavender + aksen violet) */
-  --color-nm-base: #E4E6F2;      /* Permukaan dasar — latar utama              */
-  --color-nm-shadow: #B9BBD4;    /* Bayangan gelap kanan-bawah                 */
-  --color-nm-light: #FFFFFF;     /* Bayangan terang kiri-atas                  */
-  --color-nm-ink: #4A4568;       /* Tinta ungu-abu — teks utama                */
-  --color-nm-accent: #7C6FF0;    /* Violet — aksen utama tombol/highlight      */
-  --color-nm-accent2: #F27BA5;   /* Rose lembut — aksen sekunder               */
+  --color-sk-blossom: #FFF0F5;
+  --color-sk-blush: #FFC9DC;
+  --color-sk-deep: #59223F;
+  --color-sk-rose: #F25CA2;
+  --color-sk-leaf: #57B894;
+  --color-sk-gold: #E9B44C;
 
-  /* Palet milik tema Claymorphism (clay puffy pastel candy)             */
-  --color-cl-bg: #EDE7FF;        /* Lilac lembut — latar utama tanam liur      */
-  --color-cl-ink: #4A3F71;       /* Ungu tua — teks utama                      */
-  --color-cl-shadow: #C3B6F2;    /* Bayangan luar besar khas clay              */
-  --color-cl-accent: #8A6CFF;    /* Periwinkle — aksen utama tombol            */
-  --color-cl-berry: #FF8FA3;     /* Pink candy — aksen sekunder                */
-  --color-cl-sun: #FFC94D;       /* Kuning mentega — highlight                 */
-  --color-cl-mint: #A8E6CF;      /* Mint — aksen sukses/lokasi                 */
-  --color-cl-sky: #9BD7FF;       /* Biru langit — aksen galeri/countdown       */
+  --color-bg-cream: #FFF6E0;
+  --color-bg-ink: #221B45;
+  --color-bg-tomato: #FF4D3D;
+  --color-bg-teal: #00B8A9;
+  --color-bg-mustard: #FFC53D;
+
+  --color-ow-deep: #04202C;
+  --color-ow-mid: #0B4A57;
+  --color-ow-surface: #7BD8E6;
+  --color-ow-coral: #FF7A59;
+  --color-ow-foam: #D7F5EC;
+  --color-ow-sand: #FFE2A8;
+
+  --color-cw-cream: #FFF9EC;
+  --color-cw-mint: #E0F2EE;
+  --color-cw-blue: #8ECBE0;
+  --color-cw-pink: #F9BCCB;
+  --color-cw-yellow: #FFE27A;
+  --color-cw-ink: #5C4633;
+  --color-cw-coral: #F2797E;
+
+  --color-nm-base: #E4E6F2;
+  --color-nm-shadow: #B9BBD4;
+  --color-nm-light: #FFFFFF;
+  --color-nm-ink: #4A4568;
+  --color-nm-accent: #7C6FF0;
+  --color-nm-accent2: #F27BA5;
+
+  --color-cl-bg: #EDE7FF;
+  --color-cl-ink: #4A3F71;
+  --color-cl-shadow: #C3B6F2;
+  --color-cl-accent: #8A6CFF;
+  --color-cl-berry: #FF8FA3;
+  --color-cl-sun: #FFC94D;
+  --color-cl-mint: #A8E6CF;
+  --color-cl-sky: #9BD7FF;
+
+  --shadow-lift: 0 1px 0 rgba(36, 24, 19, 0.04), 0 18px 40px -24px rgba(36, 24, 19, 0.35);
+  --shadow-deep: 0 32px 80px -34px rgba(23, 16, 12, 0.55);
 }
 
-/* Shimmer keyframe untuk skeleton variant "wave" */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-cream-100);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  ::selection {
+    background: var(--color-peach-300);
+    color: var(--color-ink-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember-500);
+    outline-offset: 3px;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    max-width: 100%;
+  }
+
+  #root {
+    position: relative;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------
+   Shared app utilities
+   ------------------------------------------------------------ */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+  }
+
+  .font-ui {
+    font-family: var(--font-sans);
+  }
+
+  .font-data {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 0.94;
+    font-variation-settings: "SOFT" 40, "WONK" 1;
+  }
+
+  .display-lg {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.22;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+
+  .grain-light::after {
+    mix-blend-mode: screen;
+    opacity: 0.12;
+  }
+
+  .rule {
+    border-color: color-mix(in srgb, var(--color-ink-900) 14%, transparent);
+  }
+
+  .paper-panel {
+    background: var(--color-cream-50);
+    border: 1px solid color-mix(in srgb, var(--color-ink-900) 12%, transparent);
+  }
+
+  .ink-panel {
+    background: var(--color-ink-950);
+    color: var(--color-cream-100);
+  }
+
+  .app-shell {
+    font-family: var(--font-sans);
+  }
+
+  .app-shell h1,
+  .app-shell h2,
+  .app-shell h3 {
+    text-wrap: balance;
+  }
+
+  .theme-canvas {
+    font-family: "Poppins", "Segoe UI", sans-serif;
+  }
+
+  .ticket-edge {
+    -webkit-mask-image: radial-gradient(circle at 0 50%, transparent 10px, #000 10.5px),
+      radial-gradient(circle at 100% 50%, transparent 10px, #000 10.5px);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    mask-image: radial-gradient(circle at 0 50%, transparent 10px, #000 10.5px),
+      radial-gradient(circle at 100% 50%, transparent 10px, #000 10.5px);
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   Motion primitives
+   ------------------------------------------------------------ */
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 
-/* Animasi masuk bubble chat AI assistant */
 @keyframes msg-in {
   from { opacity: 0; transform: translateY(10px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -112,38 +330,73 @@
   animation: msg-in 0.28s cubic-bezier(0.21, 1.02, 0.73, 1) both;
 }
 
-/* Scrollbar tipis untuk area chat AI */
-.chat-scroll { scrollbar-width: thin; scrollbar-color: #E3D5C0 transparent; }
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-2deg); }
+  50% { transform: translate3d(0, -12px, 0) rotate(1.5deg); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: page-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-rise {
+  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease both;
+}
+
+.animate-fade-in-up {
+  animation: rise-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-drift {
+  animation: drift 9s ease-in-out infinite;
+}
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise,
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-drift,
+  .marquee-track,
+  .page-enter {
+    animation: none;
+  }
+}
+
+/* Thin scrollbar for chat and dense panels */
+.chat-scroll { scrollbar-width: thin; scrollbar-color: var(--color-cream-300) transparent; }
 .chat-scroll::-webkit-scrollbar { width: 6px; }
 .chat-scroll::-webkit-scrollbar-track { background: transparent; }
-.chat-scroll::-webkit-scrollbar-thumb { background: #E3D5C0; border-radius: 999px; }
-.chat-scroll::-webkit-scrollbar-thumb:hover { background: #D9C6A8; }
-
-/* Global box-sizing */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-/* Anti-overflow horizontal global. HANYA pada <html>: nilai ini menjalar ke
-   viewport (bukan membuat scroll container baru), sehingga navbar position:sticky
-   tetap menempel ke viewport. Jika ditempel ke body/#root, elemen tersebut
-   menjadi scroll container sendiri dan sticky gagal menempel. Setiap halaman
-   memakai overflow-x-hidden sendiri pada root container-nya sebagai pengaman tambah. */
-html {
-  overflow-x: hidden;
-}
-
-/* #root sebagai containing block utk elemen absolute lama */
-#root {
-  position: relative;
-}
-
-/* Pastikan body menggunakan warna background yang diminta */
-body {
-  background-color: var(--color-brand-bg);
-  font-family: var(--font-sans);
-  color: var(--color-brand-text);
-  margin: 0;
-  padding: 0;
-  -webkit-text-size-adjust: 100%;
-}
+.chat-scroll::-webkit-scrollbar-thumb { background: var(--color-cream-300); border-radius: 999px; }
+.chat-scroll::-webkit-scrollbar-thumb:hover { background: var(--color-cream-400); }

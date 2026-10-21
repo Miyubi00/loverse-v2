@@ -15,6 +15,7 @@ import {
 import { useEditActions } from "../../hooks/useEditActions";
 import { useFileUpload } from "../../hooks/useFileUpload";
 import Pagination from "../shared/Pagination";
+import Button from "../ui/Button";
 import { useRsvpServer, type RsvpStatusFilter } from "../../hooks/useRsvpServer";
 import type { EventDetails, OrderRow, RsvpRow, TemplateRow, OrderEditForm } from "../../types/database";
 import { useTranslation } from "../../i18n";
@@ -153,23 +154,25 @@ export default function EditOrderModal({
     <div className="max-w-7xl mx-auto space-y-6">
       <form onSubmit={handleSaveUpdate} className="w-full pb-10">
         {/* Header Tab */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-start gap-3">
           <button
             type="button"
             onClick={onBack ?? (() => setEditingOrder(null))}
-            className="rounded-xl p-1.5 text-stone-500 transition hover:bg-stone-100 hover:text-stone-800"
+            className="grid h-9 w-9 shrink-0 place-items-center border border-ink-900/12 text-ink-500 transition-colors hover:border-ink-900/30 hover:text-ink-900"
             title={t('common.back')}
           >
             <ArrowLeft className="h-4 w-4" />
           </button>
           <div>
-            <h2 className="text-2xl font-bold text-stone-800">{t('admin.editInvitationTitle')}</h2>
-            <p className="mt-0.5 text-xs font-mono text-stone-400">ID: {editingOrder.id.slice(0, 12)}…</p>
+            <p className="eyebrow text-ember-600">Control / Edit</p>
+            <h2 className="mt-1 font-display text-[clamp(1.8rem,3vw,2.6rem)] leading-none tracking-[-0.05em] text-ink-950">
+              {t('admin.editInvitationTitle')}
+            </h2>
+            <p className="mt-2 font-data text-[9px] text-ink-400">ID: {editingOrder.id.slice(0, 12)}…</p>
           </div>
         </div>
 
-        {/* Sub-Tab Navigation (Pills) */}
-        <div className="mt-5 flex flex-wrap gap-1.5 rounded-2xl border border-[#EBDFCE] bg-[#FAF6EE] p-1.5 w-fit">
+        <div className="mt-6 flex w-fit max-w-full flex-wrap gap-1 border border-ink-900/12 bg-cream-100 p-1">
           <SubTabButton active={activeSection === "admin"} onClick={() => setActiveSection("admin")}>
             <Users size={15} />
             <span>{t('admin.editTabOrderInfo')}</span>
@@ -247,15 +250,16 @@ export default function EditOrderModal({
           )}
 
           {/* Tombol Simpan Lebar di Bagian Bawah */}
-          <div className="mt-8">
-            <button
+          <div className="mt-8 border-t border-ink-900/12 pt-5">
+            <Button
               type="submit"
+              size="lg"
               disabled={uploading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#E59A59] py-3.5 text-base font-bold text-white shadow-md transition hover:bg-[#d48b4b] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
+              icon={uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save size={16} />}
+              className="w-full"
             >
-              {uploading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Save size={18} />}
               {uploading ? t('customer.edit.btnSaving') : t('customer.edit.btnSave')}
-            </button>
+            </Button>
           </div>
         </div>
       </form>
@@ -382,33 +386,36 @@ function GuestbookSection({
   } = rsvp;
   const { hadir, tidakHadir, ragu } = stats;
 
-  const labelCls = "mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#712E1E]";
+  const labelCls = "mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500";
   const inputCls =
-    "h-10 w-full rounded-xl border border-[#EBDFCE] bg-[#FAF6EE] px-3 text-xs font-medium text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-[#E59A59] focus:bg-white focus:ring-2 focus:ring-[#E59A59]/20";
+    "h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15";
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col gap-3 rounded-2xl border border-[#EBDFCE] bg-white p-4 shadow-sm md:flex-row md:items-end">
-        <div className="min-w-[240px] flex-1">
+      <div className="flex flex-col gap-3 border border-ink-900/12 bg-cream-100/60 p-4 md:flex-row md:items-end">
+        <div className="min-w-[220px] flex-1">
           <label className={labelCls}>
-            <Search size={13} className="text-[#E59A59]" />
+            <Search size={12} className="text-ember-600" />
             <span>{t('customer.rsvp.filterSearchLabel')}</span>
           </label>
-          <input
-            type="text"
-            placeholder={t('customer.rsvp.filterSearchPlaceholder')}
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") applyFilters();
-            }}
-            className={`${INPUT} pl-9`}
-          />
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-300" />
+            <input
+              type="text"
+              placeholder={t('customer.rsvp.filterSearchPlaceholder')}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") applyFilters();
+              }}
+              className={`${inputCls} pl-9`}
+            />
+          </div>
         </div>
 
-        <div className="min-w-[170px]">
+        <div className="min-w-[160px]">
           <label className={labelCls}>
-            <Calendar size={13} className="text-[#E59A59]" />
+            <Calendar size={12} className="text-ember-600" />
             <span>{t('customer.rsvp.filterDateLabel')}</span>
           </label>
           <input
@@ -419,9 +426,9 @@ function GuestbookSection({
           />
         </div>
 
-        <div className="min-w-[170px]">
+        <div className="min-w-[160px]">
           <label className={labelCls}>
-            <Users size={13} className="text-[#E59A59]" />
+            <Users size={12} className="text-ember-600" />
             <span>{t('customer.rsvp.filterStatusLabel')}</span>
           </label>
           <select
@@ -436,93 +443,88 @@ function GuestbookSection({
           </select>
         </div>
 
-        <div className="flex shrink-0 gap-2">
+        <div className="flex shrink-0 gap-1.5">
           {hasActiveFilter && (
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="sm"
               onClick={resetFilters}
-              className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-4 text-xs font-bold text-rose-600 transition hover:bg-rose-100 active:scale-95 whitespace-nowrap"
+              icon={<Trash2 size={12} />}
+              className="h-10 text-danger-600 hover:bg-danger-600/5 hover:text-danger-700"
             >
-              <Trash2 size={13} />
-              <span>{t('customer.rsvp.btnResetFilter')}</span>
-            </button>
+              {t('customer.rsvp.btnResetFilter')}
+            </Button>
           )}
-          <button
-            type="button"
-            onClick={applyFilters}
-            className="flex h-10 items-center justify-center gap-1.5 rounded-xl bg-[#E59A59] px-5 text-xs font-bold text-white shadow-sm transition hover:bg-[#d48b4b] active:scale-95 whitespace-nowrap"
-          >
-            <Search size={13} />
-            <span>{t('customer.rsvp.btnSearch')}</span>
-          </button>
+          <Button type="button" size="sm" onClick={applyFilters} icon={<Search size={12} />} className="h-10 whitespace-nowrap">
+            {t('customer.rsvp.btnSearch')}
+          </Button>
         </div>
       </div>
 
-      {/* Statistik */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label={t('customer.rsvp.statTotal')} value={total} labelClass="text-stone-400" valueClass="text-stone-800" />
-        <StatCard label={t('customer.rsvp.statAttending')} value={hadir} labelClass="text-emerald-600" valueClass="text-emerald-600" />
-        <StatCard label={t('customer.rsvp.statNotAttending')} value={tidakHadir} labelClass="text-rose-500" valueClass="text-rose-500" />
-        <StatCard label={t('customer.rsvp.statUncertain')} value={ragu} labelClass="text-amber-600" valueClass="text-amber-600" />
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <StatCard label={t('customer.rsvp.statTotal')} value={total} labelClass="text-ink-400" valueClass="text-ink-950" />
+        <StatCard label={t('customer.rsvp.statAttending')} value={hadir} labelClass="text-success-700" valueClass="text-success-700" />
+        <StatCard label={t('customer.rsvp.statNotAttending')} value={tidakHadir} labelClass="text-danger-600" valueClass="text-danger-600" />
+        <StatCard label={t('customer.rsvp.statUncertain')} value={ragu} labelClass="text-gold-600" valueClass="text-gold-600" />
       </div>
 
-      {/* Tabel komentar */}
-      <div className="overflow-hidden bg-white rounded-2xl border border-[#EBDFCE] shadow-sm">
+      <div className="overflow-hidden border border-ink-900/12 bg-cream-50">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-stone-600">
-            <thead className="text-[10px] font-bold tracking-wider text-stone-500 bg-[#FAF6EE] border-b border-[#EBDFCE] uppercase">
+          <table className="w-full text-left text-[12px] text-ink-600">
+            <thead className="border-b border-ink-900/12 bg-cream-100">
               <tr>
-                <th className="p-4">{t('customer.rsvp.thGuest')}</th>
-                <th className="p-4">{t('customer.rsvp.thStatus')}</th>
-                <th className="p-4">{t('customer.rsvp.thMessage')}</th>
-                <th className="p-4 text-center">{t('customer.rsvp.thAction')}</th>
+                <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('customer.rsvp.thGuest')}</th>
+                <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('customer.rsvp.thStatus')}</th>
+                <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('customer.rsvp.thMessage')}</th>
+                <th className="px-4 py-3.5 text-center font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('customer.rsvp.thAction')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F3EBDF]">
+            <tbody className="divide-y divide-ink-900/10">
               {loading ? (
                 <tr>
-                  <td colSpan={4} className="p-12 text-center text-sm text-stone-400 italic">
+                  <td colSpan={4} className="px-4 py-12 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
                     {t('common.loading')}
                   </td>
                 </tr>
               ) : rows.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="p-12 text-center text-sm text-stone-400 italic">
+                  <td colSpan={4} className="px-4 py-12 text-center text-[12px] italic text-ink-400">
                     {hasActiveFilter ? t('customer.rsvp.emptyFiltered') : t('customer.rsvp.emptyDefault')}
                   </td>
                 </tr>
               ) : (
                 rows.map((rsvp) => (
-                  <tr key={rsvp.id} className="transition hover:bg-[#FAF6EE]/40">
-                    <td className="p-4 align-top whitespace-nowrap">
-                      <span className="text-sm font-bold text-stone-800">{rsvp.guest_name}</span>
+                  <tr key={rsvp.id} className="transition-colors hover:bg-cream-100/50">
+                    <td className="whitespace-nowrap px-4 py-4 align-top">
+                      <span className="text-[12px] font-semibold text-ink-900">{rsvp.guest_name}</span>
                       <br />
-                      <span className="text-[10px] text-stone-400">
+                      <span className="font-data text-[9px] text-ink-400">
                         {rsvp.created_at ? new Date(rsvp.created_at).toLocaleDateString(language === 'en' ? "en-US" : "id-ID") : "-"}
                       </span>
                     </td>
-                    <td className="p-4 align-top whitespace-nowrap">
+                    <td className="whitespace-nowrap px-4 py-4 align-top">
                       <StatusBadge status={rsvp.status} pax={rsvp.pax} />
                     </td>
-                    <td className="max-w-xs p-4 align-top break-words">
-                      <p className="text-sm text-stone-700 italic">&ldquo;{rsvp.message}&rdquo;</p>
+                    <td className="max-w-xs break-words px-4 py-4 align-top">
+                      <p className="text-[12px] italic text-ink-700">&ldquo;{rsvp.message}&rdquo;</p>
                       {rsvp.reply && (
-                        <div className="mt-2 rounded-xl border border-[#EBDFCE] bg-[#FAF6EE] p-2.5">
-                          <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#712E1E]">
+                        <div className="mt-2 border-l-2 border-ember-500 bg-cream-100/70 p-2.5">
+                          <p className="mb-1 font-data text-[8px] uppercase tracking-[0.12em] text-ember-600">
                             {t('customer.rsvp.yourReply')}
                           </p>
-                          <p className="text-xs text-stone-600">{rsvp.reply}</p>
+                          <p className="text-[11px] text-ink-600">{rsvp.reply}</p>
                         </div>
                       )}
                     </td>
-                    <td className="p-4 align-top text-center whitespace-nowrap">
+                    <td className="whitespace-nowrap px-4 py-4 text-center align-top">
                       <button
                         type="button"
                         onClick={() => onDelete(rsvp.id)}
                         title={t('customer.rsvp.btnDelete')}
-                        className="grid h-8 w-8 mx-auto text-red-500 rounded-xl place-items-center transition hover:bg-red-50 hover:text-red-700 active:scale-95"
+                        className="mx-auto grid h-8 w-8 place-items-center border border-danger-600/20 text-danger-600 transition-colors hover:bg-danger-600/[0.06]"
                       >
-                        <Trash2 size={15} />
+                        <Trash2 size={14} />
                       </button>
                     </td>
                   </tr>
@@ -532,7 +534,6 @@ function GuestbookSection({
           </table>
         </div>
 
-        {/* Pagination server-side */}
         {!loading && rows.length > 0 && (
           <Pagination
             page={page}
@@ -551,7 +552,7 @@ function GuestbookSection({
 function StatCard({
   label,
   value,
-  labelClass = "text-stone-400",
+  labelClass = "text-ink-400",
   valueClass,
 }: {
   label: string;
@@ -560,11 +561,11 @@ function StatCard({
   valueClass: string;
 }) {
   return (
-    <div className="p-4 text-center bg-white rounded-2xl border border-[#EBDFCE] shadow-sm">
-      <p className={`mb-1 text-[11px] font-bold tracking-wider uppercase ${labelClass}`}>
+    <div className="border border-ink-900/12 bg-cream-50 p-4">
+      <p className={`font-data text-[8px] uppercase tracking-[0.14em] ${labelClass}`}>
         {label}
       </p>
-      <p className={`text-2xl font-black ${valueClass}`}>{value}</p>
+      <p className={`mt-1.5 font-display text-3xl leading-none tracking-[-0.04em] ${valueClass}`}>{value}</p>
     </div>
   );
 }
@@ -574,20 +575,20 @@ function StatusBadge({ status, pax }: { status: RsvpRow["status"]; pax: number }
 
   if (status === "hadir") {
     return (
-      <span className="flex w-fit px-2.5 py-1 text-xs font-bold text-emerald-700 bg-emerald-50 rounded-full items-center gap-1">
-        <CheckCircle2 size={11} /> {t('customer.rsvp.statusAttending')} ({pax})
+      <span className="flex w-fit items-center gap-1 border border-success-600/25 bg-success-600/[0.06] px-2 py-1 font-data text-[8px] uppercase tracking-[0.08em] text-success-700">
+        <CheckCircle2 size={10} /> {t('customer.rsvp.statusAttending')} ({pax})
       </span>
     );
   }
   if (status === "tidak_hadir") {
     return (
-      <span className="w-fit px-2.5 py-1 text-xs font-bold text-rose-700 bg-rose-50 rounded-full">
+      <span className="w-fit border border-danger-600/25 bg-danger-600/[0.06] px-2 py-1 font-data text-[8px] uppercase tracking-[0.08em] text-danger-600">
         {t('customer.rsvp.statusNotAttending')}
       </span>
     );
   }
   return (
-    <span className="w-fit px-2.5 py-1 text-xs font-bold text-amber-700 bg-amber-50 rounded-full">
+    <span className="w-fit border border-gold-500/35 bg-gold-500/10 px-2 py-1 font-data text-[8px] uppercase tracking-[0.08em] text-gold-600">
       {t('customer.rsvp.statusUncertain')}
     </span>
   );

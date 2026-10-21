@@ -1,4 +1,4 @@
-import js from '@eslint/js'
+﻿import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
@@ -6,7 +6,16 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'supabase/**']),
+  globalIgnores([
+    'dist',
+    'supabase/**',
+    '.agents/**',
+    '.codex/**',
+    '.github/**',
+    '.opencode/**',
+    '.impeccable/**',
+    'artifacts/**',
+  ]),
   {
     // api/ berisi Vercel Function yang berjalan di runtime Node (bukan browser),
     // jadi global Node seperti `process` harus dikenali agar tidak kena no-undef.

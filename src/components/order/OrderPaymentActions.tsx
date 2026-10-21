@@ -1,42 +1,19 @@
-// ============================================================
-// src/components/order/OrderPaymentActions.tsx
-// ------------------------------------------------------------
-// Slot aksi bayar wizard /order: widget Cloudflare Turnstile + tombol
-// bayar sesuai metode terpilih di langkah 2. Dipakai sebagai slot
-// "actions" di dalam kartu OrderSummary.
-// Keterikatan : react, lucide-react, react-icons, ui/TurnstileWidget,
-//               components/order/constants, i18n
-// ============================================================
-
-import { Building2, QrCode, Smartphone } from "lucide-react";
+﻿import { Building2, QrCode, Smartphone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import type { RefObject } from "react";
-import TurnstileWidget, {
-  type TurnstileWidgetRef,
-} from "../ui/TurnstileWidget";
+import TurnstileWidget, { type TurnstileWidgetRef } from "../ui/TurnstileWidget";
 import { useTranslation } from "../../i18n";
-import {
-  PAYMENT_BUTTON_LABEL_KEYS,
-  type PaymentMethodType,
-} from "./constants";
+import { PAYMENT_BUTTON_LABEL_KEYS, type PaymentMethodType } from "./constants";
 
-/** Kelas dasar tombol bayar: tinggi, radius, & font sama dengan tombol footer wizard. */
 const PAY_BUTTON_BASE =
-  "w-full min-h-11 px-3 py-3.5 sm:py-4 rounded-2xl font-bold text-sm sm:text-base transition flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E59A59]/40";
+  "w-full min-h-11 px-3 py-3.5 sm:py-4 rounded-2xl font-semibold text-sm sm:text-base transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember-500/40";
 
 interface OrderPaymentCaptchaProps {
   setCaptchaToken: (token: string | null) => void;
   turnstileRef: RefObject<TurnstileWidgetRef | null>;
 }
 
-/**
- * Verifikasi Cloudflare Turnstile - diletakkan di dalam kartu
- * ringkasan (slot actions OrderSummary), tepat di atas tombol bayar.
- */
-export function OrderPaymentCaptcha({
-  setCaptchaToken,
-  turnstileRef,
-}: OrderPaymentCaptchaProps) {
+export function OrderPaymentCaptcha({ setCaptchaToken, turnstileRef }: OrderPaymentCaptchaProps) {
   return (
     <TurnstileWidget
       ref={turnstileRef}
@@ -66,13 +43,12 @@ export function OrderPayButton({
 }: OrderPayButtonProps) {
   const { t } = useTranslation();
 
-  // Belum memilih metode (seharusnya tidak terjadi di langkah 3, jaga-jaga).
   if (paymentMethod === null) {
     return (
       <button
         type="button"
         disabled
-        className={`${PAY_BUTTON_BASE} border-2 border-stone-200 bg-stone-100 text-stone-400 cursor-not-allowed`}
+        className={`${PAY_BUTTON_BASE} cursor-not-allowed border border-ink-900/10 bg-cream-100 text-ink-300`}
       >
         <Smartphone className="h-5 w-5 shrink-0" />
         <span className="truncate">{t("order.selectPaymentMethod")}</span>
@@ -81,9 +57,7 @@ export function OrderPayButton({
   }
 
   if (paymentMethod === "whatsapp") {
-    // Menunggu verifikasi captcha juga membuat tombol terkunci.
     const disabled = loadingWA || !captchaToken;
-
     return (
       <button
         type="button"
@@ -91,8 +65,8 @@ export function OrderPayButton({
         disabled={disabled}
         className={`${PAY_BUTTON_BASE} ${
           disabled
-            ? "border-2 border-stone-200 bg-stone-100 text-stone-400 cursor-not-allowed"
-            : "bg-[#25D366] text-white hover:bg-[#20bd5a] active:scale-[0.99] shadow-lg shadow-green-600/20"
+            ? "cursor-not-allowed border border-ink-900/10 bg-cream-100 text-ink-300"
+            : "bg-[#1FA855] text-white shadow-[0_10px_30px_-16px_rgba(31,168,85,0.8)] hover:bg-[#178f47] active:translate-y-px"
         }`}
       >
         {loadingWA ? (
@@ -116,8 +90,8 @@ export function OrderPayButton({
       disabled={disabled}
       className={`${PAY_BUTTON_BASE} ${
         disabled
-          ? "bg-stone-300 text-stone-500 cursor-not-allowed"
-          : "bg-[#712E1E] text-white hover:bg-[#8E3B27] active:scale-[0.99] shadow-lg shadow-[#712E1E]/25"
+          ? "cursor-not-allowed border border-ink-900/10 bg-cream-100 text-ink-300"
+          : "bg-ink-950 text-cream-50 shadow-[0_10px_30px_-16px_rgba(23,16,12,0.8)] hover:bg-ember-600 active:translate-y-px"
       }`}
     >
       {loadingMidtrans ? (
@@ -131,9 +105,7 @@ export function OrderPayButton({
           ) : (
             <Smartphone className="h-5 w-5 shrink-0" />
           )}
-          <span className="truncate">
-            {t(PAYMENT_BUTTON_LABEL_KEYS[paymentMethod])}
-          </span>
+          <span className="truncate">{t(PAYMENT_BUTTON_LABEL_KEYS[paymentMethod])}</span>
         </>
       )}
     </button>

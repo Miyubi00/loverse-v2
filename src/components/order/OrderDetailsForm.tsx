@@ -1,16 +1,5 @@
-// ============================================================
-// src/components/order/OrderDetailsForm.tsx
-// ------------------------------------------------------------
-// Step 01 & 02 form pemesanan /order dalam SATU kartu: bagian "Pilih Desain"
-// (template terkunci dari katalog — ganti via tombol kembali) dan bagian
-// "Data Acara & Kontak" (mempelai, tanggal acara, email & WhatsApp) hanya
-// dipisah garis tipis di dalam kartu yang sama.
-// Dipakai di  : pages/OrderPage
-// Keterikatan : lib/constants, components/order/constants, SectionCard
-// ============================================================
-
-import type { ChangeEvent } from "react";
-import { ArrowLeft, Calendar, Mail, User } from "lucide-react";
+﻿import type { ChangeEvent } from "react";
+import { ArrowLeft, ArrowUpRight, Calendar, Mail, User } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import type { MasterTemplate } from "../../lib/constants";
 import { useTranslation } from "../../i18n";
@@ -39,76 +28,82 @@ export function OrderDetailsForm({
   const { t } = useTranslation();
 
   return (
-    /* Langkah 1 & 2 = SATU kartu: "Pilih Desain" dan "Data Acara & Kontak"
-       dipisah garis tipis di dalam kartu yang sama, bukan dua kartu. */
     <SectionCard>
-      {/* 1. Template terkunci (dipilih dari katalog) */}
-      <SectionHeading title={t("order.step1Title")} />
-      <div className="flex items-center gap-3 sm:gap-4">
+      <div className="flex items-start justify-between gap-4">
+        <SectionHeading step="01" title={t("order.step1Title")} />
+        <span className="eyebrow shrink-0 pt-1 text-ink-400">Terkunci</span>
+      </div>
+
+      <div className="flex gap-4 border-y border-ink-900/10 py-4 sm:gap-5">
         {selectedImage ? (
-          <img
-            src={selectedImage}
-            alt={selectedTemplate.name}
-            className="w-16 h-20 sm:w-20 sm:h-24 rounded-xl object-cover border border-[#EBDFCE] shrink-0"
-          />
+          <div className="relative aspect-[3/4] w-[76px] shrink-0 overflow-hidden border border-ink-900/10 bg-cream-100 sm:w-[92px]">
+            <img src={selectedImage} alt={selectedTemplate.name} className="h-full w-full object-cover" />
+          </div>
         ) : null}
-        <div className="min-w-0 flex-1">
-          <p className="text-sm sm:text-base font-extrabold text-[#712E1E] truncate">
-            {selectedTemplate.name}
-          </p>
-          <p className="text-[11px] sm:text-xs text-stone-400 truncate">
-            {selectedTemplate.category} • Rp{" "}
-            {selectedTemplate.price.toLocaleString("id-ID")}
-          </p>
+        <div className="flex min-w-0 flex-1 flex-col justify-between py-0.5">
+          <div>
+            <span className="inline-flex border border-ink-900/15 px-1.5 py-0.5 font-data text-[8px] uppercase tracking-[0.12em] text-ink-500">
+              {selectedTemplate.category}
+            </span>
+            <p className="mt-2 truncate font-display text-2xl leading-none tracking-[-0.03em] text-ink-950">
+              {selectedTemplate.name}
+            </p>
+            <p className="mt-2 font-data text-[11px] text-ink-500">
+              Rp {selectedTemplate.price.toLocaleString("id-ID")}
+              <span className="text-ink-400"> / sekali bayar</span>
+            </p>
+          </div>
           <button
             type="button"
             onClick={onChangeTemplate}
-            className="mt-1.5 inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-[#E59A59] hover:text-[#d48b4b] transition"
+            className="mt-3 inline-flex w-fit items-center gap-1.5 border-b border-ink-900/25 pb-0.5 text-[11px] font-semibold text-ink-700 transition-colors hover:border-ember-500 hover:text-ember-600"
           >
-            <ArrowLeft size={12} /> {t("order.changeTemplate")}
+            <ArrowLeft size={12} /> {t("order.changeTemplate")} <ArrowUpRight size={11} />
           </button>
         </div>
       </div>
-      <p className="text-[11px] sm:text-xs text-stone-400 -mt-1">
-        {t("order.step1LockedDesc")}
-      </p>
+      <p className="-mt-2 text-[11px] leading-relaxed text-ink-400">{t("order.step1LockedDesc")}</p>
 
-      {/* 2. Data Mempelai, Acara & Kontak - bagian kedua, masih kartu yang sama */}
-      <div className="pt-4 sm:pt-5 border-t border-[#EBDFCE]">
-        <SectionHeading
-          title={t("order.step2Title")}
-          className="mb-3.5 sm:mb-4"
-        />
-        <div className="space-y-3.5 sm:space-y-4 w-full min-w-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 w-full min-w-0">
-            <div className="min-w-0 w-full">
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#712E1E] mb-1.5">
+      <div className="border-t border-ink-900/12 pt-5">
+        <div className="flex items-start justify-between gap-4">
+          <SectionHeading step="02" title={t("order.step2Title")} className="mb-4" />
+          <span className="eyebrow shrink-0 pt-1 text-ink-400">Data inti</span>
+        </div>
+
+        <div className="w-full min-w-0 space-y-4">
+          <div className="grid w-full min-w-0 grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="w-full min-w-0">
+              <label htmlFor="order-groom-name" className="mb-1.5 block font-data text-[9px] uppercase tracking-[0.14em] text-ink-500">
                 {t("order.groomName")}
               </label>
               <div className="relative w-full min-w-0">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+                <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
                 <input
+                  id="order-groom-name"
                   required
                   name="groom_name"
                   value={formData.groom_name}
                   type="text"
+                  autoComplete="given-name"
                   placeholder={t("order.groomPlaceholder")}
                   onChange={onChange}
                   className={INPUT_CLASS}
                 />
               </div>
             </div>
-            <div className="min-w-0 w-full">
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#712E1E] mb-1.5">
+            <div className="w-full min-w-0">
+              <label htmlFor="order-bride-name" className="mb-1.5 block font-data text-[9px] uppercase tracking-[0.14em] text-ink-500">
                 {t("order.brideName")}
               </label>
               <div className="relative w-full min-w-0">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+                <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
                 <input
+                  id="order-bride-name"
                   required
                   name="bride_name"
                   value={formData.bride_name}
                   type="text"
+                  autoComplete="family-name"
                   placeholder={t("order.bridePlaceholder")}
                   onChange={onChange}
                   className={INPUT_CLASS}
@@ -117,59 +112,68 @@ export function OrderDetailsForm({
             </div>
           </div>
 
-          <div className="min-w-0 w-full">
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#712E1E] mb-1.5">
+          <div className="w-full min-w-0">
+            <label htmlFor="order-wedding-date" className="mb-1.5 block font-data text-[9px] uppercase tracking-[0.14em] text-ink-500">
               {t("order.weddingDate")}
             </label>
             <div className="relative w-full min-w-0">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+              <Calendar className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
               <input
+                id="order-wedding-date"
                 required
                 name="wedding_date"
                 value={formData.wedding_date}
                 type="date"
                 min={todayStr}
                 onChange={onChange}
-                className={`${INPUT_CLASS} text-stone-600`}
+                className={INPUT_CLASS}
               />
             </div>
+            <p className="mt-1.5 text-[10px] text-ink-400">Tanggal ini akan tampil di countdown dan halaman tamu.</p>
           </div>
 
-          <div className="pt-2 border-t border-stone-200/70 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 w-full min-w-0">
-            <div className="min-w-0 w-full">
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#712E1E] mb-1.5">
+          <div className="grid w-full min-w-0 grid-cols-1 gap-4 border-t border-ink-900/10 pt-5 md:grid-cols-2">
+            <div className="w-full min-w-0">
+              <label htmlFor="order-email" className="mb-1.5 block font-data text-[9px] uppercase tracking-[0.14em] text-ink-500">
                 {t("order.email")}
               </label>
               <div className="relative w-full min-w-0">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
                 <input
+                  id="order-email"
                   required
                   name="email"
                   type="email"
+                  autoComplete="email"
                   placeholder={t("order.emailPlaceholder")}
                   value={formData.email}
                   onChange={onChange}
                   className={INPUT_CLASS}
                 />
               </div>
+              <p className="mt-1.5 text-[10px] text-ink-400">Invoice dan PIN dikirim ke email ini.</p>
             </div>
 
-            <div className="min-w-0 w-full">
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#712E1E] mb-1.5">
+            <div className="w-full min-w-0">
+              <label htmlFor="order-whatsapp" className="mb-1.5 block font-data text-[9px] uppercase tracking-[0.14em] text-ink-500">
                 {t("order.whatsapp")}
               </label>
               <div className="relative w-full min-w-0">
-                <FaWhatsapp className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+                <FaWhatsapp className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
                 <input
+                  id="order-whatsapp"
                   required
                   name="whatsapp"
                   type="tel"
+                  autoComplete="tel-national"
+                  inputMode="numeric"
                   placeholder={t("order.whatsappPlaceholder")}
                   value={formData.whatsapp}
                   onChange={onWhatsappChange}
                   className={INPUT_CLASS}
                 />
               </div>
+              <p className="mt-1.5 text-[10px] text-ink-400">Diawali tanpa 0 — contoh 81234567890.</p>
             </div>
           </div>
         </div>

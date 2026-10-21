@@ -13,6 +13,7 @@ import { Calendar, Megaphone, Pencil, Plus, ToggleLeft, ToggleRight, Trash2 } fr
 import { supabase } from '../../lib/supabaseClient';
 import type { SiteNoticeMode, SiteNoticeRow, SiteNoticeType } from '../../types/database';
 import type { ToastApi } from '../GlobalToast';
+import Button from '../ui/Button';
 import { useTranslation } from '../../i18n';
 
 interface NoticesTabProps {
@@ -34,28 +35,28 @@ interface NoticeFormState {
 }
 
 const INPUT_CLASS =
-  'h-10 w-full rounded-xl border border-[#EBDFCE] bg-[#FAF6EE] px-3 text-xs font-medium text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-[#E59A59] focus:bg-white focus:ring-2 focus:ring-[#E59A59]/20';
+  'h-10 w-full border border-ink-900/15 bg-cream-50 px-3 text-[12px] font-medium text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15';
 
 const TEXTAREA_CLASS =
-  'w-full rounded-xl border border-[#EBDFCE] bg-[#FAF6EE] px-3 py-2.5 text-xs font-medium leading-relaxed text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-[#E59A59] focus:bg-white focus:ring-2 focus:ring-[#E59A59]/20';
+  'w-full border border-ink-900/15 bg-cream-50 px-3 py-2.5 text-[12px] font-medium leading-relaxed text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15';
 
 const LABEL_CLASS =
-  'mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#712E1E]';
+  'mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.16em] text-ink-500';
 
 const TYPE_STYLE: Record<SiteNoticeType, string> = {
-  info: 'bg-blue-50 text-blue-700 border-blue-200',
-  warning: 'bg-amber-50 text-amber-700 border-amber-200',
-  promo: 'bg-purple-50 text-purple-700 border-purple-200',
-  maintenance: 'bg-rose-50 text-rose-700 border-rose-200',
+  info: 'border-ink-900/15 bg-cream-100 text-ink-600',
+  warning: 'border-gold-500/35 bg-gold-500/10 text-gold-600',
+  promo: 'border-ember-500/30 bg-peach-100 text-ember-600',
+  maintenance: 'border-danger-600/25 bg-danger-600/[0.06] text-danger-600',
 };
 
 type StatusKey = 'live' | 'scheduled' | 'ended' | 'inactive';
 
 const STATUS_STYLE: Record<StatusKey, string> = {
-  live: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-  scheduled: 'bg-blue-50 text-blue-700 border-blue-200',
-  ended: 'bg-stone-100 text-stone-500 border-stone-200',
-  inactive: 'bg-red-50 text-red-600 border-red-200',
+  live: 'border-success-600/25 bg-success-600/[0.06] text-success-700',
+  scheduled: 'border-ember-500/30 bg-peach-100 text-ember-600',
+  ended: 'border-ink-900/12 bg-cream-100 text-ink-400',
+  inactive: 'border-danger-600/25 bg-danger-600/[0.06] text-danger-600',
 };
 
 /** ISO -> value untuk <input type="datetime-local"> (waktu lokal). */
@@ -254,30 +255,26 @@ export default function NoticesTab({ toast, confirmAction }: NoticesTabProps) {
         : t('admin.noticesModeBanner');
 
   return (
-    <div className="animate-fade-in">
-      {/* Header Halaman */}
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-stone-800">{t('admin.noticesTitle')}</h2>
-          <p className="mt-1 text-sm text-stone-500">{t('admin.noticesSubtitle')}</p>
+          <p className="eyebrow text-ember-600">Control / Broadcast</p>
+          <h2 className="mt-2 font-display text-[clamp(2rem,4vw,3.1rem)] leading-none tracking-[-0.05em] text-ink-950">
+            {t('admin.noticesTitle')}
+          </h2>
+          <p className="mt-2 max-w-xl text-[12px] leading-relaxed text-ink-500">{t('admin.noticesSubtitle')}</p>
         </div>
         {!formOpen && (
-          <button
-            type="button"
-            onClick={openCreate}
-            className="flex h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#E59A59] px-4 text-xs font-bold text-white shadow-sm transition hover:bg-[#d48b4b] active:scale-95"
-          >
-            <Plus size={14} />
-            <span>{t('admin.noticesNew')}</span>
-          </button>
+          <Button type="button" onClick={openCreate} size="sm" icon={<Plus size={14} />}>
+            {t('admin.noticesNew')}
+          </Button>
         )}
       </div>
 
-      {/* Form Buat / Edit */}
       {formOpen && (
-        <div className="mb-6 rounded-2xl border border-[#EBDFCE] bg-white p-4 shadow-sm sm:p-5">
-          <h3 className="mb-4 flex items-center gap-2 font-bold text-[#712E1E]">
-            <Megaphone size={16} className="text-[#E59A59]" />
+        <div className="mb-6 paper-panel p-4 sm:p-5">
+          <h3 className="mb-5 flex items-center gap-2 border-b border-ink-900/10 pb-3 font-display text-xl tracking-[-0.03em] text-ink-950">
+            <Megaphone size={16} className="text-ember-600" />
             {editingId ? t('admin.noticesBtnEdit') : t('admin.noticesNew')}
           </h3>
 
@@ -367,7 +364,7 @@ export default function NoticesTab({ toast, confirmAction }: NoticesTabProps) {
 
             <div>
               <label className={LABEL_CLASS}>
-                <Calendar size={13} className="text-[#E59A59]" />
+                <Calendar size={12} className="text-ember-600" />
                 <span>{t('admin.noticesStartLabel')}</span>
               </label>
               <input
@@ -380,7 +377,7 @@ export default function NoticesTab({ toast, confirmAction }: NoticesTabProps) {
 
             <div>
               <label className={LABEL_CLASS}>
-                <Calendar size={13} className="text-[#E59A59]" />
+                <Calendar size={12} className="text-ember-600" />
                 <span>{t('admin.noticesEndLabel')}</span>
               </label>
               <input
@@ -392,115 +389,105 @@ export default function NoticesTab({ toast, confirmAction }: NoticesTabProps) {
             </div>
           </div>
 
-          <div className="mt-5 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={closeForm}
-              className="flex h-10 items-center justify-center whitespace-nowrap rounded-xl border border-[#EBDFCE] bg-white px-4 text-xs font-bold text-stone-600 transition hover:bg-[#FAF6EE] active:scale-95"
-            >
+          <div className="mt-5 flex justify-end gap-2 border-t border-ink-900/10 pt-4">
+            <Button type="button" variant="secondary" size="sm" onClick={closeForm}>
               {t('common.cancel')}
-            </button>
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={saving}
-              className="flex h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#712E1E] px-5 text-xs font-bold text-white shadow-sm transition hover:bg-[#8a4030] active:scale-95 disabled:opacity-60"
-            >
+            </Button>
+            <Button type="button" size="sm" onClick={handleSave} disabled={saving}>
               {saving ? t('common.loading') : t('common.save')}
-            </button>
+            </Button>
           </div>
         </div>
       )}
 
-      {/* Tabel Notice */}
       {loading ? (
-        <div className="rounded-2xl border border-[#EBDFCE] bg-white p-10 text-center text-sm text-stone-400 shadow-sm">
+        <div className="paper-panel px-6 py-12 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
           {t('common.loading')}
         </div>
       ) : rows.length === 0 ? (
-        <div className="rounded-2xl border border-[#EBDFCE] bg-white p-10 text-center text-sm text-stone-400 shadow-sm">
+        <div className="paper-panel px-6 py-12 text-center text-[12px] italic text-ink-400">
           {t('admin.noticesEmpty')}
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-[#EBDFCE] bg-white shadow-sm">
+        <div className="paper-panel overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-stone-600">
-              <thead className="border-b border-[#EBDFCE] bg-[#FAF6EE] text-xs font-bold uppercase tracking-wider text-[#712E1E]">
+            <table className="w-full text-left text-[12px] text-ink-600">
+              <thead className="border-b border-ink-900/12 bg-cream-100">
                 <tr>
-                  <th className="p-4">{t('admin.noticesThNotice')}</th>
-                  <th className="p-4">{t('admin.noticesThMode')}</th>
-                  <th className="p-4">{t('admin.noticesThSchedule')}</th>
-                  <th className="p-4 text-center">{t('admin.noticesThStatus')}</th>
-                  <th className="p-4 text-center">{t('admin.noticesThActions')}</th>
+                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.noticesThNotice')}</th>
+                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.noticesThMode')}</th>
+                  <th className="px-4 py-3.5 font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.noticesThSchedule')}</th>
+                  <th className="px-4 py-3.5 text-center font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.noticesThStatus')}</th>
+                  <th className="px-4 py-3.5 text-center font-data text-[8px] font-medium uppercase tracking-[0.14em] text-ink-500">{t('admin.noticesThActions')}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F3EBDF]">
+              <tbody className="divide-y divide-ink-900/10">
                 {rows.map((row) => {
                   const status = deriveStatus(row);
                   const schedule = formatSchedule(row, language);
                   return (
                     <tr
                       key={row.id}
-                      className={`transition ${row.is_active ? 'hover:bg-[#FAF6EE]/60' : 'bg-[#FAF6EE]/50 opacity-70'}`}
+                      className={`transition-colors ${row.is_active ? 'hover:bg-cream-100/50' : 'bg-cream-100/40 opacity-70'}`}
                     >
-                      <td className="p-4">
+                      <td className="px-4 py-4">
                         <span
-                          className={`inline-flex w-fit items-center rounded-lg border px-2 py-0.5 text-[10px] font-bold uppercase ${TYPE_STYLE[row.type] ?? TYPE_STYLE.info}`}
+                          className={`inline-flex w-fit items-center border px-2 py-0.5 font-data text-[8px] uppercase tracking-[0.1em] ${TYPE_STYLE[row.type] ?? TYPE_STYLE.info}`}
                         >
                           {row.type}
                         </span>
-                        <div className="mt-1 max-w-[320px] font-bold text-[#712E1E]">{row.title}</div>
+                        <div className="mt-1.5 max-w-[320px] font-display text-lg leading-tight tracking-[-0.03em] text-ink-950">{row.title}</div>
                         {row.body && (
-                          <div className="mt-0.5 max-w-[320px] truncate text-xs text-stone-400" title={row.body}>
+                          <div className="mt-1 max-w-[320px] truncate text-[11px] text-ink-400" title={row.body}>
                             {row.body}
                           </div>
                         )}
                       </td>
-                      <td className="p-4">
-                        <span className="rounded-lg border border-[#EBDFCE] bg-[#F7EEE3] px-2 py-1 text-xs font-medium text-[#B4693F]">
+                      <td className="px-4 py-4">
+                        <span className="border border-ink-900/12 bg-cream-100 px-2 py-1 font-data text-[8px] uppercase tracking-[0.1em] text-ink-600">
                           {modeLabel(row.mode)}
                         </span>
                       </td>
-                      <td className="p-4 text-xs text-stone-500">
-                        <div className="font-medium">{schedule.start}</div>
-                        <div className="text-stone-400">→ {schedule.end}</div>
+                      <td className="px-4 py-4 font-data text-[9px] text-ink-500">
+                        <div>{schedule.start}</div>
+                        <div className="mt-1 text-ink-400">→ {schedule.end}</div>
                       </td>
-                      <td className="p-4 text-center">
+                      <td className="px-4 py-4 text-center">
                         <span
-                          className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-bold ${STATUS_STYLE[status]}`}
+                          className={`inline-flex items-center border px-2.5 py-1 font-data text-[8px] uppercase tracking-[0.1em] ${STATUS_STYLE[status]}`}
                         >
                           {statusLabel[status]}
                         </span>
                       </td>
-                      <td className="p-4">
-                        <div className="flex items-center justify-center gap-1.5">
+                      <td className="px-4 py-4">
+                        <div className="flex items-center justify-center gap-1">
                           <button
                             type="button"
                             onClick={() => openEdit(row)}
                             title={t('admin.noticesBtnEdit')}
-                            className="rounded-xl border border-blue-200 bg-blue-50 p-2 text-blue-600 transition hover:bg-blue-100"
+                            className="grid h-8 w-8 place-items-center border border-ink-900/12 text-ink-500 transition-colors hover:border-ember-500/40 hover:bg-ember-500/[0.06] hover:text-ember-600"
                           >
-                            <Pencil size={15} />
+                            <Pencil size={14} />
                           </button>
                           <button
                             type="button"
                             onClick={() => handleToggleActive(row)}
                             title={row.is_active ? t('admin.statusInactive') : t('admin.statusActive')}
-                            className={`rounded-xl border p-2 transition ${
+                            className={`grid h-8 w-8 place-items-center border transition-colors ${
                               row.is_active
-                                ? 'border-emerald-200 bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
-                                : 'border-stone-200 bg-stone-100 text-stone-500 hover:bg-stone-200'
+                                ? 'border-success-600/25 bg-success-600/[0.06] text-success-700 hover:bg-success-600/10'
+                                : 'border-ink-900/12 bg-cream-100 text-ink-400 hover:text-ink-700'
                             }`}
                           >
-                            {row.is_active ? <ToggleRight size={16} /> : <ToggleLeft size={16} />}
+                            {row.is_active ? <ToggleRight size={15} /> : <ToggleLeft size={15} />}
                           </button>
                           <button
                             type="button"
                             onClick={() => handleDelete(row)}
                             title={t('common.delete')}
-                            className="rounded-xl border border-rose-200 bg-rose-50 p-2 text-rose-500 transition hover:bg-rose-100"
+                            className="grid h-8 w-8 place-items-center border border-danger-600/20 text-danger-600 transition-colors hover:bg-danger-600/[0.06]"
                           >
-                            <Trash2 size={15} />
+                            <Trash2 size={14} />
                           </button>
                         </div>
                       </td>

@@ -31,7 +31,7 @@ interface DialogState {
 function CapNotice({ total, shown, label }: { total: number | null; shown: number; label: string }) {
   if (typeof total !== "number" || total <= shown) return null;
   return (
-    <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-medium text-amber-800">
+    <div className="border border-amber-600/25 bg-amber-500/[0.07] px-4 py-3 font-data text-[9px] uppercase tracking-[0.08em] text-amber-800">
       Menampilkan {shown.toLocaleString("id-ID")} {label} terbaru dari total{" "}
       {total.toLocaleString("id-ID")}. Data lebih lama tidak termuat dalam daftar ini.
     </div>
@@ -191,12 +191,17 @@ export default function AdminPanel() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden h-dvh w-full font-sans bg-[#F1E8DC] relative">
+    <div className="relative flex h-dvh w-full flex-col overflow-hidden bg-cream-100 font-sans text-ink-900">
       <AdminNavbar userEmail={userEmail} />
 
-      <div className="flex flex-1 overflow-hidden min-h-0 w-full relative">
+      <div className="relative flex min-h-0 w-full flex-1 overflow-hidden">
         {sidebarOpen && (
-          <div onClick={() => setSidebarOpen(false)} className="z-40 bg-black/40 fixed inset-0 lg:hidden" />
+          <button
+            type="button"
+            aria-label={t("nav.close")}
+            onClick={() => setSidebarOpen(false)}
+            className="fixed inset-0 z-40 bg-ink-950/55 backdrop-blur-[2px] lg:hidden"
+          />
         )}
 
         <AdminSidebar
@@ -218,101 +223,116 @@ export default function AdminPanel() {
           onConfirm={dialog.onConfirm ?? undefined}
         />
 
-        <div className="flex flex-1 flex-col overflow-hidden h-full min-h-0 min-w-0 relative">
-          <header className="flex px-4 py-3 bg-[#712E1E] border-b border-black/20 shrink-0 items-center gap-2 lg:hidden">
-            <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-xl hover:bg-white/10">
-              <Menu size={20} className="text-[#FFD5AF]" />
+        <div className="relative flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+          <header className="flex shrink-0 items-center gap-2 border-b border-cream-100/10 bg-ink-950 px-4 py-3 lg:hidden">
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              aria-label={t("nav.menu")}
+              className="p-2 text-cream-100/80 transition-colors hover:text-cream-50"
+            >
+              <Menu size={20} />
             </button>
-            <div className="flex-1">
-              <h2 className="text-sm font-bold text-white">
-                {menuItems.find((m) => m.id === activeTab)?.label ?? "Edit Undangan"}
+            <div className="min-w-0 flex-1 px-1">
+              <p className="font-data text-[8px] uppercase tracking-[0.18em] text-peach-300/65">
+                {t("admin.title")}
+              </p>
+              <h2 className="mt-0.5 truncate text-[12px] font-semibold text-cream-50">
+                {menuItems.find((m) => m.id === activeTab)?.label ?? t("admin.editInvitationTitle")}
               </h2>
             </div>
-            <button onClick={handleLogout} className="p-2 rounded-xl hover:bg-white/10" title={t('nav.logout')}>
-              <LogOut size={18} className="text-red-300" />
+            <button
+              type="button"
+              onClick={handleLogout}
+              aria-label={t("nav.logout")}
+              className="p-2 text-cream-100/50 transition-colors hover:text-cream-50"
+            >
+              <LogOut size={18} />
             </button>
           </header>
 
-          <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
-            {activeTab === "edit" && editingOrder ? (
-              <EditOrderModal
-                editingOrder={editingOrder}
-                setEditingOrder={setEditingOrder}
-                editFormData={editFormData}
-                setEditFormData={setEditFormData}
-                templates={templates}
-                fetchData={refreshAll}
-                toast={toast}
-                onBack={handleBackToOrders}
-                onSaved={handleSaved}
-              />
-            ) : (
-              <div className="max-w-7xl mx-auto space-y-6">
-                {activeTab === "orders" && (
-                  <OrdersTab
-                    ordersSrv={ordersFilter}
-                    pendingOrders={pendingOrders}
-                    confirmAction={confirmAction}
-                    fetchData={refreshAll}
-                    toast={toast}
-                    viewMode="orders"
-                    onEditOrder={handleEditOrder}
-                  />
-                )}
-
-                {activeTab === "whatsapp" && (
-                  <>
-                    <CapNotice total={pendingTotal} shown={pendingOrders.length} label="pesanan masuk" />
+          <main className="flex-1 overflow-y-auto">
+            <div className="mx-auto w-full max-w-[1360px] px-4 pb-16 pt-7 sm:px-6 lg:px-8 lg:pt-9">
+              {activeTab === "edit" && editingOrder ? (
+                <EditOrderModal
+                  editingOrder={editingOrder}
+                  setEditingOrder={setEditingOrder}
+                  editFormData={editFormData}
+                  setEditFormData={setEditFormData}
+                  templates={templates}
+                  fetchData={refreshAll}
+                  toast={toast}
+                  onBack={handleBackToOrders}
+                  onSaved={handleSaved}
+                />
+              ) : (
+                <div key={activeTab} className="animate-msg-in space-y-6">
+                  {activeTab === "orders" && (
                     <OrdersTab
                       ordersSrv={ordersFilter}
                       pendingOrders={pendingOrders}
                       confirmAction={confirmAction}
                       fetchData={refreshAll}
                       toast={toast}
-                      viewMode="pending"
+                      viewMode="orders"
                       onEditOrder={handleEditOrder}
                     />
-                  </>
-                )}
+                  )}
 
-                {activeTab === "templates" && (
-                  <TemplatesTab
-                    templates={templates}
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    confirmAction={confirmAction}
-                    fetchData={fetchData}
-                    toast={toast}
-                    loading={loading}
-                  />
-                )}
+                  {activeTab === "whatsapp" && (
+                    <>
+                      <CapNotice total={pendingTotal} shown={pendingOrders.length} label="pesanan masuk" />
+                      <OrdersTab
+                        ordersSrv={ordersFilter}
+                        pendingOrders={pendingOrders}
+                        confirmAction={confirmAction}
+                        fetchData={refreshAll}
+                        toast={toast}
+                        viewMode="pending"
+                        onEditOrder={handleEditOrder}
+                      />
+                    </>
+                  )}
 
-                {activeTab === "notices" && (
-                  <NoticesTab toast={toast} confirmAction={confirmAction} />
-                )}
+                  {activeTab === "templates" && (
+                    <TemplatesTab
+                      templates={templates}
+                      searchTerm={searchTerm}
+                      setSearchTerm={setSearchTerm}
+                      confirmAction={confirmAction}
+                      fetchData={fetchData}
+                      toast={toast}
+                      loading={loading}
+                    />
+                  )}
 
-                {activeTab === "inbox" && (
-                  <InboxTab toast={toast} onCountChange={setInboxUnread} />
-                )}
+                  {activeTab === "notices" && (
+                    <NoticesTab toast={toast} confirmAction={confirmAction} />
+                  )}
 
-                {activeTab === "audit" && (
-                  <AuditTab toast={toast} />
-                )}
+                  {activeTab === "inbox" && (
+                    <InboxTab toast={toast} onCountChange={setInboxUnread} />
+                  )}
 
-                {activeTab === "edit" && !editingOrder && (
-                  <p className="text-sm text-gray-500 py-10">Pilih pesanan dari menu Data Pesanan, lalu klik tombol Edit untuk mengubah data.</p>
-                )}
-              </div>
-            )}
+                  {activeTab === "audit" && <AuditTab toast={toast} />}
+
+                  {activeTab === "edit" && !editingOrder && (
+                    <p className="py-10 text-[12px] text-ink-400">
+                      Pilih pesanan dari menu Data Pesanan, lalu klik tombol Edit untuk mengubah data.
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
           </main>
         </div>
       </div>
 
       <ConfirmDialog
         isOpen={showLogoutDialog}
-        title={t('nav.logoutConfirmTitle')}
-        message={t('nav.logoutConfirm')}
-        isDanger={true}
+        title={t("nav.logoutConfirmTitle")}
+        message={t("nav.logoutConfirm")}
+        isDanger
         onCancel={() => setShowLogoutDialog(false)}
         onConfirm={performLogout}
       />

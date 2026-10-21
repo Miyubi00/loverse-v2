@@ -6,14 +6,11 @@
 // Keterikatan : types/database (OrderRow), lucide-react
 // ============================================================
 
-// Navbar atas Dashboard (desktop): brand + aksi global.
-// Nama mempelai hanya ditampilkan di profil sidebar (tanpa duplikasi);
-// logout ada di footer sidebar.
-
-import { ExternalLink, HeartHandshake } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import type { OrderRow } from "../../types/database";
 import { useTranslation } from "../../i18n";
 import LanguageSwitcher from "../shared/LanguageSwitcher";
+import { Wordmark } from "../ui/Brand";
 
 interface CustomerNavbarProps {
   order: OrderRow;
@@ -23,65 +20,30 @@ export default function CustomerNavbar({ order }: CustomerNavbarProps) {
   const { t } = useTranslation();
 
   return (
-    <header
-      className="
-        hidden
-        px-6 py-3
-        bg-[#712E1E]
-        border-b border-black/20
-        shrink-0 items-center justify-between
-        lg:flex
-      "
-    >
-      <div
-        className="
-          flex
-          items-center gap-3
-        "
-      >
-        <div
-          className="
-            p-2
-            bg-white/10
-            rounded-xl
-          "
-        >
-          <HeartHandshake
-            className="
-              h-5 w-5
-              text-[#FFD5AF]
-            "
-          />
+    <header className="hidden shrink-0 items-center justify-between border-b border-cream-100/12 bg-ink-950 px-6 py-3 lg:flex">
+      <div className="flex items-center gap-5">
+        <Wordmark imageClassName="h-7" />
+        <span className="h-5 w-px bg-cream-100/15" aria-hidden="true" />
+        <div>
+          <p className="font-data text-[8px] uppercase tracking-[0.22em] text-peach-300/70">
+            {t("customer.workspace")}
+          </p>
+          <p className="mt-0.5 text-[12px] font-medium text-cream-100/80">
+            {t("nav.dashboard")}
+          </p>
         </div>
-        <h1
-          className="
-            text-base font-bold text-white
-          "
-        >
-          {t("nav.dashboard")}
-        </h1>
       </div>
 
-      {/* Right controls */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         <LanguageSwitcher variant="header" />
-
         <a
           href={`/wedding/${order.slug}`}
           target="_blank"
           rel="noreferrer"
-          className="
-            flex
-            px-3.5 py-2
-            text-xs font-semibold text-white
-            bg-white/15
-            rounded-xl
-            shadow-sm
-            items-center gap-2 transition hover:bg-white/25
-          "
+          className="inline-flex min-h-9 items-center gap-2 border border-cream-100/25 px-3.5 font-data text-[9px] uppercase tracking-[0.16em] text-cream-100 transition-colors hover:border-cream-50 hover:bg-cream-50 hover:text-ink-950"
         >
           <span>{t("customer.viewInvitation")}</span>
-          <ExternalLink size={13} />
+          <ExternalLink size={12} />
         </a>
       </div>
     </header>

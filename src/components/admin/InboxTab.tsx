@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import type { ToastApi } from '../GlobalToast';
+import Button from '../ui/Button';
 import { useTranslation } from '../../i18n';
 
 export interface InboxAttachment {
@@ -87,7 +88,7 @@ function renderLinkified(text: string): ReactNode[] {
     if (m.index > last) parts.push(text.slice(last, m.index));
     if (url) {
       parts.push(
-        <a key={k++} href={url} target="_blank" rel="noopener noreferrer" className="break-all font-semibold text-blue-700 underline">
+        <a key={k++} href={url} target="_blank" rel="noopener noreferrer" className="break-all font-semibold text-ember-600 underline">
           {url}
         </a>,
       );
@@ -260,115 +261,124 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#712E1E]">
-            <Inbox size={20} className="text-[#FFD5AF]" />
-          </span>
-          <div>
-            <h2 className="text-lg font-black text-stone-800">{t('admin.inboxTitle')}</h2>
-            <p className="text-xs text-stone-500">{t('admin.inboxSubtitle')}</p>
-          </div>
+    <div>
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="eyebrow text-ember-600">Control / Inbox</p>
+          <h2 className="mt-2 font-display text-[clamp(2rem,4vw,3.1rem)] leading-none tracking-[-0.05em] text-ink-950">
+            {t('admin.inboxTitle')}
+          </h2>
+          <p className="mt-2 max-w-xl text-[12px] leading-relaxed text-ink-500">{t('admin.inboxSubtitle')}</p>
         </div>
-        <button
+        <Button
           type="button"
+          variant="secondary"
+          size="sm"
           onClick={() => void refreshMessages()}
-          className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-white px-3 py-2 text-xs font-bold text-stone-600 shadow-sm hover:bg-stone-100"
+          icon={<RefreshCw size={14} className={loading ? 'animate-spin' : ''} />}
         >
-          <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
           {t('admin.inboxRefresh')}
-        </button>
+        </Button>
       </div>
 
       {loading && messages.length === 0 ? (
-        <p className="py-10 text-center text-sm text-stone-400">{t('common.loading')}</p>
+        <div className="paper-panel px-6 py-12 text-center font-data text-[9px] uppercase tracking-[0.14em] text-ink-400">
+          {t('common.loading')}
+        </div>
       ) : messages.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-stone-300 bg-white/60 p-10 text-center">
-          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#faf3e9]">
-            <Inbox size={24} className="text-[#b89a83]" />
+        <div className="paper-panel flex flex-col items-center px-6 py-14 text-center">
+          <span className="grid h-12 w-12 place-items-center border border-ink-900/12 bg-cream-100 text-ember-600">
+            <Inbox size={22} />
           </span>
-          <p className="mt-3 text-sm font-bold text-stone-500">{t('admin.inboxEmpty')}</p>
+          <p className="mt-4 text-[12px] italic text-ink-400">{t('admin.inboxEmpty')}</p>
         </div>
       ) : (
-        <div className="grid items-start gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
-          {/* daftar pesan */}
-          <div className="space-y-2">
-            {messages.map((m) => (
-              <button
-                key={m.id}
-                type="button"
-                onClick={() => void openMessage(m)}
-                className={`flex w-full items-start gap-3 rounded-2xl border p-3 text-left shadow-sm transition ${
-                  selected?.id === m.id
-                    ? 'border-[#712E1E] bg-[#faf6ef]'
-                    : 'border-stone-200 bg-white hover:border-stone-300'
-                }`}
-              >
-                <span
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-black ${
-                    m.is_read ? 'bg-stone-200 text-stone-500' : 'bg-[#712E1E] text-[#FFD5AF]'
+        <div className="grid items-start gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
+          <div className="paper-panel overflow-hidden">
+            <div className="flex items-center justify-between border-b border-ink-900/10 bg-cream-100 px-4 py-3">
+              <span className="font-data text-[8px] uppercase tracking-[0.14em] text-ink-500">Messages</span>
+              <span className="font-data text-[9px] text-ink-400">{messages.length}</span>
+            </div>
+            <div className="max-h-[calc(100vh-16rem)] divide-y divide-ink-900/10 overflow-y-auto">
+              {messages.map((m) => (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => void openMessage(m)}
+                  className={`flex w-full items-start gap-3 border-l-2 p-3.5 text-left transition-colors ${
+                    selected?.id === m.id
+                      ? 'border-ember-500 bg-peach-100/60'
+                      : 'border-transparent hover:bg-cream-100/60'
                   }`}
                 >
-                  {initialOf(m.from_addr)}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="flex items-center gap-1.5">
-                    {m.is_read ? (
-                      <MailOpen size={13} className="shrink-0 text-stone-400" />
-                    ) : (
-                      <Mail size={13} className="shrink-0 text-[#712E1E]" />
-                    )}
-                    <span className={`truncate text-[13px] ${m.is_read ? 'font-semibold text-stone-600' : 'font-black text-stone-800'}`}>
-                      {m.from_addr}
-                    </span>
-                    {!m.is_read && <span className="h-2 w-2 shrink-0 rounded-full bg-[#712E1E]" />}
+                  <span
+                    className={`grid h-9 w-9 shrink-0 place-items-center border font-data text-[11px] font-semibold ${
+                      m.is_read
+                        ? 'border-ink-900/12 bg-cream-100 text-ink-400'
+                        : 'border-ember-500/30 bg-ember-600 text-cream-50'
+                    }`}
+                  >
+                    {initialOf(m.from_addr)}
                   </span>
-                  <span className="mt-0.5 block truncate text-xs font-semibold text-stone-500">{m.subject}</span>
-                  <span className="mt-0.5 block truncate text-[11px] text-stone-400">
-                    {(m.text_body || '').split('\n')[0]}
-                  </span>
-                  <span className="mt-1 flex items-center justify-between text-[11px] text-stone-400">
-                    <span className="inline-flex items-center gap-1">
-                      <CalendarDays size={11} /> {formatDate(m.received_at)}
-                    </span>
-                    {m.replied_at && (
-                      <span className="inline-flex items-center gap-1 font-bold text-green-700">
-                        <CheckCheck size={12} /> {t('admin.inboxReplied')}
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center gap-1.5">
+                      {m.is_read ? (
+                        <MailOpen size={12} className="shrink-0 text-ink-300" />
+                      ) : (
+                        <Mail size={12} className="shrink-0 text-ember-600" />
+                      )}
+                      <span className={`truncate text-[11px] ${m.is_read ? 'font-medium text-ink-500' : 'font-semibold text-ink-900'}`}>
+                        {m.from_addr}
                       </span>
-                    )}
+                      {!m.is_read && <span className="ml-auto h-1.5 w-1.5 shrink-0 bg-ember-600" />}
+                    </span>
+                    <span className={`mt-1 block truncate text-[12px] ${m.is_read ? 'font-medium text-ink-600' : 'font-semibold text-ink-900'}`}>
+                      {m.subject}
+                    </span>
+                    <span className="mt-1 block truncate text-[10px] text-ink-400">
+                      {(m.text_body || '').split('\n')[0]}
+                    </span>
+                    <span className="mt-2 flex items-center justify-between font-data text-[8px] uppercase tracking-[0.08em] text-ink-400">
+                      <span className="inline-flex items-center gap-1">
+                        <CalendarDays size={10} /> {formatDate(m.received_at)}
+                      </span>
+                      {m.replied_at && (
+                        <span className="inline-flex items-center gap-1 text-success-700">
+                          <CheckCheck size={10} /> {t('admin.inboxReplied')}
+                        </span>
+                      )}
+                    </span>
                   </span>
-                </span>
-              </button>
-            ))}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* isi pesan */}
-          <div className="h-fit overflow-hidden rounded-2xl bg-white shadow-sm">
+          <div className="paper-panel overflow-hidden">
             {!selected ? (
-              <p className="flex items-center justify-center gap-2 px-6 py-14 text-center text-sm text-stone-400">
-                <MailOpen size={16} /> {t('admin.inboxSelectHint')}
+              <p className="flex items-center justify-center gap-2 px-6 py-16 text-center text-[12px] italic text-ink-400">
+                <MailOpen size={15} /> {t('admin.inboxSelectHint')}
               </p>
             ) : (
               <div>
-                <div className="border-b border-stone-100 bg-[#faf6ef] px-5 py-4">
+                <div className="border-b border-ink-900/10 bg-cream-100 px-5 py-4">
                   <p className="flex items-start gap-2.5">
-                    <FileText size={18} className="mt-0.5 shrink-0 text-[#712E1E]" />
-                    <span className="text-[15px] font-black leading-snug text-stone-800">{selected.subject}</span>
+                    <FileText size={17} className="mt-0.5 shrink-0 text-ember-600" />
+                    <span className="font-display text-xl leading-snug tracking-[-0.03em] text-ink-950">{selected.subject}</span>
                   </p>
-                  <div className="mt-3 space-y-1.5 text-xs text-stone-500">
+                  <div className="mt-3 grid gap-1.5 text-[11px] text-ink-500 sm:grid-cols-2">
                     <p className="flex items-center gap-2">
-                      <User size={13} className="shrink-0 text-[#712E1E]" />
-                      {t('admin.inboxFrom')} <strong className="text-stone-700">{selected.from_addr}</strong>
+                      <User size={12} className="shrink-0 text-ember-600" />
+                      {t('admin.inboxFrom')} <strong className="font-semibold text-ink-800">{selected.from_addr}</strong>
                     </p>
                     <p className="flex items-center gap-2">
-                      <CalendarDays size={13} className="shrink-0 text-[#712E1E]" />
+                      <CalendarDays size={12} className="shrink-0 text-ember-600" />
                       {formatDate(selected.received_at)}
                     </p>
                     <p className="flex items-center gap-2">
-                      <BadgeCheck size={13} className={`shrink-0 ${selected.replied_at ? 'text-green-700' : 'text-stone-400'}`} />
+                      <BadgeCheck size={12} className={`shrink-0 ${selected.replied_at ? 'text-success-700' : 'text-ink-300'}`} />
                       {selected.replied_at ? (
-                        <span className="font-bold text-green-700">{t('admin.inboxReplied')}</span>
+                        <span className="font-semibold text-success-700">{t('admin.inboxReplied')}</span>
                       ) : (
                         <span>{t('admin.inboxUnread')}</span>
                       )}
@@ -378,22 +388,22 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
 
                 <div className="px-5 py-4">
                   <div className="mb-2 flex items-center justify-between gap-2">
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#b89a83]">
+                    <p className="font-data text-[8px] uppercase tracking-[0.14em] text-ink-400">
                       {t('admin.inboxMessageLabel')}
                     </p>
                     {selected.html_body ? (
-                      <span className="inline-flex overflow-hidden rounded-lg border border-stone-200 text-[11px] font-bold">
+                      <span className="inline-flex overflow-hidden border border-ink-900/12">
                         <button
                           type="button"
                           onClick={() => setViewHtml(true)}
-                          className={`px-2.5 py-1 ${viewHtml ? 'bg-[#712E1E] text-white' : 'bg-white text-stone-500 hover:bg-stone-100'}`}
+                          className={`px-2.5 py-1 font-data text-[8px] uppercase tracking-[0.08em] transition-colors ${viewHtml ? 'bg-ink-950 text-cream-50' : 'bg-cream-50 text-ink-500 hover:bg-cream-100'}`}
                         >
                           {t('admin.inboxViewHtml')}
                         </button>
                         <button
                           type="button"
                           onClick={() => setViewHtml(false)}
-                          className={`px-2.5 py-1 ${!viewHtml ? 'bg-[#712E1E] text-white' : 'bg-white text-stone-500 hover:bg-stone-100'}`}
+                          className={`border-l border-ink-900/12 px-2.5 py-1 font-data text-[8px] uppercase tracking-[0.08em] transition-colors ${!viewHtml ? 'bg-ink-950 text-cream-50' : 'bg-cream-50 text-ink-500 hover:bg-cream-100'}`}
                         >
                           {t('admin.inboxViewText')}
                         </button>
@@ -405,11 +415,11 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                       title={selected.subject}
                       srcDoc={selected.html_body}
                       sandbox=""
-                      className="h-[30rem] w-full rounded-xl border border-stone-200 bg-white"
+                      className="h-[30rem] w-full border border-ink-900/12 bg-white"
                     />
                   ) : (
-                    <div className="rounded-xl border-l-4 border-[#712E1E] bg-[#faf8f4] p-4">
-                      <p className="max-h-72 overflow-y-auto whitespace-pre-wrap text-[13px] leading-relaxed text-stone-700">
+                    <div className="border-l-2 border-ember-500 bg-cream-100/60 p-4">
+                      <p className="max-h-72 overflow-y-auto whitespace-pre-wrap text-[12px] leading-relaxed text-ink-700">
                         {selected.text_body ? renderLinkified(selected.text_body) : `(${t('admin.inboxNoBody')})`}
                       </p>
                     </div>
@@ -418,8 +428,8 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
 
                 {(selected.attachments ?? []).length > 0 && (
                   <div className="px-5 pb-1">
-                    <p className="mb-2 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#b89a83]">
-                      <Paperclip size={12} /> {t('admin.inboxAttachments')} ({(selected.attachments ?? []).length})
+                    <p className="mb-2 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.14em] text-ink-400">
+                      <Paperclip size={11} /> {t('admin.inboxAttachments')} ({(selected.attachments ?? []).length})
                     </p>
                     <div className="flex flex-wrap gap-2.5">
                       {(selected.attachments ?? []).map((a, i) =>
@@ -430,10 +440,10 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                             target="_blank"
                             rel="noopener noreferrer"
                             title={`${a.name} · ${formatSize(a.size)}`}
-                            className="group relative block h-20 w-20 overflow-hidden rounded-xl border border-stone-200 bg-stone-100 hover:border-[#712E1E]"
+                            className="group relative block h-20 w-20 overflow-hidden border border-ink-900/12 bg-cream-100 hover:border-ember-500"
                           >
                             <img src={a.url} alt={a.name} className="h-full w-full object-cover" loading="lazy" />
-                            <span className="absolute inset-x-0 bottom-0 truncate bg-black/55 px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                            <span className="absolute inset-x-0 bottom-0 truncate bg-ink-950/75 px-1.5 py-0.5 text-[9px] font-medium text-cream-50">
                               {a.name}
                             </span>
                           </a>
@@ -444,18 +454,18 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                             target="_blank"
                             rel="noopener noreferrer"
                             title={`${a.name} · ${formatSize(a.size)}`}
-                            className="flex w-44 items-center gap-2.5 rounded-xl border border-stone-200 bg-white p-2.5 hover:border-[#712E1E]"
+                            className="flex w-44 items-center gap-2.5 border border-ink-900/12 bg-cream-50 p-2.5 hover:border-ember-500"
                           >
                             <span
-                              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg font-black ${
-                                isPdfAtt(a) ? 'bg-red-100 text-red-700' : 'bg-stone-100 text-stone-500'
+                              className={`grid h-9 w-9 shrink-0 place-items-center font-data text-[8px] font-semibold ${
+                                isPdfAtt(a) ? 'bg-danger-600/10 text-danger-600' : 'bg-cream-100 text-ink-500'
                               }`}
                             >
-                              {isPdfAtt(a) ? <span className="text-[10px]">PDF</span> : <FileText size={18} />}
+                              {isPdfAtt(a) ? 'PDF' : <FileText size={16} />}
                             </span>
                             <span className="min-w-0">
-                              <span className="block truncate text-xs font-semibold text-stone-700">{a.name}</span>
-                              <span className="block text-[11px] text-stone-400">{formatSize(a.size)}</span>
+                              <span className="block truncate text-[11px] font-semibold text-ink-800">{a.name}</span>
+                              <span className="block font-data text-[9px] text-ink-400">{formatSize(a.size)}</span>
                             </span>
                           </a>
                         ),
@@ -464,26 +474,22 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                   </div>
                 )}
 
-                <div className="border-t border-stone-100 px-5 py-4">
+                <div className="border-t border-ink-900/10 px-5 py-4">
                   {!replyOpen ? (
-                    <button
-                      type="button"
-                      onClick={() => setReplyOpen(true)}
-                      className="inline-flex items-center gap-2 rounded-xl bg-[#712E1E] px-4 py-2 text-xs font-bold text-white hover:bg-[#5a2318]"
-                    >
-                      <Reply size={14} /> {t('admin.inboxReplyButton')}
-                    </button>
+                    <Button type="button" size="sm" onClick={() => setReplyOpen(true)} icon={<Reply size={14} />}>
+                      {t('admin.inboxReplyButton')}
+                    </Button>
                   ) : (
                     <div>
-                      <label className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#712E1E]">
-                        <Reply size={13} /> {t('admin.inboxReplyLabel')}
+                      <label className="mb-1.5 flex items-center gap-1.5 font-data text-[8px] uppercase tracking-[0.14em] text-ink-500">
+                        <Reply size={12} className="text-ember-600" /> {t('admin.inboxReplyLabel')}
                       </label>
                       <textarea
                         value={reply}
                         onChange={(e) => setReply(e.target.value)}
                         rows={4}
                         placeholder={t('admin.inboxReplyPlaceholder')}
-                        className="w-full rounded-xl border border-[#EBDFCE] bg-[#FAF6EE] p-3 text-sm text-stone-800 outline-none placeholder:text-stone-400 focus:border-[#E59A59] focus:bg-white"
+                        className="w-full border border-ink-900/15 bg-cream-50 p-3 text-[12px] text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/15"
                       />
                       <input
                         ref={fileInputRef}
@@ -504,24 +510,25 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                             return (
                               <span key={i} className="group relative block">
                                 {img ? (
-                                  <img src={a.url} alt={a.file.name} className="h-20 w-20 rounded-xl border border-stone-200 object-cover" />
+                                  <img src={a.url} alt={a.file.name} className="h-20 w-20 border border-ink-900/12 object-cover" />
                                 ) : (
                                   <span
-                                    className={`flex h-20 w-20 flex-col items-center justify-center gap-1 rounded-xl border border-stone-200 font-black ${
-                                      pdf ? 'bg-red-50 text-red-700' : 'bg-stone-100 text-stone-500'
+                                    className={`flex h-20 w-20 flex-col items-center justify-center gap-1 border border-ink-900/12 font-data ${
+                                      pdf ? 'bg-danger-600/10 text-danger-600' : 'bg-cream-100 text-ink-500'
                                     }`}
                                   >
-                                    {pdf ? <span className="text-xs">PDF</span> : <FileText size={20} />}
-                                    <span className="max-w-[64px] truncate px-1 text-[9px] font-semibold">{a.file.name}</span>
+                                    {pdf ? <span className="text-[10px] font-semibold">PDF</span> : <FileText size={18} />}
+                                    <span className="max-w-[64px] truncate px-1 text-[8px] font-medium">{a.file.name}</span>
                                   </span>
                                 )}
-                                <span className="absolute -bottom-1 left-1 rounded-full bg-black/55 px-1.5 text-[9px] font-semibold text-white">
+                                <span className="absolute -bottom-1 left-1 bg-ink-950/75 px-1.5 font-data text-[8px] text-cream-50">
                                   {formatSize(a.file.size)}
                                 </span>
                                 <button
                                   type="button"
                                   onClick={() => removeAttachFile(i)}
-                                  className="absolute -right-1.5 -top-1.5 rounded-full bg-stone-800 p-0.5 text-white hover:bg-red-700"
+                                  aria-label={`Remove ${a.file.name}`}
+                                  className="absolute -right-1.5 -top-1.5 bg-ink-950 p-0.5 text-cream-50 hover:bg-danger-600"
                                 >
                                   <X size={12} />
                                 </button>
@@ -530,34 +537,38 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                           })}
                         </div>
                       )}
-                      <div className="mt-2.5 flex items-center gap-2">
-                        <button
+                      <div className="mt-3 flex flex-wrap items-center gap-2">
+                        <Button
                           type="button"
+                          variant="secondary"
+                          size="sm"
                           onClick={() => fileInputRef.current?.click()}
-                          className="inline-flex items-center gap-2 rounded-xl border border-stone-200 bg-white px-3 py-2 text-xs font-bold text-stone-600 hover:border-stone-300"
+                          icon={<Paperclip size={14} />}
                         >
-                          <Paperclip size={14} /> {t('admin.inboxAttach')}
-                        </button>
-                        <button
+                          {t('admin.inboxAttach')}
+                        </Button>
+                        <Button
                           type="button"
+                          size="sm"
                           onClick={() => void sendReply()}
                           disabled={sending || !reply.trim()}
-                          className="inline-flex items-center gap-2 rounded-xl bg-[#712E1E] px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
+                          icon={<Send size={14} />}
                         >
-                          <Send size={14} /> {sending ? t('admin.inboxSending') : t('admin.inboxSend')}
-                        </button>
-                        <button
+                          {sending ? t('admin.inboxSending') : t('admin.inboxSend')}
+                        </Button>
+                        <Button
                           type="button"
+                          variant="ghost"
+                          size="sm"
                           onClick={() => {
                             setReplyOpen(false);
                             setReply('');
                           }}
-                          className="rounded-xl px-3 py-2 text-xs font-bold text-stone-400 hover:text-stone-600"
                         >
                           {t('admin.inboxCancel')}
-                        </button>
+                        </Button>
                       </div>
-                      <p className="mt-1.5 text-[11px] text-stone-400">{t('admin.inboxAttachHint')}</p>
+                      <p className="mt-1.5 font-data text-[8px] text-ink-400">{t('admin.inboxAttachHint')}</p>
                     </div>
                   )}
                 </div>

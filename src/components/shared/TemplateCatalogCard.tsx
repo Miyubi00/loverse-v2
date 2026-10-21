@@ -1,30 +1,16 @@
-// ============================================================
-// src/components/shared/TemplateCatalogCard.tsx
-// ------------------------------------------------------------
-// Kartu tema katalog dua bagian: cover utuh di atas (bg gelap,
-// zoom halus saat hover) + panel solid brand di bawah berisi
-// judul, chip kategori, serta harga pill + CTA "Pilih Tema"
-// berdampingan. Klik cover/judul = buka demo; CTA = halaman
-// pilih tema.
-// Dipakai di  : pages/HomePage.tsx (section Katalog Tema)
-// Keterikatan : react-router-dom (Link), lucide-react,
-//               components/ui/SkeletonImage, i18n
-// ============================================================
+import { Link } from "react-router-dom";
+import { ArrowUpRight, Eye } from "lucide-react";
+import { SkeletonImage } from "../ui/SkeletonImage";
+import { useTranslation } from "../../i18n";
+import type { TemplateRow } from "../../types/database";
 
-import { Link } from 'react-router-dom';
-import { SkeletonImage } from '../ui/SkeletonImage';
-import { useTranslation } from '../../i18n';
-import type { TemplateRow } from '../../types/database';
-
-// Kanonisasi nama tema saat tampil (data DB tetap tak tersentuh).
 const PRETTY_NAMES: Record<string, string> = {
-  iphone: 'iPhone',
+  iphone: "iPhone",
 };
 const prettifyName = (name: string) => PRETTY_NAMES[name.toLowerCase()] ?? name;
 
 interface TemplateCatalogCardProps {
   template: TemplateRow & { image: string };
-  /** Harga sudah terformat (formatPriceK) dari pemanggil. */
   priceLabel: string;
 }
 
@@ -34,55 +20,56 @@ export default function TemplateCatalogCard({ template, priceLabel }: TemplateCa
   const orderUrl = `/order?template=${template.slug}`;
 
   return (
-    <article
-      data-template-slug={template.slug}
-      className="group relative flex flex-col aspect-[347/387] rounded-2xl sm:rounded-3xl overflow-hidden border border-[#EBDFCE] shadow-sm hover:shadow-[0_22px_45px_-16px_rgba(113,46,30,0.25)] hover:-translate-y-1 transition-all duration-300 bg-[#FAF6EE]"
-    >
-
-      {/* Cover utuh — mengisi sisa tinggi kartu (klik = demo tema) */}
+    <article data-template-slug={template.slug} className="group relative">
       <Link
         to={demoUrl}
         title={`Lihat demo ${template.name}`}
-        aria-label={`Lihat demo ${template.name}`}
-        className="relative block flex-1 min-h-0 overflow-hidden"
+        className="relative block aspect-[3/4] overflow-hidden bg-ink-900"
       >
         <SkeletonImage
           src={template.image}
-          alt={template.name}
+          alt={`Pratinjau tema ${template.name}`}
           width={800}
           height={1066}
-          className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+          className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.045]"
         />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/88 via-ink-950/10 to-ink-950/15" />
+        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <span className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-cream-50/40 bg-cream-50/12 text-cream-50 backdrop-blur-md">
+            <Eye className="h-4 w-4" />
+          </span>
+        </div>
+
+        <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
+          <span className="border border-cream-50/25 bg-ink-950/18 px-2 py-1 font-data text-[8px] uppercase tracking-[0.18em] text-cream-50/85 backdrop-blur-sm">
+            {template.category ?? "Basic"}
+          </span>
+          <span className="font-data text-[9px] text-cream-50/55">No. {String(template.id ?? "").padStart(2, "0") || "—"}</span>
+        </div>
+
+        <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+          <p className="eyebrow text-peach-300/90">{t("home.catalogPreview")}</p>
+          <h3 className="mt-2 font-display text-[clamp(1.35rem,3vw,1.8rem)] leading-none tracking-[-0.035em] text-cream-50">
+            {prettifyName(template.name)}
+          </h3>
+        </div>
       </Link>
 
-      {/* Panel krem brand — tinggi mengikuti konten */}
-      <div className="relative bg-[#FAF6EE] p-2.5 sm:p-4 flex flex-col">
+      <div className="flex items-stretch justify-between border-b border-ink-900/15">
+        <Link
+          to={orderUrl}
+          className="flex min-h-11 flex-1 items-center justify-between px-1 py-3 text-[11px] font-semibold tracking-[0.01em] text-ink-800 transition-colors hover:text-ember-600"
+        >
+          <span>{t("home.catalogCreate")}</span>
+          <span className="font-data text-[10px] text-ink-500">{priceLabel}</span>
+        </Link>
         <Link
           to={demoUrl}
-          title={template.name}
-          className="min-w-0 truncate text-[#712E1E] font-extrabold text-sm sm:text-lg leading-snug hover:underline decoration-2 underline-offset-2"
+          aria-label={`Buka demo ${template.name}`}
+          className="flex w-11 items-center justify-center border-l border-ink-900/15 text-ink-400 transition-colors hover:bg-ink-950 hover:text-cream-50"
         >
-          {prettifyName(template.name)}
+          <ArrowUpRight className="h-4 w-4" />
         </Link>
-
-        {template.category && (
-          <span className="mt-1 sm:mt-2 self-start px-2 py-0.5 rounded-full bg-[#F1E8DC] border border-[#EBDFCE] text-[#712E1E] text-[9px] sm:text-[10px] font-bold">
-            {template.category}
-          </span>
-        )}
-
-        {/* Harga + CTA berdampingan */}
-        <div className="mt-2.5 sm:mt-3 flex items-center gap-1.5 sm:gap-2">
-          <span className="shrink-0 px-2.5 sm:px-3.5 py-2 sm:py-3 rounded-full bg-white border border-[#E59A59]/40 text-[#712E1E] text-[10px] sm:text-sm font-black whitespace-nowrap">
-            {priceLabel}
-          </span>
-          <Link
-            to={orderUrl}
-            className="flex-1 min-w-0 flex items-center justify-center rounded-full bg-[#E59A59] py-2 sm:py-3 px-1.5 sm:px-2 text-[10px] sm:text-sm font-extrabold whitespace-nowrap text-white shadow-md hover:bg-[#d48b4b] active:scale-[0.98] transition"
-          >
-            {t('home.catalogCreate')}
-          </Link>
-        </div>
       </div>
     </article>
   );

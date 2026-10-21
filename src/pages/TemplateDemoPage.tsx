@@ -16,6 +16,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 import { MASTER_TEMPLATES } from '../lib/constants';
 import LanguageSwitcher from '../components/shared/LanguageSwitcher';
 import { DemoSkeleton } from '../components/ui/SkeletonLoaders';
+import { buttonClass } from '../components/ui/buttonStyles';
 
 export default function TemplateDemo() {
   const { t } = useTranslation();
@@ -29,9 +30,14 @@ export default function TemplateDemo() {
 
   if (!TemplateRenderer) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-500">
-        <p className="text-xl mb-4">{t('demo.notFound', { slug: slug || '' })}</p>
-        <Link to="/" className="text-blue-500 underline">{t('common.backHome')}</Link>
+      <div className="flex min-h-screen flex-col items-center justify-center bg-cream-100 px-6 text-center text-ink-600">
+        <span className="eyebrow text-ember-600">Demo</span>
+        <p className="mt-3 max-w-md font-display text-2xl leading-tight tracking-[-0.03em] text-ink-950">
+          {t('demo.notFound', { slug: slug || '' })}
+        </p>
+        <Link to="/" className={buttonClass('secondary', 'md', 'mt-7')}>
+          {t('common.backHome')}
+        </Link>
       </div>
     );
   }
@@ -96,16 +102,19 @@ export default function TemplateDemo() {
   };
 
   return (
-    <div className="relative">
-      <div className="fixed top-4 left-4 z-50 flex items-center gap-2">
+    <div className="theme-canvas relative">
+      <nav
+        aria-label="Demo"
+        className="fixed left-4 top-4 z-50 flex flex-wrap items-center gap-2 sm:left-6 sm:top-6"
+      >
         <Link
           to="/"
-          className="flex items-center gap-2 bg-black/50 hover:bg-black/70 text-white px-4 py-2 rounded-xl backdrop-blur-sm transition shadow-lg text-sm font-medium border border-white/20"
+          className="inline-flex min-h-10 items-center gap-2 rounded-[3px] border border-cream-100/25 bg-ink-950/80 px-3.5 font-data text-[10px] uppercase tracking-[0.16em] text-cream-50 shadow-[0_14px_30px_-18px_rgba(23,16,12,0.9)] backdrop-blur-md transition-colors duration-200 hover:bg-ink-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300"
         >
-          <ArrowLeft className="w-4 h-4" /> {t('demo.back')}
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" /> {t('demo.back')}
         </Link>
-        <LanguageSwitcher variant="header" />
-      </div>
+        <LanguageSwitcher variant="header" className="bg-ink-950/80 backdrop-blur-md" />
+      </nav>
 
       <Suspense fallback={<DemoSkeleton />}>
         <TemplateRenderer

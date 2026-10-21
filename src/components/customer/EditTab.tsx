@@ -6,12 +6,8 @@
 // Keterikatan : components/shared/form/*, hooks/useEditActions, types/database
 // ============================================================
 
-// Tab "Edit Konten" Dashboard mempelai: komposisi sub-tab tematik.
-// Kartu form & primitif bersama ada di src/components/shared/form/*,
-// aksi hapus/tambah ada di hooks/useEditActions.
-
 import { useState, type ChangeEvent, type Dispatch, type FormEvent, type SetStateAction } from "react";
-import { Camera, CreditCard, Loader2, MapPin, Save } from "lucide-react";
+import { Camera, CreditCard, MapPin, Save } from "lucide-react";
 import ConfirmDialog from "../ConfirmDialog";
 import { SubTabButton, LightboxPreview, type PreviewImage } from "../shared/form/FormKit";
 import {
@@ -23,6 +19,7 @@ import {
   BanksCard,
 } from "../shared/form/SectionCards";
 import { useEditActions } from "../../hooks/useEditActions";
+import Button from "../ui/Button";
 import type { EventDetails } from "../../types/database";
 import type { DashboardForm } from "../../hooks/useDashboardData";
 import { useTranslation } from "../../i18n";
@@ -55,6 +52,12 @@ interface EditTabProps {
 
 type SubSection = "info" | "media" | "extra";
 
+const SUB_TABS: { id: SubSection; label: string; icon: typeof MapPin }[] = [
+  { id: "info", label: "customer.edit.tabDetails", icon: MapPin },
+  { id: "media", label: "customer.edit.tabMedia", icon: Camera },
+  { id: "extra", label: "customer.edit.tabExtra", icon: CreditCard },
+];
+
 export default function EditTab({
   formData,
   setFormData,
@@ -85,47 +88,39 @@ export default function EditTab({
   } = useEditActions(setFormData, { orderId, getData: () => formData });
 
   const openPreview = (url: string, title: string) => setPreviewImage({ url, title });
+  const activeIndex = SUB_TABS.findIndex((tab) => tab.id === activeSection);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      <form onSubmit={handleSaveData} className="w-full pb-10">
-        {/* Header Tab */}
-        <div>
-          <h2 className="text-2xl font-bold text-stone-800">{t('customer.edit.title')}</h2>
-          <p className="mt-1 text-sm text-stone-500">
-            {t('customer.edit.desc')}
-          </p>
+    <div>
+      <form onSubmit={handleSaveData} className="pb-6">
+        <div className="sticky top-0 z-20 -mx-4 flex flex-wrap items-center justify-between gap-3 border-b border-ink-900/10 bg-cream-100/95 px-4 py-3 backdrop-blur-sm sm:-mx-7 sm:px-7 lg:-mx-10 lg:px-10">
+          <div className="flex w-full border border-ink-900/12 bg-cream-50 p-1 sm:w-fit">
+            {SUB_TABS.map((tab) => (
+              <SubTabButton
+                key={tab.id}
+                active={activeSection === tab.id}
+                onClick={() => setActiveSection(tab.id)}
+              >
+                <tab.icon size={14} strokeWidth={1.6} />
+                <span>{t(tab.label)}</span>
+              </SubTabButton>
+            ))}
+          </div>
+          <span className="hidden font-data text-[9px] uppercase tracking-[0.14em] text-ink-400 sm:inline">
+            {String(activeIndex + 1).padStart(2, "0")} / 03
+          </span>
         </div>
 
-        {/* Sub-Tab Navigation (Pills) */}
-        <div className="mt-5 flex flex-wrap gap-1.5 rounded-2xl border border-[#EBDFCE] bg-[#FAF6EE] p-1.5 w-fit">
-          <SubTabButton active={activeSection === "info"} onClick={() => setActiveSection("info")}>
-            <MapPin size={15} />
-            <span>{t('customer.edit.tabDetails')}</span>
-          </SubTabButton>
-
-          <SubTabButton active={activeSection === "media"} onClick={() => setActiveSection("media")}>
-            <Camera size={15} />
-            <span>{t('customer.edit.tabMedia')}</span>
-          </SubTabButton>
-
-          <SubTabButton active={activeSection === "extra"} onClick={() => setActiveSection("extra")}>
-            <CreditCard size={15} />
-            <span>{t('customer.edit.tabExtra')}</span>
-          </SubTabButton>
-        </div>
-
-        {/* Konten Form Per Sub-Tab */}
-        <div className="mt-6">
+        <div className="pt-6">
           {activeSection === "info" && (
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className="grid gap-5 lg:grid-cols-2">
               <LocationCard data={formData} handleChange={handleChange} />
               <FamilyCard data={formData} handleChange={handleChange} />
             </div>
           )}
 
           {activeSection === "media" && (
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className="grid gap-5 lg:grid-cols-2">
               <PhotosCard
                 data={formData}
                 activeUploadField={activeUploadField}
@@ -145,7 +140,7 @@ export default function EditTab({
           )}
 
           {activeSection === "extra" && (
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className="grid gap-5 lg:grid-cols-2">
               <MusicQuoteCard
                 data={formData}
                 handleChange={handleChange}
@@ -165,32 +160,34 @@ export default function EditTab({
               />
             </div>
           )}
+        </div>
 
-          {/* Tombol Simpan Lebar di Bagian Bawah */}
-          <div className="mt-8">
-            <button
-              type="submit"
-              disabled={loading || uploading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#E59A59] py-3.5 text-base font-bold text-white shadow-md transition hover:bg-[#d48b4b] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Save size={18} />}
-              {loading ? t('customer.edit.btnSaving') : t('customer.edit.btnSave')}
-            </button>
-          </div>
+        <div className="sticky bottom-0 z-20 -mx-4 mt-8 flex items-center justify-between gap-4 border-t border-ink-900/12 bg-cream-100/95 px-4 py-3.5 backdrop-blur-sm sm:-mx-7 sm:px-7 lg:-mx-10 lg:px-10">
+          <p className="hidden max-w-xs text-[11px] leading-relaxed text-ink-400 sm:block">
+            {t("customer.edit.desc")}
+          </p>
+          <Button
+            type="submit"
+            size="lg"
+            loading={loading}
+            disabled={uploading}
+            icon={<Save size={15} />}
+            className="ml-auto w-full sm:w-auto"
+          >
+            {loading ? t("customer.edit.btnSaving") : t("customer.edit.btnSave")}
+          </Button>
         </div>
       </form>
 
-      {/* Dialog Konfirmasi Hapus */}
       <ConfirmDialog
         isOpen={confirmData.show}
-        title={t('customer.edit.confirmDeleteTitle')}
+        title={t("customer.edit.confirmDeleteTitle")}
         message={confirmData.message}
-        isDanger={true}
+        isDanger
         onCancel={closeConfirm}
         onConfirm={confirmData.action ?? undefined}
       />
 
-      {/* Modal Preview Gambar (Lightbox) */}
       <LightboxPreview image={previewImage} onClose={() => setPreviewImage(null)} />
     </div>
   );

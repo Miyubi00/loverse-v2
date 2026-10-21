@@ -1,211 +1,159 @@
-import { useState, useRef, type FormEvent, type ChangeEvent } from 'react';
-import { supabase } from '../lib/supabaseClient';
-import { setCustomerToken } from '../lib/customerClient';
-import { Link, useNavigate } from 'react-router-dom';
-import { useToast } from '../components/GlobalToast';
-import { Lock, LogIn, HeartHandshake, Eye, EyeOff, Phone } from 'lucide-react';
-import { useTranslation } from '../i18n';
-import { usePageMeta } from '../hooks/usePageMeta';
-import TurnstileWidget, { type TurnstileWidgetRef } from '../components/ui/TurnstileWidget';
+﻿import { useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { supabase } from "../lib/supabaseClient";
+import { setCustomerToken } from "../lib/customerClient";
+import { Link, useNavigate } from "react-router-dom";
+import { useToast } from "../components/GlobalToast";
+import { Eye, EyeOff, Lock, LogIn, Phone } from "lucide-react";
+import { useTranslation } from "../i18n";
+import { usePageMeta } from "../hooks/usePageMeta";
+import TurnstileWidget, { type TurnstileWidgetRef } from "../components/ui/TurnstileWidget";
+import AuthShell from "../components/shared/AuthShell";
+import Button from "../components/ui/Button";
 
 interface CustomerLoginResponse {
   access_token: string;
   expires_at: number;
-  order: {
-    id: string;
-    slug: string;
-    groom_name: string;
-    bride_name: string;
-  };
+  order: { id: string; slug: string; groom_name: string; bride_name: string };
 }
 
-/** Ambil pesan error dari Edge Function bila tersedia. */
 async function extractInvokeError(err: unknown): Promise<string> {
   try {
     const ctx = (err as { context?: Response }).context;
-    if (ctx && typeof ctx.json === 'function') {
+    if (ctx && typeof ctx.json === "function") {
       const body = (await ctx.json()) as { error?: string };
       if (body?.error) return body.error;
     }
   } catch {
-    /* fallback di bawah */
+    /* fallback */
   }
-  return 'Terjadi kesalahan sistem. Pastikan data benar.';
+  return "Terjadi kesalahan sistem. Pastikan data benar.";
 }
+
+const inputClass =
+  "w-full border-0 border-b border-ink-900/20 bg-transparent py-3 pl-7 pr-10 text-[15px] text-ink-950 outline-none transition-colors placeholder:text-ink-300 focus:border-ink-950";
 
 export default function DashboardLogin() {
   const { t } = useTranslation();
   usePageMeta(
-    'Login Dashboard — LoVerse',
-    'Masuk dashboard undangan digital LoVerse dengan No. WhatsApp dan PIN 6 digit untuk mengatur undanganmu.',
+    "Login Dashboard — LoVerse",
+    "Masuk dashboard undangan digital LoVerse dengan No. WhatsApp dan PIN 6 digit untuk mengatur undanganmu.",
   );
   const navigate = useNavigate();
-  const toast = useToast(); 
+  const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileWidgetRef>(null);
-
-  // State UX PIN
   const [showPin, setShowPin] = useState(false);
-  const [pinValue, setPinValue] = useState('');
+  const [pinValue, setPinValue] = useState("");
 
-  const handlePinChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    if (/^\d*$/.test(val) && val.length <= 6) {
-      setPinValue(val);
-    }
+  const handlePinChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (/^\d*$/.test(value) && value.length <= 6) setPinValue(value);
   };
 
-  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (!captchaToken) {
-      toast.warning(t('common.captchaRequired'));
+      toast.warning(t("common.captchaRequired"));
       return;
     }
-
     setLoading(true);
-
-    const form = e.currentTarget;
-    const whatsappInput = form.elements.namedItem('whatsapp') as HTMLInputElement | null;
-    let whatsapp = (whatsappInput?.value ?? '').trim();
-
-    // --- FITUR AUTO-FORMAT NOMOR WHATSAPP ---
-    whatsapp = whatsapp.replace(/[^0-9+]/g, '');
-
-    if (whatsapp.startsWith('0')) {
-        whatsapp = '+62' + whatsapp.substring(1);
-    } else if (whatsapp.startsWith('62')) {
-        whatsapp = '+' + whatsapp;
-    } else if (!whatsapp.startsWith('+')) {
-        whatsapp = '+62' + whatsapp;
-    }
+    const form = event.currentTarget;
+    const whatsappInput = form.elements.namedItem("whatsapp") as HTMLInputElement | null;
+    let whatsapp = (whatsappInput?.value ?? "").trim();
+    whatsapp = whatsapp.replace(/[^0-9+]/g, "");
+    if (whatsapp.startsWith("0")) whatsapp = "+62" + whatsapp.substring(1);
+    else if (whatsapp.startsWith("62")) whatsapp = "+" + whatsapp;
+    else if (!whatsapp.startsWith("+")) whatsapp = "+62" + whatsapp;
 
     try {
-      const { data, error } = await supabase.functions.invoke('customer-login', {
-        body: {
-          whatsapp,
-          pin: pinValue,
-          captcha_token: captchaToken,
-        },
+      const { data, error } = await supabase.functions.invoke("customer-login", {
+        body: { whatsapp, pin: pinValue, captcha_token: captchaToken },
       });
-
       if (error) {
-        console.error('Login Error:', error);
+        console.error("Login Error:", error);
         throw new Error(await extractInvokeError(error));
       }
-
       const login = data as CustomerLoginResponse | null;
-      if (!login?.access_token || !login.order?.id) {
-        throw new Error(t('login.errorNotFound'));
-      }
-
-      // Login Sukses
-      toast.success(t('login.toastSuccess'));
-
+      if (!login?.access_token || !login.order?.id) throw new Error(t("login.errorNotFound"));
+      toast.success(t("login.toastSuccess"));
       setCustomerToken(login.access_token);
-      sessionStorage.setItem('active_order_id', login.order.id);
-      sessionStorage.removeItem('order_pin');
-
-      setTimeout(() => {
-          navigate(`/dashboard/${login.order.id}`);
-      }, 1000);
-
+      sessionStorage.setItem("active_order_id", login.order.id);
+      sessionStorage.removeItem("order_pin");
+      setTimeout(() => navigate(`/dashboard/${login.order.id}`), 1000);
     } catch (err) {
       setCaptchaToken(null);
       turnstileRef.current?.reset();
-      toast.error(err instanceof Error ? err.message : t('toast.systemError'));
+      toast.error(err instanceof Error ? err.message : t("toast.systemError"));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#F1E8DC] flex items-center justify-center p-3 sm:p-4 font-sans">
-      <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl w-full max-w-md border border-[#EBDFCE]">
-        
-        {/* Header Login */}
-        <div className="text-center mb-6 sm:mb-8">
-          <div className="bg-[#E59A59]/10 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 animate-pulse">
-             <HeartHandshake className="w-7 h-7 sm:w-8 sm:h-8 text-[#E59A59]" />
+    <AuthShell
+      eyebrow="Dashboard mempelai"
+      title={t("login.title")}
+      description={t("login.subtitle")}
+      footnote={<>{t("login.pinHelp")} <Link to="/forgot-pin" className="ml-1 font-semibold text-ember-600 underline-offset-4 hover:underline">{t("login.resendPinLink")}</Link></>}
+    >
+      <form onSubmit={handleLogin} className="space-y-6">
+        <div>
+          <label htmlFor="customer-whatsapp" className="eyebrow text-ink-500">{t("login.whatsappLabel")}</label>
+          <div className="relative mt-2">
+            <Phone className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+            <input
+              id="customer-whatsapp"
+              type="tel"
+              name="whatsapp"
+              required
+              autoComplete="tel"
+              placeholder={t("login.whatsappPlaceholder")}
+              className={inputClass}
+            />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-[#712E1E]">{t('login.title')}</h1>
-          <p className="text-stone-400 mt-1.5 text-xs sm:text-sm">{t('login.subtitle')}</p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
-          
-          {/* Input No WhatsApp */}
-          <div>
-            <label className="block text-xs sm:text-sm font-bold text-[#712E1E] mb-1">{t('login.whatsappLabel')}</label>
-            <div className="relative w-full min-w-0">
-                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-stone-400 pointer-events-none" />
-                <input 
-                  type="tel" 
-                  name="whatsapp" 
-                  required 
-                  placeholder={t('login.whatsappPlaceholder')} 
-                  className="w-full min-w-0 py-2.5 sm:py-3 pr-3.5 pl-11 rounded-xl border border-stone-200 focus:border-[#E59A59] focus:ring-2 focus:ring-[#E59A59]/20 outline-none transition text-sm sm:text-base" 
-                />
-            </div>
+        <div>
+          <label htmlFor="customer-pin" className="eyebrow text-ink-500">{t("login.pinLabel")}</label>
+          <div className="relative mt-2">
+            <Lock className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+            <input
+              id="customer-pin"
+              name="pin"
+              required
+              type={showPin ? "text" : "password"}
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              maxLength={6}
+              placeholder={t("login.pinPlaceholder")}
+              value={pinValue}
+              onChange={handlePinChange}
+              className={`${inputClass} font-data tracking-[0.36em]`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPin((value) => !value)}
+              aria-label={showPin ? "Sembunyikan PIN" : "Tampilkan PIN"}
+              className="absolute right-0 top-1/2 -translate-y-1/2 p-1 text-ink-400 transition-colors hover:text-ink-900"
+            >
+              {showPin ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
           </div>
+        </div>
 
-          {/* Input PIN */}
-          <div className="bg-yellow-50 p-3.5 sm:p-4 rounded-xl border border-yellow-100">
-              <label className="block text-xs sm:text-sm font-bold text-[#712E1E] mb-1">{t('login.pinLabel')}</label>
-              <div className="relative w-full min-w-0">
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-stone-400 pointer-events-none" />
-                
-                <input 
-                  name="pin" 
-                  required 
-                  type={showPin ? "text" : "password"} 
-                  inputMode="numeric" 
-                  maxLength={6} 
-                  placeholder={t('login.pinPlaceholder')} 
-                  value={pinValue}
-                  onChange={handlePinChange} 
-                  className="w-full min-w-0 py-2.5 sm:py-3 pr-12 pl-11 rounded-xl border border-stone-200 focus:border-[#E59A59] focus:ring-2 focus:ring-[#E59A59]/20 outline-none transition bg-white font-mono tracking-widest text-base sm:text-lg" 
-                />
+        <TurnstileWidget
+          ref={turnstileRef}
+          onSuccess={(token) => setCaptchaToken(token)}
+          onExpire={() => setCaptchaToken(null)}
+          onError={() => setCaptchaToken(null)}
+        />
 
-                <button 
-                  type="button"
-                  onClick={() => setShowPin(!showPin)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-[#E59A59] transition"
-                >
-                  {showPin ? <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Eye className="w-4 h-4 sm:w-5 sm:h-5" />}
-                </button>
-              </div>
-              <p className="text-[11px] sm:text-xs text-stone-500 mt-1.5 sm:mt-2">{t('login.pinHelp')}</p>
-              <Link
-                to="/forgot-pin"
-                className="mt-1 inline-block text-[11px] sm:text-xs font-bold text-[#E59A59] hover:text-[#d48b4b] transition"
-              >
-                {t('login.resendPinLink')}
-              </Link>
-          </div>
-
-          {/* Cloudflare Turnstile Captcha Widget */}
-          <TurnstileWidget
-            ref={turnstileRef}
-            onSuccess={(token) => setCaptchaToken(token)}
-            onExpire={() => setCaptchaToken(null)}
-            onError={() => setCaptchaToken(null)}
-          />
-
-          <button 
-            disabled={loading || !captchaToken}
-            className="w-full bg-[#E59A59] text-white py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-lg hover:bg-[#d48b4b] transition flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-          >
-            {loading ? t('login.btnSubmitting') : (
-                <>
-                  <LogIn className="w-5 h-5" /> {t('login.btnSubmit')}
-                </>
-            )}
-          </button>
-        </form>
-      </div>
-
-    </div>
+        <Button type="submit" size="lg" disabled={loading || !captchaToken} loading={loading} className="w-full">
+          {!loading && <LogIn className="h-4 w-4" />}
+          {loading ? t("login.btnSubmitting") : t("login.btnSubmit")}
+        </Button>
+      </form>
+    </AuthShell>
   );
 }

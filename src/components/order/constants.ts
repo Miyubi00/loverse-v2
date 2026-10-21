@@ -188,7 +188,7 @@ export const formatIDR = (value: number) =>
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const INPUT_CLASS =
-  "w-full min-w-0 py-2.5 sm:py-3 pr-3.5 pl-11 rounded-xl border border-stone-200 bg-white focus:border-[#E59A59] focus:ring-2 focus:ring-[#E59A59]/20 outline-none transition text-sm sm:text-base";
+  "w-full min-w-0 rounded-[2px] border border-ink-900/15 bg-cream-50/60 py-2.5 pl-10 pr-3 text-sm text-ink-950 outline-none transition-colors placeholder:text-ink-300 focus:border-ember-500 focus:bg-white focus:ring-2 focus:ring-ember-500/10 sm:py-3 sm:text-[15px]";
 
 export const PAYMENT_SUMMARY_LABEL_KEYS: Record<PaymentMethodType, string> = {
   automatic: "order.orderSummaryAutomatic",

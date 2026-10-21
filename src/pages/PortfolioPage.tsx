@@ -1,41 +1,23 @@
-// ============================================================
-// src/pages/PortfolioPage.tsx
-// ------------------------------------------------------------
-// Halaman portofolio ala brand besar: hero + statistik + filter kategori +
-// grid karya + CTA. Data DUMMY (src/lib/portfolioData.ts) memakai variasi
-// tema katalog; tiap kartu tertaut ke demo live temanya.
-// Keterikatan : react-router-dom; lucide-react; ../lib/{constants,
-// portfolioData}; ../i18n.
-// ============================================================
+﻿import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight, ArrowUpRight, MapPin, Star, Users } from "lucide-react";
+import { MASTER_TEMPLATES } from "../lib/constants";
+import { PORTFOLIO_ITEMS } from "../lib/portfolioData";
+import { useTranslation } from "../i18n";
+import { usePageMeta } from "../hooks/usePageMeta";
+import PageHeader from "../components/ui/PageHeader";
+import { buttonClass } from "../components/ui/buttonStyles";
+import { cn } from "../lib/cn";
 
-import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  ArrowRight,
-  Award,
-  Eye,
-  Heart,
-  Images,
-  MapPin,
-  Sparkles,
-  Star,
-  Users,
-} from 'lucide-react';
-import { MASTER_TEMPLATES } from '../lib/constants';
-import { PORTFOLIO_ITEMS } from '../lib/portfolioData';
-import { useTranslation } from '../i18n';
-import { usePageMeta } from '../hooks/usePageMeta';
-
-const templateOf = (slug: string) =>
-  MASTER_TEMPLATES.find((t) => t.slug === slug);
+const templateOf = (slug: string) => MASTER_TEMPLATES.find((t) => t.slug === slug);
 
 export default function PortfolioPage() {
   const { t } = useTranslation();
   usePageMeta(
-    'Portofolio Undangan Pernikahan Digital — LoVerse',
-    'Lihat koleksi undangan pernikahan digital LoVerse: puluhan tema elegan, modern, dan lucu dengan demo live yang bisa langsung dicoba.',
+    "Portofolio Undangan Pernikahan Digital — LoVerse",
+    "Lihat koleksi undangan pernikahan digital LoVerse: puluhan tema elegan, modern, dan lucu dengan demo live yang bisa langsung dicoba.",
   );
-  const [category, setCategory] = useState('all');
+  const [category, setCategory] = useState("all");
 
   const categories = useMemo(() => {
     const set = new Set<string>();
@@ -43,170 +25,133 @@ export default function PortfolioPage() {
       const cat = templateOf(item.templateSlug)?.category;
       if (cat) set.add(cat);
     }
-    return ['all', ...Array.from(set)];
+    return ["all", ...Array.from(set)];
   }, []);
 
   const items = useMemo(
     () =>
       PORTFOLIO_ITEMS.filter((item) => {
-        if (category === 'all') return true;
+        if (category === "all") return true;
         return templateOf(item.templateSlug)?.category === category;
       }),
     [category],
   );
 
   return (
-    <div className="min-h-screen bg-[#FAF6EE]">
-      {/* HERO */}
-      <section className="relative overflow-hidden border-b border-[#EBDFCE]/60">
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <div className="absolute -top-20 left-1/4 h-[420px] w-[420px] rounded-full bg-gradient-to-br from-[#E59A59]/15 to-transparent blur-3xl" />
-          <div className="absolute top-32 right-10 h-[380px] w-[380px] rounded-full bg-gradient-to-bl from-[#712E1E]/10 to-transparent blur-3xl" />
-        </div>
-        <div className="container relative z-10 mx-auto px-4 py-14 text-center sm:px-6 md:py-20 lg:px-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#EBDFCE] bg-white/90 px-4 py-1.5 shadow-sm backdrop-blur-sm">
-            <Images size={14} className="text-[#E59A59]" />
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#712E1E] sm:text-xs">
-              {t('portfolio.badge')}
-            </span>
-          </div>
-          <h1 className="mx-auto mt-4 max-w-3xl font-brand text-4xl font-semibold leading-tight text-[#712E1E] sm:text-5xl md:text-6xl">
-            {t('portfolio.title')}
-          </h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-stone-600 sm:text-base md:text-lg">
-            {t('portfolio.subtitle')}
-          </p>
+    <div className="min-h-screen bg-cream-100 text-ink-900">
+      <div className="mx-auto w-full max-w-[1480px] px-4 sm:px-7 lg:px-10">
+        <PageHeader
+          eyebrow={t("portfolio.badge")}
+          index="02"
+          title={<>{t("portfolio.title")}</>}
+          description={t("portfolio.subtitle")}
+          aside={
+            <div className="grid w-full grid-cols-3 border-y border-ink-900/15">
+              {[
+                ["40+", t("portfolio.statThemes")],
+                ["68+", t("portfolio.statCouples")],
+                ["4.9", t("portfolio.statRating")],
+              ].map(([value, label], index) => (
+                <div key={label} className={cn("py-4", index > 0 && "border-l border-ink-900/15 pl-4")}>
+                  <p className="font-display text-3xl leading-none tracking-[-0.04em] text-ink-950">{value}</p>
+                  <p className="mt-2 text-[9px] uppercase tracking-[0.1em] text-ink-400">{label}</p>
+                </div>
+              ))}
+            </div>
+          }
+        />
 
-          {/* Statistik */}
-          <div className="mx-auto mt-8 grid max-w-2xl grid-cols-3 gap-3">
-            {[
-              { icon: <Award size={16} />, value: '40+', label: t('portfolio.statThemes') },
-              { icon: <Heart size={16} />, value: '68+', label: t('portfolio.statCouples') },
-              { icon: <Star size={16} />, value: '4.9', label: t('portfolio.statRating') },
-            ].map((s) => (
-              <div
-                key={s.label}
-                className="rounded-2xl border border-[#EBDFCE] bg-white/80 px-2 py-4 shadow-sm backdrop-blur-sm"
+        <div className="flex flex-col gap-4 border-b border-ink-900/15 py-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" role="group" aria-label="Filter kategori">
+            {categories.map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setCategory(item)}
+                aria-pressed={category === item}
+                className={cn(
+                  "shrink-0 border px-3.5 py-2 font-data text-[9px] uppercase tracking-[0.12em] transition-colors",
+                  category === item
+                    ? "border-ink-950 bg-ink-950 text-cream-50"
+                    : "border-transparent text-ink-500 hover:border-ink-900/20 hover:text-ink-900",
+                )}
               >
-                <span className="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#FAF3E9] text-[#712E1E]">
-                  {s.icon}
-                </span>
-                <p className="mt-2 font-brand text-2xl font-semibold text-[#712E1E] sm:text-3xl">
-                  {s.value}
-                </p>
-                <p className="mt-0.5 text-[11px] font-semibold text-stone-500 sm:text-xs">{s.label}</p>
-              </div>
+                {item === "all" ? t("portfolio.filterAll") : item}
+              </button>
             ))}
           </div>
+          <p className="font-data text-[9px] uppercase tracking-[0.15em] text-ink-400">
+            {items.length} cerita / 2023—2026
+          </p>
         </div>
-      </section>
 
-      {/* FILTER */}
-      <section className="container mx-auto px-4 pt-10 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap justify-center gap-2">
-          {categories.map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setCategory(c)}
-              className={`rounded-full px-4 py-2 text-xs font-bold transition sm:text-sm ${
-                category === c
-                  ? 'bg-[#712E1E] text-white shadow-md'
-                  : 'border border-[#EBDFCE] bg-white text-stone-500 hover:border-[#E59A59]/60 hover:text-[#712E1E]'
-              }`}
-            >
-              {c === 'all' ? t('portfolio.filterAll') : c}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* GRID KARYA */}
-      <section className="container mx-auto px-4 py-10 sm:px-6 md:py-14 lg:px-8">
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => {
+        <div className="columns-1 gap-5 py-12 sm:columns-2 lg:columns-3 lg:gap-6 lg:py-16">
+          {items.map((item, index) => {
             const tpl = templateOf(item.templateSlug);
+            const featured = index % 7 === 0;
             return (
-              <article
-                key={item.id}
-                className="group overflow-hidden rounded-2xl border border-[#EBDFCE] bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-              >
-                <Link to={`/demo/${item.templateSlug}`} className="relative block aspect-[3/4] overflow-hidden bg-[#F3EBDF]">
+              <article key={item.id} className="group mb-10 break-inside-avoid">
+                <Link
+                  to={`/demo/${item.templateSlug}`}
+                  className={cn("relative block overflow-hidden bg-ink-900", featured ? "aspect-[4/5]" : "aspect-[3/4]")}
+                >
                   {tpl ? (
                     <img
                       src={tpl.image}
                       alt={`${item.groom} & ${item.bride}`}
                       loading="lazy"
-                      className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
+                      className="h-full w-full object-cover object-top transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.04]"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-stone-300">
-                      <Images size={40} />
-                    </div>
+                    <div className="flex h-full items-center justify-center text-cream-100/20">LoVerse</div>
                   )}
-                  <span className="absolute inset-0 flex items-center justify-center gap-2 bg-[#3a140c]/0 text-sm font-bold text-white opacity-0 transition duration-300 group-hover:bg-[#3a140c]/55 group-hover:opacity-100">
-                    <Eye size={18} /> {t('portfolio.viewDemo')}
-                  </span>
-                  <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#712E1E] backdrop-blur-sm">
-                    {tpl?.category ?? '-'}
-                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/5 to-transparent" />
+                  <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
+                    <span className="border border-cream-100/25 bg-ink-950/15 px-2 py-1 font-data text-[8px] uppercase tracking-[0.16em] text-cream-50/85 backdrop-blur-sm">
+                      {tpl?.category ?? "Basic"}
+                    </span>
+                    <span className="font-data text-[9px] text-cream-50/50">0{index + 1}</span>
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-6">
+                    <div>
+                      <p className="font-display text-[clamp(1.5rem,3vw,2.5rem)] leading-none tracking-[-0.04em] text-cream-50">
+                        {item.groom} &amp; {item.bride}
+                      </p>
+                      <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-cream-100/55">
+                        <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" />{item.city} · {item.date}</span>
+                        <span className="inline-flex items-center gap-1"><Users className="h-3 w-3" />{item.guests}</span>
+                        <span className="inline-flex items-center gap-1"><Star className="h-3 w-3 fill-peach-300 text-peach-300" />{item.rating.toFixed(1)}</span>
+                      </p>
+                    </div>
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cream-100/30 text-cream-50 transition-colors group-hover:bg-cream-50 group-hover:text-ink-950">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
+                  </div>
                 </Link>
-                <div className="p-4 sm:p-5">
-                  <h3 className="font-brand text-xl font-semibold text-[#712E1E] sm:text-2xl">
-                    {item.groom} &amp; {item.bride}
-                  </h3>
-                  <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-stone-500">
-                    <span className="inline-flex items-center gap-1">
-                      <MapPin size={12} /> {item.city} · {item.date}
-                    </span>
-                    <span className="inline-flex items-center gap-1">
-                      <Users size={12} /> {item.guests}
-                    </span>
-                    <span className="inline-flex items-center gap-1 font-bold text-[#B4693F]">
-                      <Star size={12} className="fill-amber-400 text-amber-400" /> {item.rating.toFixed(1)}
-                    </span>
+                <div className="flex items-center justify-between gap-3 border-b border-ink-900/15 py-3">
+                  <p className="font-data text-[8px] uppercase tracking-[0.14em] text-ink-400">
+                    {t("portfolio.themeLabel")}: {tpl?.name ?? item.templateSlug}
                   </p>
-                  <p className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-stone-400">
-                    {t('portfolio.themeLabel')}: {tpl?.name ?? item.templateSlug}
-                  </p>
+                  <span className="font-data text-[8px] uppercase tracking-[0.12em] text-ember-600">{t("portfolio.viewDemo")}</span>
                 </div>
               </article>
             );
           })}
         </div>
-      </section>
+      </div>
 
-      {/* CTA */}
-      <section className="container mx-auto px-4 pb-16 sm:px-6 md:pb-24 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-[#712E1E] px-6 py-12 text-center shadow-xl sm:px-10">
-          <div className="pointer-events-none absolute inset-0" aria-hidden>
-            <div className="absolute -left-16 -top-16 h-64 w-64 rounded-full bg-[#E59A59]/20 blur-3xl" />
-            <div className="absolute -bottom-20 -right-10 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
+      <section className="grain relative overflow-hidden bg-wine-900 text-cream-100">
+        <div className="relative z-[2] mx-auto flex w-full max-w-[1480px] flex-col items-start justify-between gap-8 px-4 py-16 sm:px-7 sm:py-20 lg:flex-row lg:items-end lg:px-10">
+          <div>
+            <span className="eyebrow text-peach-300/80">{t("portfolio.ctaBadge")}</span>
+            <h2 className="display-lg mt-4 max-w-[14ch] text-[clamp(2.6rem,5.2vw,4.8rem)] text-cream-50">{t("portfolio.ctaTitle")}</h2>
+            <p className="mt-4 max-w-md text-[14px] leading-relaxed text-cream-100/55">{t("portfolio.ctaDesc")}</p>
           </div>
-          <div className="relative z-10">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[#FFD5AF]">
-              <Sparkles size={13} /> {t('portfolio.ctaBadge')}
-            </span>
-            <h2 className="mx-auto mt-3 max-w-xl font-brand text-3xl font-semibold leading-tight text-white sm:text-4xl">
-              {t('portfolio.ctaTitle')}
-            </h2>
-            <p className="mx-auto mt-2 max-w-md text-sm text-[#FFD5AF]/80">
-              {t('portfolio.ctaDesc')}
-            </p>
-            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link
-                to="/order"
-                className="inline-flex items-center gap-2 rounded-xl bg-[#E59A59] px-7 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-[#d48b4b] active:scale-95"
-              >
-                {t('portfolio.ctaOrder')} <ArrowRight size={16} />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-7 py-3 text-sm font-bold text-white transition hover:bg-white/20 active:scale-95"
-              >
-                {t('portfolio.ctaContact')}
-              </Link>
-            </div>
+          <div className="flex flex-col gap-2.5 xs:flex-row">
+            <Link to="/order" className={buttonClass("peach", "lg", "h-13")}>
+              {t("portfolio.ctaOrder")} <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/contact" className={buttonClass("outlineLight", "lg", "h-13")}>{t("portfolio.ctaContact")}</Link>
           </div>
         </div>
       </section>

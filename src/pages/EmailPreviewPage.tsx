@@ -49,7 +49,9 @@ function EmailHeader() {
   return (
     <div className="flex items-center justify-between bg-[#5E2318] px-8 py-6">
       <div>
-        <img src="/logo.png" alt="LoVerse" className="h-10 w-auto" />
+        <Link to="/" aria-label="Loverse — Beranda" className="inline-flex">
+          <img src="/logo.png" alt="Loverse" width={680} height={220} className="h-10 w-auto" />
+        </Link>
         <p className="mt-1 text-[12px] text-[#f5e6d5]">Undangan Digital Pernikahan</p>
       </div>
       <div className="border-l border-white/30 pl-4 text-[10px] font-semibold uppercase leading-[1.9] tracking-[0.22em] text-[#f5e6d5]">
@@ -63,8 +65,10 @@ function EmailFooter() {
   return (
     <div className="mt-8 flex items-end justify-between border-t border-[#f0e2d0] pt-5 text-left">
       <div>
-          <p className="text-[16px] font-semibold text-[#8a6a55] font-brand">LoVerse</p>
-        <p className="text-[12px] text-[#b89a83]">Undangan Digital Pernikahan</p>
+        <span className="inline-flex bg-ink-950 px-2.5 py-2">
+          <img src="/logo.png" alt="Loverse" width={680} height={220} className="h-6 w-auto" />
+        </span>
+        <p className="mt-2 text-[12px] text-[#b89a83]">Undangan Digital Pernikahan</p>
       </div>
       <div className="text-right">
         <p className="flex items-center justify-end gap-2 font-serif text-[22px] italic text-[#8a6a55]">

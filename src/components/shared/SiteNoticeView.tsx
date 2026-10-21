@@ -10,6 +10,7 @@
 // ============================================================
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { AlertTriangle, Gift, Info, Wrench, X } from 'lucide-react';
 import type { SiteNoticeRow, SiteNoticeType } from '../../types/database';
@@ -24,32 +25,32 @@ const TYPE_PRIORITY: Record<SiteNoticeType, number> = {
 
 const BANNER_STYLE: Record<SiteNoticeType, { wrap: string; icon: string; Icon: typeof Info }> = {
   info: {
-    wrap: 'border-sky-200 bg-sky-50 text-sky-950',
-    icon: 'bg-sky-100 text-sky-600',
+    wrap: 'border-ink-900/15 bg-cream-50 text-ink-900',
+    icon: 'bg-cream-200 text-ink-600',
     Icon: Info,
   },
   warning: {
-    wrap: 'border-amber-200 bg-amber-50 text-amber-950',
-    icon: 'bg-amber-100 text-amber-600',
+    wrap: 'border-gold-600/30 bg-[#f6ead4] text-ink-900',
+    icon: 'bg-gold-500/15 text-gold-600',
     Icon: AlertTriangle,
   },
   maintenance: {
-    wrap: 'border-rose-200 bg-rose-50 text-rose-950',
-    icon: 'bg-rose-100 text-rose-600',
+    wrap: 'border-danger-600/20 bg-[#f7e4dc] text-ink-900',
+    icon: 'bg-danger-600/10 text-danger-700',
     Icon: Wrench,
   },
   promo: {
-    wrap: 'border-[#712E1E] bg-gradient-to-r from-[#712E1E] to-[#9a4a2e] text-white shadow-sm',
-    icon: 'bg-white/15 text-[#FFD5AF]',
+    wrap: 'border-ink-900/10 bg-ink-950 text-cream-100',
+    icon: 'bg-peach-300/15 text-peach-300',
     Icon: Gift,
   },
 };
 
 const MODAL_BADGE_STYLE: Record<SiteNoticeType, string> = {
-  info: 'bg-sky-100 text-sky-600',
-  warning: 'bg-amber-100 text-amber-600',
-  maintenance: 'bg-rose-100 text-rose-600',
-  promo: 'bg-[#F7EEE3] text-[#712E1E]',
+  info: 'bg-cream-200 text-ink-700',
+  warning: 'bg-gold-500/15 text-gold-600',
+  maintenance: 'bg-danger-600/10 text-danger-700',
+  promo: 'bg-peach-300 text-ink-900',
 };
 
 const dismissedKey = (n: SiteNoticeRow) => `loverse_notice_dismissed:${n.id}`;
@@ -70,7 +71,7 @@ function NoticeModal({ notice, onClose }: { notice: SiteNoticeRow; onClose: () =
   const isInternal = href.startsWith('/');
   const actionLabel = notice.cta_label?.trim() || t('siteNotice.ack');
   const ctaClass =
-    'mt-5 flex h-10 w-full items-center justify-center rounded-xl bg-[#712E1E] text-sm font-bold text-white no-underline transition hover:bg-[#8a4030] active:scale-[0.98]';
+    'mt-6 flex min-h-11 w-full items-center justify-center rounded-[3px] bg-ink-950 px-4 text-sm font-semibold text-cream-50 no-underline transition hover:bg-ember-600 active:translate-y-px';
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -116,40 +117,42 @@ function NoticeModal({ notice, onClose }: { notice: SiteNoticeRow; onClose: () =
     );
   };
 
-  return (
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
       aria-label={notice.title}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950/72 p-4 backdrop-blur-[3px]"
       onClick={dismiss}
     >
       <div
-        className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
+        className="relative w-full max-w-md border border-ink-900/15 bg-cream-50 p-6 text-ink-900 shadow-deep sm:p-8"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-3">
-          <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${style}`}>
-            <Icon size={22} />
+          <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[2px] ${style}`}>
+            <Icon size={18} />
           </span>
           <button
             type="button"
             onClick={dismiss}
             aria-label={t('siteNotice.close')}
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-stone-400 transition hover:bg-stone-100 hover:text-stone-600"
+            className="flex h-8 w-8 shrink-0 items-center justify-center text-ink-400 transition hover:text-ink-900"
           >
-            <X size={17} />
+            <X size={16} />
           </button>
         </div>
 
-        <h2 className="mt-4 font-brand text-xl font-bold text-[#712E1E]">{notice.title}</h2>
+        <p className="eyebrow mt-6 text-ember-600">Pemberitahuan</p>
+        <h2 className="mt-3 font-display text-2xl leading-tight tracking-[-0.03em] text-ink-950">{notice.title}</h2>
         {notice.body && (
-          <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-stone-600">{notice.body}</p>
+          <p className="mt-3 whitespace-pre-line text-[13px] leading-relaxed text-ink-500">{notice.body}</p>
         )}
 
         {renderCta()}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -179,8 +182,8 @@ function NoticeBanner({ notice }: { notice: SiteNoticeRow }) {
   }, [notice.body]);
 
   return (
-    <div className={`mx-auto flex max-w-6xl items-start gap-3 rounded-xl border px-4 py-3 ${style.wrap}`}>
-      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${style.icon}`}>
+    <div className={`mx-auto flex max-w-6xl items-start gap-3 border px-4 py-3 ${style.wrap}`}>
+      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-[2px] ${style.icon}`}>
         <Icon size={16} />
       </span>
       <div className="min-w-0 flex-1 text-sm">
@@ -253,7 +256,7 @@ export default function SiteNoticeView({ notices }: { notices: SiteNoticeRow[] }
   return (
     <>
       {banners.length > 0 && (
-        <div className="w-full space-y-2 bg-[#F1E8DC] px-4 pb-1 pt-4 sm:px-6 lg:px-8">
+        <div className="w-full space-y-2 bg-cream-100 px-4 pb-1 pt-3 sm:px-6 lg:px-8">
           {banners.map((n) => (
             <NoticeBanner key={n.id} notice={n} />
           ))}

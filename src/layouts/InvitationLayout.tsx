@@ -11,7 +11,7 @@ import { Outlet } from 'react-router-dom';
 // INVITATION LAYOUT (Fullscreen Tanpa Navbar)
 export default function InvitationLayout() {
   return (
-    <div className="w-full min-h-screen bg-white">
+    <div className="theme-canvas w-full min-h-screen bg-white">
       <Outlet />
     </div>
   );

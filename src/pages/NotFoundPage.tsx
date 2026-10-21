@@ -1,64 +1,44 @@
-import { Link } from 'react-router-dom';
-import { HeartCrack, ArrowLeft, Home } from 'lucide-react';
-import { useTranslation } from '../i18n';
+﻿import { Link } from "react-router-dom";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { useTranslation } from "../i18n";
+import { buttonClass } from "../components/ui/buttonStyles";
 
 export default function NotFound() {
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-[#F1E8DC] flex items-center justify-center p-6 relative overflow-hidden font-sans text-[#712E1E]">
-      
-      {/* --- BACKGROUND DECORATION (BLOBS) --- */}
-      <div className="absolute -top-20 -left-20 w-64 h-64 bg-[#E59A59] rounded-full opacity-20 blur-3xl animate-pulse"></div>
-      <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-[#E59A59] rounded-full opacity-20 blur-3xl animate-pulse delay-700"></div>
+    <div className="relative flex min-h-[calc(100svh-68px)] items-center overflow-hidden bg-ink-950 text-cream-100">
+      <div className="grain grain-light absolute inset-0" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cream-100/10" />
+        <div className="absolute left-1/2 top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-peach-300/15" />
+        <div className="absolute left-1/2 top-1/2 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,214,178,0.16),transparent_68%)] blur-2xl" />
+      </div>
 
-      <div className="relative z-10 text-center max-w-md w-full">
-        
-        {/* ICON */}
-        <div className="mb-6 flex justify-center">
-          <div className="relative">
-            <div className="w-24 h-24 bg-[#FAF6EE] rounded-full flex items-center justify-center border-2 border-[#E59A59] shadow-sm">
-                <HeartCrack size={48} className="text-[#E59A59]" />
+      <div className="relative z-[2] mx-auto w-full max-w-[1180px] px-4 py-16 sm:px-7 lg:px-10">
+        <p className="eyebrow text-peach-300/70">Halaman tidak ditemukan / 404</p>
+        <div className="mt-6 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="display-xl text-[clamp(6rem,22vw,17rem)] leading-[0.72] text-cream-50/95">404</p>
+            <h1 className="mt-5 max-w-[14ch] font-display text-[clamp(1.8rem,4vw,3.2rem)] leading-[1.02] tracking-[-0.04em] text-peach-300">
+              {t("notFound.title")}
+            </h1>
+          </div>
+          <div className="max-w-sm lg:pb-3">
+            <p className="text-[14px] leading-relaxed text-cream-100/58">{t("notFound.desc")}</p>
+            <div className="mt-6 flex flex-col gap-2.5 xs:flex-row">
+              <Link to="/" className={buttonClass("peach", "md")}>
+                {t("notFound.btnHome")} <ArrowUpRight className="h-4 w-4" />
+              </Link>
+              <button type="button" onClick={() => window.history.back()} className={buttonClass("outlineLight", "md")}>
+                <ArrowLeft className="h-4 w-4" /> {t("common.back")}
+              </button>
             </div>
-            {/* Dekorasi kecil */}
-            <span className="absolute top-0 right-0 text-2xl animate-bounce">?</span>
+            <p className="mt-8 font-data text-[8px] uppercase tracking-[0.16em] text-cream-100/25">
+              {t("notFound.footer", { year: new Date().getFullYear() })}
+            </p>
           </div>
         </div>
-
-        {/* TEXT CONTENT */}
-        <h1 className="text-6xl md:text-8xl font-extrabold text-[#712E1E] mb-2 tracking-tighter">
-          {t('notFound.code')}
-        </h1>
-        <h2 className="text-xl md:text-2xl font-bold mb-4 text-stone-500">
-          {t('notFound.title')}
-        </h2>
-        <p className="text-stone-400 mb-8 leading-relaxed">
-          {t('notFound.desc')}
-        </p>
-
-        {/* ACTION BUTTONS */}
-        <div className="flex flex-col gap-3">
-          <Link 
-            to="/" 
-            className="w-full bg-[#712E1E] text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-[#5a2316] transition transform hover:-translate-y-1 flex items-center justify-center gap-2"
-          >
-            <Home size={18} />
-            {t('notFound.btnHome')}
-          </Link>
-          
-          <button 
-            onClick={() => window.history.back()} 
-            className="w-full bg-white border-2 border-[#E59A59] text-[#E59A59] py-3.5 rounded-xl font-bold hover:bg-[#FAF6EE] transition flex items-center justify-center gap-2"
-          >
-            <ArrowLeft size={18} />
-            {t('notFound.btnBack')}
-          </button>
-        </div>
-
-        {/* FOOTER TEXT */}
-        <p className="mt-12 text-xs text-stone-400">
-          {t('notFound.footer', { year: new Date().getFullYear() })}
-        </p>
       </div>
     </div>
   );

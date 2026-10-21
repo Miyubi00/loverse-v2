@@ -88,7 +88,7 @@ export function LocationCard({ data, handleChange }: DataCardProps) {
           handleChange={handleChange}
         />
       </div>
-      <p className="-mt-3 text-xs italic text-stone-400">
+      <p className="-mt-2 text-[11px] italic text-ink-400">
         {t('customer.edit.dateHint')}
       </p>
       <div className="grid grid-cols-2 gap-3">
@@ -203,15 +203,15 @@ export function PhotosCard({
                   data.cover_photo &&
                   onPreview(data.cover_photo, t('customer.edit.coverBanner'))
                 }
-                className="flex items-center gap-1 text-xs font-semibold text-[#712E1E] transition hover:underline"
+                className="flex items-center gap-1 font-data text-[8px] uppercase tracking-[0.1em] text-ink-600 transition hover:text-ember-600"
               >
                 <Eye size={13} /> {t('common.view')}
               </button>
-              <span className="text-stone-300">•</span>
+              <span className="text-ink-300">•</span>
               <button
                 type="button"
                 onClick={() => onRemovePhoto("cover_photo", t('customer.edit.coverBanner'))}
-                className="flex items-center gap-1 text-xs font-semibold text-rose-500 transition hover:underline"
+                className="flex items-center gap-1 font-data text-[8px] uppercase tracking-[0.1em] text-danger-600 transition hover:text-danger-700"
               >
                 <Trash2 size={13} /> {t('common.delete')}
               </button>
@@ -219,7 +219,7 @@ export function PhotosCard({
           )}
         </div>
 
-        <div className="group relative flex h-40 w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border-2 border-dashed border-stone-300 bg-[#FAF6EE] transition hover:border-[#E59A59]">
+        <div className="group relative flex h-40 w-full flex-col items-center justify-center gap-3 overflow-hidden border border-dashed border-ink-900/20 bg-cream-100/60 transition-colors hover:border-ember-500">
           {data.cover_photo ? (
             <>
               <img
@@ -227,18 +227,18 @@ export function PhotosCard({
                 className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
                 alt="Cover"
               />
-              <div className="absolute inset-0 bg-black/25 opacity-0 transition group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-ink-950/30 opacity-0 transition group-hover:opacity-100" />
             </>
           ) : (
-            <div className="flex flex-col items-center gap-1.5 text-stone-400">
-              <Camera size={26} />
-              <span className="text-xs font-medium">
+            <div className="flex flex-col items-center gap-1.5 text-ink-400">
+              <Camera size={26} strokeWidth={1.4} />
+              <span className="text-[11px] font-medium">
                 {t('customer.edit.noCover')}
               </span>
             </div>
           )}
 
-          <label className="relative z-10 cursor-pointer rounded-xl bg-white/90 px-4 py-2 text-xs font-bold text-stone-700 shadow-md backdrop-blur-sm transition hover:scale-105 hover:bg-white active:scale-95">
+          <label className="relative z-10 cursor-pointer border border-ink-900/10 bg-cream-50/90 px-4 py-2 font-data text-[8px] uppercase tracking-[0.12em] text-ink-800 shadow-sm backdrop-blur-sm transition hover:bg-cream-50 active:scale-95">
             {data.cover_photo ? t('customer.edit.btnChangeCover') : t('customer.edit.btnUploadCover')}
             <input
               type="file"
@@ -283,15 +283,15 @@ export function GalleryCard({
         icon={<ImagePlus size={16} />}
         title={t('customer.edit.cardGallery')}
         action={
-          <span className="text-xs font-semibold text-stone-400">
+          <span className="font-data text-[9px] text-ink-400">
             {t('customer.edit.galleryCount', { count: gallery.length })}
           </span>
         }
       />
 
-      <label className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-stone-300 bg-[#FAF6EE]/50 py-4 text-sm font-bold text-stone-600 transition hover:border-[#E59A59] hover:bg-[#FAF6EE] hover:text-[#B4693F] active:scale-[0.99]">
+      <label className="flex w-full cursor-pointer items-center justify-center gap-2 border border-dashed border-ink-900/20 bg-cream-100/50 py-4 text-[11px] font-semibold text-ink-600 transition-colors hover:border-ember-500 hover:bg-cream-100 hover:text-ember-600 active:scale-[0.99]">
         {isUploading ? (
-          <Loader2 size={18} className="animate-spin text-[#E59A59]" />
+          <Loader2 size={18} className="animate-spin text-ember-500" />
         ) : (
           <ImagePlus size={18} />
         )}
@@ -309,7 +309,7 @@ export function GalleryCard({
       </label>
 
       {gallery.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-stone-200 py-10 text-center text-xs italic text-stone-400">
+        <div className="border border-dashed border-ink-900/15 py-10 text-center text-[11px] italic text-ink-400">
           {t('customer.edit.galleryEmpty')}
         </div>
       ) : (
@@ -317,7 +317,7 @@ export function GalleryCard({
           {gallery.map((url, idx) => (
             <div
               key={url || idx}
-              className="group relative aspect-square overflow-hidden rounded-2xl border border-[#EBDFCE] bg-stone-100 shadow-sm"
+              className="group relative aspect-square overflow-hidden border border-ink-900/10 bg-cream-200"
             >
               <img
                 src={url}
@@ -325,12 +325,12 @@ export function GalleryCard({
                 alt={`Gallery ${idx + 1}`}
               />
 
-              <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/50 opacity-0 transition duration-200 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center gap-2 bg-ink-950/55 opacity-0 transition duration-200 group-hover:opacity-100">
                 <button
                   type="button"
                   onClick={() => onPreview(url, `Foto Galeri #${idx + 1}`)}
                   title={t('common.view')}
-                  className="grid h-8 w-8 place-items-center rounded-xl bg-white/25 text-white backdrop-blur-sm transition hover:bg-white/40 hover:scale-110 active:scale-95"
+                  className="grid h-8 w-8 place-items-center bg-cream-50/25 text-cream-50 backdrop-blur-sm transition hover:bg-cream-50/40 active:scale-95"
                 >
                   <Eye size={15} />
                 </button>
@@ -338,7 +338,7 @@ export function GalleryCard({
                   type="button"
                   onClick={() => onRequestRemove(idx)}
                   title={t('common.delete')}
-                  className="grid h-8 w-8 place-items-center rounded-xl bg-rose-500/80 text-white backdrop-blur-sm transition hover:bg-rose-600 hover:scale-110 active:scale-95"
+                  className="grid h-8 w-8 place-items-center bg-danger-600/80 text-white backdrop-blur-sm transition hover:bg-danger-700 active:scale-95"
                 >
                   <Trash2 size={15} />
                 </button>
@@ -392,9 +392,9 @@ export function MusicQuoteCard({
   return (
     <section className={CARD}>
       <CardHeader icon={<Music size={16} />} title={t('customer.edit.cardMusicQuote')} />
-      <div className="flex items-center gap-3 rounded-xl border border-[#EBDFCE] bg-[#FAF6EF] p-3">
+      <div className="flex items-center gap-3 border border-ink-900/12 bg-cream-100/60 p-3">
         <div className="min-w-0 flex-1">
-          <p className={`text-xs font-bold ${isAudioUploading || converting || removing ? 'text-stone-400 italic' : 'text-stone-700'}`}>
+          <p className={`font-data text-[8px] uppercase tracking-[0.12em] ${isAudioUploading || converting || removing ? 'italic text-ink-400' : 'text-ink-600'}`}>
             {statusText}
           </p>
           {hasMusic && !removing && (
@@ -409,7 +409,7 @@ export function MusicQuoteCard({
               onClick={() => void onRemoveMusic()}
               disabled={busy}
               title={t('common.delete')}
-              className="shrink-0 cursor-pointer rounded-xl border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-bold text-red-600 transition hover:bg-red-100 disabled:opacity-60 disabled:cursor-wait flex items-center gap-1.5"
+              className="flex shrink-0 cursor-pointer items-center gap-1.5 border border-danger-600/25 bg-danger-600/[0.06] px-3 py-1.5 text-[10px] font-semibold text-danger-600 transition-colors hover:bg-danger-600/10 disabled:cursor-wait disabled:opacity-60"
             >
               {removing ? (
                 <>
@@ -424,8 +424,8 @@ export function MusicQuoteCard({
           )
         ) : (
           <label
-            className={`shrink-0 cursor-pointer rounded-xl bg-[#E59A59] px-3 py-1.5 text-xs font-bold text-white transition hover:bg-[#d48b4b] flex items-center gap-1.5 ${
-              isAudioUploading || converting ? 'opacity-70 cursor-wait pointer-events-none' : ''
+            className={`flex shrink-0 cursor-pointer items-center gap-1.5 border border-ink-950 bg-ink-950 px-3 py-1.5 text-[10px] font-semibold text-cream-50 transition-colors hover:bg-ember-600 ${
+              isAudioUploading || converting ? 'pointer-events-none cursor-wait opacity-70' : ''
             }`}
           >
             {isAudioUploading ? (
@@ -494,26 +494,26 @@ export function BanksCard({
           <button
             type="button"
             onClick={onAdd}
-            className="rounded-xl bg-[#712E1E] px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white transition hover:bg-[#8a4030]"
+            className="border border-ink-900/15 bg-ink-950 px-3 py-1.5 font-data text-[8px] uppercase tracking-[0.12em] text-cream-50 transition-colors hover:bg-ember-600"
           >
             {t('customer.edit.btnAddBank')}
           </button>
         }
       />
       {banks.length === 0 && (
-        <p className="text-xs italic text-stone-400 py-2">
+        <p className="py-2 text-[11px] italic text-ink-400">
           {t('customer.edit.banksEmpty')}
         </p>
       )}
       {banks.map((bank, idx) => (
         <div
           key={idx}
-          className="relative rounded-xl border border-[#EBDFCE] bg-[#FAF6EF] p-3 pr-9"
+          className="relative border border-ink-900/12 bg-cream-100/50 p-3 pr-9"
         >
           <button
             type="button"
             onClick={() => onRequestRemove(idx)}
-            className="absolute right-2.5 top-2.5 text-stone-300 transition hover:text-rose-500"
+            className="absolute right-2.5 top-2.5 text-ink-300 transition-colors hover:text-danger-600"
           >
             <Trash2 className="h-3.5 w-3.5" />
           </button>

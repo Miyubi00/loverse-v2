@@ -89,9 +89,8 @@ function App() {
               <Route path="/tutorial" element={<SkeletonRoute Skeleton={TutorialSkeleton}><TutorialPage /></SkeletonRoute>} />
               <Route path="/privacy" element={<SkeletonRoute Skeleton={LegalSkeleton}><PrivacyPolicyPage /></SkeletonRoute>} />
               <Route path="/terms" element={<SkeletonRoute Skeleton={LegalSkeleton}><TermsPage /></SkeletonRoute>} />
+              <Route path="*" element={<SkeletonRoute Skeleton={NotFoundSkeleton}><NotFoundPage /></SkeletonRoute>} />
             </Route>
-
-            <Route path="*" element={<SkeletonRoute Skeleton={NotFoundSkeleton}><NotFoundPage /></SkeletonRoute>} />
 
             {/* GROUP 2: TEMPLATE DEMO */}
             <Route path="/demo/:slug" element={<SkeletonRoute Skeleton={DemoSkeleton}><TemplateDemoPage /></SkeletonRoute>} />

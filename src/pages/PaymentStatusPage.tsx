@@ -1,18 +1,14 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabaseClient';
-import { ADMIN_WHATSAPP } from '../lib/constants';
-import { CheckCircle, XCircle, Clock, ArrowRight, RefreshCcw, Home, CreditCard, MessageSquare } from 'lucide-react';
-import { FaWhatsapp } from 'react-icons/fa';
-import { PaymentStatusSkeleton } from '../components/ui/SkeletonLoaders';
-import { useTranslation } from '../i18n';
+﻿import type { ReactNode } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { ArrowRight, ArrowUpRight, CheckCircle, Clock, CreditCard, Home, RefreshCcw, ShieldCheck, XCircle } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
+import { supabase } from "../lib/supabaseClient";
+import { ADMIN_WHATSAPP } from "../lib/constants";
+import { PaymentStatusSkeleton } from "../components/ui/SkeletonLoaders";
+import { useTranslation } from "../i18n";
+import Button from "../components/ui/Button";
 
-/**
- * Respons terbatas dari Edge Function `payment-status`.
- * Model kapabilitas: akses = mengetahui midtrans_order_id dari
- * redirect URL. PIN hanya dikirim saat sukses; snap_token hanya
- * saat pending.
- */
 interface PaymentStatusResponse {
   found: boolean;
   payment_status: string;
@@ -32,330 +28,360 @@ interface PaymentStatusResponse {
   created_at: string | null;
 }
 
-const formatIDR = (value: number) =>
-    `Rp ${value.toLocaleString('id-ID')}`;
+const formatIDR = (value: number) => `Rp ${value.toLocaleString("id-ID")}`;
 
-/** Kartu ringkasan order yang dipakai semua status. */
 function OrderSummary({ order }: { order: PaymentStatusResponse }) {
-    const { t } = useTranslation();
-    const total = typeof order.price === 'number' && order.price > 0 ? order.price : 0;
-    const rows: Array<[string, string]> = [
-        [t('paymentStatus.sumCouple'), `${order.groom_name} & ${order.bride_name}`],
-        [t('paymentStatus.sumTemplate'), order.template_name || 'Undangan Digital'],
-        [t('paymentStatus.sumMethod'), order.payment_method || 'QRIS'],
-    ];
-    return (
-        <div className="bg-[#FAF6EE] border border-[#EBDFCE] rounded-2xl p-4 text-left">
-            <dl className="space-y-2 text-xs sm:text-sm">
-                {rows.map(([label, value]) => (
-                    <div key={label} className="flex justify-between gap-3">
-                        <dt className="text-stone-400 shrink-0">{label}</dt>
-                        <dd className="font-bold text-[#712E1E] text-right truncate">{value}</dd>
-                    </div>
-                ))}
-                <div className="flex justify-between items-center gap-3 pt-2.5 mt-1 border-t border-[#EBDFCE]">
-                    <dt className="text-stone-400 shrink-0">{t('paymentStatus.sumTotal')}</dt>
-                    <dd className="font-black text-[#712E1E] text-right text-sm sm:text-base">
-                        {formatIDR(total)}
-                    </dd>
-                </div>
-            </dl>
-            {order.order_id ? (
-                <p className="mt-2.5 pt-2 border-t border-dashed border-[#EBDFCE] text-[10px] sm:text-[11px] text-stone-400 font-mono text-center select-all">
-                    {order.order_id}
-                </p>
-            ) : null}
+  const { t } = useTranslation();
+  const total = typeof order.price === "number" && order.price > 0 ? order.price : 0;
+  const rows: Array<[string, string]> = [
+    [t("paymentStatus.sumCouple"), `${order.groom_name} & ${order.bride_name}`],
+    [t("paymentStatus.sumTemplate"), order.template_name || "Undangan Digital"],
+    [t("paymentStatus.sumMethod"), order.payment_method || "QRIS"],
+  ];
+
+  return (
+    <div className="border border-ink-900/12 bg-cream-50">
+      <dl className="divide-y divide-ink-900/10 text-[11px]">
+        {rows.map(([label, value]) => (
+          <div key={label} className="flex items-center justify-between gap-4 px-4 py-2.5">
+            <dt className="shrink-0 text-ink-400">{label}</dt>
+            <dd className="truncate text-right font-medium text-ink-850">{value}</dd>
+          </div>
+        ))}
+      </dl>
+      <div className="flex items-end justify-between gap-4 border-t border-ink-900/10 bg-ink-950 px-4 py-4">
+        <dt className="text-[10px] font-medium text-cream-100/55">{t("paymentStatus.sumTotal")}</dt>
+        <dd className="font-display text-2xl leading-none tracking-[-0.04em] text-peach-200">{formatIDR(total)}</dd>
+      </div>
+      {order.order_id ? (
+        <p className="select-all border-t border-dashed border-ink-900/15 px-4 py-2.5 text-center font-data text-[9px] tracking-[0.08em] text-ink-400">
+          {order.order_id}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+type Tone = "success" | "pending" | "failed" | "neutral" | "manual";
+
+const TONE = {
+  success: {
+    icon: "border-success-600/25 bg-success-600/10 text-success-700",
+    ring: "border-success-600/20",
+    accent: "text-success-700",
+    dot: "bg-success-600",
+  },
+  pending: {
+    icon: "border-gold-600/25 bg-gold-500/12 text-gold-600",
+    ring: "border-gold-600/20",
+    accent: "text-gold-600",
+    dot: "bg-gold-500",
+  },
+  failed: {
+    icon: "border-danger-600/20 bg-danger-600/8 text-danger-700",
+    ring: "border-danger-600/15",
+    accent: "text-danger-700",
+    dot: "bg-danger-600",
+  },
+  neutral: {
+    icon: "border-ink-900/15 bg-cream-200 text-ink-500",
+    ring: "border-ink-900/10",
+    accent: "text-ink-500",
+    dot: "bg-ink-400",
+  },
+  manual: {
+    icon: "border-success-600/25 bg-success-600/10 text-success-700",
+    ring: "border-success-600/20",
+    accent: "text-success-700",
+    dot: "bg-success-600",
+  },
+} as const;
+
+function StatusShell({
+  tone,
+  icon,
+  eyebrow,
+  title,
+  description,
+  children,
+}: {
+  tone: Tone;
+  icon: ReactNode;
+  eyebrow: string;
+  title: string;
+  description: string;
+  children: ReactNode;
+}) {
+  const { t } = useTranslation();
+  const styles = TONE[tone];
+
+  return (
+    <div className="relative min-h-[calc(100svh-68px)] w-full max-w-full overflow-hidden bg-cream-100">
+      <div
+        className={`pointer-events-none absolute left-1/2 top-24 h-[440px] w-[440px] -translate-x-1/2 rounded-full border ${styles.ring}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`pointer-events-none absolute left-1/2 top-24 h-[300px] w-[300px] -translate-x-1/2 rounded-full border ${styles.ring}`}
+        aria-hidden="true"
+      />
+
+      <div className="relative mx-auto w-full max-w-xl px-4 py-8 sm:px-6 sm:py-12">
+        <div className="flex items-center justify-between gap-4">
+          <Link to="/" className="inline-flex items-center gap-1.5 font-data text-[9px] uppercase tracking-[0.14em] text-ink-400 transition-colors hover:text-ink-900">
+            <Home className="h-3.5 w-3.5" /> LoVerse
+          </Link>
+          <Link to="/contact" className="inline-flex items-center gap-1 font-data text-[9px] uppercase tracking-[0.14em] text-ink-400 transition-colors hover:text-ember-600">
+            {t("contact.title")} <ArrowUpRight className="h-3 w-3" />
+          </Link>
         </div>
-    );
+
+        <div className="mt-12 text-center">
+          <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full border ${styles.icon}`}>
+            {icon}
+          </div>
+          <p className={`eyebrow mt-6 ${styles.accent}`}>{eyebrow}</p>
+          <h1 className="mx-auto mt-3 max-w-[16ch] font-display text-[clamp(2.2rem,5vw,3.4rem)] leading-[0.98] tracking-[-0.045em] text-ink-950">
+            {title}
+          </h1>
+          <p className="mx-auto mt-4 max-w-md text-[12px] leading-relaxed text-ink-500">{description}</p>
+        </div>
+
+        <div className="mt-8">{children}</div>
+
+        <div className="mt-7 flex items-center justify-center gap-2">
+          <span className={`h-1.5 w-1.5 rounded-full ${styles.dot}`} />
+          <p className="font-data text-[9px] uppercase tracking-[0.12em] text-ink-400">
+            LoVerse · Midtrans · WhatsApp
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function PaymentStatus() {
-    const { t } = useTranslation();
-    const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
-    const [order, setOrder] = useState<PaymentStatusResponse | null>(null);
+  const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [order, setOrder] = useState<PaymentStatusResponse | null>(null);
 
-    const orderId = searchParams.get('order_id');
-    const isManualWhatsApp = !orderId;
+  const orderId = searchParams.get("order_id");
+  const isManualWhatsApp = !orderId;
 
-    // orderId di URL bisa berupa token terenkripsi (alur utama) atau id
-    // mentah (link lama / redirect bawaan Midtrans). Server yang resolve.
-    const fetchOrderStatus = useCallback(async (showLoader = false) => {
-        if (!orderId) return;
-        if (showLoader) setLoading(true);
-        const { data, error } = await supabase.functions
-            .invoke('payment-status', { body: { order_token: orderId } });
-
-        if (!error && data?.found) {
-            setOrder(data as PaymentStatusResponse);
-        } else if (error) {
-            console.error('[payment-status] gagal:', error.message);
-        }
+  const fetchOrderStatus = useCallback(
+    async (showLoader = false) => {
+      if (!orderId) {
         if (showLoader) setLoading(false);
-    }, [orderId]);
+        return;
+      }
+      if (showLoader) setLoading(true);
+      const { data, error } = await supabase.functions.invoke("payment-status", { body: { order_token: orderId } });
+      if (!error && data?.found) {
+        setOrder(data as PaymentStatusResponse);
+      } else if (error) {
+        console.error("[payment-status] gagal:", error.message);
+      }
+      if (showLoader) setLoading(false);
+    },
+    [orderId],
+  );
 
-    // Muat pertama kali
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            void fetchOrderStatus(true);
-        }, 0);
-        return () => clearTimeout(timer);
-    }, [fetchOrderStatus]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      void fetchOrderStatus(true);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [fetchOrderStatus]);
 
-    const paymentStatus = order?.payment_status;
-    const isTerminal = !!paymentStatus && paymentStatus !== 'pending';
+  const paymentStatus = order?.payment_status;
+  const isTerminal = !!paymentStatus && paymentStatus !== "pending";
 
-    // Polling status dengan backoff; berhenti saat terminal.
-    // Status gagal datang dari webhook expire Midtrans (tanpa batas lokal).
-
-    useEffect(() => {
-        if (isManualWhatsApp || !orderId || isTerminal) return;
-
-        const BASE_MS = 4000;
-        const CAP_MS = 60000;
-        let delay = BASE_MS;
-        let timerId: ReturnType<typeof setTimeout> | undefined;
-        let cancelled = false;
-
-        const poll = () => {
-            if (cancelled) return;
-            if (document.visibilityState === 'visible') {
-                void fetchOrderStatus();
-            }
-            delay = Math.min(delay * 2, CAP_MS);
-            timerId = setTimeout(poll, delay);
-        };
-
-        timerId = setTimeout(poll, delay);
-
-        return () => {
-            cancelled = true;
-            if (timerId !== undefined) clearTimeout(timerId);
-        };
-    }, [fetchOrderStatus, isManualWhatsApp, orderId, isTerminal]);
-
-    const handlePayAgain = () => {
-        if (!order || !order.snap_token) {
-            navigate('/order');
-            return;
-        }
-
-        window.snap?.pay?.(order.snap_token, {
-            onSuccess: function () {
-                navigate(`/payment-status?order_id=${orderId}`);
-                fetchOrderStatus();
-            },
-            onPending: function () {
-                navigate(`/payment-status?order_id=${orderId}`);
-                fetchOrderStatus();
-            },
-            onError: function () {
-                fetchOrderStatus();
-            },
-            onClose: function () {
-                navigate(`/payment-status?order_id=${orderId}`);
-            }
-        });
+  useEffect(() => {
+    if (isManualWhatsApp || !orderId || isTerminal) return;
+    const BASE_MS = 4000;
+    const CAP_MS = 60000;
+    let delay = BASE_MS;
+    let timerId: ReturnType<typeof setTimeout> | undefined;
+    let cancelled = false;
+    const poll = () => {
+      if (cancelled) return;
+      if (document.visibilityState === "visible") void fetchOrderStatus();
+      delay = Math.min(delay * 2, CAP_MS);
+      timerId = setTimeout(poll, delay);
     };
+    timerId = setTimeout(poll, delay);
+    return () => {
+      cancelled = true;
+      if (timerId !== undefined) clearTimeout(timerId);
+    };
+  }, [fetchOrderStatus, isManualWhatsApp, orderId, isTerminal]);
 
-    // --- RENDER LOADING ---
-    if (loading) return <PaymentStatusSkeleton />;
-
-    // ====================================================================
-    // RENDER 1: UI KHUSUS MANUAL WHATSAPP (Jika tidak ada order_id)
-    // ====================================================================
-    if (isManualWhatsApp) {
-        return (
-            <div className="min-h-screen bg-[#F1E8DC] flex items-center justify-center p-3 sm:p-4 font-sans w-full max-w-full overflow-x-hidden">
-                <div className="max-w-md w-full bg-white rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 text-center border border-[#EBDFCE] relative overflow-hidden">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-[#25D366] shadow-md shadow-green-100">
-                        <FaWhatsapp className="w-8 h-8 sm:w-10 sm:h-10" />
-                    </div>
-                    <h1 className="text-2xl sm:text-3xl font-black text-[#712E1E] mb-2">{t('paymentStatus.manualTitle')}</h1>
-                    <p className="text-stone-500 mb-6 text-xs sm:text-sm leading-relaxed">
-                        {t('paymentStatus.manualDesc')}
-                    </p>
-
-                    <div className="bg-[#FAF6EE] p-3 sm:p-4 rounded-xl mb-6 text-left border border-[#EBDFCE]">
-                        <p className="text-xs text-stone-600 leading-relaxed flex items-start gap-2">
-                            <span className="text-[#E59A59] font-bold text-sm">💡</span>
-                            <span>{t('paymentStatus.manualNote')}</span>
-                        </p>
-                    </div>
-
-                    <div className="flex flex-col gap-2.5 sm:gap-3">
-                        <a
-                            href={`https://wa.me/${ADMIN_WHATSAPP}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full py-3.5 sm:py-4 bg-[#25D366] text-white rounded-xl font-bold text-sm sm:text-base hover:bg-[#20bd5a] transition shadow-lg shadow-green-600/20 flex items-center justify-center gap-2"
-                        >
-                            <FaWhatsapp className="w-5 h-5" /> {t('paymentStatus.btnWhatsapp')}
-                        </a>
-                        <button
-                            onClick={() => navigate('/')}
-                            className="w-full py-3 sm:py-3.5 bg-[#FAF6EE] text-[#712E1E] rounded-xl font-bold text-xs sm:text-sm hover:bg-[#F3EBDF] transition border border-[#EBDFCE] flex items-center justify-center gap-2"
-                        >
-                            <Home className="w-4 h-4" /> {t('paymentStatus.btnHome')}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
+  const handlePayAgain = () => {
+    if (!order || !order.snap_token) {
+      navigate("/order");
+      return;
     }
+    window.snap?.pay?.(order.snap_token, {
+      onSuccess: function () {
+        navigate(`/payment-status?order_id=${orderId}`);
+        fetchOrderStatus();
+      },
+      onPending: function () {
+        navigate(`/payment-status?order_id=${orderId}`);
+        fetchOrderStatus();
+      },
+      onError: function () {
+        fetchOrderStatus();
+      },
+      onClose: function () {
+        navigate(`/payment-status?order_id=${orderId}`);
+      },
+    });
+  };
 
-    // ====================================================================
-    // RENDER 2: JIKA ORDER TIDAK DITEMUKAN
-    // ====================================================================
-    if (!order || !order.found) {
-        return (
-            <div className="min-h-screen bg-[#F1E8DC] flex items-center justify-center p-3 sm:p-4 font-sans w-full max-w-full overflow-x-hidden">
-                <div className="max-w-md w-full bg-white rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 text-center border border-[#EBDFCE]">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-stone-400">
-                        <XCircle className="w-8 h-8 sm:w-10 sm:h-10" />
-                    </div>
-                    <h1 className="text-xl sm:text-2xl font-black text-[#712E1E] mb-2">{t('paymentStatus.notFoundTitle')}</h1>
-                    <p className="text-stone-400 mb-6 sm:mb-8 text-xs sm:text-sm">
-                        {t('paymentStatus.notFoundDesc')}
-                    </p>
-                    <button
-                        onClick={() => navigate('/')}
-                        className="w-full py-3 sm:py-3.5 bg-[#FAF6EE] text-[#712E1E] rounded-xl font-bold text-xs sm:text-sm hover:bg-[#F3EBDF] transition border border-[#EBDFCE]"
-                    >
-                        {t('paymentStatus.btnHome')}
-                    </button>
-                </div>
-            </div>
-        );
-    }
+  if (loading) return <PaymentStatusSkeleton />;
 
-    // ====================================================================
-    // RENDER 3: STATUS TRANSAKSI MIDTRANS
-    // ====================================================================
-    const isSuccess = order.payment_status === 'success';
-    const isPending = order.payment_status === 'pending';
-    const isFailed = ['failed', 'expired', 'deny', 'cancel'].includes(order.payment_status);
-    // Tanpa batas lokal: pending tampil sampai DB berubah (webhook sukses /
-    // expire Midtrans). Polling di atas yang memutakhirkan tampilan.
-    const showPending = isPending;
-    const showFailed = isFailed;
-
-    // Konfigurasi visual per status: pita gradien dan lingkaran ikon.
-    const statusTheme = isSuccess
-        ? {
-            band: 'from-emerald-400 via-emerald-500 to-teal-500',
-            iconWrap: 'bg-emerald-50 text-emerald-600 shadow-emerald-100',
-            Icon: CheckCircle,
-        }
-        : showFailed
-            ? {
-                band: 'from-rose-400 via-rose-500 to-red-500',
-                iconWrap: 'bg-rose-50 text-rose-600 shadow-rose-100',
-                Icon: XCircle,
-            }
-            : {
-                band: 'from-amber-300 via-[#E59A59] to-[#d48b4b]',
-                iconWrap: 'bg-amber-50 text-amber-600 shadow-amber-100',
-                Icon: Clock,
-            };
-
+  if (isManualWhatsApp) {
     return (
-        <div className="min-h-screen bg-[#F1E8DC] font-sans w-full max-w-full overflow-x-hidden flex items-center justify-center p-3 sm:p-6 relative">
-            {/* dekorasi latar */}
-            <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-                <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-[#E59A59]/15 blur-3xl" />
-                <div className="absolute -bottom-28 -right-20 w-80 h-80 rounded-full bg-[#712E1E]/10 blur-3xl" />
-            </div>
-
-            <div className="relative max-w-md w-full bg-white rounded-3xl shadow-2xl shadow-stone-900/10 text-center border border-[#EBDFCE] overflow-hidden">
-                <div className={`h-2 bg-gradient-to-r ${statusTheme.band}`} />
-
-                <div className="p-6 sm:p-8">
-                    <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-lg ${statusTheme.iconWrap} ${showPending ? 'animate-pulse' : ''}`}>
-                        <statusTheme.Icon className="w-8 h-8 sm:w-10 sm:h-10" />
-                    </div>
-
-                    {/* --- SUCCESS --- */}
-                    {isSuccess && (
-                        <div className="animate-fade-in-up">
-                            <h1 className="text-2xl sm:text-3xl font-black text-[#712E1E] mb-2">{t('paymentStatus.successTitle')}</h1>
-                            <p className="text-stone-500 mb-5 text-xs sm:text-sm leading-relaxed">
-                                {t('paymentStatus.successDesc', { groom: order.groom_name, bride: order.bride_name })}
-                            </p>
-
-                            <div className="mb-5">
-                                <OrderSummary order={order} />
-                            </div>
-
-                            <div className="bg-[#F7EEE3] p-3 sm:p-4 rounded-xl mb-6 border border-dashed border-[#E59A59]">
-                                <p className="text-xs text-[#712E1E] leading-relaxed text-center">
-                                    {t('paymentStatus.pinNote', { email: order.email || 'email' })}
-                                </p>
-                            </div>
-
-                            <div className="flex flex-col gap-2.5">
-                                <button onClick={() => navigate('/login')} className="w-full py-3.5 bg-gradient-to-r from-[#712E1E] to-[#8f3d27] text-white rounded-xl font-bold text-sm sm:text-base hover:brightness-110 active:brightness-95 transition shadow-lg shadow-[#712E1E]/25 flex items-center justify-center gap-2">
-                                    {t('paymentStatus.btnDashboard')} <ArrowRight className="w-5 h-5" />
-                                </button>
-                                <button onClick={() => navigate(`/wedding/${order.slug}`)} className="w-full py-3.5 bg-white border-2 border-[#712E1E]/20 text-[#712E1E] rounded-xl font-bold text-sm sm:text-base hover:border-[#712E1E] hover:bg-stone-50 transition">
-                                    {t('paymentStatus.btnViewInvitation')}
-                                </button>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* --- PENDING --- */}
-                    {showPending && (
-                        <div className="animate-fade-in-up">
-                            <h1 className="text-2xl sm:text-3xl font-black text-[#712E1E] mb-2">{t('paymentStatus.pendingTitle')}</h1>
-                            <p className="text-stone-400 mb-4 text-xs sm:text-sm">
-                                {t('paymentStatus.pendingDesc')}
-                            </p>
-
-                            <div className="mb-5">
-                                <OrderSummary order={order} />
-                            </div>
-
-                            <div className="flex flex-col gap-2.5">
-                                <button
-                                    type="button"
-                                    onClick={handlePayAgain}
-                                    className="w-full py-3.5 sm:py-4 rounded-xl font-bold text-base shadow-xl shadow-[#E59A59]/30 transition transform hover:-translate-y-0.5 active:translate-y-0 bg-gradient-to-r from-[#E59A59] to-[#d48b4b] text-white hover:brightness-105 flex items-center justify-center gap-2"
-                                >
-                                    <CreditCard className="w-5 h-5" /> {t('paymentStatus.btnPayNow')}
-                                </button>
-                                <button onClick={() => fetchOrderStatus()} className="w-full py-3 bg-stone-100 text-stone-600 rounded-xl font-bold text-sm hover:bg-stone-200 active:bg-stone-300 transition flex items-center justify-center gap-2">
-                                    <RefreshCcw className="w-4 h-4" /> {t('paymentStatus.btnCheckStatus')}
-                                </button>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* --- FAILED --- */}
-                    {showFailed && (
-                        <div className="animate-fade-in-up">
-                            <h1 className="text-2xl sm:text-3xl font-black text-[#712E1E] mb-2">{t('paymentStatus.failedTitle')}</h1>
-                            <p className="text-stone-400 mb-5 text-xs sm:text-sm">
-                                {t('paymentStatus.failedDesc')}
-                            </p>
-
-                            <div className="mb-5">
-                                <OrderSummary order={order} />
-                            </div>
-
-                            <div className="flex flex-col gap-2.5">
-                                <button onClick={() => navigate('/order')} className="w-full py-3.5 bg-gradient-to-r from-[#712E1E] to-[#8f3d27] text-white rounded-xl font-bold text-sm sm:text-base hover:brightness-110 active:brightness-95 transition shadow-lg shadow-[#712E1E]/25">
-                                    {t('paymentStatus.btnNewOrder')}
-                                </button>
-                                <button onClick={() => navigate('/')} className="w-full py-3 bg-white border border-stone-200 text-stone-500 rounded-xl font-bold text-sm hover:bg-stone-50 transition flex items-center justify-center gap-2">
-                                    <Home className="w-4 h-4" /> {t('paymentStatus.btnHome')}
-                                </button>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
+      <StatusShell
+        tone="manual"
+        icon={<FaWhatsapp className="h-6 w-6" />}
+        eyebrow="WhatsApp / Manual"
+        title={t("paymentStatus.manualTitle")}
+        description={t("paymentStatus.manualDesc")}
+      >
+        <div className="border border-ink-900/12 bg-white p-5 sm:p-6">
+          <p className="text-[11px] leading-relaxed text-ink-500">{t("paymentStatus.manualNote")}</p>
+          <div className="mt-5 flex flex-col gap-2.5">
+            <a
+              href={`https://wa.me/${ADMIN_WHATSAPP}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[2px] bg-success-700 px-4 text-sm font-semibold text-cream-50 transition-colors hover:bg-success-600"
+            >
+              <FaWhatsapp className="h-5 w-5" /> {t("paymentStatus.btnWhatsapp")}
+            </a>
+            <Button variant="secondary" className="w-full" onClick={() => navigate("/")}>
+              <Home className="h-4 w-4" /> {t("paymentStatus.btnHome")}
+            </Button>
+          </div>
         </div>
+      </StatusShell>
     );
+  }
+
+  if (!order || !order.found) {
+    return (
+      <StatusShell
+        tone="neutral"
+        icon={<XCircle className="h-6 w-6" />}
+        eyebrow={t("paymentStatus.statusNotFound")}
+        title={t("paymentStatus.notFoundTitle")}
+        description={t("paymentStatus.notFoundDesc")}
+      >
+        <div className="border border-ink-900/12 bg-white p-5 text-center sm:p-6">
+          <Button variant="primary" className="w-full" onClick={() => navigate("/")}>
+            <Home className="h-4 w-4" /> {t("paymentStatus.btnHome")}
+          </Button>
+        </div>
+      </StatusShell>
+    );
+  }
+
+  const isSuccess = order.payment_status === "success";
+  const isPending = order.payment_status === "pending";
+  const isFailed = ["failed", "expired", "deny", "cancel"].includes(order.payment_status);
+  const showPending = isPending;
+  const showFailed = isFailed;
+
+  if (isSuccess) {
+    return (
+      <StatusShell
+        tone="success"
+        icon={<CheckCircle className="h-6 w-6" />}
+        eyebrow={t("paymentStatus.statusPaid")}
+        title={t("paymentStatus.successTitle")}
+        description={t("paymentStatus.successDesc", { groom: order.groom_name, bride: order.bride_name })}
+      >
+        <div className="overflow-hidden border border-ink-900/15 bg-white">
+          <div className="p-4 sm:p-5">
+            <OrderSummary order={order} />
+            <div className="mt-4 flex items-start gap-2.5 border border-dashed border-ember-500/35 bg-cream-50 p-3">
+              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-ember-600" />
+              <p className="text-[11px] leading-relaxed text-ink-500">
+                {t("paymentStatus.pinNote", { email: order.email || "email" })}
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 border-t border-ink-900/10 p-4 sm:flex-row sm:p-5">
+            <Button variant="primary" className="flex-1" onClick={() => navigate("/login")}>
+              {t("paymentStatus.btnDashboard")} <ArrowRight className="h-4 w-4" />
+            </Button>
+            <Button variant="secondary" className="flex-1" onClick={() => navigate(`/wedding/${order.slug}`)}>
+              {t("paymentStatus.btnViewInvitation")}
+            </Button>
+          </div>
+        </div>
+      </StatusShell>
+    );
+  }
+
+  if (showPending) {
+    return (
+      <StatusShell
+        tone="pending"
+        icon={<Clock className="h-6 w-6" />}
+        eyebrow={t("paymentStatus.statusPending")}
+        title={t("paymentStatus.pendingTitle")}
+        description={t("paymentStatus.pendingDesc")}
+      >
+        <div className="overflow-hidden border border-ink-900/15 bg-white">
+          <div className="p-4 sm:p-5">
+            <OrderSummary order={order} />
+            <p className="mt-3 flex items-center gap-2 text-[10px] text-ink-400">
+              <Clock className="h-3.5 w-3.5" /> {t("paymentStatus.autoRefreshNote")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 border-t border-ink-900/10 p-4 sm:flex-row sm:p-5">
+            <Button variant="peach" className="flex-1" onClick={handlePayAgain}>
+              <CreditCard className="h-4 w-4" /> {t("paymentStatus.btnPayNow")}
+            </Button>
+            <Button variant="secondary" className="flex-1" onClick={() => fetchOrderStatus()}>
+              <RefreshCcw className="h-4 w-4" /> {t("paymentStatus.btnCheckStatus")}
+            </Button>
+          </div>
+        </div>
+      </StatusShell>
+    );
+  }
+
+  if (showFailed) {
+    return (
+      <StatusShell
+        tone="failed"
+        icon={<XCircle className="h-6 w-6" />}
+        eyebrow={t("paymentStatus.statusFailed")}
+        title={t("paymentStatus.failedTitle")}
+        description={t("paymentStatus.failedDesc")}
+      >
+        <div className="overflow-hidden border border-ink-900/15 bg-white">
+          <div className="p-4 sm:p-5">
+            <OrderSummary order={order} />
+          </div>
+          <div className="flex flex-col gap-2 border-t border-ink-900/10 p-4 sm:flex-row sm:p-5">
+            <Button variant="primary" className="flex-1" onClick={() => navigate("/order")}>
+              {t("paymentStatus.btnNewOrder")}
+            </Button>
+            <Button variant="secondary" className="flex-1" onClick={() => navigate("/")}>
+              <Home className="h-4 w-4" /> {t("paymentStatus.btnHome")}
+            </Button>
+          </div>
+        </div>
+      </StatusShell>
+    );
+  }
+
+  return null;
 }

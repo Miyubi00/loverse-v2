@@ -39,33 +39,34 @@ export default function Pagination({
   const end = Math.min(page * pageSize, total);
 
   const navButton =
-    "grid h-8 min-w-8 place-items-center rounded-xl px-2 text-xs font-bold transition active:scale-95";
-  const idleButton = `${navButton} border border-[#EBDFCE] bg-white text-stone-600 hover:bg-[#FAF6EE] hover:text-[#712E1E]`;
+    "grid h-8 min-w-8 place-items-center border px-2 font-data text-[9px] transition active:translate-y-px disabled:cursor-not-allowed disabled:opacity-35";
+  const idleButton = `${navButton} border-ink-900/12 bg-cream-50 text-ink-600 hover:border-ink-900/30 hover:text-ink-900`;
 
   return (
-    <div className="flex flex-col gap-3 border-t border-[#EBDFCE] bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-3 border-t border-ink-900/12 bg-cream-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-wrap items-center gap-3">
-        <p className="text-xs text-stone-500">
-          {language === 'en' ? (
+        <p className="text-[10px] text-ink-500">
+          {language === "en" ? (
             <>
-              Showing <span className="font-bold text-stone-700">{start}–{end}</span> of{" "}
-              <span className="font-bold text-stone-700">{total}</span> entries
+              Showing <span className="font-semibold text-ink-800">{start}–{end}</span> of{" "}
+              <span className="font-semibold text-ink-800">{total}</span> entries
             </>
           ) : (
             <>
-              Menampilkan <span className="font-bold text-stone-700">{start}–{end}</span> dari{" "}
-              <span className="font-bold text-stone-700">{total}</span> entri
+              Menampilkan <span className="font-semibold text-ink-800">{start}–{end}</span> dari{" "}
+              <span className="font-semibold text-ink-800">{total}</span> entri
             </>
           )}
         </p>
         <select
           value={pageSize}
           onChange={(e) => onPageSizeChange(Number(e.target.value))}
-          className="h-8 rounded-xl border border-[#EBDFCE] bg-[#FAF6EE] px-2 text-xs font-medium text-stone-800 outline-none transition focus:border-[#E59A59] focus:bg-white focus:ring-2 focus:ring-[#E59A59]/20"
+          aria-label={language === "en" ? "Rows per page" : "Baris per halaman"}
+          className="h-8 border border-ink-900/12 bg-cream-50 px-2 font-data text-[9px] text-ink-600 outline-none transition focus:border-ember-500 focus:ring-2 focus:ring-ember-500/15"
         >
           {PAGE_SIZES.map((size) => (
             <option key={size} value={size}>
-              {size} {language === 'en' ? '/ page' : '/ halaman'}
+              {size} {language === "en" ? "/ page" : "/ halaman"}
             </option>
           ))}
         </select>
@@ -76,15 +77,15 @@ export default function Pagination({
           type="button"
           onClick={() => onPageChange(page - 1)}
           disabled={page <= 1}
-          className={`${idleButton} ${page <= 1 ? "cursor-not-allowed opacity-40" : ""}`}
-          title={t('common.prev')}
+          className={idleButton}
+          title={t("common.prev")}
         >
           <ChevronLeft size={14} />
         </button>
 
         {buildPageNumbers(page, totalPages).map((p, idx) =>
           p === "…" ? (
-            <span key={`ellipsis-${idx}`} className="px-1 text-xs text-stone-400">
+            <span key={`ellipsis-${idx}`} className="px-1 font-data text-[9px] text-ink-400">
               …
             </span>
           ) : (
@@ -92,11 +93,7 @@ export default function Pagination({
               key={p}
               type="button"
               onClick={() => onPageChange(p)}
-              className={
-                p === page
-                  ? `${navButton} bg-[#712E1E] text-white shadow-sm`
-                  : idleButton
-              }
+              className={p === page ? `${navButton} border-ink-950 bg-ink-950 text-cream-50` : idleButton}
             >
               {p}
             </button>
@@ -107,8 +104,8 @@ export default function Pagination({
           type="button"
           onClick={() => onPageChange(page + 1)}
           disabled={page >= totalPages}
-          className={`${idleButton} ${page >= totalPages ? "cursor-not-allowed opacity-40" : ""}`}
-          title={t('common.next')}
+          className={idleButton}
+          title={t("common.next")}
         >
           <ChevronRight size={14} />
         </button>

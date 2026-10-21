@@ -284,6 +284,8 @@ export default function MotionFlowTheme({
         {!isOpen && (
           <motion.div
             key="envelope"
+            role="region"
+            aria-label="Undangan"
             className="fixed inset-0 z-50 flex items-center justify-center bg-mf-deep"
             initial={{ opacity: 1 }}
             exit={{ y: '-100%', borderBottomLeftRadius: '50%', borderBottomRightRadius: '50%' }}
@@ -875,6 +877,7 @@ export default function MotionFlowTheme({
                         <Users size={12} /> Jumlah Hadir
                       </label>
                       <select
+                        aria-label="Jumlah hadir"
                         value={rsvpPax}
                         onChange={(e) => setRsvpPax(Number(e.target.value))}
                         className="w-full p-3 rounded-xl bg-white text-mf-ink border border-mf-muted/40 outline-none focus:border-mf-rose cursor-pointer"
