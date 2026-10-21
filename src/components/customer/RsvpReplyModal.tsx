@@ -54,7 +54,7 @@ export default function RsvpReplyModal({
         <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">
           {rsvp.guest_name}
         </span>
-        <p className="mt-1 text-[14px] leading-relaxed text-ink-600">�?o{rsvp.message}�??</p>
+        <p className="mt-1 text-[14px] leading-relaxed text-ink-600">&ldquo;{rsvp.message}&rdquo;</p>
       </div>
 
       <div className="mt-4">

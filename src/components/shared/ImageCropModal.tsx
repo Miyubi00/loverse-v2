@@ -68,7 +68,7 @@ export default function ImageCropModal({
       <div className="px-5 pt-5 pb-3">
         <h3 className="font-bold text-ink-900">{title}</h3>
         <p className="text-[14px] text-ink-500 mt-0.5">
-          Geser &amp; perbesar untuk memilih area �?" rasio sudah terkunci otomatis.
+          Geser &amp; perbesar untuk memilih area &mdash; rasio sudah terkunci otomatis.
         </p>
       </div>
 
