@@ -110,13 +110,13 @@ for (const width of [1440, 390]) {
 
     await openMediaTab(page, data.id);
 
-    await expect(page.getByText("Upload Foto", { exact: true })).toHaveCount(0);
+    await expect(page.getByText("Unggah Foto", { exact: true })).toHaveCount(0);
     await expect(page.getByText("Ganti Foto", { exact: true })).toHaveCount(0);
-    await expect(page.getByText("Upload Banner Sampul", { exact: true })).toHaveCount(0);
+    await expect(page.getByText("Unggah Banner Sampul", { exact: true })).toHaveCount(0);
     await expect(page.getByText("Ganti Banner Sampul", { exact: true })).toHaveCount(0);
-    await expect(page.getByText("Upload Foto ke Galeri", { exact: true })).toHaveCount(1);
+    await expect(page.getByText("Unggah Foto ke Galeri", { exact: true })).toHaveCount(1);
 
-    const uploads = page.getByRole("button", { name: "Upload Foto", exact: true });
+    const uploads = page.getByRole("button", { name: "Unggah Foto", exact: true });
     await expect(uploads).toHaveCount(3);
 
     for (const [index, title] of [
@@ -146,7 +146,7 @@ for (const width of [1440, 390]) {
 
     const bannerView = page.getByRole("button", { name: "Lihat", exact: true }).first();
     const saveButton = page.getByRole("button", { name: "Simpan Perubahan" });
-    const galleryUpload = page.getByRole("button", { name: "Upload Foto ke Galeri" });
+    const galleryUpload = page.getByRole("button", { name: "Unggah Foto ke Galeri" });
 
     if (width === 390) {
       await expect(bannerView.locator("svg").first()).toBeHidden();

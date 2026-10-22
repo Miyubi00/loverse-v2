@@ -90,9 +90,9 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
         <aside className="grain grain-light relative hidden overflow-hidden bg-ink-950 p-10 text-cream-100 lg:flex lg:flex-col lg:justify-between lg:p-14">
           <div className="relative z-[2]">
             <Wordmark imageClassName="h-9" />
-            <p className="eyebrow mt-16 text-peach-300/75">Control room / LoVerse</p>
+            <p className="eyebrow mt-16 text-peach-300/75">{t("admin.title")} / LoVerse</p>
             <p className="mt-6 max-w-[10ch] font-display text-[clamp(3rem,5vw,5rem)] leading-[0.92] tracking-[-0.055em] text-cream-50">
-              Kawal setiap <span className="italic text-peach-300">undangan.</span>
+              {t("admin.subtitle")}
             </p>
             <p className="mt-7 max-w-sm text-[14px] leading-relaxed text-cream-100/75">
               {t("admin.loginSubtitle")}

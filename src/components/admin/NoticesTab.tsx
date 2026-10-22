@@ -59,6 +59,13 @@ const STATUS_STYLE: Record<StatusKey, string> = {
   inactive: 'border-danger-600/25 bg-danger-600/[0.06] text-danger-600',
 };
 
+const TYPE_LABEL_KEY: Record<SiteNoticeType, string> = {
+  info: 'admin.noticesTypeInfo',
+  warning: 'admin.noticesTypeWarning',
+  promo: 'admin.noticesTypePromo',
+  maintenance: 'admin.noticesTypeMaintenance',
+};
+
 /** ISO -> value untuk <input type="datetime-local"> (waktu lokal). */
 function toLocalInput(iso?: string | null): string {
   if (!iso) return '';
@@ -434,7 +441,7 @@ export default function NoticesTab({ toast, confirmAction }: NoticesTabProps) {
                         <span
                           className={`inline-flex w-fit items-center border px-2 py-0.5 font-data text-[14px] uppercase tracking-[0.06em] ${TYPE_STYLE[row.type] ?? TYPE_STYLE.info}`}
                         >
-                          {row.type}
+                          {t(TYPE_LABEL_KEY[row.type])}
                         </span>
                         <div className="mt-1.5 max-w-[320px] font-display text-lg leading-tight tracking-[-0.03em] text-ink-950">{row.title}</div>
                         {row.body && (

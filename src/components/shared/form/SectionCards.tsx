@@ -400,7 +400,7 @@ export function MusicQuoteCard({
   const busy = isAudioUploading || converting || removing;
 
   const statusText = isAudioUploading
-    ? (t('customer.edit.uploading') || 'Mengunggah musik...')
+    ? t('common.processing')
     : converting
       ? t('customer.edit.musicConverting', { percent: convertPercent ?? 0 })
       : removing
@@ -450,7 +450,7 @@ export function MusicQuoteCard({
           >
             {isAudioUploading ? (
               <>
-                <Loader2 size={13} className="hidden animate-spin lg:block" aria-hidden="true" /> {t('customer.edit.uploading') || 'Mengunggah...'}
+                <Loader2 size={13} className="hidden animate-spin lg:block" aria-hidden="true" /> {t('common.processing')}
               </>
             ) : converting ? (
               <>

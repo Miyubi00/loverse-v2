@@ -61,7 +61,7 @@ export default function AdminSidebar({
 
       <nav className="flex-1 overflow-y-auto py-5" aria-label={t("admin.title")}>
         <p className="mb-2 px-6 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/70">
-          Control
+          {t("nav.menu")}
         </p>
         {menuItems.map((item, index) => {
           const active = activeTab === item.id;

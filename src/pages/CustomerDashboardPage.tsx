@@ -81,7 +81,7 @@ export default function Dashboard() {
   if (!order) {
     return (
       <div className="flex h-dvh w-full items-center justify-center bg-cream-100 px-6 text-center font-sans text-ink-600">
-        Data Order Tidak Ditemukan.
+        {t("paymentStatus.notFoundTitle")}
       </div>
     );
   }

@@ -16,7 +16,7 @@ export default function NotFound() {
       </div>
 
       <div className="relative z-[2] mx-auto w-full max-w-[1180px] px-4 py-16 sm:px-7 lg:px-10">
-        <p className="eyebrow text-peach-300/70">Halaman tidak ditemukan / 404</p>
+        <p className="eyebrow text-peach-300/70">{t("notFound.title")} / {t("notFound.code")}</p>
         <div className="mt-6 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="display-xl text-[clamp(6rem,22vw,17rem)] leading-[0.72] text-cream-50/95">404</p>

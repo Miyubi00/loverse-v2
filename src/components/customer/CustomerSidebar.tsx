@@ -73,7 +73,7 @@ export default function CustomerSidebar({
 
       <nav className="flex-1 overflow-y-auto py-5" aria-label={t("customer.workspace")}>
         <p className="mb-2 px-6 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/70">
-          Menu
+          {t("nav.menu")}
         </p>
         {menuItems.map((item, index) => {
           const active = activeTab === item.id;
@@ -113,7 +113,7 @@ export default function CustomerSidebar({
       <div className="shrink-0 border-t border-cream-100/10 px-5 py-4">
         {isBasic && (
           <p className="mb-3 border border-cream-100/12 px-3 py-2 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/75">
-            {t("customer.basicPackage")} — RSVP off
+            {t("customer.basicPackage")}
           </p>
         )}
         <button

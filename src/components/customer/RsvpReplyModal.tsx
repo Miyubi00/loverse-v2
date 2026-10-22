@@ -43,7 +43,7 @@ export default function RsvpReplyModal({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("common.close")}
           className="p-1 text-ink-400 transition-colors hover:text-ink-900"
         >
           <X size={17} />

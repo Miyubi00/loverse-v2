@@ -80,7 +80,7 @@ export default function ConfirmDialog({
                 <Loader2 className="w-4 h-4 animate-spin" /> {t('common.loading')}
               </>
             ) : (
-              t('common.confirm')
+              t('common.confirmAction')
             )}
           </button>
         </div>

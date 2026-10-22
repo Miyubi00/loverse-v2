@@ -1,4 +1,4 @@
-# Copy changelog — K1
+# Copy changelog — K1-K5
 
 Perubahan ini hanya mencakup brand, hero, pengantar fitur, CTA, footer, dan metadata beranda. Struktur dan kunci i18n tetap.
 
@@ -76,3 +76,84 @@ Metadata sosial (`og:*` dan `twitter:*`) tetap statis pada HTML awal dan memakai
 | `order.selectPaymentMethod` | `Pilih Metode Pembayaran` → `Pilih metode pembayaran` | `Select a Payment Method` → `Select a payment method` | Menyamakan gaya kapitalisasi pada tombol dan judul bagian. |
 | `order.orderSummaryAutomatic` | `Otomatis — QRIS / VA / E-Wallet` → `Otomatis — QRIS / VA / dompet digital` | `Automatic — QRIS / VA / E-Wallet` → `Automatic — QRIS / VA / e-wallets` | Memakai istilah dompet digital yang konsisten. |
 | `order.orderSummaryWa` | `WhatsApp CS (Gratis Rp 0)` → `WhatsApp (biaya Rp 0)` | `WhatsApp CS (Free Rp 0)` → `WhatsApp (Rp 0 fee)` | Memperjelas bahwa Rp 0 adalah biaya metode WhatsApp. |
+
+## K3 — dashboard mempelai
+
+| Kunci | ID lama → baru | EN lama → baru | Alasan |
+|---|---|---|---|
+| `customer.workspace` | `Studio Undangan` → `Dashboard Undangan` | `Invitation Studio` → `Invitation Dashboard` | Menyamakan nama ruang kerja dengan judul dashboard. |
+| `customer.workspaceEyebrow` | `Ruang kerja mempelai` → `Kelola undangan` | `Couple workspace` → `Manage invitation` | Menyebut tindakan yang tersedia, bukan nama ruang yang abstrak. |
+| `customer.weddingDay` | `Hari bahagia` → `Tanggal acara` | `The big day` → `Event date` | Label tanggal kini menyebut data yang ditampilkan. |
+| `customer.basicPackage` | `Paket Basic` → `Kategori Basic - tanpa RSVP` | `Basic Package` → `Basic category - no RSVP` | Menjelaskan arti kategori Basic dan menghapus label campuran “RSVP off” di sidebar. |
+| `customer.menuRsvp` | `Buku Tamu` → `RSVP & Buku Tamu` | `Guestbook & RSVP` → `RSVP & Guestbook` | Menu mencakup konfirmasi kehadiran dan buku tamu. |
+| `customer.rsvp.title` | `Buku Tamu` → `RSVP & Buku Tamu` | `Guestbook & RSVP` → `RSVP & Guestbook` | Menyamakan judul tab dengan label menu. |
+| `customer.share.tabExcel` | `Unggah Excel` → `Unggah CSV` | `Upload Excel / CSV` → `Upload CSV` | Unggahan hanya menerima berkas CSV. |
+| `customer.share.manualHeading` | `Buat Link Satu Per Satu` → `Buat tautan satu per satu` | `Generate Links One by One` → `Create links one at a time` | Memakai “tautan” dan kata kerja yang konsisten. |
+| `customer.share.manualSub` | `Ketik nama tamu untuk membuat link undangan personal.` → `Ketik nama tamu untuk membuat tautan undangan personal.` | `Enter a guest name to generate a personalized invitation link.` → `Enter a guest name to create a personalized invitation link.` | Menyamakan istilah tautan dan tindakan pembuatan. |
+| `customer.share.btnCreateLink` | `Buat Link` → `Buat tautan` | `Generate Link` → `Create link` | Label tombol menyebut hasil yang dibuat. |
+| `customer.share.successTitle` | `Link Berhasil Dibuat!` → `Tautan berhasil dibuat!` | `Link Created Successfully!` → `Link created successfully!` | Memakai istilah tautan dan kapitalisasi kalimat. |
+| `customer.share.btnCopy` | `Salin Link` → `Salin tautan` | `Copy Link` → `Copy link` | Memakai istilah tautan secara konsisten. |
+| `customer.share.previewLabel` | `Pratinjau Link:` → `Pratinjau tautan:` | `Link Preview:` → `Link preview:` | Memakai istilah tautan secara konsisten. |
+| `customer.share.excelHeading` | `Upload Daftar Tamu` → `Unggah daftar tamu` | `Upload Guest List` → `Upload guest list` | Menghapus kata Inggris “Upload” pada antarmuka ID. |
+| `customer.share.csvExampleSub` | `Baris pertama adalah judul kolom, kolom pertama berisi nama tamu.` → `Baris pertama berisi judul kolom. Nama tamu dibaca dari kolom pertama.` | `First row is header, first column contains guest names.` → `The first row contains column headers. Guest names are read from the first column.` | Menjelaskan struktur CSV dan kolom yang dibaca. |
+| `customer.share.csvTip2` | `Kolom lain selain 'Nama' akan diabaikan secara otomatis.` → `Hanya kolom pertama yang dibaca; kolom lainnya diabaikan.` | `Other columns beside 'Name' will be automatically ignored.` → `Only the first column is read; other columns are ignored.` | Menyebut aturan kolom secara langsung tanpa menyiratkan judul kolom harus “Nama”. |
+| `customer.share.copiedToast` | `Link berhasil disalin!` → `Tautan berhasil disalin!` | `Link copied to clipboard!` → `Link copied!` | Menyamakan istilah tautan dan memendekkan notifikasi. |
+| `customer.edit.desc` | `Perbarui informasi dan media undangan pernikahan Anda.` → `Perbarui detail acara, foto, dan musik undangan Anda.` | `Update your wedding information and media assets.` → `Update your invitation's event details, photos, and music.` | Menyebut isi yang dapat diubah. |
+| `customer.edit.noCover` | `Belum ada foto banner sampul` → `Belum ada foto sampul` | `No cover banner photo uploaded` → `No cover photo yet` | Menghapus istilah ganda “banner sampul”. |
+| `customer.edit.btnUploadCover` | `Upload Banner Sampul` → `Unggah Banner Sampul` | `Upload Banner` → `Upload Banner` | Menghapus kata Inggris “Upload” pada antarmuka ID. |
+| `customer.edit.uploadPhoto` | `Upload Foto` → `Unggah Foto` | `Upload Photo` → `Upload Photo` | Menghapus kata Inggris “Upload” pada antarmuka ID. |
+| `customer.edit.btnUploadGallery` | `Upload Foto ke Galeri` → `Unggah Foto ke Galeri` | `Upload Gallery Photos` → `Upload Gallery Photos` | Menghapus kata Inggris “Upload” pada antarmuka ID. |
+| `customer.edit.galleryEmpty` | `Belum ada koleksi foto galeri yang diunggah.` → `Belum ada foto di galeri.` | `No gallery photos uploaded yet.` → `No photos in the gallery yet.` | Memendekkan status kosong agar langsung terbaca. |
+| `customer.edit.btnAddBank` | `+ Tambah` → `+ Tambah Rekening` | `+ Add Account` → `+ Add Account` | Tombol kini menyebut objek yang ditambahkan. |
+| `customer.rsvp.btnExport` | `Export Excel` → `Ekspor Excel` | `Export Excel` → `Export Excel` | Memakai kata kerja Indonesia pada antarmuka ID. |
+| `customer.rsvp.emptyFilter` | `Tidak ada data ditemukan.` → `Tidak ada tamu yang cocok dengan filter.` | `No data matching your filter.` → `No guests match this filter.` | Menjelaskan penyebab hasil kosong. |
+| `customer.rsvp.emptyList` | `Belum ada data ucapan.` → `Belum ada ucapan dari tamu.` | `No guest messages yet.` → `No guest messages yet.` | Menyebut sumber data yang kosong. |
+| `customer.rsvp.emptyFiltered` | `Tidak ada data ditemukan.` → `Tidak ada tamu yang cocok dengan filter.` | `No data matching your filter.` → `No guests match this filter.` | Menjelaskan penyebab hasil kosong. |
+| `customer.rsvp.emptyDefault` | `Belum ada data ucapan.` → `Belum ada ucapan dari tamu.` | `No guest messages yet.` → `No guest messages yet.` | Menyebut sumber data yang kosong. |
+
+## K4 — kejelasan panel admin
+
+| Kunci | ID lama → baru | EN lama → baru | Alasan |
+|---|---|---|---|
+| `admin.menuWhatsapp` | `Data Masuk (WhatsApp)` → `Pesanan dari WhatsApp` | `Incoming Orders (WhatsApp)` → `WhatsApp Orders` | Menu menyebut sumber dan isi data. |
+| `admin.inboxSubtitle` | `Pesan masuk ke mail@loverse.id — klik untuk membaca & membalas.` → `Pesan yang masuk ke mail@loverse.id. Klik pesan untuk membaca dan membalas.` | `Messages to mail@loverse.id — click to read & reply.` → `Messages sent to mail@loverse.id. Click a message to read and reply.` | Memisahkan keterangan kotak masuk dan tindakan membaca. |
+| `admin.loginTitle` | `Admin Login` → `Masuk Admin` | `Admin Login` → `Admin Sign In` | Memakai kata kerja Indonesia pada judul halaman masuk. |
+| `admin.loginSubtitle` | `Masuk dengan akun terdaftar untuk mengelola undangan.` → `Masuk dengan akun admin untuk mengelola undangan.` | `Log in with authorized account to manage invitations.` → `Sign in with an admin account to manage invitations.` | Menyebut jenis akun yang diperlukan. |
+| `admin.toastLogout` | `Berhasil Logout` → `Berhasil keluar.` | `Logged out successfully` → `Logged out successfully` | Menghapus kata Inggris dan menambahkan tanda baca akhir. |
+| `admin.noticeCap` | `Menampilkan {shown} pesanan masuk terbaru dari total {total}.` → `Menampilkan {shown} pesanan terbaru dari total {total}. Pesanan lain tidak dimuat di daftar ini.` | `Showing {shown} latest incoming orders out of {total} total.` → `Showing the latest {shown} orders out of {total}. Other orders are not loaded in this list.` | Menjelaskan batas daftar dan pesanan yang tidak dimuat. |
+| `admin.ordersSubtitle` | `Kelola dan pantau semua data undangan yang sudah aktif di sistem.` → `Kelola dan pantau undangan yang sudah aktif.` | `Manage and monitor all active wedding invitations in the system.` → `Manage and monitor active invitations.` | Menghapus pengulangan “semua data” dan “di sistem”. |
+| `admin.ordersDesc` | `Kelola dan pantau semua data undangan yang sudah aktif di sistem.` → `Kelola dan pantau undangan yang sudah aktif.` | `Manage and monitor all active wedding invitations in the system.` → `Manage and monitor active invitations.` | Menyamakan deskripsi dengan judul tab. |
+| `admin.whatsappTitle` | `Data Masuk WhatsApp` → `Pesanan dari WhatsApp` | `WhatsApp Incoming Orders` → `WhatsApp Orders` | Menyebut pesanan, bukan data masuk yang ambigu. |
+| `admin.whatsappSubtitle` | `Daftar pesanan yang masuk melalui WhatsApp dan menunggu persetujuan admin.` → `Pesanan dari WhatsApp yang menunggu persetujuan admin.` | `List of orders submitted via WhatsApp waiting for admin approval.` → `Orders received on WhatsApp that are waiting for admin approval.` | Memendekkan kalimat tanpa mengubah arti. |
+| `admin.whatsappDesc` | `Daftar pesanan yang masuk melalui WhatsApp dan menunggu persetujuan admin.` → `Pesanan dari WhatsApp yang menunggu persetujuan admin.` | `List of orders submitted via WhatsApp waiting for admin approval.` → `Orders received on WhatsApp that are waiting for admin approval.` | Menyamakan deskripsi dengan subjudul. |
+| `admin.pendingWaTitle` | `Data Masuk (WhatsApp)` → `Pesanan dari WhatsApp` | `Incoming Orders (WhatsApp)` → `WhatsApp Orders` | Menyamakan istilah pada semua tampilan pesanan WhatsApp. |
+| `admin.paymentPending` | `Pending` → `Menunggu` | `Pending` → `Pending` | Memakai kata Indonesia yang umum. |
+| `admin.statusPending` | `Pending` → `Menunggu` | `Pending` → `Pending` | Menyamakan status pembayaran pada tabel ID. |
+| `admin.thContact` | `Kontak Info` → `Kontak pembeli` | `Contact Info` → `Buyer contact` | Menjelaskan pemilik kontak. |
+| `admin.thAction` | `Tindakan` → `Aksi` | `Action` → `Action` | Memakai label kolom yang konsisten dan singkat. |
+| `admin.thControl` | `Kontrol` → `Aksi` | `Control` → `Actions` | Menyebut tindakan yang tersedia, bukan istilah teknis. |
+| `admin.daysAgo` | `Hari Yg Lalu` → `Hari lalu` | `Days Ago` → `Days ago` | Memperbaiki singkatan dan kapitalisasi. |
+| `admin.cardSlugWarning` | `*Hati-hati! Mengubah slug akan membuat link lama tidak bisa diakses.` → `Mengubah slug membuat tautan lama tidak bisa dibuka.` | `*Warning! Changing the slug will break previously shared links.` → `Changing the slug makes previously shared links stop working.` | Menjelaskan akibat perubahan slug tanpa peringatan berlebihan. |
+| `admin.templatesSubtitle` | `Atur katalog template undangan, kelola harga, dan status aktif atau nonaktif.` → `Atur harga dan status aktif template undangan.` | `Configure invitation templates catalog, pricing, and active status.` → `Set invitation template prices and active status.` | Menyebut dua tindakan yang tersedia di tab. |
+| `admin.templatesDesc` | `Atur katalog template undangan, kelola harga, dan status aktif atau nonaktif.` → `Atur harga dan status aktif template undangan.` | `Configure invitation templates catalog, pricing, and active status.` → `Set invitation template prices and active status.` | Menyamakan deskripsi dengan subjudul. |
+| `admin.noticesSubtitle` | `Buat pengumuman (promo, maintenance, info) yang tampil otomatis di halaman beranda.` → `Buat pengumuman promo, info, atau pemeliharaan yang tampil otomatis di beranda.` | `Create announcements (promo, maintenance, info) that appear automatically on the homepage.` → `Create promo, info, or maintenance announcements that appear automatically on the homepage.` | Menghapus tanda kurung dan memakai istilah Indonesia untuk jenis pengumuman. |
+
+## K5 — galat, status kosong, konfirmasi, dan toast
+
+| Kunci | ID lama → baru | EN lama → baru | Alasan |
+|---|---|---|---|
+| `toast.galleryAddedSaved` | `Foto ditambahkan & tersimpan.` → `Foto ditambahkan dan tersimpan.` | `Photo added & saved.` → `Photo added and saved.` | Mengganti ampersand dengan kata sambung agar kalimat status mudah dibaca. |
+| `toast.uploadSuccessSaved` | `Berhasil diunggah & tersimpan.` → `Berhasil diunggah dan tersimpan.` | `Uploaded & saved successfully.` → `Uploaded and saved.` | Menyatukan dua status dalam satu kalimat pendek. |
+| `toast.uploadSuccess` | `Upload berhasil!` → `Berhasil diunggah!` | `Upload successful!` → `Upload successful!` | Menghapus kata Inggris pada notifikasi ID. |
+| `toast.uploadFailed` | `Gagal upload: {error}` → `Gagal mengunggah: {error}` | `Upload failed: {error}` → `Upload failed: {error}` | Menghapus kata Inggris pada pesan galat ID. |
+| `toast.musicDeletedSaved` | `Musik berhasil dihapus & tersimpan.` → `Musik dihapus dan tersimpan.` | `Music removed & saved successfully.` → `Music removed and saved.` | Memendekkan status dan menghapus ampersand. |
+| `toast.deleteFailed` | `Gagal hapus: {error}` → `Gagal menghapus: {error}` | `Failed to delete: {error}` → `Failed to delete: {error}` | Memakai bentuk kata kerja yang lengkap. |
+| `toast.deleteFailedSimple` | `Gagal hapus komentar.` → `Gagal menghapus komentar.` | `Failed to delete comment.` → `Failed to delete comment.` | Memakai bentuk kata kerja yang lengkap. |
+| `toast.savedSuccess` | `Berhasil disimpan!` → `Perubahan berhasil disimpan.` | `Saved successfully!` → `Changes saved.` | Menyebut objek yang tersimpan, yaitu perubahan. |
+| `toast.priceUpdateNoChange` | `Gagal update harga: tidak ada data yang berubah.` → `Gagal memperbarui harga: tidak ada data yang berubah.` | `Failed to update price: no data changed.` → `Failed to update price: no data changed.` | Menghapus kata Inggris pada pesan galat ID. |
+| `toast.priceUpdateFailed` | `Gagal update harga.` → `Gagal memperbarui harga.` | `Failed to update price.` → `Failed to update price.` | Menghapus kata Inggris pada pesan galat ID. |
+| `toast.bulkPriceNoChange` | `Harga massal gagal: tidak ada data yang berubah.` → `Gagal memperbarui harga massal: tidak ada data yang berubah.` | `Bulk price update failed: no data changed.` → `Bulk price update failed: no data changed.` | Menyebut tindakan yang gagal sebelum penyebabnya. |
+| `toast.bulkPriceFailed` | `Gagal update massal.` → `Gagal memperbarui harga massal.` | `Failed to apply bulk update.` → `Failed to apply bulk update.` | Menyebut objek pembaruan secara lengkap. |
+| `toast.orderRejectedDeleted` | `Pesanan ditolak & dihapus.` → `Pesanan ditolak dan dihapus.` | `Order rejected & deleted.` → `Order rejected and deleted.` | Mengganti ampersand dengan kata sambung. |
+| `toast.loginFailed` | `Login Gagal: {error}` → `Gagal masuk: {error}` | `Login Failed: {error}` → `Sign-in failed: {error}` | Memakai kata kerja yang konsisten dan kapitalisasi kalimat. |
+| `toast.openingWhatsapp` | `Berhasil! Membuka WhatsApp...` → `Membuka WhatsApp...` | `Success! Opening WhatsApp...` → `Opening WhatsApp...` | Menyatakan tindakan yang sedang berjalan tanpa klaim tambahan. |

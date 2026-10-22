@@ -173,7 +173,7 @@ export default function OrdersTab({
         </div>
         {showOrders && (
           <p className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
-            {ordersTotal.toLocaleString("id-ID")} {t("admin.thCoupleDate")}
+            {ordersTotal.toLocaleString("id-ID")} {t("admin.ordersTitle")}
           </p>
         )}
       </div>

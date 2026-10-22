@@ -30,12 +30,13 @@ interface DialogState {
 }
 
 /** Banner peringatan bila daftar terpotong oleh server-side cap. */
-function CapNotice({ total, shown, label }: { total: number | null; shown: number; label: string }) {
+function CapNotice({ total, shown }: { total: number | null; shown: number }) {
+  const { t, language } = useTranslation();
   if (typeof total !== "number" || total <= shown) return null;
+  const locale = language === "en" ? "en-US" : "id-ID";
   return (
     <div className="border border-gold-600/30 bg-gold-600/[0.07] px-4 py-3 font-data text-[14px] uppercase tracking-[0.06em] text-gold-600">
-      Menampilkan {shown.toLocaleString("id-ID")} {label} terbaru dari total{" "}
-      {total.toLocaleString("id-ID")}. Data lebih lama tidak termuat dalam daftar ini.
+      {t("admin.noticeCap", { shown: shown.toLocaleString(locale), total: total.toLocaleString(locale) })}
     </div>
   );
 }
@@ -271,7 +272,7 @@ export default function AdminPanel() {
 
                   {activeTab === "whatsapp" && (
                     <>
-                      <CapNotice total={pendingTotal} shown={pendingOrders.length} label="pesanan masuk" />
+                      <CapNotice total={pendingTotal} shown={pendingOrders.length} />
                       <OrdersTab
                         ordersSrv={ordersFilter}
                         pendingOrders={pendingOrders}

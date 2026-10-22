@@ -47,3 +47,19 @@ Teks di bawah tidak diubah. Sebagian punya dukungan fungsi di kode, tetapi cakup
 | `order.asideLockedNote` | `Harga transparan. Tidak ada biaya tersembunyi.` / `Transparent pricing. No hidden fees.` | Rincian biaya terlihat pada ringkasan, tetapi klaim tanpa biaya tersembunyi yang mencakup seluruh pesanan belum diverifikasi. |
 
 Data testimoni, rating, ulasan, dan bukti sosial dummy tetap dipertahankan dan tidak dipakai sebagai dasar klaim lain.
+
+## K3-K5 — teks yang dibiarkan, tidak terlokalisasi, atau perlu bukti
+
+| Lokasi | Teks | Alasan |
+|---|---|---|
+| `AdminLogin` panel samping | `Orders / 24/7`, `RSVP / Live`, `Access / Secure` | Angka dan label ini berupa klaim operasional yang belum diverifikasi. Tidak diubah karena bukan bagian penjelasan alur; perlu keputusan produk atau sumber bukti. |
+| `OrdersTab` konfirmasi | `Aktifkan Pesanan?`, `Tolak & Hapus Pesanan?`, `Hapus Data Permanen?`, `Acara:` | Teks dialog masih tertanam dalam kode dan tidak punya kunci i18n. Tidak diubah agar tidak menambah kunci; perlu pemindahan ke locale pada perubahan berikutnya. |
+| `TemplatesTab` konfirmasi/toast | `Ubah Harga Massal?`, `Sebagian berhasil: ... terupdate.` | Sama seperti di atas: teks tertanam dan belum mengikuti bahasa aktif. |
+| `AdminPanelPage` state edit kosong | `Pilih pesanan dari menu Data Pesanan...` | Teks tertanam tanpa kunci i18n; dibiarkan. |
+| `ShareTab` label kecil | `Personal link`, `…dst.` | Teks dekoratif/ilustratif dan nama format contoh; tidak diubah agar tidak mengubah data contoh. |
+| `SectionCards` alt gambar | `Cover`, `Gallery {n}` | Alt text masih berbahasa Inggris dan tidak punya kunci i18n; dibiarkan. |
+| `useFileUpload` judul crop | `Atur Foto Mempelai Pria`, `Atur Foto Mempelai Wanita`, `Atur Banner Cover` | Judul dialog crop tertanam di hook dan hanya berbahasa Indonesia; perlu kunci i18n agar bisa diterjemahkan. |
+| `CustomerLoginPage` metadata | `Login Dashboard — LoVerse`, deskripsi metadata | Metadata halaman masih berbahasa Indonesia dan tidak memakai locale; belum ada kunci metadata yang sesuai. |
+| `PaymentStatusPage` eyebrow | `WhatsApp / Manual` | Istilah tetap dapat dipahami; belum ada kunci eyebrow yang lebih spesifik tanpa mengubah struktur. |
+| `GlobalToast` tombol tutup | `aria-label="Tutup notifikasi"` | Label aksesibilitas tertanam dan hanya berbahasa Indonesia; belum ada kunci khusus. |
+| `ui/EmptyState`, `ui/StatusBadge`, `ui/ConfirmDialog` | Default `Kosong`, label status, `Batal`/`Lanjutkan` | Komponen bersama ini tidak ditemukan pemakaiannya di TSX saat pemeriksaan; default hardcoded dibiarkan agar tidak mengubah kode mati. |

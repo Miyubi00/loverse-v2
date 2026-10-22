@@ -26,3 +26,17 @@ Deskripsi brand sengaja dibatasi pada fungsi inti: membuat dan membagikan undang
 | Ringkasan menghitung biaya berdasarkan metode; biaya WhatsApp manual bernilai Rp 0 dan metode daring juga menghitung PPN 11% atas biaya kanal. | `src/components/order/constants.ts:162-178` menghitung biaya; `src/components/order/OrderSummary.tsx:65-71,169-183` menampilkan harga tema, biaya metode, dan total. |
 
 K2 hanya menyebut fungsi dan nilai yang ditampilkan oleh kode tersebut. Angka harga, biaya, tarif, daftar metode, dan langkah checkout tidak diubah.
+
+## K3-K5 — dashboard, admin, dan status
+
+| Fakta yang disebut di teks K3-K5 | Sumber di kode |
+|---|---|
+| Kategori Basic tidak menampilkan menu RSVP dan buku tamu. | `src/pages/CustomerDashboardPage.tsx:56-58,92-101` memakai `BASIC_TEMPLATES_SLUGS` dan menyembunyikan tab RSVP untuk kategori tersebut. |
+| Impor daftar tamu menerima CSV dan membaca nama dari kolom pertama. | `src/components/customer/ShareTab.tsx:224-229` membatasi input ke `.csv`; parser daftar tamu di `src/hooks/useShareLink.ts` membaca kolom pertama. |
+| Tautan tamu dapat dibuat, disalin, dan dikirim melalui WhatsApp. | `src/components/customer/ShareTab.tsx:107-181` menyediakan form, tombol salin, dan tombol WhatsApp; `src/hooks/useShareLink.ts:53-65` membuat tautan personal. |
+| Dashboard dapat memperbarui detail acara, foto, galeri, musik, dan rekening. | `src/components/shared/form/SectionCards.tsx` merender kartu lokasi, foto, galeri, musik, dan rekening; `src/components/customer/EditTab.tsx` menyusun tab edit. |
+| Pesanan WhatsApp di panel admin menunggu persetujuan sebelum diaktifkan. | `src/components/admin/OrdersTab.tsx:63-94` menampilkan aksi aktivasi untuk pesanan pending dan memanggil `activate-pending-order`. |
+| Panel admin dapat mengatur harga dan status aktif template. | `src/components/admin/TemplatesTab.tsx:60-120` menyediakan pembaruan status, harga satuan, dan harga massal. |
+| Pengumuman situs memiliki jenis info, peringatan, promo, dan pemeliharaan. | `src/components/admin/NoticesTab.tsx:46-51,286-295` mendefinisikan tipe dan pilihan jenis pengumuman. |
+
+K3-K5 tidak menambahkan angka, durasi, kuota, atau klaim keamanan baru. Teks promosi admin yang belum terverifikasi dicatat di `docs/copy-flags.md`.

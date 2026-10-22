@@ -1,6 +1,6 @@
 # LoVerse UI Redesign — Progress
 
-Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete; copywriting K1 and K2 complete. The full Playwright suite has two unrelated language-toggle failures on `/demo/motion-flow`.**
+Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete; copywriting K1–K5 complete. The full Playwright suite has two unrelated language-toggle failures on `/demo/motion-flow`.**
 
 ## Copywriting — K2 (catalog, FAQ, checkout, and payment)
 
@@ -12,6 +12,17 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete; copywrit
 - [x] Screenshots: [ID mobile landing](artifacts/copy-k2/id-390-landing.png), [EN mobile landing](artifacts/copy-k2/en-390-landing.png), [ID mobile catalog](artifacts/copy-k2/id-390-catalog.png), [EN mobile catalog](artifacts/copy-k2/en-390-catalog.png), [ID desktop landing](artifacts/copy-k2/id-1440-landing.png), [EN desktop landing](artifacts/copy-k2/en-1440-landing.png), [ID desktop catalog](artifacts/copy-k2/id-1440-catalog.png), [EN desktop catalog](artifacts/copy-k2/en-1440-catalog.png).
 - [x] `npm run lint`, `npm run typecheck`, production build, and `npm test` pass; unit suite: 44/44. The local-only order tests are ignored by Git per `.gitignore` but were updated to the current labels before running.
 - [x] Production build retains the existing `PhoneShowcaseScene` warning at 1,076.89 kB / 297.86 kB gzip; K2 changes do not affect that chunk.
+
+## Copywriting — K3–K5 (dashboard, admin, and status copy)
+
+- [x] K3 clarified customer dashboard labels, share/edit/RSVP copy, upload actions, CSV guidance, and differentiated RSVP empty states without changing flows or field names.
+- [x] K4 clarified WhatsApp orders, inbox/login, templates, notices, contact/action labels, payment status, and admin navigation copy while preserving existing keys.
+- [x] K5 clarified auth, upload, delete, save, and system-error toasts; localized the error boundary, 404 eyebrow, and confirm action; removed untranslated fallbacks in dashboard and login.
+- [x] Reused existing keys for missing customer editor labels and replaced embedded admin sidebar copy with `nav.menu`; no new locale keys were added.
+- [x] `scripts/check-copy.mjs`: 933 matching non-empty ID/EN keys; 123 documented locale changes preserve placeholders, tags, and numbers.
+- [x] K3–K5 copy-sensitive Playwright tests pass: 26/26 across dashboard, edit media, modal overlays, and language toggle at 390px, 1440px, and 320–360px edge widths.
+- [x] `npm run lint`, `npm run typecheck`, production build, and `npm test` pass; unit suite: 44/44.
+- [x] Unresolved hardcoded or unverified strings are recorded in `docs/copy-flags.md`; source facts and the full row-by-row changelog are in `docs/copy-facts.md` and `docs/copy-changelog.md`.
 
 ## PhoneShowcase v2 — M1
 

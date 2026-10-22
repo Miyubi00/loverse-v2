@@ -120,7 +120,7 @@ for (const language of ["id", "en"]) {
 const changelog = readFileSync(resolve(root, "docs/copy-changelog.md"), "utf8");
 const rows = changelog
   .split(/\r?\n/)
-  .filter((line) => /^\|\s*`(?:home|order)\./.test(line))
+  .filter((line) => /^\|\s*`(?:home|order|customer|admin|toast)\./.test(line))
   .map((line) => line.split("|").slice(1, -1).map((cell) => cell.trim()));
 
 if (rows.length === 0) errors.push("No locale entries found in docs/copy-changelog.md");

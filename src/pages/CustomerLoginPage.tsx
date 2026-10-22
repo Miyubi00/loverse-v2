@@ -16,7 +16,7 @@ interface CustomerLoginResponse {
   order: { id: string; slug: string; groom_name: string; bride_name: string };
 }
 
-async function extractInvokeError(err: unknown): Promise<string> {
+async function extractInvokeError(err: unknown, fallback: string): Promise<string> {
   try {
     const ctx = (err as { context?: Response }).context;
     if (ctx && typeof ctx.json === "function") {
@@ -26,7 +26,7 @@ async function extractInvokeError(err: unknown): Promise<string> {
   } catch {
     /* fallback */
   }
-  return "Terjadi kesalahan sistem. Pastikan data benar.";
+  return fallback;
 }
 
 const inputClass =
@@ -72,7 +72,7 @@ export default function DashboardLogin() {
       });
       if (error) {
         console.error("Login Error:", error);
-        throw new Error(await extractInvokeError(error));
+        throw new Error(await extractInvokeError(error, t("toast.systemError")));
       }
       const login = data as CustomerLoginResponse | null;
       if (!login?.access_token || !login.order?.id) throw new Error(t("login.errorNotFound"));
@@ -92,7 +92,7 @@ export default function DashboardLogin() {
 
   return (
     <AuthShell
-      eyebrow="Dashboard mempelai"
+      eyebrow={t("customer.navbarTitle")}
       title={t("login.title")}
       description={t("login.subtitle")}
       footnote={<>{t("login.pinHelp")} <Link to="/forgot-pin" className="ml-1 font-semibold text-ember-600 underline-offset-4 hover:underline">{t("login.resendPinLink")}</Link></>}
