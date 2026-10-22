@@ -46,7 +46,7 @@ export default function CustomerSidebar({
     >
       <div className="relative shrink-0 border-b border-cream-100/10 px-6 pb-6 pt-6">
         <div className="flex items-start justify-between gap-3">
-          <p className="font-data text-[14px] uppercase tracking-[0.06em] text-peach-300/85">
+          <p className="font-data text-[14px] uppercase tracking-[0.06em] text-champagne/85">
             {t("customer.workspace")}
           </p>
           <button
@@ -61,12 +61,12 @@ export default function CustomerSidebar({
 
         <h1 className="mt-5 font-display text-[28px] leading-[1.02] tracking-[-0.04em] text-cream-50">
           {order.groom_name}
-          <span className="mx-1.5 text-peach-300/70">&</span>
+          <span className="mx-1.5 text-champagne/70">&</span>
           {order.bride_name}
         </h1>
 
         <div className="mt-4 flex items-center gap-2 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/75">
-          <CalendarDays size={12} className="text-peach-300/70" />
+          <CalendarDays size={12} className="text-champagne/70" />
           {dateLabel}
         </div>
       </div>
@@ -86,14 +86,14 @@ export default function CustomerSidebar({
               className={cn(
                 "group flex w-full items-center gap-3 border-l-2 py-3 pl-5 pr-5 text-left transition-colors",
                 active
-                  ? "border-peach-300 bg-cream-50/[0.06] text-cream-50"
+                  ? "border-champagne bg-cream-50/[0.06] text-cream-50"
                   : "border-transparent text-cream-100/70 hover:border-cream-100/25 hover:bg-cream-50/[0.03] hover:text-cream-100",
               )}
             >
               <span
                 className={cn(
                   "w-5 font-data text-[14px] tabular-nums",
-                  active ? "text-peach-300" : "text-cream-100/65",
+                  active ? "text-champagne" : "text-cream-100/65",
                 )}
               >
                 {String(index + 1).padStart(2, "0")}
@@ -101,7 +101,7 @@ export default function CustomerSidebar({
               <item.icon size={16} strokeWidth={1.6} className="shrink-0" />
               <span className="flex-1 text-[14px] font-medium tracking-[-0.01em]">{item.label}</span>
               {item.badge !== null && (
-                <span className="min-w-5 bg-peach-300 px-1.5 py-0.5 text-center font-data text-[14px] font-bold text-ink-950">
+                <span className="min-w-5 bg-champagne px-1.5 py-0.5 text-center font-data text-[14px] font-bold text-ink-950">
                   {item.badge}
                 </span>
               )}

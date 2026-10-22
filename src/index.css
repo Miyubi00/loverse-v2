@@ -15,55 +15,78 @@
 
   --breakpoint-xs: 420px;
 
-  /* Logo-derived scale — hue 63.12, sampled from public/logo.svg (#FFD6B2).
+  /* LoVerse palette — brown and champagne.
+     Source: loverse-color-palette.xlsx. #633221 and #FFD6B2 were supplied by
+     the user; the rest are role-based supporting colors. */
+  --color-espresso: #2b1510;
+  --color-kakao: #4a2418;
+  --color-kastanye: #633221;
+  --color-permukaan: #7a4430;
+  --color-peach: #ffd6b2;
+  --color-krem: #fff6ec;
+  --color-champagne: #e4c78e;
+  --color-tembaga: #e8a07f;
+  --color-muted-dark: #e2c3a6;
+  --color-gold-dark: #8a6420;
+  --color-muted-cream: #7a5445;
+  --color-success-dark: #a9c7a0;
+  --color-warning-dark: #ebbb5a;
+  --color-error-dark: #f5a092;
+  --color-success-cream: #3f6b4a;
+  --color-warning-cream: #8a5a00;
+  --color-error-cream: #b3392f;
+  --color-wine: #7a2433;
+  --color-forest: #2f4a3a;
+
+  /* Backwards-compatible app scale — mapped to the palette above.
      Values documented in docs/color-from-logo.md. */
-  --color-ink-950: #190f07;
-  --color-ink-900: #281b10;
-  --color-ink-800: #392a1d;
-  --color-ink-700: #513e2d;
-  --color-ink-600: #685341;
-  --color-ink-500: #75604e;
-  --color-ink-400: #7d6958;
-  --color-ink-300: #ac9b8c;
+  --color-ink-950: #2b1510;
+  --color-ink-900: #4a2418;
+  --color-ink-800: #633221;
+  --color-ink-700: #7a4430;
+  --color-ink-600: #7a5445;
+  --color-ink-500: #7a5445;
+  --color-ink-400: #7a5445;
+  --color-ink-300: #7a5445;
 
-  /* Paper / cream — same hue, high lightness */
-  --color-cream-50: #fff9f2;
-  --color-cream-100: #ffefe2;
-  --color-cream-200: #f8e2cf;
-  --color-cream-300: #ecd0b8;
-  --color-cream-400: #d8b79a;
+  /* Paper / cream — Krem replaces pure white; Peach is used only as a tint. */
+  --color-cream-50: #fff6ec;
+  --color-cream-100: #fff6ec;
+  --color-cream-200: color-mix(in srgb, var(--color-peach) 24%, var(--color-krem));
+  --color-cream-300: #e4c78e;
+  --color-cream-400: #e8a07f;
 
-  /* Official logo peach + same-hue accents */
-  --color-peach-100: #fff0e1;
-  --color-peach-200: #ffe3c9;
+  /* Official logo peach + palette accents */
+  --color-peach-100: color-mix(in srgb, var(--color-peach) 18%, var(--color-krem));
+  --color-peach-200: color-mix(in srgb, var(--color-peach) 42%, var(--color-krem));
   --color-peach-300: #ffd6b2;
-  --color-peach-400: #f7bd89;
-  --color-ember-400: #eeaf75;
-  --color-ember-500: #bf7523;
-  --color-ember-600: #9d5800;
-  --color-ember-700: #7d4600;
+  --color-peach-400: #e8a07f;
+  --color-ember-400: #e8a07f;
+  --color-ember-500: #8a6420;
+  --color-ember-600: #8a6420;
+  --color-ember-700: #633221;
 
-  /* Deep same-hue panels */
-  --color-wine-800: #3e2915;
-  --color-wine-900: #28190a;
-  --color-gold-500: #d3965c;
-  --color-gold-600: #875726;
+  /* Deep panels */
+  --color-wine-800: #7a2433;
+  --color-wine-900: #7a2433;
+  --color-gold-500: #e4c78e;
+  --color-gold-600: #8a6420;
 
   /* Functional status colors — semantic exceptions, documented */
-  --color-success-600: #426f4c;
-  --color-success-700: #325b3b;
-  --color-danger-600: #a43c33;
-  --color-danger-700: #852f28;
-  --color-whatsapp-600: #17843f;
-  --color-whatsapp-700: #0e6e33;
+  --color-success-600: #3f6b4a;
+  --color-success-700: #2f4a3a;
+  --color-danger-600: #b3392f;
+  --color-danger-700: #7a2433;
+  --color-whatsapp-600: #3f6b4a;
+  --color-whatsapp-700: #2f4a3a;
 
   /* Backwards-compatible brand aliases used by older components */
-  --color-brand-nav: #190f07;
+  --color-brand-nav: #2b1510;
   --color-brand-nav-text: #ffd6b2;
-  --color-brand-bg: #ffefe2;
-  --color-brand-text: #281b10;
-  --color-brand-muted: #75604e;
-  --color-brand-primary: #9d5800;
+  --color-brand-bg: #fff6ec;
+  --color-brand-text: #2b1510;
+  --color-brand-muted: #7a5445;
+  --color-brand-primary: #8a6420;
 
   /* Palet tema undangan (JANGAN diubah — kontrak visual template) */
   --color-mf-deep: #3D1832;
@@ -140,11 +163,37 @@
 @layer base {
   :root {
     color-scheme: light;
+    --color-white: var(--color-krem);
   }
 
   html {
     overflow-x: hidden;
     scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ink-500) var(--color-cream-200);
+  }
+
+  html::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  html::-webkit-scrollbar-track {
+    background: var(--color-cream-200);
+  }
+
+  html::-webkit-scrollbar-thumb {
+    background: var(--color-ink-500);
+    border: 3px solid var(--color-cream-200);
+    border-radius: 999px;
+  }
+
+  html::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ember-600);
+  }
+
+  html::-webkit-scrollbar-corner {
+    background: var(--color-cream-200);
   }
 
   body {
@@ -294,7 +343,7 @@
   .glow-ember {
     background-image: radial-gradient(
       ellipse at bottom left,
-      color-mix(in srgb, var(--color-ember-600) 18%, transparent),
+      color-mix(in srgb, var(--color-tembaga) 16%, transparent),
       transparent 66%
     );
   }
@@ -302,7 +351,7 @@
   .glow-peach {
     background-image: radial-gradient(
       circle,
-      color-mix(in srgb, var(--color-peach-300) 16%, transparent),
+      color-mix(in srgb, var(--color-tembaga) 12%, transparent),
       transparent 68%
     );
   }
@@ -360,6 +409,8 @@
 
   .theme-canvas {
     font-family: "Poppins", "Segoe UI", sans-serif;
+    /* Invitation templates keep their own white; app chrome uses Krem. */
+    --color-white: #fff;
   }
 
   .ticket-edge {

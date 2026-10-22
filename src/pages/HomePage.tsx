@@ -33,6 +33,7 @@ type CategoryFilter = "All" | "Basic" | "RSVP";
 
 const BASE_DUMMY_SOLD = 60;
 const FALLBACK_MIN_PRICE = 50000;
+const CATALOG_BATCH_SIZE = 8;
 const SECTION_IDS = ["beranda", "fitur", "statistik", "katalog", "alur", "testimoni", "faq", "mulai"] as const;
 
 const formatIDR = (value: number) =>
@@ -78,6 +79,7 @@ export default function Landing() {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("All");
   const [templates, setTemplates] = useState<Array<TemplateRow & { image: string }>>([]);
+  const [visibleTemplateCount, setVisibleTemplateCount] = useState(CATALOG_BATCH_SIZE);
   const [loading, setLoading] = useState(true);
   const [soldCount, setSoldCount] = useState<number | null>(null);
   const [minPrice, setMinPrice] = useState<number | null>(null);
@@ -156,6 +158,7 @@ export default function Landing() {
         .filter((template) => template.name.toLowerCase().includes(searchTerm.toLowerCase())),
     [templates, searchTerm, categoryFilter],
   );
+  const visibleTemplates = filteredTemplates.slice(0, visibleTemplateCount);
 
   const features = [
     { icon: Sparkles, title: t("home.features.f1Title"), desc: t("home.features.f1Desc") },
@@ -213,7 +216,7 @@ export default function Landing() {
             left: "30%",
             right: "-20%",
             backgroundImage:
-              "radial-gradient(ellipse 72% 78% at 62% 45%, color-mix(in srgb, var(--color-peach-300) 15%, transparent), transparent 72%), radial-gradient(ellipse 66% 60% at 76% 83%, color-mix(in srgb, var(--color-ember-600) 13%, transparent), transparent 76%), radial-gradient(ellipse at center, transparent 52%, color-mix(in srgb, var(--color-ink-950) 45%, transparent) 100%)",
+              "radial-gradient(ellipse 72% 78% at 62% 45%, color-mix(in srgb, var(--color-tembaga) 15%, transparent), transparent 72%), radial-gradient(ellipse 66% 60% at 76% 83%, color-mix(in srgb, var(--color-tembaga) 13%, transparent), transparent 76%), radial-gradient(ellipse at center, transparent 52%, color-mix(in srgb, var(--color-ink-950) 45%, transparent) 100%)",
           }}
           aria-hidden="true"
         />
@@ -228,14 +231,14 @@ export default function Landing() {
           <div className="flex flex-col justify-between px-4 pb-10 pt-12 sm:px-7 sm:pt-16 lg:min-h-[calc(100svh-68px)] lg:px-10 lg:pb-12 lg:pt-20">
             <div>
               <div className="flex items-center gap-3">
-                <span className="h-px w-8 bg-peach-300/60" />
-                <p className="eyebrow text-peach-300/80">{t("home.heroEyebrow")}</p>
+                <span className="h-px w-8 bg-champagne/60" />
+                <p className="eyebrow text-champagne/80">{t("home.heroEyebrow")}</p>
               </div>
 
               <h1 className="display-xl mt-8 max-w-[10.5ch] text-[clamp(3.9rem,9.4vw,8.8rem)] text-cream-50">
                 <span className="block">{t("home.heroLine1")}</span>
                 <span className="block">
-                  <span className="italic text-peach-300">{t("home.heroLine2").split(" ")[0]}</span>{" "}
+                  <span className="italic text-champagne">{t("home.heroLine2").split(" ")[0]}</span>{" "}
                   {t("home.heroLine2").split(" ").slice(1).join(" ")}
                 </span>
               </h1>
@@ -270,14 +273,14 @@ export default function Landing() {
                     <span
                       key={initial}
                       className="flex h-8 w-8 items-center justify-center rounded-full border border-ink-950 bg-cream-200 font-display text-[14px] font-semibold text-ink-800"
-                      style={{ backgroundColor: ["var(--color-cream-200)", "var(--color-peach-300)", "var(--color-cream-300)", "var(--color-cream-100)"][index] }}
+                      style={{ backgroundColor: ["var(--color-cream-200)", "var(--color-tembaga)", "var(--color-cream-300)", "var(--color-cream-100)"][index] }}
                     >
                       {initial}
                     </span>
                   ))}
                 </div>
                 <div>
-                  <div className="flex items-center gap-1 text-peach-300">
+                  <div className="flex items-center gap-1 text-champagne">
                     {Array.from({ length: 5 }).map((_, index) => (
                       <Star key={index} className="h-3 w-3 fill-current" />
                     ))}
@@ -294,7 +297,7 @@ export default function Landing() {
 
           <div className="relative min-h-[430px] border-t border-cream-100/10 sm:min-h-[560px] lg:min-h-0 lg:border-l lg:border-t-0">
             <div className="absolute left-5 top-6 z-10 flex items-center gap-2 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/60">
-              <span className="h-1 w-1 rounded-full bg-peach-300" />
+              <span className="h-1 w-1 rounded-full bg-champagne" />
               Live / 2026
             </div>
             <div className="absolute right-5 top-1/2 z-0 hidden -translate-y-1/2 rotate-90 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/55 sm:block">
@@ -311,7 +314,7 @@ export default function Landing() {
                 <span className="whitespace-nowrap font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/60">
                   {item}
                 </span>
-                <Plus className="h-3 w-3 text-peach-300/50" />
+                <Plus className="h-3 w-3 text-champagne/50" />
               </span>
             ))}
           </div>
@@ -367,33 +370,33 @@ export default function Landing() {
       </section>
 
       {/* STATS */}
-      <section id="statistik" className="scroll-mt-20 border-b border-ink-900/12 bg-peach-300">
+      <section id="statistik" className="scroll-mt-20 border-b border-cream-100/15 bg-wine-900 text-cream-100">
         <div className="mx-auto w-full max-w-[1480px] px-4 py-14 sm:px-7 sm:py-20 lg:px-10">
-          <div className="flex items-center justify-between gap-4 border-b border-ink-900/18 pb-6">
-            <span className="eyebrow text-ink-800">{t("home.statsEyebrow")}</span>
-            <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-800/75">LoVerse / ID</span>
+          <div className="flex items-center justify-between gap-4 border-b border-cream-100/20 pb-6">
+            <span className="eyebrow text-champagne/85">{t("home.statsEyebrow")}</span>
+            <span className="font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/70">LoVerse / ID</span>
           </div>
-          <div className="grid grid-cols-2 divide-ink-900/15 pt-8 sm:grid-cols-3 sm:divide-x">
+          <div className="grid grid-cols-2 divide-cream-100/20 pt-8 sm:grid-cols-3 sm:divide-x">
             <div className="pb-8 sm:pb-0">
               <StatNumber value={displaySold} suffix="+" />
-              <p className="mt-3 text-[14px] font-medium uppercase tracking-[0.06em] text-ink-700">
+              <p className="mt-3 text-[14px] font-medium uppercase tracking-[0.06em] text-cream-100/80">
                 {t("home.stats.sold")}
               </p>
             </div>
-            <div className="border-l border-ink-900/15 pb-8 pl-5 sm:border-l-0 sm:pb-0 sm:pl-8">
+            <div className="border-l border-cream-100/20 pb-8 pl-5 sm:border-l-0 sm:pb-0 sm:pl-8">
               <StatNumber value={activeCount} />
-              <p className="mt-3 text-[14px] font-medium uppercase tracking-[0.06em] text-ink-700">
+              <p className="mt-3 text-[14px] font-medium uppercase tracking-[0.06em] text-cream-100/80">
                 {t("home.stats.templates")}
               </p>
             </div>
-            <div className="col-span-2 mt-4 border-t border-ink-900/15 pt-6 sm:col-span-1 sm:mt-0 sm:border-t-0 sm:pl-8 sm:pt-0">
+            <div className="col-span-2 mt-4 border-t border-cream-100/20 pt-6 sm:col-span-1 sm:mt-0 sm:border-t-0 sm:pl-8 sm:pt-0">
               <div className="flex items-end gap-1.5">
                 <span className="font-display text-[clamp(3.8rem,9vw,7.6rem)] font-light leading-[0.8] tracking-[-0.055em]">
                   4.9
                 </span>
-                <Star className="mb-2 h-5 w-5 fill-ink-900 text-ink-900" />
+                <Star className="mb-2 h-5 w-5 fill-champagne text-champagne" />
               </div>
-              <p className="mt-3 text-[14px] font-medium uppercase tracking-[0.06em] text-ink-700">
+              <p className="mt-3 text-[14px] font-medium uppercase tracking-[0.06em] text-cream-100/80">
                 {t("home.stats.rating")}
               </p>
             </div>
@@ -426,7 +429,10 @@ export default function Landing() {
               <input
                 type="search"
                 value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
+                onChange={(event) => {
+                  setSearchTerm(event.target.value);
+                  setVisibleTemplateCount(CATALOG_BATCH_SIZE);
+                }}
                 placeholder={t("home.catalogSearchPlaceholder")}
                 className="w-full border-0 bg-transparent py-2 text-[14px] text-ink-900 outline-none placeholder:text-ink-400"
               />
@@ -443,7 +449,10 @@ export default function Landing() {
                 <button
                   key={value}
                   type="button"
-                  onClick={() => setCategoryFilter(value)}
+                  onClick={() => {
+                    setCategoryFilter(value);
+                    setVisibleTemplateCount(CATALOG_BATCH_SIZE);
+                  }}
                   aria-pressed={categoryFilter === value}
                   className={cn(
                     "shrink-0 border px-3.5 py-2 font-data text-[14px] uppercase tracking-[0.06em] transition-colors",
@@ -466,15 +475,34 @@ export default function Landing() {
               <TemplateCardSkeleton count={8} />
             </div>
           ) : filteredTemplates.length > 0 ? (
-            <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4 lg:gap-x-6">
-              {filteredTemplates.map((template) => (
-                <TemplateCatalogCard
-                  key={template.slug}
-                  template={template}
-                  priceLabel={formatPriceK(template.price ?? FALLBACK_MIN_PRICE)}
-                />
-              ))}
-            </div>
+            <>
+              <div id="theme-catalog-grid" className="mt-8 grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4 lg:gap-x-6">
+                {visibleTemplates.map((template) => (
+                  <TemplateCatalogCard
+                    key={template.slug}
+                    template={template}
+                    priceLabel={formatPriceK(template.price ?? FALLBACK_MIN_PRICE)}
+                  />
+                ))}
+              </div>
+              {visibleTemplateCount < filteredTemplates.length && (
+                <div className="mt-10 flex justify-center">
+                  <button
+                    type="button"
+                    aria-controls="theme-catalog-grid"
+                    onClick={() =>
+                      setVisibleTemplateCount((count) =>
+                        Math.min(count + CATALOG_BATCH_SIZE, filteredTemplates.length),
+                      )
+                    }
+                    className={buttonClass("secondary", "md")}
+                  >
+                    {t("home.catalogLoadMore")}
+                    <Plus className="h-4 w-4" aria-hidden="true" />
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             <div className="mt-8 border border-dashed border-ink-900/20 px-6 py-16 text-center">
               <p className="font-display text-2xl tracking-[-0.02em] text-ink-900">{t("home.catalogEmpty")}</p>
@@ -484,6 +512,7 @@ export default function Landing() {
                 onClick={() => {
                   setSearchTerm("");
                   setCategoryFilter("All");
+                  setVisibleTemplateCount(CATALOG_BATCH_SIZE);
                 }}
                 className="mt-5 font-data text-[14px] uppercase tracking-[0.06em] text-ember-600 underline-offset-4 hover:underline"
               >
@@ -498,13 +527,13 @@ export default function Landing() {
       <section id="alur" className="scroll-mt-20 bg-ink-950 text-cream-100">
         <div className="mx-auto grid w-full max-w-[1480px] gap-12 px-4 py-20 sm:px-7 sm:py-28 lg:grid-cols-12 lg:gap-16 lg:px-10">
           <div className="lg:col-span-5">
-            <span className="eyebrow text-peach-300/80">{t("home.stepsEyebrow")}</span>
+            <span className="eyebrow text-champagne/80">{t("home.stepsEyebrow")}</span>
             <h2 className="display-lg mt-5 max-w-[11ch] text-[clamp(2.7rem,5.4vw,5rem)] text-cream-50">
               {t("home.stepsTitle")}
             </h2>
             <p className="mt-6 max-w-sm text-[14px] leading-relaxed text-cream-100/55">{t("home.stepsDesc")}</p>
             <div className="mt-10 inline-flex items-end gap-3 border border-cream-100/15 px-4 py-3">
-              <span className="font-display text-4xl leading-none text-peach-300">3</span>
+              <span className="font-display text-4xl leading-none text-champagne">3</span>
               <span className="max-w-[14ch] font-data text-[14px] uppercase leading-relaxed tracking-[0.06em] text-cream-100/60">
                 {t("home.stepsTagline")}
               </span>
@@ -517,10 +546,10 @@ export default function Landing() {
                 <Reveal key={step.num} delay={index * 80}>
                   <article className="group grid grid-cols-[auto_1fr] gap-5 border-b border-cream-100/15 py-7 sm:gap-8 sm:py-9">
                     <div className="flex flex-col items-start gap-4">
-                      <span className="font-display text-[clamp(2.6rem,5vw,4rem)] font-light leading-none text-peach-300/90">
+                      <span className="font-display text-[clamp(2.6rem,5vw,4rem)] font-light leading-none text-champagne/90">
                         {step.num}
                       </span>
-                      <step.icon className="h-4 w-4 text-cream-100/30 transition-colors group-hover:text-peach-300" />
+                      <step.icon className="h-4 w-4 text-cream-100/30 transition-colors group-hover:text-champagne" />
                     </div>
                     <div className="pt-1">
                       <h3 className="font-display text-[clamp(1.5rem,2.6vw,2rem)] leading-tight tracking-[-0.025em] text-cream-50">
@@ -534,7 +563,7 @@ export default function Landing() {
             </div>
             <Link
               to="/tutorial"
-              className="mt-8 inline-flex items-center gap-2 font-data text-[14px] uppercase tracking-[0.06em] text-peach-300 transition-colors hover:text-cream-50"
+              className="mt-8 inline-flex items-center gap-2 font-data text-[14px] uppercase tracking-[0.06em] text-champagne transition-colors hover:text-cream-50"
             >
               {t("home.faqTutorialBtn")}
               <ArrowUpRight className="h-3.5 w-3.5" />
@@ -572,7 +601,7 @@ export default function Landing() {
                   </blockquote>
                   <figcaption className="mt-6 flex items-center justify-between gap-4 border-t border-ink-900/10 pt-4">
                     <div className="flex items-center gap-2.5">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-peach-300 font-display text-[14px] font-semibold text-ink-900">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-champagne font-display text-[14px] font-semibold text-ink-900">
                         {testimonial.name.charAt(0)}
                       </span>
                       <div>
@@ -661,13 +690,13 @@ export default function Landing() {
         <div className="grain relative mx-auto flex w-full max-w-[1480px] flex-col items-start justify-between gap-10 px-4 py-20 sm:px-7 sm:py-28 lg:flex-row lg:items-end lg:px-10">
           <div className="relative z-[2]">
             <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-peach-300/60" />
-              <span className="eyebrow text-peach-300/80">{t("home.ctaEyebrow")}</span>
+              <span className="h-px w-8 bg-champagne/60" />
+              <span className="eyebrow text-champagne/80">{t("home.ctaEyebrow")}</span>
             </div>
             <h2 className="display-xl mt-6 max-w-[13ch] text-[clamp(3rem,7vw,6.8rem)] text-cream-50">
               {t("home.ctaTitleNew")}
             </h2>
-            <p className="mt-6 max-w-md text-[14px] leading-relaxed text-cream-100/58">
+            <p className="mt-6 max-w-md text-[14px] leading-relaxed text-muted-dark">
               {t("home.ctaBannerDesc")}
             </p>
             <div className="mt-8 flex flex-col gap-2.5 xs:flex-row">
@@ -695,7 +724,7 @@ export default function Landing() {
           </div>
 
           <div className="pointer-events-none absolute -right-20 top-0 h-[420px] w-[420px] rounded-full border border-cream-100/10" aria-hidden="true" />
-          <div className="pointer-events-none absolute -right-6 top-24 h-[220px] w-[220px] rounded-full border border-peach-300/15" aria-hidden="true" />
+          <div className="pointer-events-none absolute -right-6 top-24 h-[220px] w-[220px] rounded-full border border-champagne/15" aria-hidden="true" />
         </div>
       </section>
     </div>

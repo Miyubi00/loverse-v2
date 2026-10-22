@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect, type FormEvent } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabaseClient";
 import { captureError } from "../../lib/monitoring";
 import type { ToastApi } from "../GlobalToast";
-import { Eye, EyeOff, Lock, Mail, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useTranslation } from "../../i18n";
-import LanguageToggleButton from "../shared/LanguageToggleButton";
+import Navbar from "../Navbar";
 import Button from "../ui/Button";
-import { BrandPlate, Wordmark } from "../ui/Brand";
 import TurnstileWidget, { type TurnstileWidgetRef } from "../ui/TurnstileWidget";
 
 interface AdminLoginProps {
@@ -85,21 +85,21 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
   };
 
   return (
-    <div className="app-shell min-h-dvh bg-cream-100">
-      <div className="mx-auto grid min-h-dvh w-full max-w-[1480px] lg:grid-cols-[1.05fr_.95fr]">
-        <aside className="grain grain-light relative hidden overflow-hidden bg-ink-950 p-10 text-cream-100 lg:flex lg:flex-col lg:justify-between lg:p-14">
+    <div className="app-shell min-h-screen bg-cream-100">
+      <Navbar />
+      <div className="grid min-h-[calc(100svh-68px)] w-full lg:grid-cols-2">
+        <aside className="grain grain-light relative hidden overflow-hidden bg-ink-950 p-10 text-cream-100 lg:flex lg:min-h-[calc(100svh-68px)] lg:flex-col lg:justify-between lg:p-14">
           <div className="relative z-[2]">
-            <Wordmark imageClassName="h-9" />
-            <p className="eyebrow mt-16 text-peach-300/75">{t("admin.title")} / LoVerse</p>
-            <p className="mt-6 max-w-[10ch] font-display text-[clamp(3rem,5vw,5rem)] leading-[0.92] tracking-[-0.055em] text-cream-50">
+            <p className="eyebrow text-champagne/75">{t("admin.title")} / LoVerse</p>
+            <p className="mt-6 max-w-[11ch] font-display text-[clamp(2.8rem,4.6vw,4.4rem)] leading-[0.95] tracking-[-0.045em] text-cream-50">
               {t("admin.subtitle")}
             </p>
-            <p className="mt-7 max-w-sm text-[14px] leading-relaxed text-cream-100/75">
+            <p className="mt-6 max-w-sm text-[14px] leading-relaxed text-cream-100/65">
               {t("admin.loginSubtitle")}
             </p>
           </div>
 
-          <div className="relative z-[2] grid grid-cols-3 gap-4 border-t border-cream-100/15 pt-6">
+          <div className="relative z-[2] mt-16 grid grid-cols-3 gap-4 border-t border-cream-100/15 pt-6">
             {[
               { label: "Orders", value: "24/7" },
               { label: "RSVP", value: "Live" },
@@ -115,45 +115,39 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
           </div>
 
           <div className="pointer-events-none absolute -right-24 top-1/4 h-[460px] w-[460px] rounded-full border border-cream-100/10" aria-hidden="true" />
-          <div className="pointer-events-none absolute -right-2 top-1/4 h-[280px] w-[280px] rounded-full border border-peach-300/15" aria-hidden="true" />
+          <div className="pointer-events-none absolute -right-2 top-1/4 h-[280px] w-[280px] rounded-full border border-champagne/15" aria-hidden="true" />
           <div className="pointer-events-none absolute bottom-0 left-0 h-1/2 w-full glow-ember" aria-hidden="true" />
         </aside>
 
-        <main className="relative flex items-center px-4 py-12 sm:px-8 lg:px-14">
-          <div className="absolute right-4 top-4 sm:right-6 sm:top-6">
-            <LanguageToggleButton variant="light" />
-          </div>
+        <main id="main-content" className="relative flex min-h-[calc(100svh-68px)] items-center px-4 py-12 sm:px-8 lg:px-14 lg:py-16">
+          <div className="mx-auto w-full max-w-[440px]">
+            <Link to="/" className="inline-flex items-center gap-2 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 transition-colors hover:text-ink-900">
+              <ArrowLeft className="h-3 w-3" aria-hidden="true" /> {t("common.back")}
+            </Link>
+            <p className="eyebrow mt-10 text-ember-600">{t("admin.title")}</p>
 
-          <div className="mx-auto w-full max-w-[420px]">
-            <div className="mb-10 lg:hidden">
-              <BrandPlate />
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center border border-ink-900/12 bg-cream-50 text-ember-600">
-                <ShieldCheck className="h-5 w-5" strokeWidth={1.5} />
-              </span>
-              <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
-                {t("admin.title")}
-              </span>
-            </div>
-
-            <h1 className="mt-8 font-display text-[clamp(2.3rem,4.4vw,3.4rem)] leading-[0.96] tracking-[-0.05em] text-ink-950">
+            <h1 className="mt-4 font-display text-[clamp(2.2rem,4.4vw,3.3rem)] leading-[0.98] tracking-[-0.045em] text-ink-950">
               {t("admin.loginTitle")}
             </h1>
             <p className="mt-3 text-[14px] leading-relaxed text-ink-500">{t("admin.loginSubtitle")}</p>
 
-            <form onSubmit={handleLogin} className="mt-8 space-y-4">
+            <form onSubmit={handleLogin} className="mt-8 space-y-6">
               <div>
                 <label htmlFor="admin-email" className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                   {t("admin.loginEmail")}
                 </label>
-                <div className="relative mt-1.5">
-                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-ink-400">
+                <div className="relative mt-2">
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-ink-400" aria-hidden="true">
                     <Mail size={15} />
                   </span>
                   <input
                     id="admin-email"
+                    name="email"
                     type="email"
+                    inputMode="email"
+                    autoComplete="username"
+                    autoCapitalize="none"
+                    spellCheck={false}
                     required
                     disabled={loginLoading}
                     placeholder="admin@loverse.com"
@@ -168,13 +162,15 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
                 <label htmlFor="admin-password" className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
                   {t("admin.loginPassword")}
                 </label>
-                <div className="relative mt-1.5">
-                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-ink-400">
+                <div className="relative mt-2">
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-ink-400" aria-hidden="true">
                     <Lock size={15} />
                   </span>
                   <input
                     id="admin-password"
+                    name="password"
                     type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
                     required
                     disabled={loginLoading}
                     placeholder="••••••••"
@@ -188,7 +184,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
                     aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
                     className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-ink-400 transition-colors hover:text-ink-900"
                   >
-                    {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                    {showPassword ? <EyeOff size={15} aria-hidden="true" /> : <Eye size={15} aria-hidden="true" />}
                   </button>
                 </div>
               </div>
@@ -205,7 +201,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
                 size="lg"
                 disabled={loginLoading || !captchaToken || lockSeconds > 0}
                 loading={loginLoading}
-                className="mt-2 w-full"
+                className="w-full"
               >
                 {lockSeconds > 0
                   ? t("admin.loginLocked", { seconds: lockSeconds })
@@ -215,7 +211,7 @@ export default function AdminLogin({ toast }: AdminLoginProps) {
               </Button>
             </form>
 
-            <p className="mt-8 border-t border-ink-900/12 pt-5 text-[14px] leading-relaxed text-ink-400">
+            <p className="mt-6 border-t border-ink-900/12 pt-5 text-[14px] leading-relaxed text-ink-400">
               {t("admin.loginFooter")}
             </p>
           </div>

@@ -83,7 +83,7 @@ export default function Navbar() {
                   )}
                 >
                   {t(link.key)}
-                  <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-peach-300 transition-transform duration-300 group-hover:scale-x-100" />
+                  <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-champagne transition-transform duration-300 group-hover:scale-x-100" />
                 </Link>
               );
             })}

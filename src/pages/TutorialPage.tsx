@@ -83,12 +83,12 @@ function TutorialCard({ item, index }: { item: TutorialItem; index: number }) {
                   <Play size={20} className="ml-0.5 fill-current" />
                 </span>
               </span>
-              <span aria-hidden="true" className="absolute bottom-3 right-3 font-data text-[14px] text-cream-50/75">
+              <span aria-hidden="true" className="absolute bottom-3 right-3 bg-ink-950/80 px-1.5 py-0.5 font-data text-[14px] text-cream-50">
                 {item.duration}
               </span>
             </button>
           ) : (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-cream-100/40">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-cream-100/60">
               <Play className="h-6 w-6" />
               <p className="font-data text-[14px] uppercase tracking-[0.06em]">{t("tutorial.videoSoon")}</p>
             </div>

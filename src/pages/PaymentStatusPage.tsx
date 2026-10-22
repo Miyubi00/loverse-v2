@@ -51,7 +51,7 @@ function OrderSummary({ order }: { order: PaymentStatusResponse }) {
       </dl>
       <div className="flex items-end justify-between gap-4 border-t border-ink-900/10 bg-ink-950 px-4 py-4">
         <dt className="text-[14px] font-medium text-cream-100/55">{t("paymentStatus.sumTotal")}</dt>
-        <dd className="font-display text-2xl leading-none tracking-[-0.04em] text-peach-200">{formatIDR(total)}</dd>
+        <dd className="font-display text-2xl leading-none tracking-[-0.04em] text-cream-100">{formatIDR(total)}</dd>
       </div>
       {order.order_id ? (
         <p className="select-all border-t border-dashed border-ink-900/15 px-4 py-2.5 text-center font-data text-[14px] tracking-[0.06em] text-ink-400">

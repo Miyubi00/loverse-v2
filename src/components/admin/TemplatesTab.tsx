@@ -253,7 +253,7 @@ export default function TemplatesTab({ templates, searchTerm, setSearchTerm, con
                       <span
                         className={`inline-block border px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] ${
                           template.category === "RSVP"
-                            ? "border-ember-500/30 bg-peach-100 text-ember-600"
+                            ? "border-ember-500/30 bg-cream-200 text-ember-600"
                             : "border-ink-900/15 bg-cream-100 text-ink-600"
                         }`}
                       >

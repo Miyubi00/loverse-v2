@@ -307,7 +307,7 @@ export default function InboxTab({ toast, onCountChange }: InboxTabProps) {
                   onClick={() => void openMessage(m)}
                   className={`flex w-full items-start gap-3 border-l-2 p-3.5 text-left transition-colors ${
                     selected?.id === m.id
-                      ? 'border-ember-500 bg-peach-100/60'
+                      ? 'border-ember-500 bg-cream-200/60'
                       : 'border-transparent hover:bg-cream-100/60'
                   }`}
                 >

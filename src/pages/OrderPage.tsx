@@ -101,12 +101,15 @@ function OrderAside({
   return (
     <aside className="hidden lg:block">
       <div className="sticky top-24 space-y-4">
-        <div className="border border-ink-900/15 bg-white p-4">
-          <div className="flex items-center justify-between gap-3">
-            <p className="eyebrow text-ink-400">{t("order.asideTitle")}</p>
-            <span className="font-data text-[14px] text-ink-400">0{step} / 03</span>
+        <div className="overflow-hidden border border-ink-900/15 bg-white">
+          <div className="bg-wine-900 px-4 py-3 text-cream-100">
+            <div className="flex items-center justify-between gap-3">
+              <p className="eyebrow text-champagne/90">{t("order.asideTitle")}</p>
+              <span className="font-data text-[14px] text-cream-100/75">0{step} / 03</span>
+            </div>
           </div>
-          <div className="mt-4 flex gap-3">
+          <div className="p-4">
+          <div className="flex gap-3">
             <div className="aspect-[3/4] w-[64px] shrink-0 overflow-hidden border border-ink-900/10 bg-cream-100">
               {image ? <img src={image} alt={template.name} className="h-full w-full object-cover" /> : null}
             </div>
@@ -134,6 +137,7 @@ function OrderAside({
             </div>
           </div>
           <p className="mt-2 text-[14px] leading-relaxed text-ink-400">{t("order.asideLockedNote")}</p>
+          </div>
         </div>
 
         <div className="border border-ink-900/12 bg-cream-50 p-4">
@@ -155,7 +159,7 @@ function OrderAside({
           to="/contact"
           className="flex items-center gap-3 border border-ink-900/12 bg-white p-3.5 transition-colors hover:border-ink-900/30 hover:bg-cream-50"
         >
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center bg-ink-950 text-peach-300">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center bg-ink-950 text-champagne">
             <MessageCircle className="h-4 w-4" />
           </span>
           <span className="min-w-0">

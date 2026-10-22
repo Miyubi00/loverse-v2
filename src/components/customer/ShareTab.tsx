@@ -75,7 +75,7 @@ export default function ShareTab({
                   : "text-ink-500 hover:bg-cream-100 hover:text-ink-900"
               }`}
             >
-              <span className={`font-data text-[14px] ${active ? "text-peach-300" : "text-ink-400"}`}>
+              <span className={`font-data text-[14px] ${active ? "text-champagne" : "text-ink-400"}`}>
                 {mode.index}
               </span>
               <span className="text-[14px] font-semibold tracking-[-0.01em]">{mode.label}</span>
@@ -136,7 +136,7 @@ export default function ShareTab({
               <div className="relative z-[2] flex h-full flex-col">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="eyebrow text-peach-300">{t("customer.share.successTitle")}</p>
+                    <p className="eyebrow text-champagne">{t("customer.share.successTitle")}</p>
                     <p className="mt-3 font-display text-2xl tracking-[-0.03em] text-cream-50">
                       {guestName || "—"}
                     </p>
@@ -209,9 +209,9 @@ export default function ShareTab({
       {shareMode === "excel" && (
         <div className="space-y-5">
           <section className="grid gap-5 lg:grid-cols-[1.1fr_.9fr]">
-            <label className="group flex cursor-pointer flex-col justify-between border border-dashed border-ink-900/25 bg-cream-50 p-6 text-center transition-colors hover:border-ember-500 hover:bg-peach-100/40 sm:p-10">
+            <label className="group flex cursor-pointer flex-col justify-between border border-dashed border-ink-900/25 bg-cream-50 p-6 text-center transition-colors hover:border-ember-500 hover:bg-cream-200 sm:p-10">
               <span className="flex flex-col items-center gap-3">
-                <span className="flex h-14 w-14 items-center justify-center border border-ink-900/12 bg-cream-100 text-ember-600 transition-colors group-hover:border-ember-500/40 group-hover:bg-peach-200">
+                <span className="flex h-14 w-14 items-center justify-center border border-ink-900/12 bg-cream-100 text-ember-600 transition-colors group-hover:border-ember-500/40 group-hover:bg-cream-200">
                   <FileSpreadsheet className="h-6 w-6" strokeWidth={1.5} />
                 </span>
                 <span className="mt-2 font-display text-[1.6rem] tracking-[-0.04em] text-ink-950">

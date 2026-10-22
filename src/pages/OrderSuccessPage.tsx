@@ -22,7 +22,7 @@ export default function OrderSuccess() {
         <section className="relative">
           <div className="pointer-events-none absolute -left-16 -top-16 h-56 w-56 rounded-full border border-ink-900/10" aria-hidden="true" />
           <div className="relative">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-ink-950 text-peach-300">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-ink-950 text-champagne">
               <Check className="h-5 w-5" strokeWidth={3} />
             </div>
             <p className="eyebrow mt-8 text-ember-600">{t("orderSuccess.eyebrow")}</p>

@@ -1,6 +1,6 @@
 import type { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
-import logoSource from "../../../public/logo.svg?raw";
+import logoSource from "../../assets/logo.svg?raw";
 import { cn } from "../../lib/cn";
 
 const logoPaths = logoSource
@@ -51,7 +51,7 @@ export function Wordmark({
       onClick={onClick}
       aria-label={ariaLabel}
       className={cn(
-        "inline-flex shrink-0 items-center rounded-[3px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-peach-300",
+        "inline-flex shrink-0 items-center rounded-[3px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember-500",
         className,
       )}
     >

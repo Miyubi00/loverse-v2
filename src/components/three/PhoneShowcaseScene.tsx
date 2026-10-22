@@ -27,7 +27,7 @@ import {
   type Texture,
 } from "three";
 import { toCreasedNormals } from "three/addons/utils/BufferGeometryUtils.js";
-import { readColorToken } from "../../lib/cssColor";
+import { readColorToken, withAlpha } from "../../lib/cssColor";
 import type { PhoneShowcaseMotion } from "../home/phoneShowcaseMotion";
 import { SHOWCASE_TEMPLATES } from "../home/showcaseTemplates";
 
@@ -298,10 +298,11 @@ function OrbitRings({ peach, ember }: { peach: string; ember: string }) {
     canvas.height = 64;
     const context = canvas.getContext("2d");
     if (context) {
+      const cream = readColorToken("cream-50");
       const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32);
-      gradient.addColorStop(0, "rgba(255,255,255,0.95)");
-      gradient.addColorStop(0.18, "rgba(255,255,255,0.6)");
-      gradient.addColorStop(1, "rgba(255,255,255,0)");
+      gradient.addColorStop(0, withAlpha(cream, 0.95));
+      gradient.addColorStop(0.18, withAlpha(cream, 0.6));
+      gradient.addColorStop(1, withAlpha(cream, 0));
       context.fillStyle = gradient;
       context.fillRect(0, 0, 64, 64);
     }
@@ -557,13 +558,13 @@ function ShowcaseRig({
 
   const colors = useMemo(
     () => ({
-      peach: readColorToken("peach-300", "#ffd6b2"),
-      ember: readColorToken("ember-500", "#bf7523"),
-      cream: readColorToken("cream-100", "#ffefe2"),
-      frame: new Color(readColorToken("cream-300", "#ecd0b8"))
-        .lerp(new Color(readColorToken("ink-400", "#7d6958")), 0.48)
+      peach: readColorToken("champagne"),
+      ember: readColorToken("tembaga"),
+      cream: readColorToken("cream-100"),
+      frame: new Color(readColorToken("cream-300"))
+        .lerp(new Color(readColorToken("ink-400")), 0.48)
         .getStyle(),
-      black: readColorToken("ink-950", "#190f07"),
+      black: readColorToken("ink-950"),
     }),
     [],
   );

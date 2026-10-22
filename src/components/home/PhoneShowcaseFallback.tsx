@@ -60,7 +60,7 @@ export default function PhoneShowcaseFallback({
       </div>
 
       <div
-        className="pointer-events-none absolute bottom-20 left-1/2 h-px w-40 -translate-x-1/2 bg-gradient-to-r from-transparent via-peach-300/40 to-transparent"
+        className="pointer-events-none absolute bottom-20 left-1/2 h-px w-40 -translate-x-1/2 bg-gradient-to-r from-transparent via-champagne/40 to-transparent"
         aria-hidden="true"
       />
     </div>

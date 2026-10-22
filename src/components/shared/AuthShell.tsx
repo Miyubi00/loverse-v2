@@ -16,14 +16,14 @@ export default function AuthShell({ eyebrow, title, description, children, footn
 
   return (
     <div className="min-h-[calc(100svh-68px)] bg-cream-100">
-      <div className="mx-auto grid w-full max-w-[1480px] lg:grid-cols-2">
+      <div className="grid w-full lg:grid-cols-2">
         <aside className="grain grain-light relative hidden overflow-hidden bg-ink-950 p-10 text-cream-100 lg:flex lg:flex-col lg:justify-between lg:min-h-[calc(100svh-68px)] lg:p-14">
           <div className="relative z-[2]">
-            <p className="eyebrow text-peach-300/75">{t("authShell.eyebrow")}</p>
+            <p className="eyebrow text-champagne/75">{t("authShell.eyebrow")}</p>
             <p className="mt-6 max-w-[11ch] font-display text-[clamp(2.8rem,4.6vw,4.4rem)] leading-[0.95] tracking-[-0.045em] text-cream-50">
-              {t("authShell.titleLead")} <span className="italic text-peach-300">{t("authShell.titleAccent")}</span>
+              {t("authShell.titleLead")} <span className="italic text-champagne">{t("authShell.titleAccent")}</span>
             </p>
-            <p className="mt-6 max-w-sm text-[14px] leading-relaxed text-cream-100/50">
+            <p className="mt-6 max-w-sm text-[14px] leading-relaxed text-cream-100/65">
               {t("authShell.description")}
             </p>
           </div>
@@ -32,14 +32,14 @@ export default function AuthShell({ eyebrow, title, description, children, footn
             <div className="flex items-end justify-between gap-6">
               <div>
                 <p className="font-display text-xl tracking-[-0.03em] text-cream-50">{t("home.mockupCouple")}</p>
-                <p className="mt-1 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/35">{t("home.mockupDate")}</p>
+                <p className="mt-1 font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/60">{t("home.mockupDate")}</p>
               </div>
-              <Heart className="h-5 w-5 text-peach-300" />
+              <Heart className="h-5 w-5 text-champagne" />
             </div>
           </div>
 
           <div className="pointer-events-none absolute -right-20 top-1/3 h-[420px] w-[420px] rounded-full border border-cream-100/10" aria-hidden="true" />
-          <div className="pointer-events-none absolute -right-4 top-1/3 h-[260px] w-[260px] rounded-full border border-peach-300/15" aria-hidden="true" />
+          <div className="pointer-events-none absolute -right-4 top-1/3 h-[260px] w-[260px] rounded-full border border-champagne/15" aria-hidden="true" />
           <div className="pointer-events-none absolute bottom-0 left-0 h-1/2 w-full glow-ember" aria-hidden="true" />
         </aside>
 

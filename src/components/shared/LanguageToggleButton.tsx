@@ -21,11 +21,10 @@ export default function LanguageToggleButton({
     <button
       type="button"
       onClick={toggleLanguage}
-      aria-label={label}
       title={label}
       lang={language}
       className={cn(
-        "inline-flex min-h-10 min-w-10 items-center justify-center gap-1.5 border px-2.5 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300",
+        "inline-flex min-h-10 min-w-10 items-center justify-center gap-1.5 border px-2.5 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500",
         onDark
           ? "border-cream-100/25 text-cream-100/80 hover:border-cream-50 hover:text-cream-50"
           : "border-ink-900/15 text-ink-600 hover:border-ink-900/30 hover:text-ink-900",
@@ -36,6 +35,7 @@ export default function LanguageToggleButton({
       <span lang={targetLanguage} className="font-data text-[14px] uppercase tracking-[0.06em]">
         {targetLanguage.toUpperCase()}
       </span>
+      <span className="sr-only">{label}</span>
     </button>
   );
 }

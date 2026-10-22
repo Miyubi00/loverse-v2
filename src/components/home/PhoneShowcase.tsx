@@ -278,7 +278,7 @@ export default function PhoneShowcase() {
       data-index={activeIndex}
       data-showcase-index={activeIndex}
       data-showcase-mode={sceneVisible ? "webgl" : "fallback"}
-      className="group relative flex h-full w-full select-none flex-col overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-peach-300/70"
+      className="group relative flex h-full w-full select-none flex-col overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-ember-500/70"
       onKeyDown={onKeyDown}
     >
       <div
@@ -331,7 +331,7 @@ export default function PhoneShowcase() {
             aria-label={t("home.showcasePrevious")}
             disabled={isTransitioning}
             onClick={() => queueTransition(-1)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300 disabled:opacity-45"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500 disabled:opacity-45"
           >
             <ChevronLeft className="h-4 w-4" aria-hidden="true" />
           </button>
@@ -342,7 +342,7 @@ export default function PhoneShowcase() {
             aria-pressed={isPlaying && !reducedMotion}
             disabled={reducedMotion}
             onClick={() => setIsPlaying((playing) => !playing)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500"
           >
             {isPlaying ? (
               <Pause className="h-4 w-4" aria-hidden="true" />
@@ -356,7 +356,7 @@ export default function PhoneShowcase() {
             aria-label={t("home.showcaseNext")}
             disabled={isTransitioning}
             onClick={() => queueTransition(1)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300 disabled:opacity-45"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500 disabled:opacity-45"
           >
             <ChevronRight className="h-4 w-4" aria-hidden="true" />
           </button>
@@ -369,7 +369,7 @@ export default function PhoneShowcase() {
             <p className="font-data text-[12px] uppercase tracking-[0.08em] text-cream-100/70">
               {String(activeIndex + 1).padStart(2, "0")} /{" "}
               {String(SHOWCASE_TEMPLATES.length).padStart(2, "0")}
-              <span className="mx-1.5 text-peach-300/65">·</span>
+              <span className="mx-1.5 text-champagne/65">·</span>
               {active.category}
             </p>
             <p className="mt-1 truncate font-display text-[clamp(1.15rem,2.4vw,1.55rem)] leading-none tracking-[-0.025em] text-cream-50">
@@ -380,7 +380,7 @@ export default function PhoneShowcase() {
           <Link
             to={"/demo/" + active.slug}
             aria-label={t("portfolio.viewDemo") + ": " + active.name}
-            className="group/link inline-flex h-10 shrink-0 items-center gap-1.5 bg-peach-300 px-3 text-[13px] font-semibold text-ink-950 transition-colors hover:bg-peach-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-peach-300"
+            className="group/link inline-flex h-10 shrink-0 items-center gap-1.5 bg-peach-300 px-3 text-[13px] font-semibold text-ink-950 transition-colors hover:bg-peach-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500"
           >
             {t("portfolio.viewDemo")}
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />

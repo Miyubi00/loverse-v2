@@ -1,85 +1,64 @@
 # Color From Logo
 
-Sumber warna: `public/logo.svg` dan `public/logo.png`.
+Sumber warna: `public/logo.svg`, `public/logo.png`, dan
+`loverse-color-palette.xlsx`.
 
-## Sampling
+Warna dominan logo adalah `#FFD6B2` (Peach). Warna `#633221` (Kastanye) dan
+`#FFD6B2` diberikan langsung oleh user. Nilai lain di workbook adalah warna
+pendukung berbasis peran, bukan brand guideline terpisah.
 
-Kedua berkas dirender ke canvas tanpa filter, lalu piksel opak dihitung. Warna dominan
-keduanya identik:
+## Palette
 
-| Asset | Dimensions | Dominant opaque color |
-| --- | --- | --- |
-| `logo.svg` | viewBox `-12 -14 672 520` | `#FFD6B2` |
-| `logo.png` | `680 × 220` | `#FFD6B2` |
-
-Variasi `#FFD5B1`/`#FFD5B2`/`#FFD6B3` hanya berasal dari anti-aliasing tepi. Tidak ada
-warna logo lain.
-
-Logo peach dalam OKLCH:
-
-```text
-oklch(0.9021 0.0660 63.12)
-```
-
-Hue **63.12** dipakai tetap untuk seluruh skala netral, krem, peach, dan aksen. Chroma
-diturunkan untuk netral dan dinaikkan sedikit untuk aksen. Warna status (success, danger,
-WhatsApp) tetap memakai hue fungsional masing-masing agar status tidak mengandalkan warna
-saja; nilainya tetap token dan tidak dipakai sebagai aksen dekoratif.
-
-## Scale
-
-| Token | Hex | OKLCH (L C H) | Peran |
+| Peran | Token utama | Hex | Pemakaian |
 | --- | --- | --- | --- |
-| `ink-950` | `#190F07` | `0.180 0.022 63.12` | teks utama, panel gelap |
-| `ink-900` | `#281B10` | `0.235 0.028 63.12` | teks utama |
-| `ink-800` | `#392A1D` | `0.300 0.032 63.12` | teks kuat |
-| `ink-700` | `#513E2D` | `0.380 0.038 63.12` | teks sekunder |
-| `ink-600` | `#685341` | `0.460 0.040 63.12` | teks sekunder |
-| `ink-500` | `#75604E` | `0.505 0.038 63.12` | muted minimum di krem (5.28:1) |
-| `ink-400` | `#7D6958` | `0.535 0.036 63.12` | muted minimum di krem (4.64:1) |
-| `ink-300` | `#AC9B8C` | `0.700 0.030 63.12` | dekorasi/ikon non-teks |
-| `cream-50` | `#FFF9F2` | `0.985 0.012 63.12` | kartu terang |
-| `cream-100` | `#FFEFE2` | `0.962 0.024 63.12` | latar utama |
-| `cream-200` | `#F8E2CF` | `0.925 0.035 63.12` | panel sekunder |
-| `cream-300` | `#ECD0B8` | `0.875 0.045 63.12` | border/dekorasi |
-| `cream-400` | `#D8B79A` | `0.800 0.055 63.12` | border kuat |
-| `peach-100` | `#FFF0E1` | `0.965 0.028 63.12` | tint |
-| `peach-200` | `#FFE3C9` | `0.935 0.048 63.12` | tint kuat |
-| `peach-300` | `#FFD6B2` | `0.9021 0.066 63.12` | **warna logo**, bidang gelap saja |
-| `peach-400` | `#F7BD89` | `0.840 0.095 63.12` | hover peach |
-| `ember-400` | `#EEAF75` | `0.800 0.105 63.12` | aksen terang |
-| `ember-500` | `#BF7523` | `0.630 0.130 63.12` | focus ring, garis |
-| `ember-600` | `#9D5800` | `0.530 0.125 63.12` | teks aksen/CTA (4.88:1 di krem) |
-| `ember-700` | `#7D4600` | `0.450 0.105 63.12` | hover/teks aksen kuat |
-| `wine-900` | `#28190A` | `0.230 0.035 63.12` | panel gelap alternatif |
-| `wine-800` | `#3E2915` | `0.300 0.045 63.12` | panel gelap alternatif |
-| `gold-500` | `#D3965C` | `0.720 0.105 63.12` | status pending |
-| `gold-600` | `#875726` | `0.500 0.090 63.12` | teks pending (6.14:1) |
-| `success-600` | `#426F4C` | `0.500 0.075 150` | status sukses |
-| `success-700` | `#325B3B` | `0.430 0.070 150` | teks sukses |
-| `danger-600` | `#A43C33` | `0.500 0.140 28` | status bahaya |
-| `danger-700` | `#852F28` | `0.430 0.120 28` | teks bahaya |
-| `whatsapp-600` | `#17843F` | `0.540 0.140 150` | tombol WhatsApp (4.76:1 dengan putih) |
-| `whatsapp-700` | `#0E6E33` | `0.470 0.135 150` | hover WhatsApp |
+| Espresso | `espresso`, `ink-950` | `#2B1510` | panel gelap, teks utama di krem |
+| Kakao | `kakao`, `ink-900` | `#4A2418` | panel gelap sekunder |
+| Kastanye | `kastanye`, `ink-800` | `#633221` | brand dan CTA gelap |
+| Permukaan | `permukaan`, `ink-700` | `#7A4430` | permukaan gelap |
+| Peach | `peach`, `peach-300` | `#FFD6B2` | logo dan CTA utama |
+| Krem | `krem`, `cream-50`, `cream-100` | `#FFF6EC` | latar terang utama |
+| Champagne | `champagne`, `cream-300`, `gold-500` | `#E4C78E` | garis, ikon, aksen kecil |
+| Tembaga | `tembaga`, `cream-400`, `peach-400`, `ember-400` | `#E8A07F` | aksen dan hover sesekali |
+| Muted dark | `muted-dark` | `#E2C3A6` | teks sekunder di latar gelap |
+| Emas tua | `gold-dark`, `ember-500`, `ember-600`, `gold-600` | `#8A6420` | teks emas di krem |
+| Muted cream | `muted-cream`, `ink-600`, `ink-500`, `ink-400`, `ink-300` | `#7A5445` | teks sekunder di krem |
+| Sukses gelap | `success-dark` | `#A9C7A0` | status sukses di latar gelap |
+| Peringatan gelap | `warning-dark` | `#EBBB5A` | status peringatan di latar gelap |
+| Error gelap | `error-dark` | `#F5A092` | status error di latar gelap |
+| Sukses krem | `success-cream`, `success-600`, `whatsapp-600` | `#3F6B4A` | status sukses dan WhatsApp |
+| Peringatan krem | `warning-cream` | `#8A5A00` | status peringatan di krem |
+| Error krem | `error-cream`, `danger-600` | `#B3392F` | status error di krem |
+| Anggur | `wine`, `wine-800`, `wine-900`, `danger-700` | `#7A2433` | section CTA dan aksi hapus |
+| Hijau hutan | `forest`, `success-700`, `whatsapp-700` | `#2F4A3A` | hijau gelap/WhatsApp |
 
-## Contrast Rules
+Token turunan:
 
-- Teks krem di atas `ink-950` memakai `cream-100` atau lebih terang; opasitas teks harus
-  tetap ≥4.5:1.
-- `peach-300` hanya untuk logo/aksen di permukaan gelap. Jangan jadikan teks di atas krem.
-- Teks muted di krem minimal `ink-500`; `ink-400` masih lolos 4.64:1 tetapi jangan
-  dikombinasikan dengan opacity tambahan.
-- `ember-600` dan `ember-700` lolos untuk teks di krem; `ember-500` hanya non-teks.
-- `success-600`, `danger-600`, dan `whatsapp-600` adalah token fungsional. Label/ikon
-  pendamping tetap wajib ada agar status tidak bergantung pada warna saja.
-- Semua nilai warna aplikasi didefinisikan di `src/index.css`. Komponen tidak boleh
-  menulis hex/rgb/hsl. Tema undangan di `src/templates/themes` dikecualikan karena
-  merupakan kontrak visual produk.
+- `cream-200` adalah `color-mix` 24% Peach + Krem.
+- `peach-100` adalah `color-mix` 18% Peach + Krem.
+- `peach-200` adalah `color-mix` 42% Peach + Krem.
+- `--color-white` di app diarahkan ke Krem. `.theme-canvas` me-resetnya ke
+  `#fff` agar template undangan mempertahankan kontrak visualnya.
 
-## Verification
+## Aturan
+
+- Kontras teks normal minimal `4.5:1`; teks besar dan komponen UI minimal `3:1`.
+- Peach dipakai untuk logo dan CTA utama; aksen kecil memakai Champagne atau
+  Tembaga. Hindari area luas dan teks panjang; area luas memakai Krem atau tint
+  Krem.
+- Champagne dipakai datar dan hemat; jangan membuat gradien emas baru.
+- Status memakai varian sesuai latar: varian `*-dark` di permukaan gelap,
+  varian `*-cream` di permukaan terang. Jangan menaruh teks status langsung di
+  atas Permukaan `#7A4430`.
+- Krem menggantikan putih murni dan Espresso menggantikan hitam murni di app.
+- Komponen aplikasi tidak boleh menulis hex/rgb/hsl. Tema undangan di
+  `src/templates/themes` dikecualikan karena merupakan kontrak visual produk.
+
+## Verifikasi
 
 ```powershell
-Select-String -Path "src/**/*.tsx","src/**/*.ts" -Pattern "#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\("
+node scripts/audit-colors.mjs
+node scripts/audit-a11y.mjs
 ```
 
-Hasil akhir harus kosong untuk komponen aplikasi (tema undangan tidak termasuk).
+`audit-colors` memeriksa token wajib, raw color, palette asing, dan pasangan
+kontras. `audit-a11y` menjalankan axe pada route utama dengan dev server aktif.

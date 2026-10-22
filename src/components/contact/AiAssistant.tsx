@@ -129,6 +129,8 @@ function TypingLine({ label, tone }: { label: string; tone: 'ember' | 'success' 
   );
 }
 
+const MAX_MESSAGE_LENGTH = 250;
+
 export default function AiAssistant({ waNumber }: AiAssistantProps) {
   const { t } = useTranslation();
   const { messages, isTyping, isAdminTyping, send, retry, handoverActive, closeHandover, requestHandover } = useAiChat();
@@ -215,7 +217,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
         role="log"
         aria-live="polite"
         aria-relevant="additions"
-        className="chat-scroll min-h-[320px] max-h-[460px] flex-1 space-y-4 overflow-y-auto bg-cream-50 px-4 py-4 sm:px-5 sm:py-5"
+        className="chat-scroll min-h-[420px] max-h-[560px] flex-1 space-y-4 overflow-y-auto bg-cream-50 px-4 py-4 sm:px-5 sm:py-5"
       >
         {messages.length === 0 && !isTyping && (
           <div className="animate-msg-in motion-reduce:animate-none">
@@ -392,8 +394,9 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
             }}
             placeholder={handoverActive ? t('contact.ai.adminPlaceholder') : t('contact.ai.placeholder')}
             aria-label={handoverActive ? t('contact.ai.adminPlaceholder') : t('contact.ai.placeholder')}
-            maxLength={1000}
-            className="min-h-11 max-h-28 min-w-0 flex-1 resize-none bg-transparent px-1 py-2.5 text-[16px] leading-relaxed text-ink-950 placeholder:text-ink-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500"
+            maxLength={MAX_MESSAGE_LENGTH}
+            aria-describedby="ai-message-character-count"
+            className="min-h-11 max-h-28 min-w-0 flex-1 resize-none rounded-[3px] border border-ink-900/25 bg-cream-50 px-3 py-2.5 text-[16px] leading-relaxed text-ink-950 placeholder:text-ink-500 transition-colors focus:border-ember-600 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ember-500"
           />
           <button type="button"
             onClick={handleSend}
@@ -405,7 +408,13 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
           </button>
         </div>
 
-        <div className="mt-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+        <div className="mt-1 flex justify-end">
+          <span id="ai-message-character-count" className="font-data text-[11px] tabular-nums text-ink-500">
+            {t('contact.ai.characterCount', { count: String(draft.length), max: String(MAX_MESSAGE_LENGTH) })}
+          </span>
+        </div>
+
+        <div className="mt-1 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
           <p className="flex items-center gap-1.5 text-[13px] leading-snug text-ink-500">
             <ShieldCheck className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             {t('contact.ai.disclaimer')}

@@ -41,7 +41,7 @@ const BANNER_STYLE: Record<SiteNoticeType, { wrap: string; icon: string; Icon: t
   },
   promo: {
     wrap: 'border-ink-900/10 bg-ink-950 text-cream-100',
-    icon: 'bg-peach-300/15 text-peach-300',
+    icon: 'bg-tembaga/15 text-tembaga',
     Icon: Gift,
   },
 };
@@ -50,7 +50,7 @@ const MODAL_BADGE_STYLE: Record<SiteNoticeType, string> = {
   info: 'bg-cream-200 text-ink-700',
   warning: 'bg-gold-500/15 text-gold-600',
   maintenance: 'bg-danger-600/10 text-danger-700',
-  promo: 'bg-peach-300 text-ink-900',
+  promo: 'bg-tembaga text-espresso',
 };
 
 const dismissedKey = (n: SiteNoticeRow) => `loverse_notice_dismissed:${n.id}`;

@@ -176,8 +176,8 @@ export default function InvitationRender() {
   if (pageStatus === 'unpaid') {
     return (
       <div className="h-screen flex flex-col items-center justify-center bg-cream-100 p-6 text-center font-sans">
-        <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-peach-300 max-w-md w-full relative overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-32 h-32 bg-peach-200 rounded-full opacity-50 blur-2xl" />
+        <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-champagne max-w-md w-full relative overflow-hidden">
+          <div className="absolute -top-10 -right-10 w-32 h-32 bg-tembaga/15 rounded-full opacity-50 blur-2xl" />
 
           <div className="relative z-10">
             <div className="w-20 h-20 bg-danger-600/5 text-danger-600 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-danger-600/20">

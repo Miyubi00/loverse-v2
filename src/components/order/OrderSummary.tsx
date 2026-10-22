@@ -183,7 +183,7 @@ export function OrderSummary({
           </div>
           <div className="mt-4 flex items-end justify-between gap-4 bg-ink-950 px-4 py-4 text-cream-50">
             <span className="text-[14px] font-medium text-cream-100/60">{t("order.totalPayment")}</span>
-            <span className="font-display text-[26px] leading-none tracking-[-0.04em] text-peach-200 sm:text-3xl">
+            <span className="font-display text-[26px] leading-none tracking-[-0.04em] text-cream-100 sm:text-3xl">
               {formatIDR(total)}
             </span>
           </div>

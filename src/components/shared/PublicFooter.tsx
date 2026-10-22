@@ -57,7 +57,7 @@ export default function PublicFooter() {
               href={`https://wa.me/${ADMIN_WHATSAPP}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 border-b border-peach-300/35 pb-1 font-data text-[14px] text-peach-300 transition-colors hover:border-peach-300 hover:text-peach-200"
+              className="mt-6 inline-flex items-center gap-2 border-b border-champagne/35 pb-1 font-data text-[14px] text-champagne transition-colors hover:border-champagne hover:text-cream-100"
             >
               <MessageCircle className="h-3.5 w-3.5" />
               {ADMIN_PHONE_LABEL}
@@ -68,32 +68,32 @@ export default function PublicFooter() {
           <FooterColumn title={t("home.footerExplore")} links={explore} />
           <FooterColumn title={t("home.footerHelp")} links={help} />
           <div>
-            <p className="eyebrow text-cream-100/36">{t("home.footerLegal")}</p>
+            <p className="eyebrow text-cream-100/60">{t("home.footerLegal")}</p>
             <ul className="mt-5 space-y-3">
               {legal.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="text-[14px] text-cream-100/65 transition-colors hover:text-peach-300"
+                    className="text-[14px] text-cream-100/65 transition-colors hover:text-champagne"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-            <p className="eyebrow mt-8 text-cream-100/36">{t("home.footerContact")}</p>
+            <p className="eyebrow mt-8 text-cream-100/60">{t("home.footerContact")}</p>
             <div className="mt-4 flex flex-col gap-2.5 text-[14px] text-cream-100/62">
               <a
                 href="https://instagram.com/loverse.id"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 transition-colors hover:text-peach-300"
+                className="inline-flex items-center gap-2 transition-colors hover:text-champagne"
               >
                 <Instagram className="h-3.5 w-3.5" /> @loverse.id
               </a>
               <a
                 href="mailto:mail@loverse.id"
-                className="inline-flex items-center gap-2 transition-colors hover:text-peach-300"
+                className="inline-flex items-center gap-2 transition-colors hover:text-champagne"
               >
                 <Mail className="h-3.5 w-3.5" /> mail@loverse.id
               </a>
@@ -101,7 +101,7 @@ export default function PublicFooter() {
                 href={`https://wa.me/${ADMIN_WHATSAPP}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 transition-colors hover:text-peach-300"
+                className="inline-flex items-center gap-2 transition-colors hover:text-champagne"
               >
                 <Phone className="h-3.5 w-3.5" /> WhatsApp
               </a>
@@ -111,7 +111,7 @@ export default function PublicFooter() {
 
         <div className="flex flex-col gap-8 border-b border-cream-100/12 py-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4">
-            <span className="eyebrow shrink-0 text-cream-100/36">{t("home.footerPayments")}</span>
+            <span className="eyebrow shrink-0 text-cream-100/60">{t("home.footerPayments")}</span>
             <div className="flex flex-wrap gap-1.5">
               {PAYMENT_LOGOS.map((logo) => (
                 <span
@@ -128,7 +128,7 @@ export default function PublicFooter() {
               ))}
             </div>
           </div>
-          <p className="text-[14px] leading-relaxed text-cream-100/35">
+          <p className="text-[14px] leading-relaxed text-cream-100/60">
             {t("home.footerPaymentsSub")}
           </p>
         </div>
@@ -144,7 +144,7 @@ export default function PublicFooter() {
                 href="https://sketchfab.com/3d-models/low-poly-phone-for-mockups-bb7058cfb8fd44f2880e03df1235299d"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline decoration-cream-100/45 underline-offset-2 hover:text-peach-300"
+                className="underline decoration-cream-100/45 underline-offset-2 hover:text-champagne"
               >
                 Low Poly Phone for Mockups
               </a>{" "}
@@ -153,7 +153,7 @@ export default function PublicFooter() {
                 href="https://sketchfab.com/akacodes"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline decoration-cream-100/45 underline-offset-2 hover:text-peach-300"
+                className="underline decoration-cream-100/45 underline-offset-2 hover:text-champagne"
               >
                 akacodes
               </a>{" "}
@@ -175,13 +175,13 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <p className="eyebrow text-cream-100/36">{title}</p>
+      <p className="eyebrow text-cream-100/60">{title}</p>
       <ul className="mt-5 space-y-3">
         {links.map((link) => (
           <li key={link.to}>
             <Link
               to={link.to}
-              className="inline-flex items-center gap-1.5 text-[14px] text-cream-100/65 transition-colors hover:text-peach-300"
+              className="inline-flex items-center gap-1.5 text-[14px] text-cream-100/65 transition-colors hover:text-champagne"
             >
               {link.label}
             </Link>

@@ -54,7 +54,7 @@ export default function ConfirmDialog({
     >
       <div className="flex flex-col items-center text-center">
         <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4
-          ${isDanger ? 'bg-danger-600/10 text-danger-600' : 'bg-peach-200 text-ember-700'}`}>
+          ${isDanger ? 'bg-danger-600/10 text-danger-600' : 'bg-cream-200 text-ember-700'}`}>
           <AlertTriangle className="w-8 h-8" />
         </div>
 

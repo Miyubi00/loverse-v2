@@ -11,7 +11,7 @@ import type { ComponentType, ReactElement } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 /* --- IMPORT APP-WIDE PROVIDERS --- */
-import { ToastProvider } from './components/GlobalToast';
+import { ToastProvider } from './components/ToastProvider';
 import { LanguageProvider } from './i18n';
 import ErrorBoundary from './components/ErrorBoundary';
 import {

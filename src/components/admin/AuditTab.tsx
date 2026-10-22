@@ -35,7 +35,7 @@ interface AuditTabProps {
 }
 
 const KIND_STYLE: Record<string, { pill: string; icon: typeof User }> = {
-  admin: { pill: 'text-ember-600 bg-peach-100 border-ember-500/30', icon: ShieldCheck },
+  admin: { pill: 'text-ember-600 bg-cream-200 border-ember-500/30', icon: ShieldCheck },
   customer: { pill: 'text-ink-600 bg-cream-100 border-ink-900/15', icon: User },
   service: { pill: 'text-ink-600 bg-cream-100 border-ink-900/15', icon: Cpu },
   midtrans: { pill: 'text-success-700 bg-success-600/[0.06] border-success-600/25', icon: CreditCard },

@@ -33,7 +33,7 @@ export default function TemplateCatalogCard({ template, priceLabel }: TemplateCa
           height={1066}
           className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.045]"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/88 via-ink-950/10 to-ink-950/15" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/25 to-ink-950/15" />
 
         <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
           <span className="border border-cream-50/25 bg-ink-950/18 px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-cream-50/85 backdrop-blur-sm">
@@ -42,7 +42,7 @@ export default function TemplateCatalogCard({ template, priceLabel }: TemplateCa
         </div>
 
         <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-          <p className="eyebrow text-peach-300/90">{t("home.catalogPreview")}</p>
+          <p className="eyebrow text-cream-50">{t("home.catalogPreview")}</p>
           <h3 className="mt-2 font-display text-[clamp(1.35rem,3vw,1.8rem)] leading-none tracking-[-0.035em] text-cream-50">
             {prettifyName(template.name)}
           </h3>

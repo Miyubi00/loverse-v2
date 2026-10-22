@@ -18,7 +18,7 @@ export interface PortfolioItem {
 }
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
-  { id: 1, groom: 'Dimas', bride: 'Sarah', date: '24 Okt 2026', city: 'Jakarta', guests: 320, rating: 5.0, templateSlug: 'botanical-gold' },
+  { id: 1, groom: 'Mempelai', bride: 'Pasangan', date: '24 Okt 2026', city: 'Jakarta', guests: 320, rating: 5.0, templateSlug: 'botanical-gold' },
   { id: 2, groom: 'Raka', bride: 'Nadia', date: '12 Sep 2026', city: 'Bandung', guests: 210, rating: 4.9, templateSlug: 'rustic-floral' },
   { id: 3, groom: 'Bagas', bride: 'Citra', date: '05 Sep 2026', city: 'Surabaya', guests: 450, rating: 5.0, templateSlug: 'emerald-royale' },
   { id: 4, groom: 'Yoga', bride: 'Putri', date: '29 Agu 2026', city: 'Yogyakarta', guests: 180, rating: 4.8, templateSlug: 'javanese' },

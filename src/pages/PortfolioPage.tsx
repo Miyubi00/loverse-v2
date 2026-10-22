@@ -102,12 +102,12 @@ export default function PortfolioPage() {
                   ) : (
                     <div className="flex h-full items-center justify-center text-cream-100/20">LoVerse</div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/5 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/5 to-ink-950/65" />
                   <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
                     <span className="border border-cream-100/25 bg-ink-950/15 px-2 py-1 font-data text-[14px] uppercase tracking-[0.06em] text-cream-50/85 backdrop-blur-sm">
                       {tpl?.category ?? "Basic"}
                     </span>
-                    <span className="font-data text-[14px] text-cream-50/50">0{index + 1}</span>
+                    <span className="font-data text-[14px] text-cream-50">0{index + 1}</span>
                   </div>
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-6">
                     <div>
@@ -117,7 +117,7 @@ export default function PortfolioPage() {
                       <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-cream-100/55">
                         <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" />{item.city} · {item.date}</span>
                         <span className="inline-flex items-center gap-1"><Users className="h-3 w-3" />{item.guests}</span>
-                        <span className="inline-flex items-center gap-1"><Star className="h-3 w-3 fill-peach-300 text-peach-300" />{item.rating.toFixed(1)}</span>
+                        <span className="inline-flex items-center gap-1"><Star className="h-3 w-3 fill-champagne text-champagne" />{item.rating.toFixed(1)}</span>
                       </p>
                     </div>
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cream-100/30 text-cream-50 transition-colors group-hover:bg-cream-50 group-hover:text-ink-950">
@@ -140,9 +140,9 @@ export default function PortfolioPage() {
       <section className="grain relative overflow-hidden bg-wine-900 text-cream-100">
         <div className="relative z-[2] mx-auto flex w-full max-w-[1480px] flex-col items-start justify-between gap-8 px-4 py-16 sm:px-7 sm:py-20 lg:flex-row lg:items-end lg:px-10">
           <div>
-            <span className="eyebrow text-peach-300/80">{t("portfolio.ctaBadge")}</span>
+            <span className="eyebrow text-champagne/80">{t("portfolio.ctaBadge")}</span>
             <h2 className="display-lg mt-4 max-w-[14ch] text-[clamp(2.6rem,5.2vw,4.8rem)] text-cream-50">{t("portfolio.ctaTitle")}</h2>
-            <p className="mt-4 max-w-md text-[14px] leading-relaxed text-cream-100/55">{t("portfolio.ctaDesc")}</p>
+            <p className="mt-4 max-w-md text-[14px] leading-relaxed text-muted-dark">{t("portfolio.ctaDesc")}</p>
           </div>
           <div className="flex flex-col gap-2.5 xs:flex-row">
             <Link to="/order" className={buttonClass("peach", "lg", "h-13")}>

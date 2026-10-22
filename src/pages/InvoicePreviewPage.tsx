@@ -97,14 +97,14 @@ export default function InvoicePreviewPage() {
                 <Link to="/" aria-label="Loverse — Beranda" className="inline-flex">
                   <img src="/logo.png" alt="Loverse" width={680} height={220} className="h-10 w-auto" />
                 </Link>
-                <p className="mt-1.5 text-[14px] text-peach-300/90">Undangan Pernikahan Digital</p>
-                <p className="mt-2 text-[14px] italic text-peach-300/80">Abadikan Momen Spesial, Dalam Satu Cerita Indah</p>
+                <p className="mt-1.5 text-[14px] text-champagne/90">Undangan Pernikahan Digital</p>
+                <p className="mt-2 text-[14px] italic text-champagne/80">Abadikan Momen Spesial, Dalam Satu Cerita Indah</p>
               </div>
               <div className="text-right shrink-0">
                 <p className="text-2xl font-black tracking-[0.06em] text-cream-200">INVOICE</p>
-                <p className="mt-1 text-[14px] font-bold tracking-[0.06em] text-peach-300/90">BUKTI PEMBAYARAN</p>
-                <div className="my-2 ml-auto h-px w-12 bg-peach-300/70" />
-                <p className="text-[14px] text-peach-300/80">{LOVERSE_CONTACT.domain}</p>
+                <p className="mt-1 text-[14px] font-bold tracking-[0.06em] text-champagne/90">BUKTI PEMBAYARAN</p>
+                <div className="my-2 ml-auto h-px w-12 bg-champagne/70" />
+                <p className="text-[14px] text-champagne/80">{LOVERSE_CONTACT.domain}</p>
               </div>
             </div>
             <div className="grid gap-3 p-4 sm:grid-cols-2">

@@ -99,7 +99,7 @@ function CategoryRow({
             active
               ? green
                 ? "border-whatsapp-600/30 bg-whatsapp-600 text-white"
-                : "border-ink-950 bg-ink-950 text-peach-300"
+                : "border-ink-950 bg-ink-950 text-champagne"
               : "border-ink-900/10 bg-cream-100 text-ink-500"
           }`}
         >

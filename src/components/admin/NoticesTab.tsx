@@ -46,7 +46,7 @@ const LABEL_CLASS =
 const TYPE_STYLE: Record<SiteNoticeType, string> = {
   info: 'border-ink-900/15 bg-cream-100 text-ink-600',
   warning: 'border-gold-500/35 bg-gold-500/10 text-gold-600',
-  promo: 'border-ember-500/30 bg-peach-100 text-ember-600',
+  promo: 'border-ember-500/30 bg-cream-200 text-ember-600',
   maintenance: 'border-danger-600/25 bg-danger-600/[0.06] text-danger-600',
 };
 
@@ -54,7 +54,7 @@ type StatusKey = 'live' | 'scheduled' | 'ended' | 'inactive';
 
 const STATUS_STYLE: Record<StatusKey, string> = {
   live: 'border-success-600/25 bg-success-600/[0.06] text-success-700',
-  scheduled: 'border-ember-500/30 bg-peach-100 text-ember-600',
+  scheduled: 'border-ember-500/30 bg-cream-200 text-ember-600',
   ended: 'border-ink-900/12 bg-cream-100 text-ink-400',
   inactive: 'border-danger-600/25 bg-danger-600/[0.06] text-danger-600',
 };
