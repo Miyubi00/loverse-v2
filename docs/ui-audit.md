@@ -115,3 +115,35 @@ DOM text assertions and targeted crops were used to confirm content in those cas
 - Perbaikan: kedua animasi memakai `fill-mode: backwards` agar transform kembali `none` setelah selesai, dan seluruh modal memakai shared `Modal` yang di-portal ke `document.body`.
 - Shared Modal menangani scroll lock, focus trap/restore, Escape/backdrop sesuai perilaku lama, `role="dialog"`, `aria-modal="true"`, label, serta lapisan `z-[200]` di atas topbar/sidebar/drawer.
 - Dimigrasikan: legacy ConfirmDialog, ui ConfirmDialog, ImageCropModal, LightboxPreview, RsvpReplyModal, SiteNoticeView, dan video modal TutorialPage. `EditOrderModal` memakai modal-modal tersebut untuk konfirmasi/crop/lightbox di dalamnya.
+
+## 8. Contact Scrollbar and AI Card Revision (2026-10-22)
+
+### 8.1 Root Cause
+
+- `html` is the intended viewport scroller (`overflow-x: hidden; overflow-y: auto`). `body` and `#root` remain `visible`.
+- `main#main-content` used `overflow-x-hidden`. Because one axis was not `visible`, the browser computed `overflow-y: auto`, turning `main` into a second scroll container.
+- That inner container measured 10px of overflow during `.page-enter` (`translateY(10px)`) and about 20px after settling because `Reveal` applies `translate-y-5` to offscreen quick links. The result was a short, unnecessary second scrollbar inside `main`.
+- `scrollbar-gutter: stable` was considered but not applied: the inner container, not scrollbar width, caused the duplication.
+
+### 8.2 Fix
+
+- `src/layouts/PublicLayout.tsx`: `overflow-x-hidden` changed to `overflow-x-clip` on `main#main-content`. This clips horizontal decoration without creating a vertical scroll container or changing layout.
+- `src/components/contact/AiAssistant.tsx`: card rebuilt with 4px corners, flat header, logo avatar, list-style quick questions, editorial message treatment, 44px send control, 320–460px message area, and container-only auto-scroll.
+- Auto-scroll still calls `scrollTo` on `.chat-scroll` only; it does not call `scrollIntoView`. Smooth behavior is skipped under `prefers-reduced-motion`.
+- `src/pages/ContactPage.tsx`: AI and WhatsApp cards now share a two-column stretched grid with equal 593px height at 1440px; quick-link cards use the same 4px border treatment.
+
+### 8.3 Verification
+
+- DOM metrics at 1440×900 and 390×844: only `html` is a page scroll container; `main` computes `overflow: visible`; document horizontal overflow is `false`.
+- AI and WhatsApp card rectangles: both `top: 514`, `bottom: 1107`, `height: 593` at 1440×900.
+- Chat empty state: `clientHeight 320`, `scrollHeight 320`, `scrollTop 0` (no initial inner scrollbar).
+- Chat with a long mocked reply: `clientHeight 460`, `scrollHeight 713`, `scrollTop 253`; only the message area scrolls.
+- Captures at 1440×900 and 390×844 in Indonesian and English: `%TEMP%\opencode\contact-final\` (viewport, full page, edge crop, hover, focus, mocked chat, long-reply overflow).
+- Home, portfolio, and tutorial were spot-checked at both widths: `main` overflow-y `visible`, no horizontal overflow.
+- `impeccable detect --scope layout` on the three changed files returned `[]`. URL scan only reports the intentional Instrument Sans/cream brand system as advisory slop warnings.
+- `npm run typecheck`, `npm run lint`, and `npm run build` pass. Tests were intentionally not run for this revision.
+
+### 8.4 Residual Notes
+
+- Headless Chromium uses an overlay scrollbar and full-page captures can crop the rightmost 10px. The visible viewport screenshot and DOM metrics were used as the scrollbar proof; the bar is present and singular.
+- The WhatsApp card has purposeful vertical breathing room at 1440px because it stretches to match the taller AI chat card.
