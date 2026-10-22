@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
+import { useTranslation } from "../../i18n";
 import { cn } from "../../lib/cn";
 import Button from "./Button";
 import Modal from "./Modal";
@@ -21,14 +22,16 @@ export default function ConfirmDialog({
   open,
   title,
   description,
-  confirmLabel = "Lanjutkan",
-  cancelLabel = "Batal",
+  confirmLabel,
+  cancelLabel,
   danger = false,
   busy = false,
   onConfirm,
   onClose,
   children,
 }: ConfirmDialogProps) {
+  const { t } = useTranslation();
+
   return (
     <Modal
       open={open}
@@ -43,12 +46,12 @@ export default function ConfirmDialog({
       <button
         type="button"
         onClick={onClose}
-        aria-label="Tutup"
+        aria-label={t("common.close")}
         className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center text-ink-400 transition-colors hover:text-ink-900"
       >
         <X className="h-4 w-4" aria-hidden="true" />
       </button>
-      <p className="eyebrow text-ember-600">Konfirmasi</p>
+      <p className="eyebrow text-ember-600">{t("common.confirm")}</p>
       <h2 className="mt-4 pr-10 font-display text-3xl leading-[1.05] tracking-[-0.03em] text-ink-950">
         {title}
       </h2>
@@ -56,10 +59,10 @@ export default function ConfirmDialog({
       {children && <div className="mt-5">{children}</div>}
       <div className="mt-8 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
         <Button variant="secondary" onClick={onClose} disabled={busy}>
-          {cancelLabel}
+          {cancelLabel ?? t("common.cancel")}
         </Button>
         <Button variant={danger ? "danger" : "primary"} onClick={onConfirm} loading={busy}>
-          {confirmLabel}
+          {confirmLabel ?? t("common.confirm")}
         </Button>
       </div>
     </Modal>

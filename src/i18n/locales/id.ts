@@ -70,6 +70,10 @@ export const id = {
     menu: "Menu",
     close: "Tutup menu",
     skip: "Lewati ke konten",
+    mainAria: "Navigasi utama",
+    mobileAria: "Navigasi seluler",
+    menuEyebrow: "Menu / 2026",
+    tagline: "Undangan digital yang terasa seperti kamu.",
   },
   home: {
     badge: "Platform Undangan Pernikahan Digital",
@@ -122,6 +126,12 @@ export const id = {
     mockupMusicStatus: "Sedang Memutar Musik",
     mockupShareReady: "Siap Sebar via WhatsApp",
     mockupCountdownDays: "Hari Menuju Acara",
+    mockupSaveDate: "Simpan tanggal",
+    filterAria: "Filter kategori tema",
+    stepsTagline: "langkah, tanpa drama",
+    catalogDemoTitle: "Lihat demo {name}",
+    catalogPreviewAlt: "Pratinjau tema {name}",
+    catalogDemoAria: "Buka demo {name}",
     aboutTitle: "Mengapa Memilih LoVerse?",
     aboutDesc: "Platform undangan digital all-in-one yang dirancang untuk memberikan kemudahan bagi calon pengantin dan kenyamanan bagi tamu.",
     features: {
@@ -200,6 +210,7 @@ export const id = {
     heroPortfolioBtn: "Lihat Portofolio",
   },
   siteNotice: {
+    label: "Pemberitahuan",
     ack: "Mengerti",
     close: "Tutup",
     readMore: "Selengkapnya",
@@ -209,9 +220,15 @@ export const id = {
     badge: "Panduan",
     title: "Tutorial Penggunaan",
     subtitle: "Panduan video langkah demi langkah: memesan, mengatur, hingga menyebar undangan digital LoVerse.",
+    metaTitle: "Tutorial Undangan Digital — LoVerse",
+    metaDescription:
+      "Panduan video dan langkah tertulis: cara pesan undangan, edit undangan, lupa PIN, bagikan undangan, dan cek RSVP & buku tamu LoVerse.",
     groupOrder: "Cara Memesan",
     groupSetup: "Kelola Undangan",
     stepsLabel: "Langkah-langkah",
+    cardLabel: "Panduan",
+    guidesCount: "{count} panduan · video + teks",
+    lessonsCount: "{count} pelajaran",
     videoSoon: "Video segera hadir",
     videoPlay: "Putar video",
     videoClose: "Tutup video",
@@ -277,10 +294,15 @@ export const id = {
     badge: "Portofolio Kami",
     title: "Cerita Cinta yang Telah Kami Abadikan",
     subtitle: "Koleksi undangan pernikahan digital yang telah memukau ratusan tamu — klik untuk melihat demo live-nya.",
+    metaTitle: "Portofolio Undangan Pernikahan Digital — LoVerse",
+    metaDescription:
+      "Lihat koleksi undangan pernikahan digital LoVerse: puluhan tema elegan, modern, dan lucu dengan demo live yang bisa langsung dicoba.",
     statThemes: "Desain Tema",
     statCouples: "Pasangan Bahagia",
     statRating: "Rating Rata-rata",
     filterAll: "Semua",
+    filterAria: "Filter kategori",
+    storyCount: "{count} cerita / 2023—2026",
     viewDemo: "Lihat Demo",
     themeLabel: "Tema",
     ctaBadge: "Giliranmu",
@@ -293,6 +315,19 @@ export const id = {
     back: "Kembali ke Beranda",
     title: "Buat Undangan",
     desc: "Isi data acara dan kontak, lalu pilih metode pembayaran.",
+    metaTitle: "Buat Undangan Pernikahan Digital — LoVerse",
+    metaDescription:
+      "Pilih 40+ tema undangan digital, isi data, bayar via QRIS, VA, e-wallet, atau WhatsApp. Undangan aktif otomatis dengan PIN dashboard.",
+    eyebrow: "Pemesanan / 2026",
+    headlineLead: "Pesan",
+    headlineAccent: "undangan.",
+    stepProgress: "Langkah {step} / 03",
+    reviewEyebrow: "Terakhir",
+    reviewTitle: "Periksa sebelum bayar.",
+    reviewTag: "Invoice / draft",
+    termsPrefix: "Dengan melanjutkan, kamu menyetujui",
+    termsLink: "Syarat & Ketentuan",
+    termsSuffix: "LoVerse.",
     tutorialLink: "Lihat panduan pemesanan",
     resetForm: "Kosongkan formulir",
     resetDialogTitle: "Kosongkan formulir?",
@@ -310,15 +345,21 @@ export const id = {
     btnNext: "Lanjut",
     btnBack: "Kembali",
     step2Title: "Data Acara & Kontak",
+    locked: "Terkunci",
+    coreData: "Data inti",
+    oncePayment: "sekali bayar",
     groomName: "Mempelai Pria",
     groomPlaceholder: "Contoh: Romeo",
     brideName: "Mempelai Wanita",
     bridePlaceholder: "Contoh: Juliet",
     weddingDate: "Tanggal Pernikahan",
+    dateHint: "Tanggal ini akan tampil di countdown dan halaman tamu.",
     email: "Email",
     emailPlaceholder: "nama@email.com",
+    emailHint: "Invoice dan PIN dikirim ke email ini.",
     whatsapp: "Nomor WhatsApp",
     whatsappPlaceholder: "81234567890",
+    whatsappHint: "Diawali tanpa 0 — contoh 81234567890.",
     step3Title: "Metode Pembayaran",
     step3Desc: "Pilih metode pembayaran yang Anda inginkan.",
     preLaunchNotice: "Pembayaran online segera hadir. Saat ini pembayaran via transfer manual WhatsApp.",
@@ -334,10 +375,14 @@ export const id = {
     methodWaSubtitle: "Hubungi admin LoVerse lewat WhatsApp untuk mengatur pembayaran manual.",
     methodWaBadge: "Bantuan CS",
     methodSummaryLabel: "Metode",
+    from: "dari",
     gopayDesc: "Bayar via saldo GoPay atau cicilan GoPay Later",
     shopeepayDesc: "Bayar via saldo ShopeePay atau SPayLater",
     danaDesc: "Bayar instan via aplikasi atau barcode Dana",
     summaryTitle: "Ringkasan Pesanan",
+    confirmEyebrow: "Konfirmasi pesanan / 03",
+    eventData: "Data acara",
+    progressAria: "Progres pemesanan",
     notFilled: "Belum diisi",
     templatePrice: "Harga tema",
     adminFee: "Biaya pembayaran",
@@ -429,6 +474,7 @@ export const id = {
     required: "Field ini wajib diisi.",
   },
   orderSuccess: {
+    eyebrow: "Pesanan diterima / WhatsApp",
     title: "Pesanan Terkirim!",
     desc: "Data pesanan Anda sudah kami terima. Lanjutkan percakapan di WhatsApp agar admin kami bisa segera membantu.",
     steps: {
@@ -465,6 +511,7 @@ export const id = {
     btnViewInvitation: "Lihat Undangan",
     pendingTitle: "Menunggu Pembayaran",
     pendingDesc: "Selesaikan pembayaran untuk mengaktifkan undangan.",
+    defaultTemplate: "Undangan Digital",
     sumCouple: "Mempelai",
     sumTemplate: "Template",
     sumMethod: "Metode",
@@ -478,6 +525,9 @@ export const id = {
   login: {
     title: "Masuk Mempelai",
     subtitle: "Masuk untuk mengedit undangan pernikahanmu",
+    metaTitle: "Login Dashboard — LoVerse",
+    metaDescription:
+      "Masuk dashboard undangan digital LoVerse dengan No. WhatsApp dan PIN 6 digit untuk mengatur undanganmu.",
     whatsappLabel: "No. WhatsApp",
     whatsappPlaceholder: "Contoh: 081234567890",
     pinLabel: "PIN Keamanan",
@@ -523,12 +573,18 @@ export const id = {
     headline: "Bicara dengan manusia, atau AI.",
     title: "Hubungi Kami",
     subtitle: "Punya pertanyaan atau butuh bantuan? Tim LoVerse siap membantu Anda!",
+    metaTitle: "Hubungi Kami — LoVerse",
+    metaDescription:
+      "Konsultasi undangan pernikahan digital via WhatsApp dan email. Tim LoVerse siap membantu memilih tema dan pemesanan.",
     instagramTitle: "Instagram",
     instagramSubtitle: "Portofolio & Testimoni",
     instagramFollow: "Ikuti",
+    instagramAria: "Instagram LoVerse",
     whatsappMainTitle: "WhatsApp Utama",
     whatsappMainDesc: "Respon tercepat untuk konsultasi dan pemesanan baru.",
     whatsappMainBtn: "Chat {name}",
+    whatsappNumberLabel: "Nomor WhatsApp Utama",
+    whatsappGreeting: "Halo Admin LoVerse, saya mau konsultasi tentang undangan digital...",
     otherAdminsTitle: "Admin Bantuan Lainnya",
     adminSales: "Konsultasi & Pesan",
     adminTech: "Bantuan Teknis",
@@ -563,6 +619,19 @@ export const id = {
       retry: "Kirim Ulang",
       chatAdmin: "Chat Admin via WhatsApp",
       disclaimer: "AI bisa keliru. Untuk info pasti, hubungi admin kami.",
+      adminName: "Admin LoVerse",
+      connected: "Terhubung ke admin",
+      connectedHint: "Balasan admin akan muncul di sini • Ketik \"selesai\" untuk akhiri",
+      endHandover: "Akhiri",
+      adminBusy: "Admin sedang sibuk",
+      chatWhatsapp: "Chat WhatsApp {number}",
+      adminLabel: "Admin",
+      adminTyping: "Admin mengetik...",
+      adminPlaceholder: "Ketik pesan untuk admin...",
+      connectAdmin: "Hubungkan ke admin",
+      connectAdminShort: "Hubungkan admin",
+      escalationMessage:
+        "Halo Admin, tadi asisten AI sedang sibuk. Saya mau bertanya tentang undangan digital...",
     },
     sectionAi: "Jawaban Instan",
     sectionAiDesc: "Dijawab AI, gratis 24/7",
@@ -576,6 +645,133 @@ export const id = {
     quickStatus: "Cek Status Pesanan",
     quickStatusDesc: "Lacak pembayaran Anda",
   },
+  authShell: {
+    eyebrow: "Ruang mempelai",
+    titleLead: "Hari bahagiamu,",
+    titleAccent: "satu tautan.",
+    description:
+      "Masuk untuk mengatur cerita, foto, musik, dan tamu — semuanya di satu tempat yang tenang.",
+  },
+  legal: {
+    backHome: "Kembali ke beranda",
+    eyebrow: "Dokumen / Legal",
+    updated: "Terakhir diperbarui: {date}",
+    updatedDate: "22 Oktober 2026",
+    contents: "Isi dokumen",
+    tocAria: "Daftar isi",
+    contact: "Ada pertanyaan? Hubungi kami",
+    privacy: {
+      title: "Kebijakan Privasi",
+      metaDescription:
+        "Kebijakan privasi LoVerse — bagaimana kami mengumpulkan, menggunakan, dan melindungi data pengguna undangan pernikahan digital.",
+      sections: [
+        {
+          title: "Ringkasan",
+          body: [
+            "LoVerse adalah layanan undangan pernikahan digital. Kebijakan ini menjelaskan data yang kami kumpulkan, tujuan penggunaannya, dan cara Anda mengelolanya.",
+          ],
+        },
+        {
+          title: "Data yang Kami Kumpulkan",
+          body: [
+            "Saat memesan: nama mempelai, tanggal acara, alamat email, nomor WhatsApp, serta foto dan musik yang Anda unggah untuk isi undangan.",
+            "Saat masuk Dashboard: nomor WhatsApp dan PIN yang menjadi kredensial akun Anda.",
+            "Data RSVP tamu (nama, kehadiran, ucapan) dikumpulkan melalui halaman undangan dan dapat diakses atau diekspor oleh mempelai melalui Dashboard.",
+          ],
+        },
+        {
+          title: "Penggunaan Data",
+          body: [
+            "Data digunakan untuk membuat dan mengoperasikan undangan, keperluan administrasi pesanan (invoice dan konfirmasi pembayaran), serta peningkatan kualitas layanan.",
+            "Kami tidak menjual atau membagikan data Anda kepada pihak ketiga untuk tujuan iklan.",
+          ],
+        },
+        {
+          title: "Pembayaran",
+          body: [
+            "Pembayaran diproses oleh mitra pembayaran Midtrans (QRIS, dompet digital, Virtual Account). LoVerse tidak menyimpan data kartu pembayaran atau kredensial keuangan Anda.",
+          ],
+        },
+        {
+          title: "Penyimpanan & Keamanan",
+          body: [
+            "Data undangan disimpan pada infrastruktur basis data Supabase. Akses konten terbatas pada pemilik pesanan (login PIN), tamu yang menerima tautan undangan, dan admin yang bertanggung jawab atas layanan.",
+          ],
+        },
+        {
+          title: "Hak Anda",
+          body: [
+            "Anda dapat memperbarui isi undangan secara mandiri melalui Dashboard 24 jam.",
+            "Untuk menghapus data pesanan, hubungi kami melalui halaman Kontak dan kami akan memprosesnya.",
+          ],
+        },
+        {
+          title: "Perubahan Kebijakan",
+          body: [
+            "Kebijakan ini dapat diperbarui dari waktu ke waktu. Tanggal pembaruan terakhir selalu tercantum di bagian atas halaman ini.",
+          ],
+        },
+      ],
+    },
+    terms: {
+      title: "Syarat & Ketentuan",
+      metaDescription:
+        "Syarat & Ketentuan layanan undangan pernikahan digital LoVerse — pesanan, pembayaran, masa aktif, dan lisensi penggunaan tema.",
+      sections: [
+        {
+          title: "Deskripsi Layanan",
+          body: [
+            "LoVerse menyediakan undangan pernikahan digital dengan fitur RSVP, buku tamu, musik pengiring, galeri foto, dan dashboard khusus mempelai. Layanan diakses melalui tautan undangan yang dapat dibagikan.",
+          ],
+        },
+        {
+          title: "Pesanan & Akun",
+          body: [
+            "Pesanan dibuat melalui halaman Order. Setelah pembayaran terverifikasi, kredensial akun (nomor WhatsApp dan PIN 6 digit) dikirimkan melalui email.",
+            "PIN bersifat rahasia. Jangan bagikan PIN kepada siapa pun yang tidak berwenang atas akun Anda.",
+          ],
+        },
+        {
+          title: "Pembayaran",
+          body: [
+            "Pembayaran otomatis menggunakan Midtrans (QRIS, GoPay, ShopeePay, Virtual Account) atau transfer manual melalui WhatsApp dengan konfirmasi admin.",
+            "Pesanan dianggap aktif setelah status pembayaran berubah menjadi lunas di sistem.",
+          ],
+        },
+        {
+          title: "Masa Aktif Undangan",
+          body: [
+            "Undangan aktif hingga seluruh rangkaian acara pernikahan selesai, tanpa biaya bulanan.",
+            "Perjanjian ini berakhir setelah masa aktif undangan berakhir atau pesanan ditolak sebelum pembayaran.",
+          ],
+        },
+        {
+          title: "Perubahan Isi Undangan",
+          body: [
+            "Mempelai dapat mengubah isi undangan (lokasi, jadwal, foto, musik, rekening kado) secara mandiri melalui Dashboard kapan saja tanpa biaya tambahan.",
+          ],
+        },
+        {
+          title: "Hak Penggunaan Tema",
+          body: [
+            "Lisensi tema bersifat personal untuk satu acara. Anda tidak diperbolehkan menjual ulang, mendistribusikan, atau memperbanyak desain untuk kepentingan komersial lain.",
+          ],
+        },
+        {
+          title: "Batasan Penggunaan",
+          body: [
+            "Isi undangan menjadi tanggung jawab mempelai. Dilarang menayangkan konten yang melanggar hukum atau hak cipta pihak lain, atau mengandung ujaran kebencian.",
+          ],
+        },
+        {
+          title: "Perubahan Syarat",
+          body: [
+            "Syarat ini dapat diperbarui saat fitur layanan berubah. Tanggal pembaruan terakhir tercantum di bagian atas halaman ini.",
+          ],
+        },
+      ],
+    },
+  },
   notFound: {
     code: "404",
     title: "Halaman Tidak Ditemukan",
@@ -587,6 +783,11 @@ export const id = {
   demo: {
     back: "Kembali ke Beranda",
     notFound: "Template \"{slug}\" tidak ditemukan.",
+    ariaLabel: "Demo",
+    defaultTheme: "Undangan",
+    metaTitle: "Demo Tema {theme} — LoVerse",
+    metaDescription:
+      "Lihat demo live tema undangan pernikahan digital {theme}: interaktif, lengkap RSVP, musik, dan galeri. Coba gratis.",
   },
   invitation: {
     notFoundTitle: "Undangan Tidak Ditemukan",

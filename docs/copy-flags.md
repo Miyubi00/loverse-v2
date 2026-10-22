@@ -59,7 +59,16 @@ Data testimoni, rating, ulasan, dan bukti sosial dummy tetap dipertahankan dan t
 | `ShareTab` label kecil | `Personal link`, `…dst.` | Teks dekoratif/ilustratif dan nama format contoh; tidak diubah agar tidak mengubah data contoh. |
 | `SectionCards` alt gambar | `Cover`, `Gallery {n}` | Alt text masih berbahasa Inggris dan tidak punya kunci i18n; dibiarkan. |
 | `useFileUpload` judul crop | `Atur Foto Mempelai Pria`, `Atur Foto Mempelai Wanita`, `Atur Banner Cover` | Judul dialog crop tertanam di hook dan hanya berbahasa Indonesia; perlu kunci i18n agar bisa diterjemahkan. |
-| `CustomerLoginPage` metadata | `Login Dashboard — LoVerse`, deskripsi metadata | Metadata halaman masih berbahasa Indonesia dan tidak memakai locale; belum ada kunci metadata yang sesuai. |
 | `PaymentStatusPage` eyebrow | `WhatsApp / Manual` | Istilah tetap dapat dipahami; belum ada kunci eyebrow yang lebih spesifik tanpa mengubah struktur. |
-| `GlobalToast` tombol tutup | `aria-label="Tutup notifikasi"` | Label aksesibilitas tertanam dan hanya berbahasa Indonesia; belum ada kunci khusus. |
-| `ui/EmptyState`, `ui/StatusBadge`, `ui/ConfirmDialog` | Default `Kosong`, label status, `Batal`/`Lanjutkan` | Komponen bersama ini tidak ditemukan pemakaiannya di TSX saat pemeriksaan; default hardcoded dibiarkan agar tidak mengubah kode mati. |
+| `ui/EmptyState`, `ui/StatusBadge` | Default `Kosong`, label status | Komponen bersama ini tidak ditemukan pemakaiannya di TSX saat pemeriksaan; default hardcoded dibiarkan agar tidak mengubah kode mati. |
+
+## K6 — teks yang sengaja dibiarkan atau di luar cakupan
+
+| Lokasi | Teks | Alasan |
+|---|---|---|
+| `HomePage` tahap dekoratif | `Live / 2026`, `LoVerse / ID`, `loverse.id`, `No. 0142` | Label merek, negara, dan nomor contoh; bukan kalimat yang perlu diterjemahkan. |
+| `PaymentStatusPage` | `WhatsApp / Manual`, `LoVerse · Midtrans · WhatsApp` | Nama merek dan metode pembayaran; istilahnya sama di kedua bahasa. |
+| `PublicFooter` | `@loverse.id`, `mail@loverse.id`, `WhatsApp`, kredit model 3D | Nama merek, alamat, dan atribusi lisensi. |
+| Konten contoh undangan dan demo tema | Nama pasangan, tanggal, lokasi, kutipan, dan ucapan contoh | Data contoh sengaja tidak diterjemahkan agar demo tetap konsisten. |
+| `ImageCropModal`, `Pagination`, `ShareTab`, `SectionCards` | `Zoom`, `Batal`, `Pangkas & Unggah`, `Showing ... of ... entries`, `Personal link`, `Cover` | Berada di editor pelanggan atau komponen yang belum masuk cakupan K6; perlu pass terpisah bila seluruh dashboard ingin dilokalkan. |
+| Panel admin dan dialog konfirmasi admin | Label tabel, dialog, dan toast yang masih tertanam | Di luar halaman publik K6; sudah tercatat pada bagian K3–K5 di atas. |

@@ -23,12 +23,12 @@ export default function TemplateCatalogCard({ template, priceLabel }: TemplateCa
     <article data-template-slug={template.slug} className="group relative">
       <Link
         to={demoUrl}
-        title={`Lihat demo ${template.name}`}
+        title={t("home.catalogDemoTitle", { name: template.name })}
         className="relative block aspect-[3/4] overflow-hidden bg-ink-900"
       >
         <SkeletonImage
           src={template.image}
-          alt={`Pratinjau tema ${template.name}`}
+          alt={t("home.catalogPreviewAlt", { name: template.name })}
           width={800}
           height={1066}
           className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.045]"
@@ -59,7 +59,7 @@ export default function TemplateCatalogCard({ template, priceLabel }: TemplateCa
         </Link>
         <Link
           to={demoUrl}
-          aria-label={`Buka demo ${template.name}`}
+          aria-label={t("home.catalogDemoAria", { name: template.name })}
           className="flex w-11 items-center justify-center border-l border-ink-900/15 text-ink-400 transition-colors hover:bg-ink-950 hover:text-cream-50"
         >
           <ArrowUpRight className="h-4 w-4" />

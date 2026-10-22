@@ -170,10 +170,7 @@ function OrderAside({
 
 export default function OrderForm() {
   const { t } = useTranslation();
-  usePageMeta(
-    "Buat Undangan Pernikahan Digital — LoVerse",
-    "Pilih 40+ tema undangan digital, isi data, bayar via QRIS, VA, e-wallet atau WhatsApp. Undangan aktif otomatis dengan PIN dashboard.",
-  );
+  usePageMeta(t("order.metaTitle"), t("order.metaDescription"));
   const toast = useToast();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -348,9 +345,9 @@ export default function OrderForm() {
 
         <div className="mt-7 flex flex-wrap items-end justify-between gap-6 border-b border-ink-900/15 pb-7 sm:mt-9 sm:pb-9">
           <div className="min-w-0">
-            <p className="eyebrow text-ember-600">Pemesanan / 2026</p>
+            <p className="eyebrow text-ember-600">{t("order.eyebrow")}</p>
             <h1 className="mt-3 font-display text-[clamp(2.6rem,6vw,4.5rem)] leading-[0.94] tracking-[-0.05em] text-ink-950">
-              Pesan <span className="italic text-ember-600">undangan.</span>
+              {t("order.headlineLead")} <span className="italic text-ember-600">{t("order.headlineAccent")}</span>
             </h1>
             <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-ink-500 sm:text-[14px]">
               {t("order.desc")}{" "}
@@ -361,7 +358,9 @@ export default function OrderForm() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="hidden font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 sm:inline">Langkah 0{step} / 03</span>
+            <span className="hidden font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 sm:inline">
+              {t("order.stepProgress", { step: String(step).padStart(2, "0") })}
+            </span>
             <button
               type="button"
               onClick={() => setShowConfirm(true)}
@@ -380,10 +379,10 @@ export default function OrderForm() {
           <div className="mx-auto max-w-3xl">
             <div className="mb-4 flex items-end justify-between gap-4">
               <div>
-                <p className="eyebrow text-ember-600">Terakhir</p>
-                <h2 className="mt-2 font-display text-2xl tracking-[-0.03em] text-ink-950 sm:text-3xl">Periksa sebelum bayar.</h2>
+                <p className="eyebrow text-ember-600">{t("order.reviewEyebrow")}</p>
+                <h2 className="mt-2 font-display text-2xl tracking-[-0.03em] text-ink-950 sm:text-3xl">{t("order.reviewTitle")}</h2>
               </div>
-              <span className="hidden font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 sm:block">Invoice / draft</span>
+              <span className="hidden font-data text-[14px] uppercase tracking-[0.06em] text-ink-400 sm:block">{t("order.reviewTag")}</span>
             </div>
             <OrderSummary
               formData={formData}
@@ -410,8 +409,11 @@ export default function OrderForm() {
                     onWhatsappCheckout={handleWhatsappCheckout}
                   />
                   <p className="text-center text-[14px] leading-relaxed text-ink-400">
-                    Dengan melanjutkan, kamu menyetujui{" "}
-                    <Link to="/terms" className="underline underline-offset-2 hover:text-ember-600">Syarat & Ketentuan</Link> LoVerse.
+                    {t("order.termsPrefix")}{" "}
+                    <Link to="/terms" className="underline underline-offset-2 hover:text-ember-600">
+                      {t("order.termsLink")}
+                    </Link>{" "}
+                    {t("order.termsSuffix")}
                   </p>
                 </>
               }

@@ -21,17 +21,14 @@ import { buttonClass } from '../components/ui/buttonStyles';
 export default function TemplateDemo() {
   const { t } = useTranslation();
   const { slug } = useParams();
-  const themeName = MASTER_TEMPLATES.find((tm) => tm.slug === slug)?.name ?? slug ?? 'Undangan';
-  usePageMeta(
-    `Demo Tema ${themeName} — LoVerse`,
-    `Lihat demo live tema undangan pernikahan digital ${themeName}: interaktif, lengkap RSVP, musik, dan galeri. Coba gratis.`,
-  );
+  const themeName = MASTER_TEMPLATES.find((tm) => tm.slug === slug)?.name ?? slug ?? t('demo.defaultTheme');
+  usePageMeta(t('demo.metaTitle', { theme: themeName }), t('demo.metaDescription', { theme: themeName }));
   const TemplateRenderer = (slug ? TEMPLATE_COMPONENTS[slug] : undefined) || TEMPLATE_COMPONENTS['rustic-floral'];
 
   if (!TemplateRenderer) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-cream-100 px-6 text-center text-ink-600">
-        <span className="eyebrow text-ember-600">Demo</span>
+        <span className="eyebrow text-ember-600">{t('demo.ariaLabel')}</span>
         <p className="mt-3 max-w-md font-display text-2xl leading-tight tracking-[-0.03em] text-ink-950">
           {t('demo.notFound', { slug: slug || '' })}
         </p>
@@ -104,7 +101,7 @@ export default function TemplateDemo() {
   return (
     <div className="theme-canvas relative">
       <nav
-        aria-label="Demo"
+        aria-label={t('demo.ariaLabel')}
         className="fixed left-4 top-4 z-[100] flex flex-wrap items-center gap-2 sm:left-6 sm:top-6"
       >
         <Link

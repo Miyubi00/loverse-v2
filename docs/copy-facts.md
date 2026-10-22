@@ -40,3 +40,7 @@ K2 hanya menyebut fungsi dan nilai yang ditampilkan oleh kode tersebut. Angka ha
 | Pengumuman situs memiliki jenis info, peringatan, promo, dan pemeliharaan. | `src/components/admin/NoticesTab.tsx:46-51,286-295` mendefinisikan tipe dan pilihan jenis pengumuman. |
 
 K3-K5 tidak menambahkan angka, durasi, kuota, atau klaim keamanan baru. Teks promosi admin yang belum terverifikasi dicatat di `docs/copy-flags.md`.
+
+## K6 — legal, metadata, dan mikrokomteks publik
+
+K6 menerjemahkan kebijakan privasi dan syarat & ketentuan yang sudah ada ke locale EN dan merapikan versi ID. Tidak ada fakta, harga, masa aktif, mitra pembayaran, atau komitmen baru. Sumber data pada dokumen legal tetap mengacu pada implementasi yang sudah tercatat di atas: formulir pesanan, dashboard, RSVP, Supabase, dan Midtrans. Label merek, metode pembayaran, konten contoh undangan, serta panel admin di luar cakupan dan dicatat di `docs/copy-flags.md`.

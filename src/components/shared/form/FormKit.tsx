@@ -214,6 +214,7 @@ export function LightboxPreview({
   image: PreviewImage | null;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   if (!image) return null;
   return (
     <Modal
@@ -230,7 +231,7 @@ export function LightboxPreview({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("common.close")}
           className="p-1 text-cream-100/50 transition-colors hover:text-cream-50"
         >
           <X size={18} />

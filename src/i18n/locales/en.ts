@@ -72,6 +72,10 @@ export const en: TranslationDictionary = {
     menu: "Menu",
     close: "Close menu",
     skip: "Skip to content",
+    mainAria: "Main navigation",
+    mobileAria: "Mobile navigation",
+    menuEyebrow: "Menu / 2026",
+    tagline: "A digital invitation that feels like you.",
   },
   home: {
     badge: "Digital Wedding Invitation Platform",
@@ -124,6 +128,12 @@ export const en: TranslationDictionary = {
     mockupMusicStatus: "Now Playing Romantic Audio",
     mockupShareReady: "Ready to Share via WhatsApp",
     mockupCountdownDays: "Days to Wedding Day",
+    mockupSaveDate: "Save the date",
+    filterAria: "Filter themes by category",
+    stepsTagline: "steps, no drama",
+    catalogDemoTitle: "View {name} demo",
+    catalogPreviewAlt: "Preview of {name} theme",
+    catalogDemoAria: "Open {name} demo",
     aboutTitle: "Why Choose LoVerse?",
     aboutDesc: "An all-in-one digital wedding platform designed for seamless event management and delight for your guests.",
     features: {
@@ -202,6 +212,7 @@ export const en: TranslationDictionary = {
     heroPortfolioBtn: "View Portfolio",
   },
   siteNotice: {
+    label: "Notice",
     ack: "Got it",
     close: "Close",
     readMore: "Read more",
@@ -211,9 +222,15 @@ export const en: TranslationDictionary = {
     badge: "Guides",
     title: "Usage Tutorials",
     subtitle: "Step-by-step video guides: ordering, managing, and sharing LoVerse digital invitations.",
+    metaTitle: "Digital Invitation Tutorials — LoVerse",
+    metaDescription:
+      "Video and written guides: how to order, edit invitations, recover your PIN, share invitations, and check RSVP and guestbook in LoVerse.",
     groupOrder: "How to Order",
     groupSetup: "Manage Your Invitation",
     stepsLabel: "Steps",
+    cardLabel: "Lesson",
+    guidesCount: "{count} guides · video + text",
+    lessonsCount: "{count} lessons",
     videoSoon: "Video coming soon",
     videoPlay: "Play video",
     videoClose: "Close video",
@@ -279,10 +296,15 @@ export const en: TranslationDictionary = {
     badge: "Our Portfolio",
     title: "Love Stories We Have Immortalized",
     subtitle: "A collection of digital wedding invitations that have amazed hundreds of guests — click to view the live demo.",
+    metaTitle: "Digital Wedding Invitation Portfolio — LoVerse",
+    metaDescription:
+      "Explore LoVerse's digital wedding invitation collection: dozens of elegant, modern, and playful themes with live demos you can try instantly.",
     statThemes: "Theme Designs",
     statCouples: "Happy Couples",
     statRating: "Average Rating",
     filterAll: "All",
+    filterAria: "Filter by category",
+    storyCount: "{count} stories / 2023—2026",
     viewDemo: "View Demo",
     themeLabel: "Theme",
     ctaBadge: "Your Turn",
@@ -295,6 +317,19 @@ export const en: TranslationDictionary = {
     back: "Back to Home",
     title: "Create Invitation",
     desc: "Enter your event and contact details, then choose a payment method.",
+    metaTitle: "Create a Digital Wedding Invitation — LoVerse",
+    metaDescription:
+      "Choose from 40+ digital invitation themes, enter your details, and pay via QRIS, VA, e-wallet, or WhatsApp. Your invitation activates automatically with a dashboard PIN.",
+    eyebrow: "Order / 2026",
+    headlineLead: "Order",
+    headlineAccent: "your invitation.",
+    stepProgress: "Step {step} / 03",
+    reviewEyebrow: "Final step",
+    reviewTitle: "Review before paying.",
+    reviewTag: "Invoice / draft",
+    termsPrefix: "By continuing, you agree to the",
+    termsLink: "Terms & Conditions",
+    termsSuffix: "of LoVerse.",
     tutorialLink: "View the ordering guide",
     resetForm: "Clear form",
     resetDialogTitle: "Clear the form?",
@@ -312,15 +347,21 @@ export const en: TranslationDictionary = {
     btnNext: "Continue",
     btnBack: "Back",
     step2Title: "Event & Contact Details",
+    locked: "Locked",
+    coreData: "Core details",
+    oncePayment: "one-time payment",
     groomName: "Groom's Name",
     groomPlaceholder: "e.g. Romeo",
     brideName: "Bride's Name",
     bridePlaceholder: "e.g. Juliet",
     weddingDate: "Wedding Date",
+    dateHint: "This date appears in the countdown and on the guest page.",
     email: "Email",
     emailPlaceholder: "name@email.com",
+    emailHint: "The invoice and PIN will be sent to this email.",
     whatsapp: "WhatsApp Number",
     whatsappPlaceholder: "81234567890",
+    whatsappHint: "Start without 0 — for example 81234567890.",
     step3Title: "Payment Method",
     step3Desc: "Choose your preferred payment method.",
     preLaunchNotice: "Online payments coming soon. Manual WhatsApp transfer only for now.",
@@ -336,10 +377,14 @@ export const en: TranslationDictionary = {
     methodWaSubtitle: "Contact LoVerse on WhatsApp to arrange manual payment.",
     methodWaBadge: "CS Assistance",
     methodSummaryLabel: "Method",
+    from: "from",
     gopayDesc: "Pay with GoPay balance or GoPay Later",
     shopeepayDesc: "Pay with ShopeePay balance or SPayLater",
     danaDesc: "Instant payment with Dana app or barcode",
     summaryTitle: "Order Summary",
+    confirmEyebrow: "Order review / 03",
+    eventData: "Event details",
+    progressAria: "Order progress",
     notFilled: "Not filled yet",
     templatePrice: "Theme price",
     adminFee: "Payment fee",
@@ -431,6 +476,7 @@ export const en: TranslationDictionary = {
     required: "This field is required.",
   },
   orderSuccess: {
+    eyebrow: "Order received / WhatsApp",
     title: "Order Submitted!",
     desc: "We have received your order details. Please continue on WhatsApp so our admin team can assist you immediately.",
     steps: {
@@ -467,6 +513,7 @@ export const en: TranslationDictionary = {
     btnViewInvitation: "View Invitation",
     pendingTitle: "Awaiting Payment",
     pendingDesc: "Complete your payment to activate your wedding invitation.",
+    defaultTemplate: "Digital Invitation",
     sumCouple: "Couple",
     sumTemplate: "Template",
     sumMethod: "Method",
@@ -480,6 +527,9 @@ export const en: TranslationDictionary = {
   login: {
     title: "Couple Login",
     subtitle: "Log in to edit and manage your wedding invitation",
+    metaTitle: "Dashboard Login — LoVerse",
+    metaDescription:
+      "Sign in to your LoVerse digital invitation dashboard with your WhatsApp number and 6-digit PIN to manage your invitation.",
     whatsappLabel: "WhatsApp Number",
     whatsappPlaceholder: "e.g. 081234567890",
     pinLabel: "Security PIN",
@@ -525,12 +575,18 @@ export const en: TranslationDictionary = {
     headline: "Talk to a human, or an AI.",
     title: "Contact Us",
     subtitle: "Have questions or need assistance? The LoVerse team is here to help!",
+    metaTitle: "Contact Us — LoVerse",
+    metaDescription:
+      "Digital wedding invitation consultations via WhatsApp and email. The LoVerse team can help you choose a theme and place an order.",
     instagramTitle: "Instagram",
     instagramSubtitle: "Portfolio & Testimonials",
     instagramFollow: "Follow",
+    instagramAria: "LoVerse on Instagram",
     whatsappMainTitle: "Main WhatsApp Support",
     whatsappMainDesc: "Fastest response for consultations and new orders.",
     whatsappMainBtn: "Chat with {name}",
+    whatsappNumberLabel: "Main WhatsApp Number",
+    whatsappGreeting: "Hello LoVerse Admin, I'd like to ask about digital invitations...",
     otherAdminsTitle: "Additional Admin Support",
     adminSales: "Consultation & Sales",
     adminTech: "Technical Support",
@@ -565,6 +621,19 @@ export const en: TranslationDictionary = {
       retry: "Retry",
       chatAdmin: "Chat Admin via WhatsApp",
       disclaimer: "AI can make mistakes. For accurate info, please contact our admin.",
+      adminName: "LoVerse Admin",
+      connected: "Connected to an admin",
+      connectedHint: "Admin replies will appear here • Type \"done\" to end",
+      endHandover: "End",
+      adminBusy: "Admin is busy",
+      chatWhatsapp: "Chat WhatsApp {number}",
+      adminLabel: "Admin",
+      adminTyping: "Admin is typing...",
+      adminPlaceholder: "Type a message for the admin...",
+      connectAdmin: "Connect to an admin",
+      connectAdminShort: "Connect admin",
+      escalationMessage:
+        "Hello Admin, the AI assistant was busy earlier. I'd like to ask about digital invitations...",
     },
     sectionAi: "Instant Answers",
     sectionAiDesc: "AI-powered, free 24/7",
@@ -578,6 +647,133 @@ export const en: TranslationDictionary = {
     quickStatus: "Check Order Status",
     quickStatusDesc: "Track your payment",
   },
+  authShell: {
+    eyebrow: "The couple's space",
+    titleLead: "Your big day,",
+    titleAccent: "one link.",
+    description:
+      "Sign in to manage your story, photos, music, and guests — all in one calm place.",
+  },
+  legal: {
+    backHome: "Back to home",
+    eyebrow: "Document / Legal",
+    updated: "Last updated: {date}",
+    updatedDate: "October 22, 2026",
+    contents: "Contents",
+    tocAria: "Table of contents",
+    contact: "Have a question? Contact us",
+    privacy: {
+      title: "Privacy Policy",
+      metaDescription:
+        "LoVerse privacy policy — how we collect, use, and protect data for digital wedding invitation users.",
+      sections: [
+        {
+          title: "Overview",
+          body: [
+            "LoVerse is a digital wedding invitation service. This policy explains what data we collect, why we use it, and how you can manage it.",
+          ],
+        },
+        {
+          title: "Data We Collect",
+          body: [
+            "When you order: couple names, event date, email address, WhatsApp number, and the photos or music you upload for the invitation.",
+            "When you sign in to the Dashboard: your WhatsApp number and PIN, which are your account credentials.",
+            "Guest RSVP data (name, attendance, message) is collected through the invitation page and can be accessed or exported by the couple through the Dashboard.",
+          ],
+        },
+        {
+          title: "How We Use Data",
+          body: [
+            "We use your data to create and operate the invitation, administer the order (invoices and payment confirmation), and improve the service.",
+            "We do not sell or share your data with third parties for advertising.",
+          ],
+        },
+        {
+          title: "Payments",
+          body: [
+            "Payments are processed by our payment partner Midtrans (QRIS, e-wallets, Virtual Accounts). LoVerse does not store your payment card details or financial credentials.",
+          ],
+        },
+        {
+          title: "Storage & Security",
+          body: [
+            "Invitation data is stored on Supabase database infrastructure. Content access is limited to the order owner (PIN login), guests with the invitation link, and the administrators responsible for the service.",
+          ],
+        },
+        {
+          title: "Your Rights",
+          body: [
+            "You can update your invitation content yourself through the Dashboard 24 hours a day.",
+            "To request deletion of order data, contact us through the Contact page and we will process your request.",
+          ],
+        },
+        {
+          title: "Policy Changes",
+          body: [
+            "We may update this policy from time to time. The last updated date is always shown at the top of this page.",
+          ],
+        },
+      ],
+    },
+    terms: {
+      title: "Terms & Conditions",
+      metaDescription:
+        "LoVerse digital wedding invitation service terms — orders, payments, active period, and theme usage license.",
+      sections: [
+        {
+          title: "Service Description",
+          body: [
+            "LoVerse provides digital wedding invitations with RSVP, guestbook, background music, photo gallery, and a dashboard for the couple. The service is accessed through a shareable invitation link.",
+          ],
+        },
+        {
+          title: "Orders & Accounts",
+          body: [
+            "Orders are placed through the Order page. Once payment is verified, account credentials (WhatsApp number and 6-digit PIN) are sent by email.",
+            "Your PIN is confidential. Do not share it with anyone who is not authorized to access your account.",
+          ],
+        },
+        {
+          title: "Payments",
+          body: [
+            "Automatic payments use Midtrans (QRIS, GoPay, ShopeePay, Virtual Account) or manual transfer via WhatsApp with admin confirmation.",
+            "An order is considered active once its payment status changes to paid in the system.",
+          ],
+        },
+        {
+          title: "Invitation Active Period",
+          body: [
+            "The invitation stays active until the entire series of wedding events is complete, with no monthly fees.",
+            "This agreement ends when the invitation's active period ends or the order is rejected before payment.",
+          ],
+        },
+        {
+          title: "Editing Invitation Content",
+          body: [
+            "The couple can edit the invitation content (location, schedule, photos, music, gift accounts) through the Dashboard at any time at no extra cost.",
+          ],
+        },
+        {
+          title: "Theme Usage Rights",
+          body: [
+            "The theme license is personal and valid for one event. You may not resell, redistribute, or reproduce the design for other commercial purposes.",
+          ],
+        },
+        {
+          title: "Acceptable Use",
+          body: [
+            "The couple is responsible for the invitation content. You may not publish content that violates the law or another party's copyright, or that contains hate speech.",
+          ],
+        },
+        {
+          title: "Changes to These Terms",
+          body: [
+            "These terms may be updated when the service features change. The last updated date is shown at the top of this page.",
+          ],
+        },
+      ],
+    },
+  },
   notFound: {
     code: "404",
     title: "Page Not Found",
@@ -589,6 +785,11 @@ export const en: TranslationDictionary = {
   demo: {
     back: "Back to Home",
     notFound: "Template \"{slug}\" not found.",
+    ariaLabel: "Demo",
+    defaultTheme: "Invitation",
+    metaTitle: "{theme} Theme Demo — LoVerse",
+    metaDescription:
+      "View a live demo of the {theme} digital wedding invitation: interactive, with RSVP, music, and a gallery. Try it free.",
   },
   invitation: {
     notFoundTitle: "Invitation Not Found",

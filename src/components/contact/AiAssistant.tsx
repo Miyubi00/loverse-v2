@@ -132,8 +132,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
   };
 
   const handleEscalate = () => {
-    const text =
-      'Halo Admin, tadi asisten AI sedang sibuk. Saya mau bertanya tentang undangan digital...';
+    const text = t('contact.ai.escalationMessage');
     window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -157,15 +156,15 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
               <h2 className="text-base sm:text-lg font-extrabold text-white leading-tight">
-                {handoverActive ? 'Admin LoVerse' : t('contact.ai.title')}
+                {handoverActive ? t('contact.ai.adminName') : t('contact.ai.title')}
               </h2>
               <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[14px] font-bold leading-none border ${handoverActive ? 'bg-success-600/20 border-success-600/40 text-cream-100' : 'bg-success-600/20 border-success-600/30 text-cream-100'}`}>
                 <span className={`w-1.5 h-1.5 rounded-full ${handoverActive ? 'bg-success-600 animate-pulse' : 'bg-success-600 animate-pulse'}`} />
-                {handoverActive ? 'Terhubung ke admin' : t('contact.ai.onlineChip')}
+                {handoverActive ? t('contact.ai.connected') : t('contact.ai.onlineChip')}
               </span>
             </div>
             <p className="mt-0.5 text-[14px] sm:text-[14px] text-pretty text-peach-300/85">
-              {handoverActive ? 'Balasan admin akan muncul di sini • Ketik "selesai" untuk akhiri' : t('contact.ai.subtitle')}
+              {handoverActive ? t('contact.ai.connectedHint') : t('contact.ai.subtitle')}
             </p>
           </div>
           {handoverActive && (
@@ -173,7 +172,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
               onClick={closeHandover}
               className="shrink-0 inline-flex items-center gap-1 bg-white/10 hover:bg-white/20 border border-white/15 text-white/90 px-2.5 py-1.5 rounded-full text-[14px] font-semibold transition"
             >
-              <X size={12} /> Akhiri
+              <X size={12} /> {t('contact.ai.endHandover')}
             </button>
           )}
         </div>
@@ -183,7 +182,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
       {handoverActive && (
         <div className="bg-success-600/10 border-b border-success-600/20 px-4 py-2 flex items-center gap-2 text-[14px] text-success-700">
           <MessageCircle size={14} className="text-success-700 shrink-0" />
-          <span className="font-semibold">Terhubung ke admin</span>
+          <span className="font-semibold">{t('contact.ai.connected')}</span>
         </div>
       )}
 
@@ -221,7 +220,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
               disabled={isTyping}
               className="inline-flex items-center gap-1.5 text-[14px] font-bold text-ink-900 bg-white border border-cream-300 px-3.5 py-1.5 rounded-full hover:bg-cream-100 transition disabled:opacity-50"
             >
-              <Headset size={14} className="text-success-700" /> Hubungkan ke admin
+              <Headset size={14} className="text-success-700" /> {t('contact.ai.connectAdmin')}
             </button>
           </div>
         )}
@@ -268,7 +267,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
                     <span className="p-1.5 rounded-lg bg-gold-500/15 text-gold-600">
                       <Headset className="w-3.5 h-3.5" />
                     </span>
-                    <p className="font-bold text-[14px] text-gold-600">Admin sedang sibuk</p>
+                    <p className="font-bold text-[14px] text-gold-600">{t('contact.ai.adminBusy')}</p>
                   </div>
                   <p className="text-[14px] text-ink-600 leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                   <button
@@ -276,7 +275,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
                     className="w-full py-2.5 bg-whatsapp-600 hover:bg-whatsapp-700 text-white rounded-xl font-bold text-[14px] flex items-center justify-center gap-2 active:scale-[0.98] transition shadow-sm"
                   >
                     <FaWhatsapp className="w-4 h-4" />
-                    Chat WhatsApp 0851-7988-0092
+                    {t('contact.ai.chatWhatsapp', { number: '0851-7988-0092' })}
                   </button>
                 </div>
               </div>
@@ -303,7 +302,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
                   <Headset className="w-3.5 h-3.5 text-white" />
                 </div>
                 <div className="max-w-[85%] sm:max-w-[75%] bg-white border border-success-600/20 text-ink-800 rounded-2xl rounded-tl-md px-4 py-2.5 text-sm shadow-xs whitespace-pre-wrap break-words leading-relaxed">
-                  <span className="text-[14px] font-bold text-success-700 uppercase tracking-wider">Admin</span>
+                  <span className="text-[14px] font-bold text-success-700 uppercase tracking-wider">{t('contact.ai.adminLabel')}</span>
                   <p className="mt-1">
                     <MessageText text={msg.content} />
                   </p>
@@ -361,7 +360,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
                   style={{ animationDelay: `${delay}ms` }}
                 />
               ))}
-              <span className="sr-only">Admin mengetik...</span>
+              <span className="sr-only">{t('contact.ai.adminTyping')}</span>
             </div>
           </div>
         )}
@@ -402,7 +401,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
                 handleSend();
               }
             }}
-            placeholder={handoverActive ? 'Ketik pesan untuk admin...' : t('contact.ai.placeholder')}
+            placeholder={handoverActive ? t('contact.ai.adminPlaceholder') : t('contact.ai.placeholder')}
             aria-label={t('contact.ai.send')}
             maxLength={1000}
             className="min-w-0 flex-1 resize-none bg-transparent py-2 text-[15px] placeholder:text-ink-500 focus:outline-none max-h-28"
@@ -423,7 +422,7 @@ export default function AiAssistant({ waNumber }: AiAssistantProps) {
           </p>
           {!handoverActive && (
             <button onClick={requestHandover} disabled={isTyping} className="text-[14px] font-bold text-success-700 hover:text-success-700 flex items-center gap-1 disabled:opacity-50">
-              <Headset size={12} /> Hubungkan admin
+              <Headset size={12} /> {t('contact.ai.connectAdminShort')}
             </button>
           )}
         </div>

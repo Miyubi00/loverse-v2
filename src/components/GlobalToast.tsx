@@ -9,6 +9,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CheckCircle, XCircle, AlertTriangle, X } from 'lucide-react';
+import { useTranslation } from '../i18n';
 
 export type ToastType = 'success' | 'error' | 'warning';
 
@@ -38,6 +39,7 @@ export const useToast = (): ToastApi => {
 };
 
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
+  const { t: translate } = useTranslation();
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const nextToastId = useRef(1);
 
@@ -126,7 +128,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
               <button
                 type="button"
                 onClick={() => removeToast(t.id)}
-                aria-label="Tutup notifikasi"
+                aria-label={translate("common.close")}
                 className="p-1.5 -mr-1 rounded-lg text-ink-500 hover:text-ink-700 hover:bg-cream-200/80 active:scale-95 transition shrink-0"
               >
                 <X className="w-4 h-4" />

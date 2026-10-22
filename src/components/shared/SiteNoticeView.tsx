@@ -126,7 +126,7 @@ function NoticeModal({ notice, onClose }: { notice: SiteNoticeRow; onClose: () =
         </button>
       </div>
 
-      <p className="eyebrow mt-6 text-ember-600">Pemberitahuan</p>
+      <p className="eyebrow mt-6 text-ember-600">{t("siteNotice.label")}</p>
       <h2 className="mt-3 font-display text-2xl leading-tight tracking-[-0.03em] text-ink-950">{notice.title}</h2>
       {notice.body && (
         <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink-500">{notice.body}</p>

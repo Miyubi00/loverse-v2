@@ -1,5 +1,6 @@
 import { useEffect, useRef, type ReactNode, type RefObject } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "../../i18n";
 import { cn } from "../../lib/cn";
 
 interface ModalProps {
@@ -54,6 +55,7 @@ export default function Modal({
   overlayClassName = "items-center justify-center bg-ink-950/65 p-4 backdrop-blur-[3px]",
   panelClassName,
 }: ModalProps) {
+  const { t } = useTranslation();
   const panelRef = useRef<HTMLDivElement>(null);
   const onCloseRef = useRef(onClose);
   const onBackdropClickRef = useRef(onBackdropClick);
@@ -151,7 +153,7 @@ export default function Modal({
         <button
           type="button"
           tabIndex={-1}
-          aria-label="Tutup dialog"
+          aria-label={t("common.close")}
           onClick={() => (onBackdropClickRef.current ?? onCloseRef.current)()}
           className="absolute inset-0 cursor-default"
         />

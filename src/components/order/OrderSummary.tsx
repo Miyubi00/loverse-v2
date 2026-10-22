@@ -37,11 +37,11 @@ interface OrderSummaryProps {
   actions?: ReactNode;
 }
 
-function formatTanggal(iso: string): string {
+function formatTanggal(iso: string, locale: string): string {
   if (!iso) return "";
   const date = new Date(`${iso}T00:00:00`);
   if (Number.isNaN(date.getTime())) return iso;
-  return date.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+  return date.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" });
 }
 
 function DetailRow({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
@@ -65,7 +65,7 @@ export function OrderSummary({
   onChangeMethod,
   actions,
 }: OrderSummaryProps) {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const fee = paymentMethod ? getPaymentMethodFee(selectedTemplate.price, paymentMethod) : 0;
   const total = selectedTemplate.price + fee;
   const methodLabel = paymentMethod ? t(PAYMENT_SUMMARY_LABEL_KEYS[paymentMethod]) : t("order.selectPaymentMethod");
@@ -105,7 +105,7 @@ export function OrderSummary({
             <p className="mt-2 text-[14px] text-ink-400">{t("order.templateSubtitle")}</p>
           </div>
         </div>
-        <p className="mt-4 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">Konfirmasi pesanan / 03</p>
+        <p className="mt-4 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">{t("order.confirmEyebrow")}</p>
       </div>
 
       <div className="divide-y divide-ink-900/10">
@@ -114,11 +114,15 @@ export function OrderSummary({
             <p className="flex items-center gap-2 font-display text-[17px] tracking-[-0.02em] text-ink-950">
               <Users size={15} className="shrink-0 text-ember-600" /> {t("order.dataContactTitle")}
             </p>
-            <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">Data acara</span>
+            <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">{t("order.eventData")}</span>
           </div>
           <div className="mt-2">
             <DetailRow icon={<Users size={13} />} label={t("order.coupleNameLabel")} value={`${formData.groom_name} & ${formData.bride_name}`} />
-            <DetailRow icon={<CalendarDays size={13} />} label={t("order.eventDateLabel")} value={formatTanggal(formData.wedding_date)} />
+            <DetailRow
+              icon={<CalendarDays size={13} />}
+              label={t("order.eventDateLabel")}
+              value={formatTanggal(formData.wedding_date, language === "en" ? "en-GB" : "id-ID")}
+            />
             <DetailRow icon={<Mail size={13} />} label={t("order.email")} value={formData.email} />
             <DetailRow icon={<FaWhatsapp size={13} />} label={t("order.whatsapp")} value={`+62${formData.whatsapp}`} />
           </div>

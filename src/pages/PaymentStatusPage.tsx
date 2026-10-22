@@ -35,7 +35,7 @@ function OrderSummary({ order }: { order: PaymentStatusResponse }) {
   const total = typeof order.price === "number" && order.price > 0 ? order.price : 0;
   const rows: Array<[string, string]> = [
     [t("paymentStatus.sumCouple"), `${order.groom_name} & ${order.bride_name}`],
-    [t("paymentStatus.sumTemplate"), order.template_name || "Undangan Digital"],
+    [t("paymentStatus.sumTemplate"), order.template_name || t("paymentStatus.defaultTemplate")],
     [t("paymentStatus.sumMethod"), order.payment_method || "QRIS"],
   ];
 

@@ -53,10 +53,7 @@ const QUICK_LINKS: Array<{ to: string; label: string; desc: string; icon: Lucide
 
 export default function Contact() {
   const { t } = useTranslation();
-  usePageMeta(
-    "Hubungi Kami — LoVerse",
-    "Konsultasi undangan pernikahan digital via WhatsApp dan email. Tim LoVerse siap membantu memilih tema dan pemesanan.",
-  );
+  usePageMeta(t("contact.metaTitle"), t("contact.metaDescription"));
   const copyToClipboard = useCopyToClipboard();
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [wibInfo, setWibInfo] = useState(() => getWibStatus());
@@ -91,7 +88,7 @@ export default function Contact() {
               </span>
               <span className="inline-flex items-center gap-2 border border-ink-900/15 px-3 py-2 font-data text-[14px] uppercase tracking-[0.06em] text-ink-600">
                 <Clock className="h-3 w-3" />
-                {t("contact.openNow")} · {wibInfo.timeString}
+                {wibInfo.isOpen ? t("contact.openNow") : t("contact.closedNow")} · {wibInfo.timeString}
               </span>
             </div>
           }
@@ -136,25 +133,25 @@ export default function Contact() {
                   </div>
                   <div className="mt-3 flex items-center justify-between gap-4">
                     <span className="font-data text-[14px] uppercase tracking-[0.06em] text-cream-100/35">
-                      Jam operasional
+                      {t("contact.hoursTitle")}
                     </span>
-                    <span className="text-[14px] text-cream-100/80">09.00 — 21.00 WIB</span>
+                    <span className="text-[14px] text-cream-100/80">{t("contact.hoursTime")}</span>
                   </div>
                 </div>
 
                 <a
-                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Halo Admin LoVerse, saya mau konsultasi tentang undangan digital...")}`}
+                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(t("contact.whatsappGreeting"))}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={buttonClass("peach", "lg", "mt-6 w-full")}
                 >
                   <FaWhatsapp className="h-4 w-4" />
-                  {t("contact.whatsappMainBtn", { name: "Admin LoVerse" })}
+                  {t("contact.whatsappMainBtn", { name: t("contact.ai.adminName") })}
                 </a>
                 <div className="mt-2 grid grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={() => handleCopy(whatsappNumber, "Nomor WhatsApp Utama", "wa-main")}
+                    onClick={() => handleCopy(whatsappNumber, t("contact.whatsappNumberLabel"), "wa-main")}
                     className="inline-flex min-h-10 items-center justify-center gap-2 border border-cream-100/15 px-3 text-[14px] text-cream-100/65 transition-colors hover:border-cream-100/35 hover:text-cream-50"
                   >
                     {copiedKey === "wa-main" ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
@@ -186,7 +183,7 @@ export default function Contact() {
                   <p className="eyebrow text-ink-400">{t("contact.instagramTitle")}</p>
                   <p className="mt-2 text-[14px] text-ink-600">{t("contact.instagramSubtitle")}</p>
                 </div>
-                <a href="https://instagram.com/loverse.id" target="_blank" rel="noopener noreferrer" aria-label="Instagram LoVerse" className="flex h-10 w-10 items-center justify-center border border-ink-900/15 text-ink-700 transition-colors hover:bg-ink-950 hover:text-cream-50">
+                <a href="https://instagram.com/loverse.id" target="_blank" rel="noopener noreferrer" aria-label={t("contact.instagramAria")} className="flex h-10 w-10 items-center justify-center border border-ink-900/15 text-ink-700 transition-colors hover:bg-ink-950 hover:text-cream-50">
                   <Instagram className="h-4 w-4" />
                 </a>
               </div>

@@ -1,4 +1,4 @@
-﻿import type { ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 import { ArrowLeft, ArrowUpRight, Calendar, Mail, User } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import type { MasterTemplate } from "../../lib/constants";
@@ -31,7 +31,7 @@ export function OrderDetailsForm({
     <SectionCard>
       <div className="flex items-start justify-between gap-4">
         <SectionHeading step="01" title={t("order.step1Title")} />
-        <span className="eyebrow shrink-0 pt-1 text-ink-400">Terkunci</span>
+        <span className="eyebrow shrink-0 pt-1 text-ink-400">{t("order.locked")}</span>
       </div>
 
       <div className="flex gap-4 border-y border-ink-900/10 py-4 sm:gap-5">
@@ -50,7 +50,7 @@ export function OrderDetailsForm({
             </p>
             <p className="mt-2 font-data text-[14px] text-ink-500">
               Rp {selectedTemplate.price.toLocaleString("id-ID")}
-              <span className="text-ink-400"> / sekali bayar</span>
+              <span className="text-ink-400"> / {t("order.oncePayment")}</span>
             </p>
           </div>
           <button
@@ -67,7 +67,7 @@ export function OrderDetailsForm({
       <div className="border-t border-ink-900/12 pt-5">
         <div className="flex items-start justify-between gap-4">
           <SectionHeading step="02" title={t("order.step2Title")} className="mb-4" />
-          <span className="eyebrow shrink-0 pt-1 text-ink-400">Data inti</span>
+          <span className="eyebrow shrink-0 pt-1 text-ink-400">{t("order.coreData")}</span>
         </div>
 
         <div className="w-full min-w-0 space-y-4">
@@ -129,7 +129,7 @@ export function OrderDetailsForm({
                 className={INPUT_CLASS}
               />
             </div>
-            <p className="mt-1.5 text-[14px] text-ink-400">Tanggal ini akan tampil di countdown dan halaman tamu.</p>
+            <p className="mt-1.5 text-[14px] text-ink-400">{t("order.dateHint")}</p>
           </div>
 
           <div className="grid w-full min-w-0 grid-cols-1 gap-4 border-t border-ink-900/10 pt-5 md:grid-cols-2">
@@ -151,7 +151,7 @@ export function OrderDetailsForm({
                   className={INPUT_CLASS}
                 />
               </div>
-              <p className="mt-1.5 text-[14px] text-ink-400">Invoice dan PIN dikirim ke email ini.</p>
+              <p className="mt-1.5 text-[14px] text-ink-400">{t("order.emailHint")}</p>
             </div>
 
             <div className="w-full min-w-0">
@@ -173,7 +173,7 @@ export function OrderDetailsForm({
                   className={INPUT_CLASS}
                 />
               </div>
-              <p className="mt-1.5 text-[14px] text-ink-400">Diawali tanpa 0 — contoh 81234567890.</p>
+              <p className="mt-1.5 text-[14px] text-ink-400">{t("order.whatsappHint")}</p>
             </div>
           </div>
         </div>

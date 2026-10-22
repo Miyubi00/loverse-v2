@@ -1,20 +1,22 @@
-﻿import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { useTranslation } from "../../i18n";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
 export interface LegalSection {
   title: string;
-  body: string[];
+  body: readonly string[];
 }
 
 interface LegalPageLayoutProps {
   title: string;
   metaDescription: string;
   updated: string;
-  sections: LegalSection[];
+  sections: readonly LegalSection[];
 }
 
 export default function LegalPageLayout({ title, metaDescription, updated, sections }: LegalPageLayoutProps) {
+  const { t } = useTranslation();
   usePageMeta(`${title} — LoVerse`, metaDescription);
 
   return (
@@ -25,25 +27,25 @@ export default function LegalPageLayout({ title, metaDescription, updated, secti
           className="inline-flex items-center gap-2 font-data text-[14px] uppercase tracking-[0.06em] text-ink-500 transition-colors hover:text-ink-950"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          Kembali ke beranda
+          {t("legal.backHome")}
         </Link>
 
         <header className="mt-10 border-b border-ink-900/15 pb-10 sm:pb-14">
           <div className="flex items-center gap-3">
-            <span className="eyebrow text-ember-600">Dokumen / Legal</span>
+            <span className="eyebrow text-ember-600">{t("legal.eyebrow")}</span>
             <span className="h-px w-10 bg-ink-900/20" />
           </div>
           <h1 className="display-xl mt-6 max-w-[15ch] text-[clamp(3.2rem,8vw,7rem)] text-ink-950">{title}</h1>
           <p className="mt-5 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
-            Terakhir diperbarui: {updated}
+            {t("legal.updated", { date: updated })}
           </p>
         </header>
 
         <div className="grid gap-12 py-10 lg:grid-cols-12 lg:gap-16 lg:py-14">
           <aside className="lg:col-span-4">
             <div className="lg:sticky lg:top-28">
-              <p className="eyebrow text-ink-400">Isi dokumen</p>
-              <nav className="mt-5 border-t border-ink-900/15" aria-label="Daftar isi">
+              <p className="eyebrow text-ink-400">{t("legal.contents")}</p>
+              <nav className="mt-5 border-t border-ink-900/15" aria-label={t("legal.tocAria")}>
                 {sections.map((section, index) => (
                   <a
                     key={section.title}
@@ -59,7 +61,7 @@ export default function LegalPageLayout({ title, metaDescription, updated, secti
                 to="/contact"
                 className="mt-8 inline-flex items-center gap-2 border-b border-ink-900/25 pb-1.5 text-[14px] font-semibold text-ink-800 transition-colors hover:border-ember-600 hover:text-ember-600"
               >
-                Ada pertanyaan? Hubungi kami
+                {t("legal.contact")}
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             </div>

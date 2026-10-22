@@ -432,7 +432,7 @@ export default function Landing() {
               />
             </label>
 
-            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" role="group" aria-label="Filter kategori">
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" role="group" aria-label={t("home.filterAria")}>
               {(
                 [
                   ["All", t("home.catalogCategoryAll")],
@@ -506,7 +506,7 @@ export default function Landing() {
             <div className="mt-10 inline-flex items-end gap-3 border border-cream-100/15 px-4 py-3">
               <span className="font-display text-4xl leading-none text-peach-300">3</span>
               <span className="max-w-[14ch] font-data text-[14px] uppercase leading-relaxed tracking-[0.06em] text-cream-100/60">
-                langkah, tanpa drama
+                {t("home.stepsTagline")}
               </span>
             </div>
           </div>
@@ -683,11 +683,11 @@ export default function Landing() {
 
           <div className="relative z-[2] hidden w-[260px] shrink-0 rotate-[-4deg] border border-cream-100/20 bg-cream-50 p-5 text-ink-900 shadow-deep lg:block">
             <div className="flex items-center justify-between border-b border-ink-900/15 pb-3">
-              <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">Save the date</span>
+              <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-500">{t("home.mockupSaveDate")}</span>
               <span className="h-1.5 w-1.5 rounded-full bg-ember-500" />
             </div>
-            <p className="mt-5 font-display text-3xl leading-none tracking-[-0.04em]">Dimas &amp; Sarah</p>
-            <p className="mt-2 font-display text-sm italic text-ink-500">24 . 10 . 2026</p>
+            <p className="mt-5 font-display text-3xl leading-none tracking-[-0.04em]">{t("home.mockupCouple")}</p>
+            <p className="mt-2 font-display text-sm italic text-ink-500">{t("home.mockupDate")}</p>
             <div className="mt-6 flex items-end justify-between border-t border-ink-900/15 pt-3">
               <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">loverse.id</span>
               <span className="font-data text-[14px] text-ember-600">No. 0142</span>

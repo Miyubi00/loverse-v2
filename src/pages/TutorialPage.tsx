@@ -95,7 +95,7 @@ function TutorialCard({ item, index }: { item: TutorialItem; index: number }) {
           )}
         </div>
         <div className="mt-3 flex items-center justify-between gap-3">
-          <span className="eyebrow text-ink-400">Lesson 0{index + 1}</span>
+          <span className="eyebrow text-ink-400">{t("tutorial.cardLabel")} 0{index + 1}</span>
           <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ember-600">{item.duration}</span>
         </div>
       </div>
@@ -136,10 +136,7 @@ function TutorialCard({ item, index }: { item: TutorialItem; index: number }) {
 
 export default function TutorialPage() {
   const { t } = useTranslation();
-  usePageMeta(
-    "Tutorial Undangan Digital — LoVerse",
-    "Panduan video dan langkah tertulis: cara pesan undangan, edit undangan, lupa PIN, bagikan undangan, dan cek RSVP & buku tamu LoVerse.",
-  );
+  usePageMeta(t("tutorial.metaTitle"), t("tutorial.metaDescription"));
   const orders = TUTORIAL_ITEMS.filter((item) => item.group === "order");
   const setups = TUTORIAL_ITEMS.filter((item) => item.group === "setup");
   let runningIndex = 0;
@@ -155,7 +152,7 @@ export default function TutorialPage() {
           aside={
             <div className="flex items-center gap-3 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
               <Play className="h-3.5 w-3.5 text-ember-600" />
-              {orders.length + setups.length} panduan · video + teks
+              {t("tutorial.guidesCount", { count: orders.length + setups.length })}
             </div>
           }
         />
@@ -168,7 +165,7 @@ export default function TutorialPage() {
             <div className="flex items-end justify-between gap-5 pb-5">
               <h2 className="font-display text-[clamp(1.8rem,4vw,3rem)] tracking-[-0.04em] text-ink-950">{group.title}</h2>
               <span className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
-                {String(group.items.length).padStart(2, "0")} lessons
+                {t("tutorial.lessonsCount", { count: String(group.items.length).padStart(2, "0") })}
               </span>
             </div>
             <div>

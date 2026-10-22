@@ -1,4 +1,4 @@
-﻿import type { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Building2, Check, ChevronDown, QrCode, Smartphone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { useTranslation } from "../../i18n";
@@ -146,7 +146,7 @@ export function PaymentMethodPicker({
     <SectionCard>
       <div className="flex items-start justify-between gap-4">
         <SectionHeading step="03" title={t("order.step3Title")} />
-        <span className="eyebrow shrink-0 pt-1 text-ink-400">Satu kali bayar</span>
+        <span className="eyebrow shrink-0 pt-1 text-ink-400">{t("order.oncePayment")}</span>
       </div>
       <p className="-mt-2 text-[14px] leading-relaxed text-ink-400">{t("order.step3Desc")}</p>
 
@@ -173,7 +173,7 @@ export function PaymentMethodPicker({
             title={t("order.methodEwalletTitle")}
             logos={<LogoPill src={MIDTRANS_LOGOS.gopay} alt="GoPay" className="h-3" />}
             description={t("order.methodEwalletSubtitle")}
-            price={<span className="text-ink-400">dari {ewalletTotal}</span>}
+            price={<span className="text-ink-400">{t("order.from")} {ewalletTotal}</span>}
             trailing={
               <ChevronDown
                 size={16}
@@ -234,7 +234,7 @@ export function PaymentMethodPicker({
               </>
             }
             description={t("order.methodVaSubtitle")}
-            price={<span className="text-ink-400">dari {vaTotal}</span>}
+            price={<span className="text-ink-400">{t("order.from")} {vaTotal}</span>}
             trailing={
               <ChevronDown
                 size={16}

@@ -25,7 +25,7 @@ export default function OrderSuccess() {
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-ink-950 text-peach-300">
               <Check className="h-5 w-5" strokeWidth={3} />
             </div>
-            <p className="eyebrow mt-8 text-ember-600">Pesanan diterima / WhatsApp</p>
+            <p className="eyebrow mt-8 text-ember-600">{t("orderSuccess.eyebrow")}</p>
             <h1 className="mt-4 max-w-[11ch] font-display text-[clamp(3rem,7vw,5.4rem)] leading-[0.92] tracking-[-0.055em] text-ink-950">
               {t("orderSuccess.title")}
             </h1>
@@ -75,7 +75,7 @@ export default function OrderSuccess() {
           </ol>
           <div className="flex items-center gap-2 border-t border-ink-900/10 bg-cream-50 px-5 py-3.5">
             <span className="h-1.5 w-1.5 rounded-full bg-whatsapp-600" />
-            <p className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">{t("contact.hoursTitle")} · 09.00–21.00 WIB</p>
+            <p className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">{t("contact.hoursTitle")} · {t("contact.hoursTime")}</p>
           </div>
         </aside>
       </div>

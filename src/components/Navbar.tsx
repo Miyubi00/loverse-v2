@@ -67,7 +67,7 @@ export default function Navbar() {
         <div className="mx-auto flex h-[68px] w-full max-w-[1480px] items-center justify-between gap-6 px-4 sm:px-7 lg:px-10">
           <Wordmark />
 
-          <nav className="hidden items-center gap-7 lg:flex" aria-label="Navigasi utama">
+          <nav className="hidden items-center gap-7 lg:flex" aria-label={t("nav.mainAria")}>
             {LINKS.map((link) => {
               const active =
                 link.href === "/contact"
@@ -122,8 +122,8 @@ export default function Navbar() {
           className="fixed inset-x-0 bottom-0 top-[68px] z-40 flex flex-col overflow-y-auto bg-cream-100 lg:hidden"
         >
           <div className="flex flex-1 flex-col px-5 pb-8 pt-8 sm:px-8">
-            <p className="eyebrow text-ink-400">Menu / 2026</p>
-            <nav className="mt-8 flex flex-col border-t border-ink-900/12" aria-label="Navigasi seluler">
+            <p className="eyebrow text-ink-400">{t("nav.menuEyebrow")}</p>
+            <nav className="mt-8 flex flex-col border-t border-ink-900/12" aria-label={t("nav.mobileAria")}>
               {LINKS.map((link, index) => (
                 <Link
                   key={link.href}
@@ -154,7 +154,7 @@ export default function Navbar() {
 
             <div className="mt-auto flex items-center justify-between gap-4 pt-10">
               <p className="max-w-[22ch] text-[14px] leading-relaxed text-ink-400">
-                Undangan digital yang terasa seperti kamu.
+                {t("nav.tagline")}
               </p>
               <LanguageToggleButton variant="light" />
             </div>

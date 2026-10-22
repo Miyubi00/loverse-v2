@@ -13,10 +13,7 @@ const templateOf = (slug: string) => MASTER_TEMPLATES.find((t) => t.slug === slu
 
 export default function PortfolioPage() {
   const { t } = useTranslation();
-  usePageMeta(
-    "Portofolio Undangan Pernikahan Digital — LoVerse",
-    "Lihat koleksi undangan pernikahan digital LoVerse: puluhan tema elegan, modern, dan lucu dengan demo live yang bisa langsung dicoba.",
-  );
+  usePageMeta(t("portfolio.metaTitle"), t("portfolio.metaDescription"));
   const [category, setCategory] = useState("all");
 
   const categories = useMemo(() => {
@@ -62,7 +59,7 @@ export default function PortfolioPage() {
         />
 
         <div className="flex flex-col gap-4 border-b border-ink-900/15 py-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" role="group" aria-label="Filter kategori">
+          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar" role="group" aria-label={t("portfolio.filterAria")}>
             {categories.map((item) => (
               <button
                 key={item}
@@ -81,7 +78,7 @@ export default function PortfolioPage() {
             ))}
           </div>
           <p className="font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
-            {items.length} cerita / 2023—2026
+            {t("portfolio.storyCount", { count: items.length })}
           </p>
         </div>
 

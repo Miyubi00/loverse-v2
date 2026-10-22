@@ -157,3 +157,18 @@ Metadata sosial (`og:*` dan `twitter:*`) tetap statis pada HTML awal dan memakai
 | `toast.orderRejectedDeleted` | `Pesanan ditolak & dihapus.` → `Pesanan ditolak dan dihapus.` | `Order rejected & deleted.` → `Order rejected and deleted.` | Mengganti ampersand dengan kata sambung. |
 | `toast.loginFailed` | `Login Gagal: {error}` → `Gagal masuk: {error}` | `Login Failed: {error}` → `Sign-in failed: {error}` | Memakai kata kerja yang konsisten dan kapitalisasi kalimat. |
 | `toast.openingWhatsapp` | `Berhasil! Membuka WhatsApp...` → `Membuka WhatsApp...` | `Success! Opening WhatsApp...` → `Opening WhatsApp...` | Menyatakan tindakan yang sedang berjalan tanpa klaim tambahan. |
+
+## K6 — legal, metadata, dan mikrokomteks publik
+
+K6 menambahkan 119 kunci ID/EN baru; kunci baru tidak dimasukkan ke tabel lama karena baseline `ui-redesign` belum memilikinya. `scripts/check-copy.mjs` tetap memverifikasi paritas kunci, placeholder, tag, dan angka untuk seluruh 1052 kunci saat ini.
+
+| Area | Perubahan |
+|---|---|
+| `/privacy` dan `/terms` | Seluruh isi, judul, meta description, daftar isi, tanggal pembaruan, label kembali, dan ajakan kontak kini berasal dari locale ID/EN. Tanggal pembaruan menjadi 22 Oktober 2026 / October 22, 2026. |
+| Mikrokomteks publik | Navbar, beranda, kartu katalog, alur pesanan, ringkasan, status pembayaran, halaman sukses, kontak, tutorial, portofolio, login, dan demo tema memakai kunci locale. |
+| Metadata | Judul dan deskripsi halaman Order, Portofolio, Tutorial, Kontak, Login, dan Demo Tema mengikuti bahasa aktif. |
+| Aksesibilitas | Label tutup modal, toast, dialog konfirmasi, lightbox, filter, navigasi, progres pesanan, dan pratinjau katalog dilokalkan. |
+| Tanggal | Tanggal acara pada ringkasan pesanan memakai `en-GB` untuk EN dan `id-ID` untuk ID. |
+| Status kontak | Label buka/tutup mengikuti jam operasional WIB yang sedang dihitung, bukan selalu menampilkan "Buka". |
+
+Fakta legal tidak berubah: teks ID/EN menerjemahkan kebijakan dan syarat yang sudah ada, tanpa menambah harga, masa aktif, mitra, atau komitmen baru. Label merek seperti `LoVerse`, `QRIS`, `GoPay`, `WhatsApp`, dan tahap dekoratif `Live / 2026` sengaja tidak diterjemahkan. Konten contoh undangan, panel admin, dan editor pelanggan di luar cakupan K6.

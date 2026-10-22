@@ -10,7 +10,7 @@ export function OrderSteps({ current }: OrderStepsProps) {
   const steps = [t("order.wizStep1"), t("order.wizStep2"), t("order.wizStep3")];
 
   return (
-    <ol className="mb-7 flex items-start gap-0 border-y border-ink-900/12 py-3 sm:mb-9" aria-label="Progres pemesanan">
+    <ol className="mb-7 flex items-start gap-0 border-y border-ink-900/12 py-3 sm:mb-9" aria-label={t("order.progressAria")}>
       {steps.map((label, index) => {
         const stepNo = (index + 1) as 1 | 2 | 3;
         const isDone = stepNo < current;

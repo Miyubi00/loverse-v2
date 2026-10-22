@@ -34,10 +34,7 @@ const inputClass =
 
 export default function DashboardLogin() {
   const { t } = useTranslation();
-  usePageMeta(
-    "Login Dashboard — LoVerse",
-    "Masuk dashboard undangan digital LoVerse dengan No. WhatsApp dan PIN 6 digit untuk mengatur undanganmu.",
-  );
+  usePageMeta(t("login.metaTitle"), t("login.metaDescription"));
   const navigate = useNavigate();
   const toast = useToast();
   const [loading, setLoading] = useState(false);

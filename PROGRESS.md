@@ -25,6 +25,18 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete; copywrit
 - [x] `npm run lint`, `npm run typecheck`, production build, and `npm test` pass; unit suite: 44/44.
 - [x] Unresolved hardcoded or unverified strings are recorded in `docs/copy-flags.md`; source facts and the full row-by-row changelog are in `docs/copy-facts.md` and `docs/copy-changelog.md`.
 
+## Copywriting — K6 (legal, metadata, and public microcopy)
+
+- [x] Localized the privacy policy, terms & conditions, and shared legal layout for ID/EN, including section bodies, table of contents, updated date, back link, and contact prompt. The legal update date is now 22 October 2026 / October 22, 2026.
+- [x] Localized page metadata for order, portfolio, tutorial, contact, customer login, and template demo; localized remaining public microcopy in the navbar, homepage, template cards, order flow, order success, payment status, contact, and AI handover.
+- [x] Localized shared accessibility labels and defaults in `Modal`, `GlobalToast`, `ui/ConfirmDialog`, and `FormKit`; fixed the contact open/closed status and the order date locale.
+- [x] Added matching ID/EN keys for the new namespaces (`authShell`, `legal`) and public-page copy; English and Indonesian keys remain identical.
+- [x] `node scripts/check-copy.mjs`: 1052 matching non-empty ID/EN keys; 123 previously documented changes still preserve placeholders, tags, and numbers.
+- [x] `npm run lint`, `npm run typecheck`, `npm test` (44/44), and `npm run build` pass.
+- [x] `language-toggle.spec.ts`: 3/3 pass at 1440px and 390px. Focused Playwright assertions confirmed localized legal, contact, portfolio, tutorial, order, login, and home copy in English.
+- [x] Screenshots: [ID privacy mobile](artifacts/copy-k6/id-privacy-mobile.png), [EN privacy mobile](artifacts/copy-k6/en-privacy-mobile.png), [ID privacy desktop](artifacts/copy-k6/id-privacy-desktop.png), [EN privacy desktop](artifacts/copy-k6/en-privacy-desktop.png), [ID terms mobile](artifacts/copy-k6/id-terms-mobile.png), [EN terms mobile](artifacts/copy-k6/en-terms-mobile.png), [ID terms desktop](artifacts/copy-k6/id-terms-desktop.png), [EN terms desktop](artifacts/copy-k6/en-terms-desktop.png), [EN contact desktop](artifacts/copy-k6/en-contact-desktop.png), [EN order desktop](artifacts/copy-k6/en-order-desktop.png).
+- [x] Remaining untranslated admin/customer editor strings and brand-only labels are recorded in `docs/copy-flags.md`; new-key notes are in `docs/copy-changelog.md`.
+
 ## PhoneShowcase v2 — M1
 
 - [x] Replaced the previous `PhoneShowcaseScene` chunk with a static two-phone 3D composition: opposed V pose, local template previews on both screens, warm lighting, orbit rings, and warm vignette background.
