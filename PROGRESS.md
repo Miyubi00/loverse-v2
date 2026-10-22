@@ -1,6 +1,6 @@
 # LoVerse UI Redesign — Progress
 
-Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete; copywriting K1–K5 complete. The full Playwright suite has two unrelated language-toggle failures on `/demo/motion-flow`.**
+Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete; copywriting K1–K5 complete. The full Playwright suite has one unrelated phone-showcase assertion failure.**
 
 ## Copywriting — K2 (catalog, FAQ, checkout, and payment)
 
@@ -21,6 +21,7 @@ Status: **Revisions A–D committed; PhoneShowcase v2 M1–M4 complete; copywrit
 - [x] Reused existing keys for missing customer editor labels and replaced embedded admin sidebar copy with `nav.menu`; no new locale keys were added.
 - [x] `scripts/check-copy.mjs`: 933 matching non-empty ID/EN keys; 123 documented locale changes preserve placeholders, tags, and numbers.
 - [x] K3–K5 copy-sensitive Playwright tests pass: 26/26 across dashboard, edit media, modal overlays, and language toggle at 390px, 1440px, and 320–360px edge widths.
+- [x] Full Playwright suite: 29/30 pass. The remaining failure is the unrelated `phone-showcase.spec.ts` reduced-motion assertion, which expects `rotateY()` but the current card transition emits `rotateZ()`.
 - [x] `npm run lint`, `npm run typecheck`, production build, and `npm test` pass; unit suite: 44/44.
 - [x] Unresolved hardcoded or unverified strings are recorded in `docs/copy-flags.md`; source facts and the full row-by-row changelog are in `docs/copy-facts.md` and `docs/copy-changelog.md`.
 
