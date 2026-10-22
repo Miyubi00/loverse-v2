@@ -6,10 +6,11 @@ import {
   Copy,
   Instagram,
   MessageCircle,
+  Phone,
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useTranslation } from "../i18n";
 import { usePageMeta } from "../hooks/usePageMeta";
@@ -81,34 +82,49 @@ export default function Contact() {
           title={<>{t("contact.headline")}</>}
           description={t("contact.subtitle")}
           aside={
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-2 border border-ink-900/15 px-3 py-2 text-[13px] leading-tight text-ink-600">
-                <span className="h-1.5 w-1.5 rounded-full bg-success-600" aria-hidden="true" />
-                {t("contact.onlineChip")}
-              </span>
-              <span className="inline-flex items-center gap-2 border border-ink-900/15 px-3 py-2 text-[13px] leading-tight text-ink-600">
-                <Clock className="h-3 w-3" aria-hidden="true" />
-                {wibInfo.isOpen ? t("contact.openNow") : t("contact.closedNow")} · {wibInfo.timeString}
-              </span>
+            <div className="w-full max-w-sm border border-ink-900/15 bg-cream-50 p-5 sm:p-6">
+              <div className="flex items-center gap-2">
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${wibInfo.isOpen ? "bg-success-600" : "bg-ink-400"}`}
+                  aria-hidden="true"
+                />
+                <span className="eyebrow text-[11px] text-ink-500">{t("contact.statusTitle")}</span>
+              </div>
+
+              <p className="mt-3 font-display text-[22px] leading-tight tracking-[-0.02em] text-ink-900">
+                {wibInfo.isOpen ? t("contact.openNow") : t("contact.closedNow")}
+              </p>
+              <p className="mt-0.5 font-data text-[13px] text-ink-500">{wibInfo.timeString}</p>
+
+              <ul className="mt-4 space-y-2.5 border-t border-ink-900/12 pt-4 text-[13px] leading-snug text-ink-600">
+                <li className="flex items-center gap-2.5">
+                  <MessageCircle className="h-3.5 w-3.5 shrink-0 text-ember-600" aria-hidden="true" />
+                  {t("contact.onlineChip")}
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Clock className="h-3.5 w-3.5 shrink-0 text-ember-600" aria-hidden="true" />
+                  {t("contact.hoursTime")}
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Sparkles className="h-3.5 w-3.5 shrink-0 text-ember-600" aria-hidden="true" />
+                  {t("contact.trustFast")}
+                </li>
+              </ul>
             </div>
           }
         />
 
-        <div className="grid gap-6 py-10 lg:grid-cols-2 lg:items-stretch lg:gap-6 lg:py-14">
+        <div className="grid items-stretch gap-6 py-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-7 lg:py-14">
           <section className="flex min-w-0 flex-col">
             <AiAssistant waNumber={whatsappNumber} />
           </section>
 
-          <aside className="flex min-w-0 flex-col">
-            <div className="grain grain-light relative flex h-full flex-col overflow-hidden rounded-[4px] border border-ink-950/40 bg-ink-950 p-6 text-cream-100 sm:p-8">
+          <aside className="flex min-w-0 flex-col gap-4">
+            <div className="grain grain-light relative flex flex-1 flex-col overflow-hidden rounded-[4px] border border-ink-950 bg-ink-950 p-6 text-cream-100 sm:p-7">
               <div className="relative z-[2] flex h-full flex-col">
                 <div className="flex items-start justify-between gap-5">
                   <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                      <p className="font-data text-[12px] leading-tight text-champagne/90">{t("contact.sectionHuman")}</p>
-                      <span className="h-0.5 w-0.5 rounded-full bg-cream-100/40" aria-hidden="true" />
-                      <p className="font-data text-[12px] leading-tight text-cream-100/55">{t("contact.sectionHumanDesc")}</p>
-                    </div>
+                    <p className="font-data text-[12px] leading-tight text-champagne/90">{t("contact.sectionHuman")}</p>
                     <h2 className="mt-1 font-display text-[22px] leading-tight tracking-[-0.03em] text-cream-50 sm:text-[24px]">
                       {t("contact.whatsappMainTitle")}
                     </h2>
@@ -118,36 +134,25 @@ export default function Contact() {
                   </span>
                 </div>
 
-                <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-cream-100/65">
+                <p className="mt-3 max-w-sm text-[14px] leading-relaxed text-cream-100/65">
                   {t("contact.whatsappMainDesc")}
                 </p>
 
-                <div className="mt-5 border-y border-cream-100/12 py-4">
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="font-data text-[13px] text-cream-100/60">WhatsApp</span>
+                <p className="mt-4 inline-flex w-fit items-center gap-2 border border-cream-100/15 px-2.5 py-1.5 text-[13px] leading-tight text-cream-100/75">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-success-dark" aria-hidden="true" />
+                  {t("contact.onlineChip")}
+                </p>
+
+                {/* Number row: phone icon + number, copy button inline right */}
+                <div className="mt-5 flex items-center justify-between gap-4 border-b border-cream-100/12 pb-5">
+                  <div className="flex items-center gap-3">
+                    <Phone className="h-4 w-4 shrink-0 text-champagne/70" aria-hidden="true" />
                     <span className="font-data text-[14px] text-cream-100/85">{displayNumber}</span>
                   </div>
-                  <div className="mt-3 flex items-center justify-between gap-4">
-                    <span className="font-data text-[13px] text-cream-100/60">{t("contact.hoursTitle")}</span>
-                    <span className="text-[14px] text-cream-100/85">{t("contact.hoursTime")}</span>
-                  </div>
-                </div>
-
-                <div className="mt-auto pt-6">
-                  <a
-                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(t("contact.whatsappGreeting"))}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={buttonClass("peach", "lg", "w-full")}
-                  >
-                    <FaWhatsapp className="h-4 w-4" aria-hidden="true" />
-                    {t("contact.whatsappMainBtn", { name: t("contact.ai.adminName") })}
-                  </a>
-
                   <button
                     type="button"
                     onClick={() => handleCopy(whatsappNumber, t("contact.whatsappNumberLabel"), "wa-main")}
-                    className="mt-2 inline-flex min-h-11 w-full items-center justify-center gap-2 border border-cream-100/15 px-3 text-[14px] text-cream-100/70 transition-colors hover:border-cream-100/35 hover:text-cream-50"
+                    className="flex h-10 shrink-0 items-center justify-center gap-2 border border-cream-100/15 px-3 text-[13px] font-medium text-cream-100/70 transition-colors hover:border-cream-100/35 hover:text-cream-50"
                   >
                     {copiedKey === "wa-main" ? (
                       <Check className="h-3.5 w-3.5" aria-hidden="true" />
@@ -156,58 +161,97 @@ export default function Contact() {
                     )}
                     {copiedKey === "wa-main" ? t("common.copied") : t("common.copy")}
                   </button>
+                </div>
 
-                  <div className="mt-4 flex items-center justify-between gap-4 border-t border-cream-100/12 pt-4">
-                    <div className="min-w-0">
-                      <p className="text-[13px] font-medium text-cream-50">{t("contact.instagramTitle")}</p>
-                      <p className="mt-0.5 text-[13px] text-cream-100/55">{t("contact.instagramSubtitle")}</p>
-                    </div>
-                    <a
-                      href="https://instagram.com/loverse.id"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={t("contact.instagramAria")}
-                      className="inline-flex min-h-11 shrink-0 items-center gap-2 border border-cream-100/15 px-3 text-[13px] font-medium text-cream-100/75 transition-colors hover:border-cream-100/35 hover:text-cream-50"
-                    >
-                      <Instagram className="h-4 w-4" aria-hidden="true" />
-                      {t("contact.instagramFollow")}
-                    </a>
+                {/* Hours row */}
+                <div className="mt-4 flex items-start gap-3">
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-champagne/70" aria-hidden="true" />
+                  <div>
+                    <p className="font-data text-[14px] leading-tight text-cream-100/85">{t("contact.hoursTime")}</p>
+                    <p className="mt-0.5 font-data text-[13px] leading-tight text-cream-100/60">{t("contact.hoursSubtitle")}</p>
                   </div>
+                </div>
 
-                  <p className="mt-4 flex items-start gap-2 text-[13px] leading-relaxed text-cream-100/60">
-                    <Clock className="mt-0.5 h-3 w-3 shrink-0" aria-hidden="true" />
-                    {t("contact.operatingHours")}
-                  </p>
+                <div className="mt-auto flex flex-col gap-2 pt-6">
+                  <a
+                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(t("contact.whatsappGreeting"))}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={buttonClass("peach", "lg", "w-full")}
+                  >
+                    <FaWhatsapp className="h-4 w-4" aria-hidden="true" />
+                    {t("contact.whatsappMainBtn", { name: t("contact.ai.adminName") })}
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
                 </div>
               </div>
 
               <div className="pointer-events-none absolute -bottom-24 -right-16 h-64 w-64 rounded-full border border-champagne/15" aria-hidden="true" />
               <div className="pointer-events-none absolute -bottom-12 -right-4 h-36 w-36 rounded-full border border-cream-100/10" aria-hidden="true" />
             </div>
+
+            <div className="flex flex-col gap-4 rounded-[4px] border border-ink-900/15 bg-cream-50 p-5 shadow-lift sm:p-6">
+              <div className="flex items-center gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-ink-900/15 bg-cream-200 text-ember-600">
+                  <FaInstagram className="h-4 w-4" aria-hidden="true" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="font-data text-[12px] leading-tight text-ember-600">{t("contact.instagramEyebrow")}</p>
+                  <p className="font-display text-[18px] leading-tight tracking-[-0.02em] text-ink-900">
+                    {t("contact.instagramTitle")}
+                  </p>
+                  <p className="mt-1 text-[13px] text-ink-500">{t("contact.instagramDesc")}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between gap-4 border-t border-ink-900/12 pt-4">
+                <div className="flex items-center gap-2">
+                  <Instagram className="h-3 w-3 shrink-0 text-ink-400" aria-hidden="true" />
+                  <span className="font-data text-[13px] text-ink-600">{t("contact.instagramHandle")}</span>
+                </div>
+                <a
+                  href="https://instagram.com/loverse.id"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t("contact.instagramAria")}
+                  className="inline-flex min-h-11 shrink-0 items-center gap-1.5 border border-ink-900/20 px-3 text-[13px] font-medium text-ink-800 transition-colors hover:border-ink-900/45 hover:bg-cream-100"
+                >
+                  {t("contact.instagramView")}
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
           </aside>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 pb-12 sm:grid-cols-3 lg:pb-16">
-          {QUICK_LINKS.map((link, index) => (
-            <Reveal key={link.to} delay={index * 60} className="h-full">
-              <Link
-                to={link.to}
-                className="group flex h-full items-start justify-between gap-5 rounded-[4px] border border-ink-900/15 bg-cream-50 px-5 py-6 transition-[background-color,border-color] hover:border-ink-900/25 hover:bg-cream-100 focus-visible:outline-offset-2"
-              >
-                <div className="flex items-start gap-4">
-                  <link.icon className="mt-0.5 h-4 w-4 text-ember-600" strokeWidth={1.5} aria-hidden="true" />
-                  <div>
-                    <p className="font-display text-xl leading-tight tracking-[-0.02em] text-ink-900">{t(link.label)}</p>
-                    <p className="mt-1 text-[14px] text-ink-400">{t(link.desc)}</p>
+        <div className="pb-12 lg:pb-16">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-ink-900/12 pb-4">
+            <span className="eyebrow text-ember-600">{t("contact.quickTitle")}</span>
+            <span className="h-px w-10 bg-ink-900/20" aria-hidden="true" />
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 pt-6 sm:grid-cols-3">
+            {QUICK_LINKS.map((link, index) => (
+              <Reveal key={link.to} delay={index * 60} className="h-full">
+                <Link
+                  to={link.to}
+                  className="group flex h-full items-start justify-between gap-5 rounded-[4px] border border-ink-900/15 bg-cream-50 px-5 py-6 transition-[background-color,border-color] hover:border-ink-900/25 hover:bg-cream-100 focus-visible:outline-offset-2"
+                >
+                  <div className="flex items-start gap-4">
+                    <link.icon className="mt-0.5 h-4 w-4 text-ember-600" strokeWidth={1.5} aria-hidden="true" />
+                    <div>
+                      <p className="font-display text-xl leading-tight tracking-[-0.02em] text-ink-900">{t(link.label)}</p>
+                      <p className="mt-1 text-[14px] text-ink-400">{t(link.desc)}</p>
+                    </div>
                   </div>
-                </div>
-                <ArrowUpRight
-                  className="h-4 w-4 shrink-0 text-ink-300 transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ember-600 motion-reduce:transition-none"
-                  aria-hidden="true"
-                />
-              </Link>
-            </Reveal>
-          ))}
+                  <ArrowUpRight
+                    className="h-4 w-4 shrink-0 text-ink-300 transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ember-600 motion-reduce:transition-none"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </div>
