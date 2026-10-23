@@ -102,7 +102,7 @@ function OrderAside({
     <aside className="hidden lg:block">
       <div className="sticky top-24 space-y-4">
         <div className="overflow-hidden border border-ink-900/15 bg-white">
-          <div className="bg-wine-900 px-4 py-3 text-cream-100">
+          <div className="bg-ink-950 px-4 py-3 text-cream-100">
             <div className="flex items-center justify-between gap-3">
               <p className="eyebrow text-champagne/90">{t("order.asideTitle")}</p>
               <span className="font-data text-[14px] text-cream-100/75">0{step} / 03</span>

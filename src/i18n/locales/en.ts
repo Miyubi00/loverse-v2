@@ -115,7 +115,6 @@ export const en: TranslationDictionary = {
     manifestoBody:
       "Add the schedule, location, photos, and music. RSVP themes also include an attendance form.",
     catalogEyebrow: "2026 Collection",
-    catalogNote: "Choose a theme for your wedding invitation.",
     stepsEyebrow: "A calm process",
     statsEyebrow: "So far",
     testimonialsEyebrow: "Their words",

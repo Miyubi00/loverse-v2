@@ -55,7 +55,7 @@ export default function Contact() {
           </section>
 
           <aside className="flex min-w-0 flex-col gap-4">
-            <div className="grain grain-light relative flex flex-[2] flex-col overflow-hidden rounded-[4px] border border-wine-900 bg-wine-900 p-5 text-cream-100 sm:p-6">
+            <div className="grain grain-light relative flex flex-[2] flex-col overflow-hidden rounded-[4px] border border-wine-900 bg-ink-950 p-5 text-cream-100 sm:p-6">
               <div className="relative z-[2] flex h-full flex-col">
                 <div className="flex items-center gap-4">
                   <span className="flex h-14 w-14 shrink-0 items-center justify-center border border-cream-100/20 text-champagne">

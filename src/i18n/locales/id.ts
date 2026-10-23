@@ -113,7 +113,6 @@ export const id = {
     manifestoBody:
       "Tambahkan jadwal, lokasi, foto, dan musik. Tema RSVP juga menyediakan formulir konfirmasi kehadiran.",
     catalogEyebrow: "Koleksi 2026",
-    catalogNote: "Pilih tema untuk undangan pernikahan Anda.",
     stepsEyebrow: "Alur yang tenang",
     statsEyebrow: "Sejauh ini",
     testimonialsEyebrow: "Kata mereka",

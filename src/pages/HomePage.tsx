@@ -370,7 +370,7 @@ export default function Landing() {
       </section>
 
       {/* STATS */}
-      <section id="statistik" className="scroll-mt-20 border-b border-cream-100/15 bg-wine-900 text-cream-100">
+      <section id="statistik" className="scroll-mt-20 border-b border-cream-100/15 bg-ink-950 text-cream-100">
         <div className="mx-auto w-full max-w-[1480px] px-4 py-14 sm:px-7 sm:py-20 lg:px-10">
           <div className="flex items-center justify-between gap-4 border-b border-cream-100/20 pb-6">
             <span className="eyebrow text-champagne/85">{t("home.statsEyebrow")}</span>
@@ -416,9 +416,6 @@ export default function Landing() {
             </div>
             <div className="max-w-sm lg:text-right">
               <p className="text-[14px] leading-relaxed text-ink-500">{t("home.catalogDesc")}</p>
-              <p className="mt-2 font-data text-[14px] uppercase tracking-[0.06em] text-ink-400">
-                {t("home.catalogNote")}
-              </p>
             </div>
           </div>
 
