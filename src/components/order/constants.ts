@@ -185,6 +185,17 @@ export const formatIDR = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 
+export const normalizeWhatsappNumber = (value: string) => {
+  const digits = value.replace(/\D/g, "");
+  if (digits.startsWith("0062")) return digits.slice(4);
+  if (digits.startsWith("62")) return digits.slice(2);
+  if (digits.startsWith("0")) return digits.slice(1);
+  return digits;
+};
+
+export const isValidWhatsappNumber = (value: string) =>
+  normalizeWhatsappNumber(value).length >= 8;
+
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const INPUT_CLASS =

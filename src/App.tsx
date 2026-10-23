@@ -56,6 +56,7 @@ const AdminPanelPage = lazy(() => import('./pages/AdminPanelPage'));
 const PaymentStatusPage = lazy(() => import('./pages/PaymentStatusPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
 const TutorialPage = lazy(() => import('./pages/TutorialPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
@@ -85,6 +86,7 @@ function App() {
 
               <Route path="/payment-status" element={<SkeletonRoute Skeleton={PaymentStatusSkeleton}><PaymentStatusPage /></SkeletonRoute>} />
               <Route path="/contact" element={<SkeletonRoute Skeleton={ContactSkeleton}><ContactPage /></SkeletonRoute>} />
+              <Route path="/about" element={<SkeletonRoute Skeleton={PageSkeleton}><AboutPage /></SkeletonRoute>} />
               <Route path="/portfolio" element={<SkeletonRoute Skeleton={PortfolioSkeleton}><PortfolioPage /></SkeletonRoute>} />
               <Route path="/tutorial" element={<SkeletonRoute Skeleton={TutorialSkeleton}><TutorialPage /></SkeletonRoute>} />
               <Route path="/privacy" element={<SkeletonRoute Skeleton={LegalSkeleton}><PrivacyPolicyPage /></SkeletonRoute>} />

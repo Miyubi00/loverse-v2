@@ -18,6 +18,8 @@ import { ADMIN_WHATSAPP, type MasterTemplate } from "../lib/constants";
 import { PRODUCTION_READY } from "../lib/constants";
 import {
   EMAIL_RE,
+  isValidWhatsappNumber,
+  normalizeWhatsappNumber,
   type OrderFormData,
   type PaymentMethodType,
 } from "../components/order/constants";
@@ -60,7 +62,7 @@ export function useOrderCheckout({
       toast.warning(t("validation.emailInvalid"));
       return false;
     }
-    if (!formData.whatsapp.trim() || formData.whatsapp.length < 8) {
+    if (!isValidWhatsappNumber(formData.whatsapp)) {
       toast.warning(t("validation.whatsappInvalid"));
       return false;
     }
@@ -80,7 +82,7 @@ export function useOrderCheckout({
     }
 
     setLoadingMidtrans(true);
-    const finalWhatsapp = `+62${formData.whatsapp}`;
+    const finalWhatsapp = `+62${normalizeWhatsappNumber(formData.whatsapp)}`;
 
     try {
       // Metode terpilih dikirim apa adanya; backend memetakan ke kanal
@@ -185,7 +187,7 @@ export function useOrderCheckout({
     setLoadingWA(true);
 
     try {
-      const finalWhatsapp = `+62${formData.whatsapp}`;
+      const finalWhatsapp = `+62${normalizeWhatsappNumber(formData.whatsapp)}`;
 
       // Catat pending LEWAT edge function (validasi + Turnstile + rate
       // limit server-side). Insert langsung ke DB dari browser DILARANG

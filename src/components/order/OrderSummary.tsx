@@ -16,6 +16,7 @@ import {
   formatIDR,
   getPaymentMethodFee,
   MIDTRANS_LOGOS,
+  normalizeWhatsappNumber,
   PAYMENT_SUMMARY_LABEL_KEYS,
   VA_BANKS,
   type PaymentMethodType,
@@ -124,7 +125,11 @@ export function OrderSummary({
               value={formatTanggal(formData.wedding_date, language === "en" ? "en-GB" : "id-ID")}
             />
             <DetailRow icon={<Mail size={13} />} label={t("order.email")} value={formData.email} />
-            <DetailRow icon={<FaWhatsapp size={13} />} label={t("order.whatsapp")} value={`+62${formData.whatsapp}`} />
+            <DetailRow
+              icon={<FaWhatsapp size={13} />}
+              label={t("order.whatsapp")}
+              value={`+62${normalizeWhatsappNumber(formData.whatsapp)}`}
+            />
           </div>
         </div>
 
@@ -157,9 +162,9 @@ export function OrderSummary({
             )}
             <span className="min-w-0">
               <span className="block truncate text-[14px] font-semibold text-ink-950">{methodLabel}</span>
-              <span className="mt-0.5 block text-[14px] text-ink-400">
-                {paymentMethod === "whatsapp" ? t("order.waDesc") : t("order.autoMethodDesc")}
-              </span>
+              {paymentMethod === "whatsapp" ? (
+                <span className="mt-0.5 block text-[14px] text-ink-400">{t("order.waDesc")}</span>
+              ) : null}
             </span>
           </div>
         </div>
@@ -181,9 +186,9 @@ export function OrderSummary({
             </div>
             <p className="text-[14px] leading-relaxed text-ink-400">{t("order.feeNotePpn")}</p>
           </div>
-          <div className="mt-4 flex items-end justify-between gap-4 bg-ink-950 px-4 py-4 text-cream-50">
-            <span className="text-[14px] font-medium text-cream-100/60">{t("order.totalPayment")}</span>
-            <span className="font-display text-[26px] leading-none tracking-[-0.04em] text-cream-100 sm:text-3xl">
+          <div className="mt-4 flex items-center justify-between gap-4 border-t border-ink-900/12 pt-4">
+            <span className="text-[14px] font-semibold text-ink-700">{t("order.totalPayment")}</span>
+            <span className="font-display text-[26px] leading-none tracking-[-0.04em] text-ink-950 sm:text-3xl">
               {formatIDR(total)}
             </span>
           </div>

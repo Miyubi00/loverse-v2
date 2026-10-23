@@ -14,7 +14,7 @@ import { usePageMeta } from "../hooks/usePageMeta";
 import type { TurnstileWidgetRef } from "../components/ui/TurnstileWidget";
 import { MASTER_TEMPLATES, type MasterTemplate } from "../lib/constants";
 import { goBackOrHome } from "../lib/navigation";
-import { ArrowLeft, ArrowRight, Check, GraduationCap, MessageCircle, RotateCcw, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, GraduationCap, RotateCcw } from "lucide-react";
 import { OrderBackButton } from "../components/order/OrderBackButton";
 import { OrderDetailsForm } from "../components/order/OrderDetailsForm";
 import { OrderSteps } from "../components/order/OrderSteps";
@@ -23,8 +23,7 @@ import { OrderSummary } from "../components/order/OrderSummary";
 import { OrderPayButton, OrderPaymentCaptcha } from "../components/order/OrderPaymentActions";
 import {
   EMAIL_RE,
-  formatIDR,
-  getPaymentMethodFee,
+  isValidWhatsappNumber,
   type ExpandedCategory,
   type PaymentMethodType,
 } from "../components/order/constants";
@@ -81,95 +80,6 @@ function clearDraft() {
   } catch {
     /* abaikan */
   }
-}
-
-function OrderAside({
-  template,
-  image,
-  paymentMethod,
-  step,
-}: {
-  template: MasterTemplate;
-  image?: string;
-  paymentMethod: PaymentMethodType;
-  step: 1 | 2 | 3;
-}) {
-  const { t } = useTranslation();
-  const fee = step === 2 ? getPaymentMethodFee(template.price, paymentMethod) : 0;
-  const perks = [t("order.asidePerkActive"), t("order.asidePerkRsvp"), t("order.asidePerkEdit")];
-
-  return (
-    <aside className="hidden lg:block">
-      <div className="sticky top-24 space-y-4">
-        <div className="overflow-hidden border border-ink-900/15 bg-white">
-          <div className="bg-ink-950 px-4 py-3 text-cream-100">
-            <div className="flex items-center justify-between gap-3">
-              <p className="eyebrow text-champagne/90">{t("order.asideTitle")}</p>
-              <span className="font-data text-[14px] text-cream-100/75">0{step} / 03</span>
-            </div>
-          </div>
-          <div className="p-4">
-          <div className="flex gap-3">
-            <div className="aspect-[3/4] w-[64px] shrink-0 overflow-hidden border border-ink-900/10 bg-cream-100">
-              {image ? <img src={image} alt={template.name} className="h-full w-full object-cover" /> : null}
-            </div>
-            <div className="min-w-0">
-              <p className="truncate font-display text-lg leading-tight tracking-[-0.03em] text-ink-950">{template.name}</p>
-              <p className="mt-1 text-[14px] text-ink-400">{t("order.packageLabel")} {template.category}</p>
-              <p className="mt-1.5 font-data text-[14px] text-ink-700">{formatIDR(template.price)}</p>
-            </div>
-          </div>
-
-          <div className="mt-4 space-y-1.5 border-t border-ink-900/10 pt-3 text-[14px]">
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-ink-400">{t("order.templatePrice")}</span>
-              <span className="font-data text-ink-700">{formatIDR(template.price)}</span>
-            </div>
-            {step === 2 && (
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-ink-400">{t("order.adminFee")}</span>
-                <span className="font-data text-ink-700">{formatIDR(fee)}</span>
-              </div>
-            )}
-            <div className="flex items-center justify-between gap-3 pt-2">
-              <span className="text-[14px] font-semibold text-ink-950">{t("order.totalPayment")}</span>
-              <span className="font-display text-xl tracking-[-0.03em] text-ink-950">{formatIDR(template.price + fee)}</span>
-            </div>
-          </div>
-          <p className="mt-2 text-[14px] leading-relaxed text-ink-400">{t("order.asideLockedNote")}</p>
-          </div>
-        </div>
-
-        <div className="border border-ink-900/12 bg-cream-50 p-4">
-          <ul className="space-y-2.5">
-            {perks.map((perk) => (
-              <li key={perk} className="flex items-start gap-2.5 text-[14px] leading-relaxed text-ink-600">
-                <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-ember-600" />
-                {perk}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-4 flex items-center gap-2 border-t border-ink-900/10 pt-3 text-[14px] text-ink-400">
-            <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-ember-600" />
-            {t("order.secureDesc")}
-          </div>
-        </div>
-
-        <Link
-          to="/contact"
-          className="flex items-center gap-3 border border-ink-900/12 bg-white p-3.5 transition-colors hover:border-ink-900/30 hover:bg-cream-50"
-        >
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center bg-ink-950 text-champagne">
-            <MessageCircle className="h-4 w-4" />
-          </span>
-          <span className="min-w-0">
-            <span className="block text-[14px] font-semibold text-ink-900">{t("order.asideHelp")}</span>
-            <span className="mt-0.5 block text-[14px] leading-snug text-ink-400">{t("order.asideHelpDesc")}</span>
-          </span>
-        </Link>
-      </div>
-    </aside>
-  );
 }
 
 export default function OrderForm() {
@@ -269,8 +179,7 @@ export default function OrderForm() {
   };
 
   const handleWhatsappChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let value = event.target.value.replace(/\D/g, "");
-    if (value.startsWith("0")) value = value.substring(1);
+    const value = event.target.value.replace(/\D/g, "");
     setFormData({ ...formData, whatsapp: value });
   };
 
@@ -297,7 +206,7 @@ export default function OrderForm() {
     if (!formData.groom_name.trim() || !formData.bride_name.trim()) return toast.warning(t("validation.coupleRequired"));
     if (!formData.wedding_date) return toast.warning(t("validation.weddingDateRequired"));
     if (!formData.email.trim() || !EMAIL_RE.test(formData.email.trim())) return toast.warning(t("validation.emailInvalid"));
-    if (!formData.whatsapp.trim() || formData.whatsapp.length < 8) return toast.warning(t("validation.whatsappInvalid"));
+    if (!isValidWhatsappNumber(formData.whatsapp)) return toast.warning(t("validation.whatsappInvalid"));
     setStep(2);
     scrollTop();
   };
@@ -338,7 +247,7 @@ export default function OrderForm() {
 
   return (
     <div className="min-h-[70svh] w-full max-w-full overflow-x-hidden bg-cream-100">
-      <div className="mx-auto w-full max-w-6xl px-4 py-7 sm:px-7 sm:py-10 lg:px-10 lg:py-14">
+      <div className="mx-auto w-full max-w-5xl px-4 py-7 sm:px-7 sm:py-10 lg:px-10 lg:py-14">
         <button
           type="button"
           onClick={handleBack}
@@ -424,50 +333,46 @@ export default function OrderForm() {
             />
           </div>
         ) : (
-          <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_316px]">
-            <div className="min-w-0">
-              {step === 1 ? (
-                <OrderDetailsForm
-                  formData={formData}
-                  selectedTemplate={selectedTemplate}
-                  selectedImage={selectedImage}
-                  todayStr={todayStr}
-                  onChange={handleChange}
-                  onWhatsappChange={handleWhatsappChange}
-                  onChangeTemplate={() =>
-                    navigate("/", { replace: true, state: { scrollToTemplate: selectedTemplate?.slug } })
-                  }
-                />
-              ) : (
-                <PaymentMethodPicker
-                  basePrice={selectedTemplate.price}
-                  paymentMethod={paymentMethod}
-                  onSelect={setPaymentMethod}
-                  expandedCategory={expandedCategory}
-                  onExpand={setExpandedCategory}
-                />
-              )}
+          <div className="mx-auto w-full max-w-5xl">
+            {step === 1 ? (
+              <OrderDetailsForm
+                formData={formData}
+                selectedTemplate={selectedTemplate}
+                selectedImage={selectedImage}
+                todayStr={todayStr}
+                onChange={handleChange}
+                onWhatsappChange={handleWhatsappChange}
+                onChangeTemplate={() =>
+                  navigate("/", { replace: true, state: { scrollToTemplate: selectedTemplate?.slug } })
+                }
+              />
+            ) : (
+              <PaymentMethodPicker
+                basePrice={selectedTemplate.price}
+                paymentMethod={paymentMethod}
+                onSelect={setPaymentMethod}
+                expandedCategory={expandedCategory}
+                onExpand={setExpandedCategory}
+              />
+            )}
 
-              {nextAction ? (
-                <div className="mt-4 grid grid-cols-2 gap-2.5 sm:mt-5 sm:gap-3">
-                  <OrderBackButton
-                    onClick={handleBack}
-                    label={t("order.btnBack")}
-                    ariaLabel={contextualBackLabel}
-                    variant="block"
-                  />
-                  <button
-                    type="button"
-                    onClick={nextAction}
-                    className="flex min-h-11 w-full items-center justify-center gap-2 rounded-[2px] bg-ink-950 px-3 py-3.5 text-sm font-semibold text-cream-50 transition-colors hover:bg-ember-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember-500/40 sm:py-4 sm:text-base"
-                  >
-                    {t("order.btnNext")} <ArrowRight size={17} />
-                  </button>
-                </div>
-              ) : null}
-            </div>
-
-            <OrderAside template={selectedTemplate} image={selectedImage} paymentMethod={paymentMethod} step={step} />
+            {nextAction ? (
+              <div className="mt-4 grid grid-cols-2 gap-2.5 sm:mt-5 sm:gap-3">
+                <OrderBackButton
+                  onClick={handleBack}
+                  label={t("order.btnBack")}
+                  ariaLabel={contextualBackLabel}
+                  variant="block"
+                />
+                <button
+                  type="button"
+                  onClick={nextAction}
+                  className="flex min-h-11 w-full items-center justify-center gap-2 rounded-[2px] bg-ink-950 px-3 py-3.5 text-sm font-semibold text-cream-50 transition-colors hover:bg-ember-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember-500/40 sm:py-4 sm:text-base"
+                >
+                  {t("order.btnNext")} <ArrowRight size={17} />
+                </button>
+              </div>
+            ) : null}
           </div>
         )}
       </div>

@@ -12,6 +12,7 @@ declare global {
           'expired-callback'?: () => void;
           theme?: 'auto' | 'light' | 'dark';
           size?: 'normal' | 'compact' | 'flexible';
+          appearance?: 'always' | 'execute' | 'interaction-only';
           language?: string;
         }
       ) => string;
@@ -32,6 +33,7 @@ interface TurnstileWidgetProps {
   onError?: () => void;
   onExpire?: () => void;
   theme?: 'auto' | 'light' | 'dark';
+  appearance?: 'always' | 'execute' | 'interaction-only';
   className?: string;
 }
 
@@ -41,7 +43,15 @@ const DEFAULT_SITE_KEY =
 
 export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetProps>(
   function TurnstileWidget(
-    { siteKey = DEFAULT_SITE_KEY, onSuccess, onError, onExpire, theme = 'light', className = '' },
+    {
+      siteKey = DEFAULT_SITE_KEY,
+      onSuccess,
+      onError,
+      onExpire,
+      theme = 'light',
+      appearance = 'interaction-only',
+      className = '',
+    },
     ref
   ) {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -77,6 +87,7 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
             sitekey: siteKey,
             theme,
             size: 'flexible',
+            appearance,
             callback: (token: string) => {
               if (isMounted && onSuccessRef.current) {
                 onSuccessRef.current(token);
@@ -131,11 +142,11 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
           widgetIdRef.current = null;
         }
       };
-    }, [siteKey, theme]);
+    }, [siteKey, theme, appearance]);
 
     return (
-      <div className={`w-full flex justify-center items-center my-2 ${className}`}>
-        <div ref={containerRef} className="w-full max-w-[300px] min-h-[65px] flex items-center justify-center" />
+      <div className={`flex w-full items-center justify-center ${className}`}>
+        <div ref={containerRef} className="flex w-full max-w-[300px] items-center justify-center" />
       </div>
     );
   }

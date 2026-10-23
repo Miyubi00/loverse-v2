@@ -26,7 +26,6 @@ export function OrderDetailsForm({
   onChangeTemplate,
 }: OrderDetailsFormProps) {
   const { t } = useTranslation();
-
   return (
     <SectionCard>
       <div className="flex items-start justify-between gap-4">
@@ -63,7 +62,6 @@ export function OrderDetailsForm({
         </div>
       </div>
       <p className="-mt-2 text-[14px] leading-relaxed text-ink-400">{t("order.step1LockedDesc")}</p>
-
       <div className="border-t border-ink-900/12 pt-5">
         <div className="flex items-start justify-between gap-4">
           <SectionHeading step="02" title={t("order.step2Title")} className="mb-4" />
@@ -173,7 +171,6 @@ export function OrderDetailsForm({
                   className={INPUT_CLASS}
                 />
               </div>
-              <p className="mt-1.5 text-[14px] text-ink-400">{t("order.whatsappHint")}</p>
             </div>
           </div>
         </div>

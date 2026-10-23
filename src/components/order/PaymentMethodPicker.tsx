@@ -17,7 +17,7 @@ import { SectionCard, SectionHeading } from "./SectionCard";
 
 interface PaymentMethodPickerProps {
   basePrice: number;
-  paymentMethod: PaymentMethodType | null;
+  paymentMethod: PaymentMethodType;
   onSelect: (method: PaymentMethodType) => void;
   expandedCategory: ExpandedCategory | null;
   onExpand: (category: ExpandedCategory | null) => void;
@@ -294,10 +294,6 @@ export function PaymentMethodPicker({
           mark={<SelectMark selected={paymentMethod === "whatsapp"} green />}
         />
       </div>
-
-      <p className="text-[14px] leading-relaxed text-ink-400">
-        {t("order.autoMethodDesc")}
-      </p>
     </SectionCard>
   );
 }
