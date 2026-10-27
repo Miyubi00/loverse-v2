@@ -209,7 +209,7 @@ export default function EmeraldRoyaleTheme({
       `}</style>
 
       {/* Audio Elemen Tersembunyi */}
-      <audio ref={audioRef} src={audioUrl} loop preload="auto" />
+      <audio ref={audioRef} src={audioUrl} loop preload="none" />
 
       {/* ============================================================ */}
       {/* 1. COVER / ENVELOPE OVERLAY */}
@@ -250,6 +250,11 @@ export default function EmeraldRoyaleTheme({
               <img
                 src={photos.cover}
                 alt="Couple Cover"
+                width={1200}
+                height={900}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-full object-cover brightness-90 hover:scale-105 transition-transform duration-700"
               />
             </div>
@@ -348,6 +353,11 @@ export default function EmeraldRoyaleTheme({
               <img
                 src={photos.cover}
                 alt="Couple Hero"
+                width={1200}
+                height={900}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-full object-cover object-center brightness-95 hover:scale-105 transition-transform duration-1000"
               />
             </div>
@@ -431,6 +441,10 @@ export default function EmeraldRoyaleTheme({
                   <img
                     src={photos.groom}
                     alt={groom}
+                    width={320}
+                    height={416}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-top hover:scale-105 transition duration-500"
                   />
                 </div>
@@ -453,6 +467,10 @@ export default function EmeraldRoyaleTheme({
                   <img
                     src={photos.bride}
                     alt={bride}
+                    width={320}
+                    height={416}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-top hover:scale-105 transition duration-500"
                   />
                 </div>
@@ -582,6 +600,10 @@ export default function EmeraldRoyaleTheme({
                   <img
                     src={imgUrl}
                     alt={`Gallery ${idx + 1}`}
+                    width={600}
+                    height={800}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-90 group-hover:brightness-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#04231C]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-3">
@@ -631,10 +653,11 @@ export default function EmeraldRoyaleTheme({
           <div className="bg-[#093B2F]/80 border border-[#D4AF37]/35 rounded-3xl p-6 sm:p-8 backdrop-blur-md shadow-2xl space-y-6">
             <form onSubmit={handleSendRsvp} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-[#F3E5AB] uppercase tracking-wider mb-1.5">
+                <label htmlFor="demo-rsvp-name" className="block text-xs font-semibold text-[#F3E5AB] uppercase tracking-wider mb-1.5">
                   Nama Anda
                 </label>
                 <input
+                  id="demo-rsvp-name"
                   type="text"
                   required
                   value={rsvpName}
@@ -646,10 +669,11 @@ export default function EmeraldRoyaleTheme({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[#F3E5AB] uppercase tracking-wider mb-1.5">
+                  <label htmlFor="demo-rsvp-status" className="block text-xs font-semibold text-[#F3E5AB] uppercase tracking-wider mb-1.5">
                     Konfirmasi Kehadiran
                   </label>
                   <select
+                    id="demo-rsvp-status"
                     value={rsvpStatus}
                     onChange={(e) => setRsvpStatus(e.target.value as RsvpStatus)}
                     className="w-full px-4 py-3 rounded-xl bg-[#04231C]/90 border border-[#D4AF37]/30 text-white focus:outline-none focus:border-[#D4AF37] text-sm"
@@ -661,10 +685,11 @@ export default function EmeraldRoyaleTheme({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#F3E5AB] uppercase tracking-wider mb-1.5">
+                  <label htmlFor="demo-rsvp-pax" className="block text-xs font-semibold text-[#F3E5AB] uppercase tracking-wider mb-1.5">
                     Jumlah Tamu (Pax)
                   </label>
                   <input
+                    id="demo-rsvp-pax"
                     type="number"
                     min={1}
                     max={10}
@@ -676,10 +701,11 @@ export default function EmeraldRoyaleTheme({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#F3E5AB] uppercase tracking-wider mb-1.5">
+                <label htmlFor="demo-rsvp-message" className="block text-xs font-semibold text-[#F3E5AB] uppercase tracking-wider mb-1.5">
                   Ucapan & Doa Restu
                 </label>
                 <textarea
+                  id="demo-rsvp-message"
                   rows={3}
                   value={rsvpMessage}
                   onChange={(e) => setRsvpMessage(e.target.value)}

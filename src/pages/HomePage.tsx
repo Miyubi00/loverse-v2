@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   ArrowRight,
@@ -14,7 +14,7 @@ import {
   Sparkles,
   Star,
 } from "lucide-react";
-import { supabase } from "../lib/supabaseClient";
+import { fetchPublicCount, fetchPublicRows } from "../lib/publicRest";
 import { ADMIN_WHATSAPP, MASTER_TEMPLATES, TESTIMONIALS } from "../lib/constants";
 import { TemplateCardSkeleton } from "../components/ui/SkeletonLoaders";
 import SiteNoticeView from "../components/shared/SiteNoticeView";
@@ -43,8 +43,29 @@ const formatPriceK = (value: number) => `Rp ${new Intl.NumberFormat("id-ID").for
 
 function StatNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
   const [display, setDisplay] = useState(0);
+  const [hasEnteredView, setHasEnteredView] = useState(false);
+  const numberRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    const element = numberRef.current;
+    if (!element) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setHasEnteredView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      setHasEnteredView(true);
+      observer.disconnect();
+    }, { threshold: 0.1 });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasEnteredView) return;
     let frame = 0;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       frame = requestAnimationFrame(() => setDisplay(value));
@@ -60,10 +81,10 @@ function StatNumber({ value, suffix = "" }: { value: number; suffix?: string }) 
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [value]);
+  }, [hasEnteredView, value]);
 
   return (
-    <span className="font-display text-[clamp(3.8rem,9vw,7.6rem)] font-light leading-[0.8] tracking-[-0.055em]">
+    <span ref={numberRef} className="font-display text-[clamp(3.8rem,9vw,7.6rem)] font-light leading-[0.8] tracking-[-0.055em]">
       {display}
       {suffix}
     </span>
@@ -81,6 +102,7 @@ export default function Landing() {
   const [templates, setTemplates] = useState<Array<TemplateRow & { image: string }>>([]);
   const [visibleTemplateCount, setVisibleTemplateCount] = useState(CATALOG_BATCH_SIZE);
   const [loading, setLoading] = useState(true);
+  const [shouldLoadHomeData, setShouldLoadHomeData] = useState(false);
   const [soldCount, setSoldCount] = useState<number | null>(null);
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -92,6 +114,30 @@ export default function Landing() {
     `LoVerse — ${t("home.heroLine1")} ${t("home.heroLine2")} ${t("home.heroLine3")}`,
     t("home.footerTagline"),
   );
+
+  useEffect(() => {
+    if (shouldLoadHomeData) return;
+    const hashTarget = location.hash.slice(1) as (typeof SECTION_IDS)[number];
+    const opensBelowFold = SECTION_IDS.indexOf(hashTarget) >= SECTION_IDS.indexOf("statistik");
+    if ((location.state as { scrollToTemplate?: string } | null)?.scrollToTemplate || opensBelowFold) {
+      setShouldLoadHomeData(true);
+      return;
+    }
+
+    const trigger = document.getElementById("statistik");
+    if (!trigger || !("IntersectionObserver" in window)) {
+      setShouldLoadHomeData(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      setShouldLoadHomeData(true);
+      observer.disconnect();
+    }, { rootMargin: "600px 0px" });
+    observer.observe(trigger);
+    return () => observer.disconnect();
+  }, [location.hash, location.state, shouldLoadHomeData]);
 
   useEffect(() => {
     if (loading) return;
@@ -115,13 +161,14 @@ export default function Landing() {
   }, [location.state, loading]);
 
   useEffect(() => {
+    if (!shouldLoadHomeData) return;
+
     const fetchTemplates = async () => {
       try {
-        const { data: dbTemplates, error } = await supabase
-          .from("templates")
-          .select("*")
-          .order("name", { ascending: true });
-        if (error) throw error;
+        const dbTemplates = await fetchPublicRows<TemplateRow[]>(
+          "templates",
+          new URLSearchParams({ select: "*", order: "name.asc" }),
+        );
         if (dbTemplates) {
           const combinedData = dbTemplates.map((dbItem) => {
             const localTemplate = MASTER_TEMPLATES.find((item) => item.slug === dbItem.slug);
@@ -139,16 +186,17 @@ export default function Landing() {
     };
 
     const fetchSoldCount = async () => {
-      const { count, error } = await supabase
-        .from("public_invitations")
-        .select("*", { count: "exact", head: true });
-      if (!error && count !== null) setSoldCount(BASE_DUMMY_SOLD + count);
-      else setSoldCount(BASE_DUMMY_SOLD + 7);
+      try {
+        const count = await fetchPublicCount("public_invitations");
+        setSoldCount(BASE_DUMMY_SOLD + (count ?? 7));
+      } catch {
+        setSoldCount(BASE_DUMMY_SOLD + 7);
+      }
     };
 
     fetchTemplates();
     fetchSoldCount();
-  }, []);
+  }, [shouldLoadHomeData]);
 
   const filteredTemplates = useMemo(
     () =>
@@ -322,7 +370,7 @@ export default function Landing() {
       </section>
 
       {/* MANIFESTO + FEATURES */}
-      <section id="fitur" className="scroll-mt-20 border-b border-ink-900/12">
+      <section id="fitur" className="section-defer scroll-mt-20 border-b border-ink-900/12">
         <div className="mx-auto w-full max-w-[1480px] px-4 py-20 sm:px-7 sm:py-28 lg:px-10">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
@@ -370,7 +418,7 @@ export default function Landing() {
       </section>
 
       {/* STATS */}
-      <section id="statistik" className="scroll-mt-20 border-b border-cream-100/15 bg-ink-950 text-cream-100">
+      <section id="statistik" className="section-defer scroll-mt-20 border-b border-cream-100/15 bg-ink-950 text-cream-100">
         <div className="mx-auto w-full max-w-[1480px] px-4 py-14 sm:px-7 sm:py-20 lg:px-10">
           <div className="flex items-center justify-between gap-4 border-b border-cream-100/20 pb-6">
             <span className="eyebrow text-champagne/85">{t("home.statsEyebrow")}</span>
@@ -405,7 +453,7 @@ export default function Landing() {
       </section>
 
       {/* CATALOG */}
-      <section id="katalog" className="scroll-mt-20 border-b border-ink-900/12">
+      <section id="katalog" className="section-defer scroll-mt-20 border-b border-ink-900/12">
         <div className="mx-auto w-full max-w-[1480px] px-4 py-20 sm:px-7 sm:py-28 lg:px-10">
           <div className="flex flex-col gap-6 border-b border-ink-900/15 pb-8 lg:flex-row lg:items-end lg:justify-between">
             <div>
@@ -468,9 +516,11 @@ export default function Landing() {
           </div>
 
           {loading ? (
-            <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4 lg:gap-x-6">
-              <TemplateCardSkeleton count={8} />
-            </div>
+            shouldLoadHomeData ? (
+              <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4 lg:gap-x-6">
+                <TemplateCardSkeleton count={8} />
+              </div>
+            ) : null
           ) : filteredTemplates.length > 0 ? (
             <>
               <div id="theme-catalog-grid" className="mt-8 grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4 lg:gap-x-6">
@@ -570,7 +620,7 @@ export default function Landing() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section id="testimoni" className="scroll-mt-20 border-b border-ink-900/12 bg-cream-50">
+      <section id="testimoni" className="section-defer scroll-mt-20 border-b border-ink-900/12 bg-cream-50">
         <div className="mx-auto w-full max-w-[1480px] px-4 py-20 sm:px-7 sm:py-28 lg:px-10">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -618,7 +668,7 @@ export default function Landing() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="scroll-mt-20 border-b border-ink-900/12">
+      <section id="faq" className="section-defer scroll-mt-20 border-b border-ink-900/12">
         <div className="mx-auto grid w-full max-w-[1480px] gap-12 px-4 py-20 sm:px-7 sm:py-28 lg:grid-cols-12 lg:gap-16 lg:px-10">
           <div className="lg:col-span-4 lg:sticky lg:top-28 lg:self-start">
             <span className="eyebrow text-ember-600">{t("home.faqEyebrow")}</span>
@@ -683,7 +733,7 @@ export default function Landing() {
       </section>
 
       {/* CTA */}
-      <section id="mulai" className="scroll-mt-20 overflow-hidden bg-wine-900 text-cream-100">
+      <section id="mulai" className="section-defer scroll-mt-20 overflow-hidden bg-wine-900 text-cream-100">
         <div className="grain relative mx-auto flex w-full max-w-[1480px] flex-col items-start justify-between gap-10 px-4 py-20 sm:px-7 sm:py-28 lg:flex-row lg:items-end lg:px-10">
           <div className="relative z-[2]">
             <div className="flex items-center gap-3">

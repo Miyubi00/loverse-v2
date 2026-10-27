@@ -36,7 +36,14 @@ export function OrderDetailsForm({
       <div className="flex gap-4 border-y border-ink-900/10 py-4 sm:gap-5">
         {selectedImage ? (
           <div className="relative aspect-[3/4] w-[76px] shrink-0 overflow-hidden border border-ink-900/10 bg-cream-100 sm:w-[92px]">
-            <img src={selectedImage} alt={selectedTemplate.name} className="h-full w-full object-cover" />
+            <img
+              src={selectedImage}
+              alt={selectedTemplate.name}
+              width={304}
+              height={405}
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
           </div>
         ) : null}
         <div className="flex min-w-0 flex-1 flex-col justify-between py-0.5">

@@ -8,6 +8,7 @@
 
 import { createElement, useEffect, useState, Suspense } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
+import '../styles/invitation-themes.css';
 import { supabase } from '../lib/supabaseClient';
 import { useToast } from '../components/GlobalToast';
 import { getTemplateComponent } from '../templates/Registry';

@@ -3,37 +3,43 @@ export interface ShowcaseTemplate {
   name: string;
   category: "Basic" | "RSVP";
   image: string;
+  imageSrcSet: string;
 }
+
+const previewImage = (slug: string) => ({
+  image: `/previews/${slug}.webp`,
+  imageSrcSet: `/previews/${slug}-240.webp 240w, /previews/${slug}-400.webp 400w, /previews/${slug}.webp 512w`,
+});
 
 export const SHOWCASE_TEMPLATES: ShowcaseTemplate[] = [
   {
     slug: "rustic-floral",
     name: "Rustic Floral",
     category: "Basic",
-    image: "/previews/rustic-floral.webp",
+    ...previewImage("rustic-floral"),
   },
   {
     slug: "modern-dark",
     name: "Modern Dark",
     category: "Basic",
-    image: "/previews/modern-dark.webp",
+    ...previewImage("modern-dark"),
   },
   {
     slug: "motion-flow",
     name: "Motion Flow",
     category: "RSVP",
-    image: "/previews/motion-flow.webp",
+    ...previewImage("motion-flow"),
   },
   {
     slug: "sakura-breeze",
     name: "Sakura Breeze",
     category: "RSVP",
-    image: "/previews/sakura-breeze.webp",
+    ...previewImage("sakura-breeze"),
   },
   {
     slug: "emerald-royale",
     name: "Emerald Royale",
     category: "RSVP",
-    image: "/previews/emerald-royale.webp",
+    ...previewImage("emerald-royale"),
   },
 ];

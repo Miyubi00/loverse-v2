@@ -1,0 +1,75 @@
+/* ============================================================
+   src/styles/invitation-themes.css
+   ------------------------------------------------------------
+   Utility Tailwind khusus komponen tema undangan. File ini hanya
+   diimpor oleh route demo/undangan (lazy), sehingga halaman publik
+   tidak perlu mengunduh seluruh utility tema.
+   ============================================================ */
+
+@import "tailwindcss" source(none);
+@source "../templates";
+
+@theme {
+  /* Palet tema undangan — jangan diubah, kontrak visual template. */
+  --color-mf-deep: #3d1832;
+  --color-mf-cream: #ffeddf;
+  --color-mf-ink: #2b1122;
+  --color-mf-muted: #a28ea6;
+  --color-mf-rose: #d65a73;
+
+  --color-pc-cream: #fff6e9;
+  --color-pc-ink: #33224b;
+  --color-pc-coral: #ff5d73;
+  --color-pc-sun: #ffc93c;
+  --color-pc-mint: #2ec4b6;
+
+  --color-ln-night: #191033;
+  --color-ln-deep: #100a26;
+  --color-ln-glow: #ffc15e;
+  --color-ln-plum: #8a4e7d;
+  --color-ln-mist: #e8e6ff;
+
+  --color-sk-blossom: #fff0f5;
+  --color-sk-blush: #ffc9dc;
+  --color-sk-deep: #59223f;
+  --color-sk-rose: #f25ca2;
+  --color-sk-leaf: #57b894;
+  --color-sk-gold: #e9b44c;
+
+  --color-bg-cream: #fff6e0;
+  --color-bg-ink: #221b45;
+  --color-bg-tomato: #ff4d3d;
+  --color-bg-teal: #00b8a9;
+  --color-bg-mustard: #ffc53d;
+
+  --color-ow-deep: #04202c;
+  --color-ow-mid: #0b4a57;
+  --color-ow-surface: #7bd8e6;
+  --color-ow-coral: #ff7a59;
+  --color-ow-foam: #d7f5ec;
+  --color-ow-sand: #ffe2a8;
+
+  --color-cw-cream: #fff9ec;
+  --color-cw-mint: #e0f2ee;
+  --color-cw-blue: #8ecbe0;
+  --color-cw-pink: #f9bccb;
+  --color-cw-yellow: #ffe27a;
+  --color-cw-ink: #5c4633;
+  --color-cw-coral: #f2797e;
+
+  --color-nm-base: #e4e6f2;
+  --color-nm-shadow: #b9bbd4;
+  --color-nm-light: #ffffff;
+  --color-nm-ink: #4a4568;
+  --color-nm-accent: #7c6ff0;
+  --color-nm-accent2: #f27ba5;
+
+  --color-cl-bg: #ede7ff;
+  --color-cl-ink: #4a3f71;
+  --color-cl-shadow: #c3b6f2;
+  --color-cl-accent: #8a6cff;
+  --color-cl-berry: #ff8fa3;
+  --color-cl-sun: #ffc94d;
+  --color-cl-mint: #a8e6cf;
+  --color-cl-sky: #9bd7ff;
+}

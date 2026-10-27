@@ -1,13 +1,6 @@
 import type { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
-import logoSource from "../../assets/logo.svg?raw";
 import { cn } from "../../lib/cn";
-
-const logoPaths = logoSource
-  .replace(/^[\s\S]*?<svg[^>]*>/i, "")
-  .replace(/<\/svg>[\s\S]*$/i, "")
-  .replace(/<title>[\s\S]*?<\/title>/i, "")
-  .trim();
 
 interface BrandMarkProps {
   className?: string;
@@ -16,16 +9,13 @@ interface BrandMarkProps {
 
 export function BrandMark({ className, title }: BrandMarkProps) {
   return (
-    <svg
-      data-brand-mark=""
-      viewBox="-12 -14 672 520"
-      fill="none"
-      preserveAspectRatio="xMidYMid meet"
-      role={title ? "img" : undefined}
-      aria-label={title}
+    <img
+      src="/logo.svg"
+      alt={title ?? ""}
       aria-hidden={title ? undefined : true}
+      width={672}
+      height={520}
       className={cn("block h-auto w-full", className)}
-      dangerouslySetInnerHTML={{ __html: logoPaths }}
     />
   );
 }

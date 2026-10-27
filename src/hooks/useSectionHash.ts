@@ -24,6 +24,10 @@ export function useSectionHash(ids: readonly string[]) {
     let cancelled = false;
     let lastTop = Number.POSITIVE_INFINITY;
     const scrollNow = () => {
+      if (targetId === 'beranda' && window.scrollY === 0) {
+        lastTop = 0;
+        return true;
+      }
       const el = document.getElementById(targetId);
       if (!el) return false;
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
@@ -47,33 +51,32 @@ export function useSectionHash(ids: readonly string[]) {
 
   // 2) Scrollspy: update hash mengikuti section terlihat (tanpa lompatan).
   useEffect(() => {
-    let raf = 0;
     let lastId = '';
-    const onScroll = () => {
-      if (raf) return;
-      raf = window.requestAnimationFrame(() => {
-        raf = 0;
-        const y = window.scrollY + 130;
-        let current = '';
-        for (const id of ids) {
-          const el = document.getElementById(id);
-          if (el && el.offsetTop <= y) current = id;
-        }
-        if (current !== lastId) {
-          lastId = current;
-          const url = window.location.pathname + window.location.search + (current ? `#${current}` : '');
-          window.history.replaceState(null, '', url);
-        }
-      });
+    let lastScrollY = window.scrollY;
+    const updateHash = (current: string) => {
+      if (!current || current === lastId) return;
+      lastId = current;
+      const url = window.location.pathname + window.location.search + `#${current}`;
+      window.history.replaceState(null, '', url);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    onScroll();
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (raf) window.cancelAnimationFrame(raf);
-    };
+
+    const observer = new IntersectionObserver((entries) => {
+      const crossed = entries.filter((entry) => entry.isIntersecting);
+      if (crossed.length === 0) return;
+
+      const scrollingDown = window.scrollY >= lastScrollY;
+      lastScrollY = window.scrollY;
+      crossed.sort((a, b) => ids.indexOf(a.target.id) - ids.indexOf(b.target.id));
+      const current = crossed[scrollingDown ? crossed.length - 1 : 0].target.id;
+      updateHash(current);
+    }, { rootMargin: '-130px 0px -75% 0px', threshold: 0 });
+
+    ids.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
   }, [ids]);
 
   // 3) Hash berubah via router → smooth scroll ke section.

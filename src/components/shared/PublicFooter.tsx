@@ -2,7 +2,6 @@
 import { ArrowUpRight, Instagram, Mail, MessageCircle } from "lucide-react";
 import { useTranslation } from "../../i18n";
 import { ADMIN_WHATSAPP } from "../../lib/constants";
-import { MIDTRANS_LOGOS } from "../order/constants";
 import { Wordmark } from "../ui/Brand";
 
 const ADMIN_PHONE_LABEL =
@@ -14,15 +13,15 @@ const ADMIN_PHONE_LABEL =
   ADMIN_WHATSAPP.slice(9);
 
 const PAYMENT_LOGOS = [
-  { src: MIDTRANS_LOGOS.qris, alt: "QRIS" },
-  { src: MIDTRANS_LOGOS.gopay, alt: "GoPay" },
-  { src: MIDTRANS_LOGOS.gopaylater, alt: "GoPay Later" },
-  { src: MIDTRANS_LOGOS.mandiri, alt: "Mandiri Virtual Account" },
-  { src: MIDTRANS_LOGOS.bni, alt: "BNI Virtual Account" },
-  { src: MIDTRANS_LOGOS.bri, alt: "BRI Virtual Account" },
-  { src: MIDTRANS_LOGOS.permata, alt: "Permata Virtual Account" },
-  { src: MIDTRANS_LOGOS.cimb, alt: "CIMB Niaga Virtual Account" },
-  { src: MIDTRANS_LOGOS.bsi, alt: "BSI Virtual Account" },
+  { src: "/logos/payment/qris.svg", alt: "QRIS", width: 30, height: 12 },
+  { src: "/logos/payment/gopay.svg", alt: "GoPay", width: 85, height: 16 },
+  { src: "/logos/payment/gopaylater.svg", alt: "GoPay Later", width: 174, height: 32 },
+  { src: "/logos/payment/mandiri.svg", alt: "Mandiri Virtual Account", width: 34, height: 10 },
+  { src: "/logos/payment/bni.svg", alt: "BNI Virtual Account", width: 34, height: 10 },
+  { src: "/logos/payment/bri.svg", alt: "BRI Virtual Account", width: 20, height: 5 },
+  { src: "/logos/payment/permata.svg", alt: "Permata Virtual Account", width: 50, height: 13 },
+  { src: "/logos/payment/cimb.svg", alt: "CIMB Niaga Virtual Account", width: 20, height: 3 },
+  { src: "/logos/payment/bsi.svg", alt: "BSI Virtual Account", width: 76, height: 24 },
 ];
 
 export default function PublicFooter() {
@@ -46,7 +45,7 @@ export default function PublicFooter() {
   ];
 
   return (
-    <footer className="grain grain-light relative overflow-hidden bg-ink-950 text-cream-100">
+    <footer className="section-defer grain grain-light relative overflow-hidden bg-ink-950 text-cream-100">
       <div className="relative z-[2] mx-auto w-full max-w-[1480px] px-4 pb-7 pt-12 sm:px-7 sm:pt-16 lg:px-10">
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 border-b border-cream-100/12 pb-10 sm:gap-x-12 lg:grid-cols-[1.4fr_.7fr_.7fr_.8fr] lg:gap-10 lg:pb-12">
           <div className="col-span-2 lg:col-span-1">
@@ -117,7 +116,10 @@ export default function PublicFooter() {
                   <img
                     src={logo.src}
                     alt={logo.alt}
+                    width={logo.width}
+                    height={logo.height}
                     loading="lazy"
+                    decoding="async"
                     className="h-4 w-auto max-w-[58px] object-contain"
                   />
                 </span>

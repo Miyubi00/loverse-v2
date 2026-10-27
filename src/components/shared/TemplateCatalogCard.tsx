@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { SkeletonImage } from "../ui/SkeletonImage";
@@ -16,18 +17,38 @@ interface TemplateCatalogCardProps {
 
 export default function TemplateCatalogCard({ template, priceLabel }: TemplateCatalogCardProps) {
   const { t } = useTranslation();
+  const cardRef = useRef<HTMLElement>(null);
+  const [shouldLoadPreview, setShouldLoadPreview] = useState(false);
   const demoUrl = `/demo/${template.slug}`;
   const orderUrl = `/order?template=${template.slug}`;
 
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoadPreview(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      setShouldLoadPreview(true);
+      observer.disconnect();
+    }, { rootMargin: "800px 0px" });
+    observer.observe(card);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <article data-template-slug={template.slug} className="group relative">
+    <article ref={cardRef} data-template-slug={template.slug} className="group relative">
       <Link
         to={demoUrl}
         title={t("home.catalogDemoTitle", { name: template.name })}
         className="relative block aspect-[3/4] overflow-hidden bg-ink-900"
       >
         <SkeletonImage
-          src={template.image}
+          src={shouldLoadPreview ? template.image : undefined}
           alt={t("home.catalogPreviewAlt", { name: template.name })}
           width={800}
           height={1066}

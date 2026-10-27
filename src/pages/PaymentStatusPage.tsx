@@ -8,6 +8,7 @@ import { ADMIN_WHATSAPP } from "../lib/constants";
 import { PaymentStatusSkeleton } from "../components/ui/SkeletonLoaders";
 import { useTranslation } from "../i18n";
 import Button from "../components/ui/Button";
+import { initializeMidtrans, isMidtransEnabled } from "../lib/midtransConfig";
 
 interface PaymentStatusResponse {
   found: boolean;
@@ -187,6 +188,10 @@ export default function PaymentStatus() {
     },
     [orderId],
   );
+
+  useEffect(() => {
+    if (isMidtransEnabled()) initializeMidtrans();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {

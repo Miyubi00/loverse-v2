@@ -16,7 +16,6 @@ import { LanguageProvider } from './i18n';
 import ErrorBoundary from './components/ErrorBoundary';
 import {
   PageSkeleton,
-  HomeSkeleton,
   OrderSkeleton,
   OrderSuccessSkeleton,
   LoginSkeleton,
@@ -43,7 +42,7 @@ import DevInvoicePreviewRoute from './pages/DevInvoicePreviewRoute';
 import DevEmailPreviewRoute from './pages/DevEmailPreviewRoute';
 
 /* --- PAGES (lazy loaded — code splitting per route) --- */
-const HomePage = lazy(() => import('./pages/HomePage'));
+import HomePage from './pages/HomePage';
 const OrderPage = lazy(() => import('./pages/OrderPage'));
 const OrderSuccessPage = lazy(() => import('./pages/OrderSuccessPage'));
 const CustomerLoginPage = lazy(() => import('./pages/CustomerLoginPage'));
@@ -77,7 +76,7 @@ function App() {
           <Routes>
             {/* GROUP 1: PUBLIC PAGES (Pakai Navbar Coklat) */}
             <Route element={<PublicLayout />}>
-              <Route path="/" element={<SkeletonRoute Skeleton={HomeSkeleton}><HomePage /></SkeletonRoute>} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/order" element={<SkeletonRoute Skeleton={OrderSkeleton}><OrderPage /></SkeletonRoute>} />
               <Route path="/order/success" element={<SkeletonRoute Skeleton={OrderSuccessSkeleton}><OrderSuccessPage /></SkeletonRoute>} />
               <Route path="/login" element={<SkeletonRoute Skeleton={LoginSkeleton}><CustomerLoginPage /></SkeletonRoute>} />

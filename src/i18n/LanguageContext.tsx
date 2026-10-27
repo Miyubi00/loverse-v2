@@ -11,11 +11,11 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
 import { id, type TranslationDictionary } from "./locales/id";
-import { en } from "./locales/en";
 
 export type Language = "id" | "en";
 
@@ -28,11 +28,6 @@ export interface LanguageContextType {
 }
 
 const STORAGE_KEY = "app_language";
-
-const dictionaries: Record<Language, TranslationDictionary> = {
-  id,
-  en,
-};
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
@@ -60,24 +55,57 @@ function interpolate(text: string, params?: Record<string, string | number>): st
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored === "id" || stored === "en") return stored;
-    } catch {
-      /* ignore */
-    }
     return "id"; // Default Bahasa Indonesia
   });
+  const [englishDictionary, setEnglishDictionary] = useState<TranslationDictionary | null>(null);
+  const englishPromiseRef = useRef<Promise<TranslationDictionary> | null>(null);
 
-  const setLanguage = useCallback((lang: Language) => {
-    setLanguageState(lang);
+  const loadEnglishDictionary = useCallback(() => {
+    if (!englishPromiseRef.current) {
+      englishPromiseRef.current = import("./locales/en")
+        .then(({ en }) => {
+          setEnglishDictionary(en);
+          return en;
+        })
+        .catch((error: unknown) => {
+          englishPromiseRef.current = null;
+          throw error;
+        });
+    }
+    return englishPromiseRef.current;
+  }, []);
+
+  useEffect(() => {
+    let active = true;
     try {
-      localStorage.setItem(STORAGE_KEY, lang);
-      document.documentElement.lang = lang;
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === "en") {
+        void loadEnglishDictionary()
+          .then(() => {
+            if (active) setLanguageState("en");
+          })
+          .catch(() => undefined);
+      }
     } catch {
       /* ignore */
     }
-  }, []);
+    return () => {
+      active = false;
+    };
+  }, [loadEnglishDictionary]);
+
+  const setLanguage = useCallback((lang: Language) => {
+    try {
+      localStorage.setItem(STORAGE_KEY, lang);
+    } catch {
+      /* ignore */
+    }
+    if (lang === "en") {
+      void loadEnglishDictionary().then(() => setLanguageState("en")).catch(() => undefined);
+      return;
+    }
+    setLanguageState("id");
+  }, [loadEnglishDictionary]);
 
   const toggleLanguage = useCallback(() => {
     setLanguage(language === "id" ? "en" : "id");
@@ -87,16 +115,19 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = language;
   }, [language]);
 
-  const dictionary = useMemo(() => dictionaries[language] || dictionaries.id, [language]);
+  const dictionary = useMemo(
+    () => (language === "en" ? englishDictionary ?? id : id),
+    [language, englishDictionary],
+  );
 
   const t = useCallback(
     (path: string, params?: Record<string, string | number>): string => {
-      const currentDict = dictionaries[language] as unknown as Record<string, unknown>;
+      const currentDict = (language === "en" ? englishDictionary ?? id : id) as unknown as Record<string, unknown>;
       let value = getNestedValue(currentDict, path);
 
       // Fallback to Indonesian if missing in English
       if (value === undefined) {
-        const fallbackDict = dictionaries.id as unknown as Record<string, unknown>;
+        const fallbackDict = id as unknown as Record<string, unknown>;
         value = getNestedValue(fallbackDict, path);
       }
 
@@ -106,7 +137,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
       return interpolate(value, params);
     },
-    [language]
+    [language, englishDictionary]
   );
 
   const contextValue = useMemo(

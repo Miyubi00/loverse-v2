@@ -12,8 +12,7 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { captureError } from '../lib/monitoring';
-import { id } from '../i18n/locales/id';
-import { en } from '../i18n/locales/en';
+import { id, type TranslationDictionary } from '../i18n/locales/id';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -22,6 +21,7 @@ interface ErrorBoundaryProps {
 interface ErrorBoundaryState {
   hasError: boolean;
   error?: Error;
+  englishDictionary?: TranslationDictionary;
 }
 
 export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
@@ -33,6 +33,15 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
 
   componentDidCatch(error: Error, info: ErrorInfo) {
     captureError(error, { componentStack: info.componentStack ?? undefined });
+    try {
+      if (localStorage.getItem('app_language') === 'en') {
+        void import('../i18n/locales/en')
+          .then(({ en }) => this.setState({ englishDictionary: en }))
+          .catch(() => undefined);
+      }
+    } catch {
+      /* use Indonesian fallback if storage is unavailable */
+    }
   }
 
   private handleReset = () => {
@@ -41,7 +50,9 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
 
   private getCopy() {
     try {
-      return localStorage.getItem('app_language') === 'en' ? en : id;
+      return localStorage.getItem('app_language') === 'en'
+        ? this.state.englishDictionary ?? id
+        : id;
     } catch {
       return id;
     }

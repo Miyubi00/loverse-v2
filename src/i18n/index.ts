@@ -6,4 +6,3 @@
 
 export * from "./LanguageContext";
 export * from "./locales/id";
-export * from "./locales/en";

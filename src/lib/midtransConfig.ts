@@ -2,7 +2,7 @@
 // src/lib/midtransConfig.ts
 // ------------------------------------------------------------
 // Satu sumber kebenaran config Midtrans sisi klien: pilih environment sandbox/production (nilai lain dianggap sandbox), muat script Snap dinamis.
-// Dipakai di  : main.tsx (init saat boot)
+// Dipakai di  : OrderPage, PaymentStatusPage (init hanya pada alur pembayaran)
 // Keterikatan : env VITE_MIDTRANS_*
 // ============================================================
 
@@ -94,8 +94,36 @@ export const initializeMidtrans = (): boolean => {
   script.setAttribute('data-client-key', clientKey);
   script.setAttribute(SNAP_TAG_ATTR, env);
   script.async = true;
+  script.addEventListener('load', () => {
+    script.dataset.loaded = 'true';
+  }, { once: true });
   document.head.appendChild(script);
 
   console.info(`[Midtrans] Snap (${env}) dimuat.`);
   return true;
 };
+
+/** Load Snap on user intent and wait until its payment API is available. */
+export async function loadMidtransSnap(): Promise<boolean> {
+  if (!isMidtransEnabled()) return false;
+
+  const env = getMidtransEnvironment();
+  const current = document.querySelector<HTMLScriptElement>(`script[${SNAP_TAG_ATTR}]`);
+  if (
+    current?.getAttribute(SNAP_TAG_ATTR) === env &&
+    (current.dataset.loaded === 'true' || typeof window.snap?.pay === 'function')
+  ) {
+    return typeof window.snap?.pay === 'function';
+  }
+
+  initializeMidtrans();
+  const script = document.querySelector<HTMLScriptElement>(`script[${SNAP_TAG_ATTR}]`);
+  if (!script) return false;
+
+  return new Promise((resolve) => {
+    const finish = () => resolve(typeof window.snap?.pay === 'function');
+    script.addEventListener('load', finish, { once: true });
+    script.addEventListener('error', () => resolve(false), { once: true });
+    if (script.dataset.loaded === 'true') finish();
+  });
+}

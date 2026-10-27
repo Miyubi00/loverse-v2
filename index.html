@@ -2,6 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://r2.loverse.id" />
+    <link
+      rel="preload"
+      href="/fonts/fraunces-variable-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      href="/fonts/instrument-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="image"
+      media="(min-width: 768px)"
+      href="/previews/rustic-floral.webp"
+      imagesrcset="/previews/rustic-floral-240.webp 240w, /previews/rustic-floral-400.webp 400w, /previews/rustic-floral.webp 512w"
+      imagesizes="(max-width: 767px) 120px, 200px"
+      fetchpriority="high"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png" />
@@ -42,6 +67,16 @@
     <meta name="twitter:description" content="LoVerse adalah platform untuk membuat dan membagikan undangan pernikahan digital." />
     <meta name="twitter:image" content="https://loverse.id/logo.png" />
     <meta name="twitter:image:alt" content="Loverse — undangan pernikahan digital" />
+    <script>
+      if (location.pathname.startsWith("/demo/")) {
+        const demoCover = document.createElement("link");
+        demoCover.rel = "preload";
+        demoCover.as = "image";
+        demoCover.href = "https://r2.loverse.id/defaults/img/385e020e17.jpg";
+        demoCover.setAttribute("fetchpriority", "high");
+        document.head.append(demoCover);
+      }
+    </script>
 
     <!-- 
       Midtrans Snap Widget
@@ -54,6 +89,59 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module">
+      import "/src/index.css";
+
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      if (supabaseUrl) {
+        try {
+          const preconnect = document.createElement("link");
+          preconnect.rel = "preconnect";
+          preconnect.href = new URL(supabaseUrl).origin;
+          preconnect.crossOrigin = "anonymous";
+          document.head.append(preconnect);
+        } catch {
+          // URL invalid: continue without the optional connection hint.
+        }
+      }
+
+      const isPrerenderedHome = location.pathname === "/" || location.pathname === "/index.html";
+      const root = document.getElementById("root");
+
+      if (!isPrerenderedHome) {
+        // Route lain belum punya HTML prerender; mulai React segera agar
+        // route chunk, data, dan gambar LCP mulai diminta tanpa menunggu FCP.
+        root?.replaceChildren();
+        import("/src/main.tsx");
+      } else {
+        // Beranda sudah tersedia di HTML. Hidrasi setelah first paint agar
+        // bundle aplikasi tidak bersaing dengan aset yang menentukan LCP.
+        let appStarted = false;
+        const startApp = () => {
+          if (appStarted) return;
+          appStarted = true;
+          import("/src/main.tsx");
+        };
+
+        if (document.readyState === "complete") {
+          startApp();
+        } else if ("PerformanceObserver" in window) {
+          try {
+            const observer = new PerformanceObserver((list) => {
+              if (list.getEntries().some((entry) => entry.name === "first-contentful-paint")) {
+                observer.disconnect();
+                startApp();
+              }
+            });
+            observer.observe({ type: "paint", buffered: true });
+            window.setTimeout(startApp, 3000);
+          } catch {
+            window.addEventListener("load", startApp, { once: true });
+          }
+        } else {
+          window.addEventListener("load", startApp, { once: true });
+        }
+      }
+    </script>
   </body>
 </html>

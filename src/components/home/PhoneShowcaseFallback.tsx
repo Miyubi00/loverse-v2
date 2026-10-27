@@ -44,6 +44,8 @@ export default function PhoneShowcaseFallback({
               <div className="relative aspect-[512/1108] h-full overflow-hidden rounded-[2rem] border-[5px] border-ink-900 bg-ink-900 shadow-deep">
                 <img
                   src={template.image}
+                  srcSet={template.imageSrcSet}
+                  sizes="(max-width: 767px) 120px, 200px"
                   alt=""
                   width={512}
                   height={1108}

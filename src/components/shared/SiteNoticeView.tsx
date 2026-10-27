@@ -152,15 +152,32 @@ function NoticeBanner({ notice }: { notice: SiteNoticeRow }) {
 
   // Deteksi apakah body terpotong clamp (tergantung lebar viewport saat itu).
   useEffect(() => {
-    if (!notice.body) return;
+    const element = bodyRef.current;
+    if (!notice.body || !element) return;
+
     const check = () => {
-      const el = bodyRef.current;
-      if (el) setIsTruncated(el.scrollHeight > el.clientHeight + 1);
+      const truncated = element.scrollHeight > element.clientHeight + 1;
+      setIsTruncated((current) => (current === truncated ? current : truncated));
     };
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, [notice.body]);
+
+    if (typeof ResizeObserver !== "undefined") {
+      const observer = new ResizeObserver(check);
+      observer.observe(element);
+      return () => observer.disconnect();
+    }
+
+    let frame = 0;
+    const scheduleCheck = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(check);
+    };
+    scheduleCheck();
+    window.addEventListener("resize", scheduleCheck);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", scheduleCheck);
+    };
+  }, [notice.body, expanded]);
 
   return (
     <div className={`mx-auto flex max-w-6xl items-start gap-3 border px-4 py-3 ${style.wrap}`}>

@@ -71,10 +71,10 @@ export default function PhoneShowcase() {
   });
   const activeIndexRef = useRef(0);
   const transitioningRef = useRef(false);
-  const [inView, setInView] = useState(() => !("IntersectionObserver" in window));
-  const [documentVisible, setDocumentVisible] = useState(
-    () => document.visibilityState === "visible",
-  );
+  // Keep the initial state server-render safe and identical during hydration.
+  const [inView, setInView] = useState(false);
+  const [documentVisible, setDocumentVisible] = useState(false);
+  const [sceneRequested, setSceneRequested] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
   const [contextLost, setContextLost] = useState(false);
@@ -88,10 +88,16 @@ export default function PhoneShowcase() {
 
   useEffect(() => {
     const node = rootRef.current;
-    if (!node || !("IntersectionObserver" in window)) return;
+    if (!node) return;
+    if (!("IntersectionObserver" in window)) {
+      setInView(true);
+      return;
+    }
 
     const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
-      rootMargin: "160px",
+      // Let the static preview cover near-viewport content; download Three.js only
+      // once the showcase itself enters the viewport, especially on mobile.
+      rootMargin: "0px",
     });
     observer.observe(node);
     return () => observer.disconnect();
@@ -99,12 +105,13 @@ export default function PhoneShowcase() {
 
   useEffect(() => {
     const syncVisibility = () => setDocumentVisible(document.visibilityState === "visible");
+    syncVisibility();
     document.addEventListener("visibilitychange", syncVisibility);
     return () => document.removeEventListener("visibilitychange", syncVisibility);
   }, []);
 
   useEffect(() => {
-    if (!ready || !canRender3D || !inView || !documentVisible) return;
+    if (!ready || !canRender3D || !sceneRequested || !inView || !documentVisible) return;
     const idle = window.requestIdleCallback
       ? window.requestIdleCallback(() => setMounted(true), { timeout: 1200 })
       : window.setTimeout(() => setMounted(true), 350);
@@ -113,7 +120,7 @@ export default function PhoneShowcase() {
       if (window.cancelIdleCallback) window.cancelIdleCallback(idle as number);
       window.clearTimeout(idle as number);
     };
-  }, [ready, canRender3D, documentVisible, inView]);
+  }, [ready, canRender3D, sceneRequested, documentVisible, inView]);
 
   const onSceneReady = useCallback(() => setSceneReady(true), []);
   const onContextLost = useCallback(() => {
@@ -184,6 +191,7 @@ export default function PhoneShowcase() {
       return;
     }
 
+    setSceneRequested(true);
     const now = performance.now();
     pointerRef.current = {
       pointerId: event.pointerId,
@@ -252,9 +260,11 @@ export default function PhoneShowcase() {
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.key === "ArrowRight") {
         event.preventDefault();
+        setSceneRequested(true);
         queueTransition(1);
       } else if (event.key === "ArrowLeft") {
         event.preventDefault();
+        setSceneRequested(true);
         queueTransition(-1);
       }
     },
@@ -330,7 +340,10 @@ export default function PhoneShowcase() {
             data-carousel-control=""
             aria-label={t("home.showcasePrevious")}
             disabled={isTransitioning}
-            onClick={() => queueTransition(-1)}
+            onClick={() => {
+              setSceneRequested(true);
+              queueTransition(-1);
+            }}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500 disabled:opacity-45"
           >
             <ChevronLeft className="h-4 w-4" aria-hidden="true" />
@@ -341,7 +354,10 @@ export default function PhoneShowcase() {
             aria-label={reducedMotion ? t("home.showcaseMotionDisabled") : isPlaying ? t("home.showcasePause") : t("home.showcasePlay")}
             aria-pressed={isPlaying && !reducedMotion}
             disabled={reducedMotion}
-            onClick={() => setIsPlaying((playing) => !playing)}
+            onClick={() => {
+              setSceneRequested(true);
+              setIsPlaying((playing) => !playing);
+            }}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500"
           >
             {isPlaying ? (
@@ -355,7 +371,10 @@ export default function PhoneShowcase() {
             data-carousel-control=""
             aria-label={t("home.showcaseNext")}
             disabled={isTransitioning}
-            onClick={() => queueTransition(1)}
+            onClick={() => {
+              setSceneRequested(true);
+              queueTransition(1);
+            }}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-100/25 bg-ink-950/75 text-cream-50 backdrop-blur transition-colors hover:bg-ink-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-500 disabled:opacity-45"
           >
             <ChevronRight className="h-4 w-4" aria-hidden="true" />

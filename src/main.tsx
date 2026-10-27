@@ -6,30 +6,29 @@
 // Keterikatan : react-dom, react-router-dom, ./App, lib/midtransConfig
 // ============================================================
 
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { StrictMode } from 'react'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
-import './index.css' // Import CSS yang sudah ada Tailwind
-import { initializeMidtrans } from './lib/midtransConfig'
 import { initMonitoring } from './lib/monitoring'
 
 // Monitoring (Sentry) — no-op bila VITE_SENTRY_DSN tidak diset.
 void initMonitoring();
 
-// Initialize Midtrans payment gateway if configured
-if (import.meta.env.VITE_MIDTRANS_CLIENT_KEY) {
-  initializeMidtrans();
-}
-
 const rootElement = document.getElementById('root');
 if (rootElement) {
-  ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
+  const application = (
+    <StrictMode>
       {/* BrowserRouter membungkus seluruh aplikasi */}
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </React.StrictMode>,
+    </StrictMode>
   );
+
+  if (rootElement.hasChildNodes()) {
+    hydrateRoot(rootElement, application);
+  } else {
+    createRoot(rootElement).render(application);
+  }
 }

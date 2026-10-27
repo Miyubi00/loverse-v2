@@ -10,7 +10,7 @@
 // ============================================================
 
 import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { fetchPublicRows } from '../lib/publicRest';
 import type { SiteNoticeRow } from '../types/database';
 
 function isActiveNow(row: SiteNoticeRow): boolean {
@@ -26,14 +26,17 @@ export function useSiteNotices() {
 
   useEffect(() => {
     let mounted = true;
-    supabase
-      .from('site_notices')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .then(({ data, error }) => {
-        if (!mounted || error) return;
-        const rows = ((data ?? []) as SiteNoticeRow[]).filter(isActiveNow);
+    fetchPublicRows<SiteNoticeRow[]>(
+      'site_notices',
+      new URLSearchParams({ select: '*', order: 'created_at.desc' }),
+    )
+      .then((data) => {
+        if (!mounted) return;
+        const rows = data.filter(isActiveNow);
         setNotices(rows);
+      })
+      .catch((error) => {
+        if (mounted) console.error('Gagal mengambil notice situs:', error);
       });
     return () => {
       mounted = false;

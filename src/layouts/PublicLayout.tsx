@@ -9,7 +9,7 @@ export default function PublicLayout() {
     <div className="app-shell flex min-h-screen w-full max-w-full flex-col bg-cream-100">
       <Navbar />
       <main id="main-content" className="w-full max-w-full flex-1 overflow-x-clip">
-        <div key={location.pathname} className="page-enter">
+        <div key={location.pathname} className={location.pathname === "/" ? "" : "page-enter"}>
           <Outlet />
         </div>
       </main>

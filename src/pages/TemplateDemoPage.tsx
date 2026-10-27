@@ -8,6 +8,7 @@
 
 import { Suspense } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import '../styles/invitation-themes.css';
 import { TEMPLATE_COMPONENTS } from '../templates/Registry';
 import type { TemplateData } from '../types/template';
 import { ArrowLeft } from 'lucide-react';

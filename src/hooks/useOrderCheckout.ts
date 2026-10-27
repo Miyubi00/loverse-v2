@@ -10,7 +10,6 @@
 // ============================================================
 
 import { useState } from "react";
-import { supabase } from "../lib/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../components/GlobalToast";
 import { useTranslation } from "../i18n";
@@ -85,6 +84,14 @@ export function useOrderCheckout({
     const finalWhatsapp = `+62${normalizeWhatsappNumber(formData.whatsapp)}`;
 
     try {
+      // Mulai memuat Snap saat checkout dimulai, bersamaan dengan pemuatan
+      // client Supabase dan pembuatan order.
+      const snapReady = import("../lib/midtransConfig")
+        .then(({ isMidtransEnabled, loadMidtransSnap }) =>
+          isMidtransEnabled() ? loadMidtransSnap() : false,
+        )
+        .catch(() => false);
+      const { supabase } = await import("../lib/supabaseClient");
       // Metode terpilih dikirim apa adanya; backend memetakan ke kanal
       // Snap yang sesuai akun + menolak bila pembayaran online dimatikan.
       const { data, error } = await supabase.functions.invoke("create-order", {
@@ -139,6 +146,7 @@ export function useOrderCheckout({
 
       if (
         payment.token &&
+        (await snapReady) &&
         typeof window.snap !== "undefined" &&
         window.snap?.pay
       ) {
@@ -188,6 +196,7 @@ export function useOrderCheckout({
 
     try {
       const finalWhatsapp = `+62${normalizeWhatsappNumber(formData.whatsapp)}`;
+      const { supabase } = await import("../lib/supabaseClient");
 
       // Catat pending LEWAT edge function (validasi + Turnstile + rate
       // limit server-side). Insert langsung ke DB dari browser DILARANG

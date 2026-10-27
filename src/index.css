@@ -1,5 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
+
+/* Utility classes khusus tema undangan dimuat terpisah (lihat
+   src/styles/invitation-themes.css) agar bundle CSS halaman publik tetap kecil. */
+@source not "./templates";
+
+/* Font self-hosted (subset Latin) — menghilangkan request pihak ketiga
+   dan memangkas ukuran unduhan font pada kunjungan pertama. */
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("/fonts/fraunces-variable-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Instrument Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/instrument-sans-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Instrument Sans";
+  font-style: italic;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/instrument-sans-italic-latin.woff2") format("woff2");
+}
 
 @theme {
   /* ----------------------------------------------------------
@@ -428,6 +457,12 @@
 
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Lewati style/layout konten di bawah fold sampai mendekati viewport. */
+  .section-defer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
   }
 }
 

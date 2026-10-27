@@ -84,7 +84,14 @@ export function OrderSummary({
         <div className="flex items-start gap-4">
           <div className="aspect-[3/4] w-[78px] shrink-0 overflow-hidden border border-ink-900/10 bg-cream-100 sm:w-[96px]">
             {selectedImage ? (
-              <img src={selectedImage} alt={selectedTemplate.name} className="h-full w-full object-cover" />
+              <img
+                src={selectedImage}
+                alt={selectedTemplate.name}
+                width={304}
+                height={405}
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
             ) : null}
           </div>
           <div className="min-w-0 flex-1">

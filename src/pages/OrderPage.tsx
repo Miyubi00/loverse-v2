@@ -5,7 +5,6 @@
   useState,
   type ChangeEvent,
 } from "react";
-import { supabase } from "../lib/supabaseClient";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { useToast } from "../components/GlobalToast";
 import ConfirmDialog from "../components/ConfirmDialog";
@@ -28,6 +27,8 @@ import {
   type PaymentMethodType,
 } from "../components/order/constants";
 import { useOrderCheckout } from "../hooks/useOrderCheckout";
+import { fetchPublicRows } from "../lib/publicRest";
+import type { TemplateRow } from "../types/database";
 
 const DRAFT_KEY = "loverse-order-draft";
 const DRAFT_TTL_MS = 7 * 24 * 60 * 60 * 1000;
@@ -106,15 +107,19 @@ export default function OrderForm() {
     let isMounted = true;
     const fetchTemplates = async () => {
       try {
-        const { data: dbTemplates, error } = await supabase.from("templates").select("*").order("name", { ascending: true });
-        if (!error && dbTemplates && dbTemplates.length > 0 && isMounted) {
-          const combined = dbTemplates.map((dbItem) => {
+        const dbTemplates = await fetchPublicRows<TemplateRow[]>(
+          "templates",
+          new URLSearchParams({ select: "*", order: "name.asc" }),
+        );
+        if (dbTemplates.length > 0 && isMounted) {
+          const combined = dbTemplates.map((dbItem, index) => {
             const local = MASTER_TEMPLATES.find((item) => item.slug === dbItem.slug);
+            const numericId = Number(dbItem.id);
             return {
-              id: dbItem.id ?? (local ? local.id : 0),
+              id: local?.id ?? (Number.isFinite(numericId) ? numericId : MASTER_TEMPLATES.length + index + 1),
               slug: dbItem.slug,
               name: dbItem.name,
-              category: dbItem.category,
+              category: dbItem.category === "RSVP" ? "RSVP" : "Basic",
               price: Number(dbItem.price),
               image: local ? local.image : "https://r2.loverse.id/themes/botanical-gold.webp",
             };
