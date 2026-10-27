@@ -1,4 +1,3 @@
-
 # Dependencies
 node_modules/
 .pnpm-store/
@@ -21,10 +20,6 @@ coverage/
 customer_jwt_secrets.env
 signing_keys.json
 supabase/signing_keys.json
-
-# Supabase - keep local only
-supabase/
-.supabase/
 
 # Logs and temporary files
 npm-debug.log*
@@ -71,33 +66,24 @@ scripts/
 # Local-only files
 logo.html
 
-# Tests (local only — tidak ikut ke GitHub)
+# Tests (tidak ikut ke push)
 tests/
 **/*.test.ts
 **/*.test.tsx
 
-# Supabase — seluruh folder lokal
-supabase/
+# Supabase - lokal, hanya schema.sql dan fungsi yang boleh di-push
+supabase/.temp/
 .supabase/
+supabase/migrations/*.sql
+!supabase/migrations/schema.sql
+supabase/functions/_shared/*.test.ts
 
-# Development scripts
-scripts/
+# Markdown - hanya README.md yang di-push
+*.md
+!README.md
 
-# Tests
-tests/
-**/tests/
-**/*.test.ts
-**/*.test.tsx
-
-# UI audit artifacts
-artifacts/
-
-# GitHub workflows (opsional, jika memang tidak ingin di-push)
-.github/
-
-# Local archive
+# Archive
 *.zip
 
-# AI coding tools
-.opencode/
-docs/
+# GitHub workflows (opsional, jika tidak ingin di-push)
+.github/
